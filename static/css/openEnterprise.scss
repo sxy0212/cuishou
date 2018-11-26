@@ -1,0 +1,16 @@
+ul,li{
+  list-style: none;
+}
+.up{
+  display: block;
+  width: 100%;
+  padding-left:0px;
+  li{
+    float: left;
+    margin-left:10px;
+  }
+}
+.el-form{ height: auto; overflow: hidden;}
+.table{ border: 1px solid #ddd; border-left:0px; border-bottom:0px; overflow-x: auto; 
+ #table tr td{ border-bottom:1px solid #ddd ;border-left:1px solid #ddd; text-align: center; padding: 10px;}
+}

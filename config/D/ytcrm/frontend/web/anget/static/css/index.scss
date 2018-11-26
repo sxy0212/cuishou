@@ -1,0 +1,80 @@
+.grid-content{
+  height:auto;
+  border:1px solid #fff;
+  background:#fff;
+  margin-right:10px;
+  margin-bottom:10px;
+  border-radius:2px;
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,.05)
+}
+.title{
+  font-size:16px;
+  color:gray;
+  height: 42px;
+  line-height: 42px;
+  padding: 0 15px;
+  border-bottom: 1px solid #f6f6f6;
+  color: #333;
+  border-radius: 2px 2px 0 0;
+}
+.card-body {
+  padding: 10px 15px;
+  line-height: 24px;
+}
+.card-list  {
+  p{
+    font-size: 36px;
+    color: #FF5722;
+    line-height: 36px;
+    padding: 5px 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    white-space: nowrap;
+  }
+}
+.fr{
+float:right;
+}
+.fl{
+float:left;
+}
+.badge{
+height:18px;
+line-height:18px;
+margin-top:10px;
+ padding: 0 6px;
+font-size: 12px;
+text-align: center;
+background-color: #FF5722;
+color: #fff;
+border-radius: 2px;
+background-color: #1E9FFF!important;
+}
+.row-two{
+  .grid-content{
+    padding:20px;
+    height:60px;
+  }
+  .two-title{
+    color:#1E9FFF;
+  }
+  .two-right{
+    margin-left:10px;
+  }
+  .two-left{
+    width:100px;
+    height:40px;
+  }
+  .two-content{
+    color:#999;
+    font-size:14px;
+    margin-top:5px;
+  }
+}
+.row-three{
+  .content{
+    height:180px;
+    text-align:center;
+  }
+}

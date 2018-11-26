@@ -1,0 +1,10 @@
+.el-row li{list-style: none;border:1px solid #eee;min-width:350px;
+  height: auto;margin-left: 10px;margin-bottom:10px;border-radius: 5px;
+  padding-bottom:50px;float: left;
+  .bottom{display: flex;justify-content: flex-start}
+  .left {padding-top:20px;
+    img{width:150px;}}
+  .right{margin-left:10px;padding-top:20px;width:150px;}
+  .header{min-width:350px; height: 50px;background: #c3c3c3;line-height: 50px;text-align: center;border-radius: 5px;}
+}
+.el-row{padding-left:0px;height:auto;overflow: hidden;}
