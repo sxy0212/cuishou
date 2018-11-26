@@ -33,6 +33,7 @@
 import left from './views/Left'
 import top from './views/Top'
 import NaveTab from './views/NaveTab/index'
+import {axiosRequest,getCookie,setCookie} from '@/assets/js/Yt.js'
 export default {
   name: 'App',
   provide(){

@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<div class="header">
-			<div class="title">	言通智能CRM</div>
+			<div class="title">	言通催收系统</div>
 			<div class="drop">
 			<span @click="shuxian" style="margin-right:20px;cursor:pointer;">刷新</span>
 			<el-dropdown trigger="hover" >

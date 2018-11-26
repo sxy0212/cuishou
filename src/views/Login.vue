@@ -1,7 +1,7 @@
 <template>
-<section>
+<section style="overflow:hidden;zoom:1">
    <el-form :model="ruleForm2"  label-position="left" label-width="0px" class="demo-ruleForm login-container">
-    <h3 class="title">代理商后台</h3>
+    <h3 class="title">言通催收系统</h3>
     <el-form-item prop="account">
       <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
@@ -18,9 +18,8 @@
 
 <script>
   import axios from "axios"
-  import {axiosRequest} from '@/assets/js/Yt.js'
-  import {getCookie} from '@/assets/js/Yt.js'
-  import {setCookie} from '@/assets/js/Yt.js'
+import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
+
   export default {
     data() {
       return {
@@ -54,6 +53,7 @@
               this.$alert(data.message)
               this.logining = false
             }
+            message(data)
           }
         }
         axiosRequest(conf)

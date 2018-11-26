@@ -3,12 +3,12 @@
         default-active="1" :unique-opened="open" @open="handleOpen"
           @close="handleClose"
           @select="handleSelect" router
-        class="el-menu-vertical-demo" style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b">
-          <el-menu-item index="/index" key="/index" >
+        class="el-menu-vertical-demo" style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b" >
+          <el-menu-item index="/index" key="/index">
             <i class="fa fa-home"></i>
             <span slot="title">首页</span>
           </el-menu-item> 
-          <el-menu-item index="" @click="test">
+          <el-menu-item index="">
                 <i class="fa fa-bar-chart"></i>
               <span slot="title">投影菜单</span>
           </el-menu-item> 
@@ -18,7 +18,7 @@
               <span>账户开通</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/information" >客户信息录入</el-menu-item>
+              <el-menu-item index="/information">客户信息录入</el-menu-item>
               <el-menu-item index="/informationList" >客户信息列表</el-menu-item>
               <el-menu-item index="/equipment">公司设备录入</el-menu-item>
               <el-menu-item index="/equipmentList">公司设备列表</el-menu-item>
@@ -119,10 +119,6 @@ import store from '../vuex/store.js'
       handleIconClick(ev) {
         console.log(ev);
       },
-      test() {
-         let routeData = this.$router.resolve({ path: '/dataShow'});
-          window.open(routeData.href, '_blank');
-      }
     },
   }
 </script>

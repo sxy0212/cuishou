@@ -57,8 +57,7 @@ let routes = [
     name: '投影菜单',
     component: dataShow,
     meta: {
-      keepAlive: false,
-      requireAuth:true,  
+      keepAlive: true,
     }
   },
   {
