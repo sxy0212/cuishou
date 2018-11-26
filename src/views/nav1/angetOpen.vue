@@ -13,12 +13,7 @@
     	<el-form-item label="管理员">
 			<el-input v-model="form.name"></el-input>
 		</el-form-item>
-    	<el-form-item label="管理员手机号">
-			<el-input v-model="form.name"></el-input>
-		</el-form-item>
-    	<el-form-item label="登录密码">
-			<el-input v-model="form.name"></el-input>
-		</el-form-item>
+    	
      <el-form-item label="确认密码">
       <span>*</span>
 			<el-input v-model="form.name"></el-input>
