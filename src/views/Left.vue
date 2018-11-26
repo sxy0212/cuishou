@@ -8,7 +8,10 @@
             <i class="fa fa-home"></i>
             <span slot="title">首页</span>
           </el-menu-item> 
-         
+          <el-menu-item index="">
+                <i class="fa fa-bar-chart"></i>
+              <span slot="title">投影菜单</span>
+          </el-menu-item> 
           <el-submenu index="2">
             <template slot="title">
               <i class="fa fa-chain"></i>
