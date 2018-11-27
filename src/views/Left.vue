@@ -4,76 +4,52 @@
           @close="handleClose"
           @select="handleSelect" router
         class="el-menu-vertical-demo" style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b" >
-      
+          <el-menu-item :index="item.path" v-for="(item,index) in data" v-if="item.child.length==0" :key="index">
+            <i :class="item.icon"></i>
+            <span slot="title">{{item.name}}</span>
+          </el-menu-item>
+          <el-submenu index="2" v-for="(item,index) in data" v-if="item.child.length!=0">
+            <template slot="title">
+              <i :class="item.icon"></i>
+              <span>{{item.name}}</span>
+            </template>
+            <el-menu-item-group>
+              <el-menu-item :index="item.path" v-for="(item,index) in item.child" :key="index">{{item.name}}</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu> 
+          <!--<el-menu-item index="/caseManagement">
+            <i class="fa fa-home"></i>
+            <span slot="title">案件管理</span>
+          </el-menu-item> 
+          <el-menu-item index="/dataManagement">
+            <i class="fa fa-home"></i>
+            <span slot="title">资料管理</span>
+          </el-menu-item> 
+          <el-menu-item index="/smsManagement">
+            <i class="fa fa-home"></i>
+            <span slot="title">短信管理</span>
+          </el-menu-item> 
+          <el-menu-item index="/speechScheme">
+            <i class="fa fa-home"></i>
+            <span slot="title">话术方案</span>
+          </el-menu-item> 
+           <el-menu-item index="/privilegeManagement">
+            <i class="fa fa-home"></i>
+            <span slot="title">权限管理</span>
+          </el-menu-item> 
           <el-submenu index="2">
             <template slot="title">
               <i class="fa fa-chain"></i>
-              <span>账户开通</span>
+              <span>系统设置</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/information">客户信息录入</el-menu-item>
-              <el-menu-item index="/informationList" >客户信息列表</el-menu-item>
-              <el-menu-item index="/equipment">公司设备录入</el-menu-item>
-              <el-menu-item index="/equipmentList">公司设备列表</el-menu-item>
+              <el-menu-item index="/regionalConfiguration">催收区域配置</el-menu-item>
+              <el-menu-item index="/clientConfiguration" >委托方配置</el-menu-item>
+              <el-menu-item index="/caseConfiguration">案件类型配置</el-menu-item>
+              <el-menu-item index="/accountManagement">账号管理</el-menu-item>
+              <el-menu-item index="/templateManagement">模板管理</el-menu-item>
             </el-menu-item-group>
-          </el-submenu>
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="fa fa-bell-o"></i>
-              <span>警告</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/balanceAlarm" >余额告警</el-menu-item>
-              <el-menu-item index="/robotExpiration">即将到期机器人</el-menu-item>
-             <el-menu-item index="/expiredAccount">已过期账户</el-menu-item>
-               <!--<el-menu-item index="/workSheet">工单报障</el-menu-item> -->
-            </el-menu-item-group>
-          </el-submenu>
-           <!--<el-submenu index="4">
-            <template slot="title">
-              <i class="fa fa-tasks"></i>
-              <span>企业管理</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/openEnterprise">已开通企业</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu> -->
-         <!--<el-submenu index="4">
-            <template slot="title">
-              <i class="fa fa-tasks"></i>
-              <span>产品</span>
-            </template>
-            <el-menu-item-group>
-              <el-menu-item index="/productList">产品管理</el-menu-item>
-              <el-menu-item index="/salesStatistics">已销售统计</el-menu-item>
-              <el-menu-item index="/order">待出货订单</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu> -->
-        <el-menu-item index="/messageGroup">
-          <i class="fa fa-comment-o"></i>
-          <span slot="title">消息群发</span>
-        </el-menu-item>
-        <el-menu-item index="/dataStatistics">
-          <i class="fa fa-bar-chart"></i>
-          <span slot="title">呼叫量统计</span>
-        </el-menu-item>
-         <el-menu-item index="/activityStatistics">
-          <i class="fa fa-line-chart"></i>
-          <span slot="title">活跃度统计</span>
-        </el-menu-item>
-         <el-menu-item index="/flowIncome">
-          <i class="fa fa-area-chart"></i>
-          <span slot="title">流量收入</span>
-        </el-menu-item>
-        
-        <el-menu-item index="/salesman">
-          <i class="fa fa-id-card"></i>
-          <span slot="title">业务员录入</span>
-        </el-menu-item> 
-       <!-- <el-menu-item index="/operatingEquipment">
-          <i class="fa fa-cog"></i>
-          <span slot="title">运行设备</span>
-        </el-menu-item> -->
+          </el-submenu>  -->    
       </el-menu>       
 </template>
 <script type="text/ecmascript-6">
@@ -82,19 +58,91 @@ import store from '../vuex/store.js'
     data(){
       return {
         open:true,
+        data:[
+          {
+            id:'1',
+            name:'任务管理',
+            path:'/taskManagement',
+            icon:'fa fa-tasks',
+            child:[]
+          },
+          {
+            id:'2',
+            name:'案件管理',
+            path:'/caseManagement',
+            icon:'fa fa-address-card-o',
+            child:[]
+          },
+           {
+            id:'3',
+            name:'资料管理',
+            path:'/dataManagement',
+            icon:'fa fa-file-text-o',
+            child:[]
+          },
+           {
+            id:'4',
+            name:'短信管理',
+            path:'/smsManagement',
+            icon:'fa fa-envelope-o',
+            child:[]
+          },
+           {
+            id:'5',
+            name:'话术方案',
+            path:'/speechScheme',
+            icon:'fa fa-file-sound-o',
+            child:[]
+          },
+           {
+            id:'6',
+            name:'权限管理',
+            path:'/privilegeManagement',
+            icon:'fa fa-sitemap',
+            child:[]
+          },
+           {
+            id:'7',
+            name:'系统设置',
+            path:'',
+            icon:'fa fa-gear',
+            child:[
+              {
+              name:'催收区域配置',
+              path:'/regionalConfiguration'
+            },
+             {
+              name:'委托方配置',
+              path:'/clientConfiguration'
+            },
+             {
+              name:'案件类型配置',
+              path:'/caseConfiguration'
+            },
+             {
+              name:'账号管理',
+              path:'/accountManagement'
+            },
+             {
+              name:'模板管理',
+              path:'/templateManagement'
+            }
+            ]
+          },
+        ]
       }
     },
  mounted () {
         //console.log(this)
-        if(this.$route.path !== '/index' && this.$route.path.indexOf('index') === -1) {
-            store.commit('add_tabs', {route: '/index', name: '首页'}); 
+        if(this.$route.path !== '/taskManagement' && this.$route.path.indexOf('taskManagement') === -1) {
+            store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'}); 
            store.commit('add_tabs', {route: this.$route.path , name: this.$route.name });
             store.commit('set_active_index', this.$route.path);
             store.commit('save_index', this.$route.query.num); 
         } else {
-           store.commit('add_tabs', {route: '/index', name: '首页'});
-            store.commit('set_active_index', '/index');
-            this.$router.push('/index');
+           store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'});
+            store.commit('set_active_index', '/taskManagement');
+            this.$router.push('/taskManagement');
         }
     },
     

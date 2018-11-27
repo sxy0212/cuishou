@@ -57,7 +57,7 @@ export default {
   methods:{
     upload(){     //按F5刷新时进去index页面同时要保证套转到dataShow页面时不是index页面
       if(this.$route.path != '/dataShow' || this.$route.path == '' ){
-        this.$router.push("/index")
+        this.$router.push("/taskManagement")
       }
     },  
     reload(){            //单页面刷新
@@ -93,13 +93,5 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
   .el-main{
     background:#f2f2f2;
   }
-  #tabs  .el-tabs__item{
-    font-size:2.2rem !important;
- }
- #tabs .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
-   background:none!important;
- }
- #tabs .el-table .cell{font-weight: bolder;line-height:45px !important;height:45px;}
- #tabs .el-tabs__nav-scroll{font-size:2.2rem !important;font-weight: bolder;}
   html,body,#app,.el-container{height:100%}
 </style>
