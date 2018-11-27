@@ -58,7 +58,7 @@ export default {
     this.upload()
   },
   methods:{
-    upload(){     //按F5刷新时进去index页面同时要保证套转到dataShow页面时不是index页面
+    upload(){     //按F5刷新时
       if(this.$route.path == '/' ){
         this.$router.push("/taskManagement")
       }
