@@ -59,9 +59,9 @@ export default {
   },
   methods:{
     upload(){     //按F5刷新时进去index页面同时要保证套转到dataShow页面时不是index页面
-      // if(this.$route.path != '/dataShow' || this.$route.path == '' ){
-      //   this.$router.push("/taskManagement")
-      // }
+      if(this.$route.path == '/' ){
+        this.$router.push("/taskManagement")
+      }
     },  
     reload(){            //单页面刷新
     //  location.replace("/#/form");
