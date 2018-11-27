@@ -4,11 +4,7 @@
           @close="handleClose"
           @select="handleSelect" router
         class="el-menu-vertical-demo" style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b" >
-          <el-menu-item index="/index" key="/index">
-            <i class="fa fa-home"></i>
-            <span slot="title">首页</span>
-          </el-menu-item> 
-         
+      
           <el-submenu index="2">
             <template slot="title">
               <i class="fa fa-chain"></i>
