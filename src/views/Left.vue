@@ -8,7 +8,7 @@
             <i :class="item.icon"></i>
             <span slot="title">{{item.name}}</span>
           </el-menu-item>
-          <el-submenu index="2" v-for="(item,index) in data" v-if="item.child.length!=0">
+          <el-submenu index="2" v-for="(item,index) in data" v-if="item.child.length!=0" :key="index">
             <template slot="title">
               <i :class="item.icon"></i>
               <span>{{item.name}}</span>

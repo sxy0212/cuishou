@@ -18,10 +18,13 @@
           <left></left>
         </keep-alive>
       </el-aside>
-      <el-main style="min-height:550px;max-height:750px;overflow:auto;margin-top:60px;">
-        <!-- Body -->
-         <router-view v-if="isRouterAlive"></router-view>
-      </el-main>
+      <keep-alive>
+        <el-main style="min-height:550px;max-height:750px;overflow:auto;margin-top:60px;" >
+          <!-- Body -->
+          <router-view v-if="isRouterAlive"></router-view>
+        </el-main>
+      </keep-alive>
+      
     </el-container>
     </el-container>
     <!-- 登录页 -->
@@ -56,9 +59,9 @@ export default {
   },
   methods:{
     upload(){     //按F5刷新时进去index页面同时要保证套转到dataShow页面时不是index页面
-      if(this.$route.path != '/dataShow' || this.$route.path == '' ){
-        this.$router.push("/taskManagement")
-      }
+      // if(this.$route.path != '/dataShow' || this.$route.path == '' ){
+      //   this.$router.push("/taskManagement")
+      // }
     },  
     reload(){            //单页面刷新
     //  location.replace("/#/form");
