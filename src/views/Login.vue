@@ -6,10 +6,10 @@
       <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号"></el-input>
     </el-form-item>
     <el-form-item prop="checkPass">
-      <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码"></el-input>
+      <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleReset2"></el-input>
     </el-form-item>
     <el-form-item style="width:100%;">
-      <el-button type="primary" style="width:100%;" @click="handleReset2" > <i class="el-icon-loading" v-show="logining"></i> 立即登录</el-button>
+      <el-button type="primary" style="width:100%;" @click="handleReset2"> <i class="el-icon-loading" v-show="logining"></i> 立即登录</el-button>
     </el-form-item>
   </el-form>
 </section>
@@ -37,7 +37,7 @@ import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
         this.logining = true
         const username = this.ruleForm2.username
         const password = this.ruleForm2.password
-        const url = "/api/api_backend.php?r=index/checklogin"
+        const url = "/api/api_backend.php?r=login/login "
         const conf = {
           url,
           data:{
@@ -47,7 +47,7 @@ import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
           success:(data)=>{
             if(data.statusCode == 1){
               setCookie('user',2);
-              this.$router.push({ path: '/index' });
+              this.$router.push({ path: '/taskManagement' });
               this.loading = false
             }else{
               this.$alert(data.message)

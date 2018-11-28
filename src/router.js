@@ -1,6 +1,7 @@
 import taskManagement from './views/nav1/taskManagement.vue'
 import caseManagement from './views/nav2/caseManagement.vue'
 import dataManagement from './views/nav3/dataManagement.vue'
+import dataStatistics from './views/nav31/dataStatistics.vue'
 import smsManagement from './views/nav4/smsManagement.vue'
 import speechScheme from './views/nav5/speechScheme.vue'
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
@@ -11,6 +12,7 @@ import clientConfiguration from './views/nav7/clientConfiguration.vue'
 import caseConfiguration from './views/nav7/caseConfiguration.vue'
 import accountManagement from './views/nav7/accountManagement.vue'
 import templateManagement from './views/nav7/templateManagement.vue'
+import levelSetting from './views/nav7/levelSetting.vue'
 
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
@@ -47,6 +49,15 @@ let routes = [
       keepAlive: true,
     }
   },
+  {
+    path: '/dataStatistics',
+    name: '数据统计',
+    component:  dataStatistics,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  
   {
     path: '/dataManagement',
     name: '资料管理',
@@ -117,6 +128,15 @@ let routes = [
       keepAlive: true,
     }
   },
+  {
+    path: '/levelSetting',
+    name: '案件等级设置',
+    component: levelSetting,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  
   
  
   
@@ -197,17 +217,17 @@ let routes = [
 const router = new Router({
       routes
 })
-// router.beforeEach((to, from, next) => {
-//     let user = JSON.parse(getCookie('user'));
-//     if(user&&to.path=='/login'){
-//       next({ path: '/index' })
-//     }
-//     console.log(user)
-//     if (!user && to.path != '/login') {
-//       next({ path: '/login' })
-//     } else {
-//       next()
-//     }
-//   })
+router.beforeEach((to, from, next) => {
+    let user = JSON.parse(getCookie('user'));
+    if(user&&to.path=='/login'){
+      next({ path: '/taskManagement' })
+    }
+    console.log(user)
+    if (!user && to.path != '/login') {
+      next({ path: '/login' })
+    } else {
+      next()
+    }
+  })
 
 export default router;
