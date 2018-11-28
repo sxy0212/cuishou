@@ -75,34 +75,42 @@ import store from '../vuex/store.js'
           },
            {
             id:'3',
+            name:'数据统计',
+            path:'/dataStatistics',
+            icon:'fa fa-bar-chart-o ',
+            child:[]
+          },
+          
+           {
+            id:'4',
             name:'资料管理',
             path:'/dataManagement',
             icon:'fa fa-file-text-o',
             child:[]
           },
            {
-            id:'4',
+            id:'5',
             name:'短信管理',
             path:'/smsManagement',
             icon:'fa fa-envelope-o',
             child:[]
           },
            {
-            id:'5',
+            id:'6',
             name:'话术方案',
             path:'/speechScheme',
             icon:'fa fa-file-sound-o',
             child:[]
           },
            {
-            id:'6',
+            id:'7',
             name:'权限管理',
             path:'/privilegeManagement',
             icon:'fa fa-sitemap',
             child:[]
           },
            {
-            id:'7',
+            id:'8',
             name:'系统设置',
             path:'',
             icon:'fa fa-gear',
@@ -126,6 +134,10 @@ import store from '../vuex/store.js'
              {
               name:'模板管理',
               path:'/templateManagement'
+            },
+            {
+              name:'案件等级设置',
+              path:'/levelSetting'
             }
             ]
           },

@@ -96,5 +96,8 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
   .el-main{
     background:#f2f2f2;
   }
+  ul li{list-style:none;}
+  .addTask .el-dialog__body{padding:10px 0px;}
+  .addTask .el-dialog{max-width:1000px;min-width:1000px;}
   html,body,#app,.el-container{height:100%}
 </style>
