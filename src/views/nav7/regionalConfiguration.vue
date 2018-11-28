@@ -22,8 +22,8 @@
           label="操作"
           >
           <template slot-scope="scope">
-            <el-button size="mini" type="success" round @click="edit(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" round>删除</el-button>
+            <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
+            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -40,6 +40,8 @@
             v-on:addNowChange = "addFn($event)"
             v-on:saveFn = "init($event)"
             :id="id"
+            :title = "bannerTitle"
+            v-on:clearId = "changeId($event)"
         ></edit-dialog>
     </el-dialog>
   </div>
@@ -76,7 +78,6 @@ export default {
     },
     methods: {
         init(){
-            console.log(this.page,this.pageSize)
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/area-list',
                 data : {
@@ -88,34 +89,69 @@ export default {
                         this.tableData = data.info
                         this.total = Number( data.total_count )
                     }
-                    console.log(data)
                 }
             }
             axiosRequest(conf)
         },
-        addFn(val){//弹框的打开与关闭
+        addFn(val){//添加弹框的打开与关闭
+            this.bannerTitle = "区域添加"
             this.addNow = val
+            this.id = ''
         },
-        edit(row){
+        changeId(){//清空编辑的具体项
+            this.id = ''
+        },
+        editFn(row){//编辑弹框的打开与关闭
             this.bannerTitle = "区域编辑"
             this.id = row.id
-            this.addFn(true)
+            this.addNow = true
         },
         pageSizeChangeFn(val){
-            console.log(val)
+            // console.log(val)
             this.page_size = val
             this.init()
         },
         currentPageChangeFn(val){
-             console.log(val)
+            // console.log(val)
             this.page = val
             this.init()
         },
-        handleEdit(){
-
-        },
-        handleDelete(){
-        
+        deleteFn(row){
+             this.$confirm('确定删除这一条？', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                let conf = {
+                    url : '/api/api_backend.php?r=system-setting/area-del',
+                    data : {
+                        id:row.id
+                    },
+                    success:(data)=>{
+                        if( data.statusCode == 1 ){
+                            this.init()
+                            Message({
+                                message: data.message,
+                                type: 'success',
+                                duration: 3 * 1000
+                            })
+                        }else if(data.statusCode == 0){
+                            Message({
+                                message: data.message,
+                                type: 'erro',
+                                duration: 3 * 1000
+                            })
+                        }
+                    }
+                }
+                axiosRequest(conf)
+            }).catch( () =>{
+                Message({
+                    message:'取消删除',
+                    type: 'erro',
+                    duration: 3 * 1000
+                })
+            })
         }
     }
 }

@@ -19,8 +19,9 @@ import { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 export default {
     name:"addArea",
-    prop:[
-        'id'
+    props:[
+        'id',
+        'title'//用于判断添加还是编辑
     ],
     data() {
         return{
@@ -32,20 +33,33 @@ export default {
     },
     methods:{
         cancelFn(){//更改菜单标题
+            this.formTitle.name = ''
             this.$emit("addNowChange",false)
-            // 此处有个接口，用于传递名称
         },
         protectFn(){
             // let url,data
-            console.log(this.id,typeof(this.id))
+            // console.log(this.id,typeof(this.id))
             let data = this.formTitle
+            let url 
+            if( this.title == '区域添加' ){
+                // console.log("添加")
+                url = '/api/api_backend.php?r=system-setting/area-add'
+            }else if( this.title == "区域编辑" ){
+                // console.log('编辑')
+                url = '/api/api_backend.php?r=system-setting/area-edit'
+                data.id = this.id
+            }
             let conf = {
-                url : '/api/api_backend.php?r=system-setting/area-add',
+                url ,
                 data,
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.cancelFn()
                         this.$emit('saveFn')
+                        this.$emit('clearId')
+                        this.formTitle = {
+                                            name:''
+                                        }
                         Message({
                             message: data.message,
                             type: 'success',
