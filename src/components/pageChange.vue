@@ -1,16 +1,14 @@
 <template>
-<div>
-   
+<div class="pageChangeCover">
   <div class="block">
-    <span class="demonstration">完整功能</span>
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="currentPage4"
-      :page-sizes="[100, 200, 300, 400]"
-      :page-size="100"
+      :current-page="page"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="page_size"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="400">
+      :total="total">
     </el-pagination>
   </div>
 </div>
@@ -19,18 +17,23 @@
 <script>
   export default {
     name:"pageChange",
+    props:[
+      'total',
+      'page',
+      'page_size'
+    ],
     methods: {
       handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+        this.$emit('pageSizeChange',val)
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.$emit('currentPageChange',val)
       }
     },
     data() {
-      return {
-        currentPage4: 4
-      };
+      return{
+
+      }
     }
   }
 </script>
