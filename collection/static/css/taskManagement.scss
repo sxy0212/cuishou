@@ -1,0 +1,61 @@
+/*机器人设置列表样式*/
+.AIadd { text-align: left; margin-bottom: 15px; height: auto; overflow: hidden; padding-left: 5px}
+.AIlist{ height: auto; overflow: hidden;}
+.AIlist ul li { display: inline-block; height: auto; overflow: hidden; min-width: 536px;max-width:600px;}
+.AIlist ul li .grid-content{ margin: 0px 5px; border: 1px solid #f1f1f1; margin-bottom: 10px; border-radius:3px; cursor: pointer; }
+.AIlist ul li:hover .grid-content{  transition: border-color 0.8s; -webkit-transition: border-color 0.8s; }
+.AIlist ul li .AiTop{ background: #8876f4; height: auto;overflow: hidden;color: #fff;
+     border-top-left-radius:3px;border-top-right-radius:3px; padding:10px; font-size: 16px}
+.AIlist ul li .ListMain{ padding: 10px; display: flex;background: #f6f7f8}
+.AIlist ul li .ListMain .pic{flex: 2; padding-right: 10px;background: #fff;}
+.AIlist ul li .ListMain .pic img{ width:141px}
+.AIlist ul li .ListMain .AiInfo{ flex: 8; height: auto;overflow: hidden; color: #999;background: #fff;margin-left: 5px;}
+.AIlist ul li .ListMain .Upton,.AIlist ul li .ListMain .machine,.AIlist ul li .AiButton{ height: auto; overflow: hidden;} 
+.AIlist ul li .ListMain .Upton{ text-align: center;margin-top:10px;margin-bottom:10px}
+.AIlist ul li .ListMain .Upton .list{ display: inline-block; width: 120px;}
+.AIlist ul li .ListMain .Upton .list .title{ margin-bottom: 10px;display: inline-block;font-size: 12px;}
+.AIlist ul li .ListMain .Upton .list .time{ color: #8876f4;font-size: 12px;}
+.AIlist ul li .ListMain .Upton .center{  padding: 0px 15px;  width: 93px}
+.AIlist ul li .ListMain .machine{ text-align: left; padding-left: 20px; margin-bottom: 10px}
+.AIlist ul li .ListMain .machine span{ color: #8876f4}
+.AIlist ul li .ListMain .AiButton .el-button{ padding: 10px }
+.AIlist ul li .ListMain .Countp{ text-align: left; padding-left: 20px; margin-bottom: 10px; height: 16px;}
+.AIlist ul li .ListMain .Countp em{ font-style: normal;font-size: 12px;}
+/*机器人添加时的样式*/
+.dial-header .el-dialog__header span{ text-align: left}
+.addTask .el-dialog .el-dialog__body{padding:10px 0px;height:700px;}
+.addTask ul li.Slider{ width:260px; display: block; float: left;margin-top:-15px;margin-left:-30px;}
+.addTask ul li{ display: inline-block}
+.addTask .el-form-item{margin-bottom:10px;}
+.addTask .el-checkbox+.el-checkbox{margin-left:5px;}
+.Infos ul li{ line-height: 35px; color: #8876f4;display: block; height: auto; overflow: hidden;}
+.Infos ul li span{display: block; float: left;  text-align: right; color: #999}
+ul li.right{margin-right:10px }
+.bind .el-dialog{max-width:500px;min-width:0px;}
+.animated {
+    -webkit-animation-duration: 2s;
+    animation-duration:  2s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+  }
+  
+  .animated.infinite {
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+  }
+
+  .div1{
+    display: inline-block;
+    width:2px;
+    height:30px;
+    background: -webkit-linear-gradient(#e7e3ff,#8876f4,#e7e3ff); /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#e7e3ff,#8876f4,#e7e3ff); /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#e7e3ff,#8876f4,#e7e3ff); /* Firefox 3.6 - 15 */
+    background:linear-gradient(#e7e3ff,#8876f4,#e7e3ff);/* 标准的语法（必须放在最后） */
+  }
+
+ 
+
+
+
+
