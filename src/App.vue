@@ -9,7 +9,9 @@
           <top></top>
          
         </keep-alive> 
-         <NaveTab style="margin-left:250px;"></NaveTab> 
+         <NaveTab style="margin-left:250px;">
+
+         </NaveTab> 
       </el-header>
     <el-container v-if="$route.meta.keepAlive">
       <el-aside style="background-color: #EBEBEB;width:250px;">
@@ -18,12 +20,14 @@
           <left></left>
         </keep-alive>
       </el-aside>
-      <keep-alive>
+     
         <el-main style="min-height:550px;max-height:750px;overflow:auto;margin-top:60px;" >
-          <!-- Body -->
+          <!-- Body --> 
+          <keep-alive>
           <router-view v-if="isRouterAlive"></router-view>
+          </keep-alive>
         </el-main>
-      </keep-alive>
+      
       
     </el-container>
     </el-container>

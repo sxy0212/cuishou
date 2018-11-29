@@ -87,7 +87,7 @@ function formatDate(date, fmt) {
     // 登录过期提示
     function message(data){
         if(data.statusCode == 0 && data.message == "请先登录"){
-            this.$alert(data.message, '提示', {
+            Vue.prototype.$alert(data.message, '提示', {
                 confirmButtonText: '确定',
                 callback: action => {
                     goHome()
@@ -96,7 +96,7 @@ function formatDate(date, fmt) {
         }
     }
     function  goHome() {
-        this.$router.push({ path: '/login' });
+        Vue.prototype.$router.push({ path: '/login' });
     }
 //实现元素跟随鼠标点击拖动
 // 引用，写在元素上v-move

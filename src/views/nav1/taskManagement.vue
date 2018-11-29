@@ -87,105 +87,104 @@
 					<!-- 添加任务弹框  -->
 					 <div class="dial-header addTask">
             <el-dialog title="任务添加" :visible.sync="Index.addTask" v-move>
-							<div style="float:left;width:50%;height:600px;display:block;background:#fff">
+							<div style="float:left;width:50%;height:740px;display:block;background:#fff">
 								<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
 								<el-form :model="form" label-width="120px" ref="forms">
                     <el-form-item label="任务名称:">
                         <el-input v-model="form.name" :style="Index.width"></el-input>
                     </el-form-item>
                     <el-form-item label="上午呼叫时间:">
-                        <el-time-select placeholder="开始时间" v-model="form.start_time_am":picker-options="{start: '08:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
+                        <el-time-select placeholder="开始时间" v-model="form.start_time_am":picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
                         <span>~</span>
-                        <el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '08:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>
+                        <el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>
                     </el-form-item>
                     <el-form-item label="下午呼叫时间:">
-                        <el-time-select placeholder="开始时间" v-model="form.start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '21:00'}" :style="Index.width1"></el-time-select>
+                        <el-time-select placeholder="开始时间" v-model="form.start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
                         <span>~</span>
-                        <el-time-select placeholder="结束时间" v-model="form.end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '21:00',minTime: form.start_time_pm}" :style="Index.width1"></el-time-select>
+                        <el-time-select placeholder="结束时间" v-model="form.end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: form.start_time_pm}" :style="Index.width1"></el-time-select>
                     </el-form-item>
-                   
-                    <el-form-item label="机器人数量:">
+                   	<el-form-item label="机器人数量:">
                         <ul>
-                            <li class="Slider"><el-slider show-stops max="10" :min="1" v-model="form.ai_count" @change="changeRobot"  :disabled="formInit.availue_ai_count == 1"></el-slider></li>
+                            <li class="Slider"><el-slider show-stops :max="10" :min="1" v-model="form.ai_count"></el-slider></li>
                         </ul>
                     </el-form-item>
                      <el-form-item label="外线号码:">
                         <el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码">
-                            <el-option v-for="list in formInit.call_id_list" :value="list.num" :lable="list.num"></el-option>
+                            <el-option v-for="(item,index) in AddData.outLine" :value="item.out_number" :label="item.out_number" :key="index"></el-option>
                         </el-select>
                     </el-form-item>
 										<el-form-item label="语音识别线路:">
-                        <el-select v-model="form.asr_number" :style="Index.width" placeholder="请选择话术" @change="asrnumberChange">
-                            <el-option v-for="list in formInit.arr_asr_number" :label="list.name" :value="list.asr_number"></el-option>
+                        <el-select v-model="form.asr_number" :style="Index.width" placeholder="请选择识别线路">
+                            <el-option v-for="(item,index) in AddData.recognition_lies" :label="item.asr_number" :value="item.asr_number" :key="index"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="振铃时长:">
                         <el-input v-model="form.call_duration" style="width:240px;margin-right:10px;"></el-input>秒
                     </el-form-item>
 											<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">呼叫规则</p>
+											<!--本人联系人-->
+											<el-form :model="form1" label-width="120px" ref="forms">
 											<el-form-item label="本人呼叫次数:">
-													<el-input v-model="form.name" :style="Index.width"></el-input>
+													<el-input v-model="form1.call_times" :style="Index.width"></el-input>
 											</el-form-item>
 											<el-form-item label="呼叫使用话术:">
-													<el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码" @change="callerIdChange">
-															<el-option v-for="list in formInit.call_id_list" :value="list.num" :lable="list.num"></el-option>
+													<el-select v-model="form1.template_id" :style="Index.width" placeholder="请选择话术">
+															<el-option v-for="(item,index) in AddData.templates" :label="item.name" :value="item.id"  :key="index"></el-option>
 													</el-select>
 											</el-form-item>
 											<el-form-item label="未接通状态:">
-													<el-checkbox-group v-model="form.checkList">
-														<el-checkbox label="空号"></el-checkbox>
-														<el-checkbox label="欠费停机"></el-checkbox>
-														<el-checkbox label="主动挂断"></el-checkbox>
-														<el-checkbox label="无法接听" ></el-checkbox>
+													<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
+														<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index">{{item.status}}</el-checkbox>
 													</el-checkbox-group>
 											</el-form-item>
 											<el-form-item label="直接拨打:">
-													<el-select v-model="form.asr_number" :style="Index.width" placeholder="请选择话术" @change="asrnumberChange">
+													<el-select v-model="form1.next_round" :style="Index.width" placeholder="请选择联系人">
 															<el-option label="第一联系人" value="1"></el-option>
 															<el-option label="第二联系人" value="2"></el-option>
 													</el-select>
 											</el-form-item>                   
-								
+										</el-form>
                 </el-form>
 							</div>
-								<div style="float:left;width:50%;height:600px;display:block;background:#fff">
-								<el-form :model="form" label-width="145px" ref="forms">
+								<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+									<!--第一联系人-->
+								<el-form :model="form2" label-width="145px" ref="forms">
                     <el-form-item label="第一联系人呼叫次数:">
-                        <el-input v-model="form.name" :style="Index.width"></el-input>
+                        <el-input v-model="form2.call_times" :style="Index.width"></el-input>
                     </el-form-item>
                     <el-form-item label="呼叫使用话术:">
-                        <el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码" @change="callerIdChange">
-                            <el-option v-for="list in formInit.call_id_list" :value="list.num" :lable="list.num"></el-option>
+                        <el-select v-model="form2.template_id" :style="Index.width" placeholder="请选择话术">
+                            <el-option v-for="(item,index) in AddData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
                         </el-select>
                     </el-form-item>
                     <el-form-item label="未接通状态:">
-                         <el-checkbox-group v-model="form.checkList">
-													<el-checkbox label="空号"></el-checkbox>
-													<el-checkbox label="欠费停机"></el-checkbox>
-													<el-checkbox label="主动挂断"></el-checkbox>
-													<el-checkbox label="无法接听" ></el-checkbox>
-												</el-checkbox-group>
+											<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
+												<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index">{{item.status}}</el-checkbox>
+											</el-checkbox-group>
                     </el-form-item>
                     <el-form-item label="直接拨打:">
-                         <el-select v-model="form.asr_number" :style="Index.width" placeholder="请选择话术" @change="asrnumberChange">
+                         <el-select v-model="form2.next_round" :style="Index.width">
                             <el-option label="第二联系人" value="2"></el-option>
                         </el-select>
-                    </el-form-item>       
+                    </el-form-item>   
+										</el-form>
+											<!--第二联系人-->
+										<el-form :model="form3" label-width="145px" ref="forms">    
 										 <el-form-item label="第二联系人呼叫次数:" style="margin-top:40px;">
-                        <el-input v-model="form.name" :style="Index.width"></el-input>
+                        <el-input v-model="form3.call_times" :style="Index.width"></el-input>
                     </el-form-item>
                     <el-form-item label="呼叫使用话术:">
-                        <el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码" @change="callerIdChange">
-                            <el-option v-for="list in formInit.call_id_list" :value="list.num" :lable="list.num"></el-option>
+                        <el-select v-model="form3.template_id" :style="Index.width" placeholder="请选择话术">
+                            <el-option v-for="(item,index) in AddData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
                         </el-select>
                     </el-form-item>
                     
-										<el-form-item label="是否发送短信:" style="margin-top:40px;">
+									<!--	<el-form-item label="是否发送短信:" style="margin-top:40px;">
 											<el-select v-model="form.asr_number" :style="Index.width"  >
 												<el-option label="不发送" value="1"></el-option>
 												<el-option label="发送" value="2"></el-option>
 											</el-select>
-										</el-form-item>                     
+										</el-form-item>  -->                
                 </el-form>
 							</div>
                 <div slot="footer" class="dialog-footer">
@@ -201,30 +200,22 @@
 </template>
 
 <script>
-import {axiosRequest} from '@/assets/js/Yt.js'
+import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 	export default {
 		data() {
 			return {
-				 startTime: '',
+				startTime: '',
         endTime: '',
-				 images: {
+				images: {
               robotOff:'/static/image/off.png',
-                robotOn: '/static/image/on.png'
-            },
-						AddData:{            //添加任务的时候需要用到的数据
-							outLine:[],     //外线号码
-							recognition_lies:[], //语音识别线路
-							call_result:[],   //未接通状态
-                QueueShow:false,      //转队列的时候出现的弹框
-                Data:[],      //数据
-                caller_id:"",
-                strategy:"rrmemory",//[振铃策略] 
-                timeout:"30",//[振铃时长]
-                maxlen:"10",//[最大等待数]
-                staff_id_queue:"" ,
-                multipleSelection:[],
-                member:"",    //成员个数
-            },
+              robotOn: '/static/image/on.png'
+        },
+				AddData:{            //添加任务的时候需要用到的数据
+					outLine:[],     //外线号码
+					recognition_lies:[], //语音识别线路
+					call_result:[],   //未接通状态
+					templates:[],   //呼叫使用话术
+        },
             formInit: {
                 used_ai_count: "",
                 company_ai_count: "",
@@ -253,41 +244,47 @@ import {axiosRequest} from '@/assets/js/Yt.js'
 							width:'width:260px',
 							width1:'width:120px'
 						},
-						form: {
-                "caller_id": "",    //外呼显示号码
-                "concurrent_line": "",      //并发线
-                "asr_number": "",     //语音识别线路
-                "batchid_str": "",   //逗号分割的批次ID字符串
-                "name": "",             //任务名称
-                "sms_switch":"0",  //短信方式
-                start_time_am:"08:00", //上午开始呼叫时间
-                end_time_am:"12:00",    //上午结束呼叫时间
-                start_time_pm:"11:00", //下午开始呼叫时间
-                end_time_pm:"21:00",    //下午结束呼叫时间
-                "ai_count": "1", //机器人数量
-                "agent_or_queue": "", //交互方式 1转手机，2转分机，3队列
-                "exten_num": "", //分机号（转分机） 
-                "asrtomobile": "",//手机号（转手机）
-                "asrqueue": "",//队列（队列）
-                "exten":"",    //人机交互需要传给后台的值
-                "creater":"",//管理坐席
-                staff_id: "",
-                enable_daemon_call1:"",
-                sms_id:"" ,    //短信模板里id
-                call_duration:"45",  //通话时长
-                call_limit_day:"0",      //通话限制
-                call_limit_hour:"0",
-                sms_method:"",      //短信发送方式
-                strategy:"",      //转队列需要用到的参数
-                timeout:"",
-                maxlen:"",
-                staff_id_queue:"",
-                auto_allot_staff:'0' ,    //自动分配坐席开关
-                auto_allot_staff_boolean:"",
-                auto_allot_customer_grade:"" ,  //自动分配客户类型"
-                auto_allot_customer:[],
-                call_fault:""       //多少通未接通停止
+						form: {	
+							name:"",    //任务名称
+              caller_id :"",// 外线号码 
+							asr_number :"",//识别线路
+							ai_count:1,// 机器人数
+							call_duration:"45",//振铃时长
+              start_time_am:"08:00", //上午开始呼叫时间
+              end_time_am:"12:00",    //上午结束呼叫时间
+              start_time_pm:"11:00", //下午开始呼叫时间
+              end_time_pm:"21:00",    //下午结束呼叫时间
+              call_limit_day:"0",      //通话限制
+              call_limit_hour:"0",
             },
+						round_rule:[],
+						not_connected_status1:[],
+						not_connected_status2:[],
+						form1:{
+							round:'0',
+   						template_id:"",
+							next_round:"1",
+							call_times:"",
+							not_connected_status:""
+						},
+						form2:{
+							round:'1',
+   						template_id:"",
+							next_round:"2",
+							call_times:"",
+							not_connected_status:""
+						},
+						form3:{
+							round:'2',
+   						template_id:"",
+							call_times:"",
+							next_round:"3",
+							not_connected_status:""
+						},
+						data1:{},
+						data2:{},
+						data3:{},
+						data4:{},
            Dates:[{
 							 ai_count: "1",
 								asr_number: "8500002",
@@ -387,7 +384,14 @@ import {axiosRequest} from '@/assets/js/Yt.js'
 					 ],
 			}
 		},
+		created() {
+			this.data1 = clone(this.form)
+			this.data2 = clone(this.form1)
+			this.data3 = clone(this.form2)
+			this.data4 = clone(this.form3)
+		},
 		 beforeMount() {
+
             // this.init()   //页面数据初始化 
          
         },
@@ -401,10 +405,16 @@ import {axiosRequest} from '@/assets/js/Yt.js'
 						this.AddData.outLine = data.info.out_side_lines
 						this.AddData.recognition_lies = data.info.recognition_lies
 						this.AddData.call_result = data.info.call_result_status
-						console.log(data)
+						this.AddData.templates = data.info.templates
 					}
 				}
 				axiosRequest(conf)
+			},
+			changeStatus1(){
+				this.form1.not_connected_status = this.not_connected_status1.join()
+			},
+			changeStatus2(){
+				this.form2.not_connected_status = this.not_connected_status2.join()
 			},
 		  init() {
                 const url = '/api/api_backend.php?r=asroperate/asrinfo'
@@ -427,7 +437,32 @@ import {axiosRequest} from '@/assets/js/Yt.js'
 							this.addInit()
 						},
 						onSubmit(){
-							
+							this.round_rule[0] = this.form1;
+							this.round_rule[1] = this.form2;
+							this.round_rule[2] = this.form3;
+							const data = this.form
+							data.round_rule = JSON.stringify(this.round_rule)
+							const url = "/api/api_backend.php?r=asroperate/add-handle"
+							const conf = {
+								url,
+								data:data,
+								success:(data)=>{
+									this.$alert(data.message)
+									if(data.statusCode == 1){
+										this.Index.addTask = false;
+										this.form = this.data1
+										this.form1 = this.data2
+										this.form2 = this.data3
+										this.form3 = this.data4
+										this.not_connected_status1 = []
+										this.not_connected_status2 = []
+									}else{
+										this.Index.addTask = true
+									}
+									message(data)
+								}
+							}
+							axiosRequest(conf)
 						}
 		}
 	}
