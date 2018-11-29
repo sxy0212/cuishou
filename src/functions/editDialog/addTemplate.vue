@@ -2,25 +2,18 @@
     <div>
         <div>
             <el-form :model="formTitle">
-                <el-form-item label="等级名称" :label-width="formLabelWidth">
+                <el-form-item label="模板名称" :label-width="formLabelWidth">
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="方案设置" :label-width="formLabelWidth">
-                </el-form-item>
-                <el-form-item label="本人电话" :label-width="formLabelWidth">
-                    <el-radio v-model="formTitle.self_phone_status" label="1">接通</el-radio>
-                    <el-radio v-model="formTitle.self_phone_status" label="-1">未接通</el-radio>
-                </el-form-item>
-                <el-form-item label="第一联系人" :label-width="formLabelWidth">
-                    <el-radio v-model="formTitle.first_contact_phone_status" label="1">接通</el-radio>
-                    <el-radio v-model="formTitle.first_contact_phone_status" label="-1">未接通</el-radio>
-                </el-form-item>
-                <el-form-item label="第二联系人" :label-width="formLabelWidth">
-                    <el-radio v-model="formTitle.second_contact_phone_status" label="1">接通</el-radio>
-                    <el-radio v-model="formTitle.second_contact_phone_status" label="-1">未接通</el-radio>
+                <el-form-item label="选择字段" :label-width="formLabelWidth">
+                    <el-checkbox v-model="formTitle.num1" disabled>备选项1</el-checkbox>
+                    <el-checkbox v-model="formTitle.num2" disabled>备选项</el-checkbox>
+                    <el-checkbox v-model="formTitle.num3" >备选项</el-checkbox>
+                    <el-checkbox v-model="formTitle.num4" >备选项</el-checkbox>
                 </el-form-item>
             </el-form>
         </div>
+       
         <div slot="footer" class="dialog-footer">
             <el-button @click="protectFn">保存</el-button>
             <el-button type="primary" @click="cancelFn">取消</el-button>
@@ -50,10 +43,10 @@ export default {
         protectFn(){
             let data = this.formTitle
             let url 
-            if( this.title == '等级添加' ){
-                url = '/api/api_backend.php?r=system-setting/case-level-add'
-            }else if( this.title == "等级编辑" ){
-                url = '/api/api_backend.php?r=system-setting/case-level-edit'
+            if( this.title == '模板添加' ){
+                url = '/api/api_backend.php?r=system-setting/template-add'
+            }else if( this.title == "模板编辑" ){
+                url = '/api/api_backend.php?r=system-setting/template-edit'
                 data.id = this.id
             }
             let conf = {
