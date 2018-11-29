@@ -20,9 +20,11 @@
         </el-table-column>
         <el-table-column
           label="操作"
+          width="250"
           >
           <template slot-scope="scope">
             <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
+            <el-button size="mini" type="primary" round @click="downloadFn(scope.row)">下载</el-button>
             <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -44,6 +46,7 @@
             :id="id"
             :title = "bannerTitle"
             :formTitle = "formTitle"
+            :fieldsList = "fieldsList"
         ></edit-dialog>
     </el-dialog>
   </div>
@@ -75,11 +78,9 @@ export default {
             }],
             formTitle:{//添加或是修改模块的数据
                 name:'',
-                num1:true,
-                num2:true,
-                num3:false,
-                num4:false
+                
             },
+            fieldsList:[]//多选选项
         }
     },
     created() {
@@ -102,10 +103,34 @@ export default {
             }
             axiosRequest(conf)
         },
+        askFields(val,str){//调取多选选项
+            let conf = {
+                url : '/api/api_backend.php?r=system-setting/template-all-fields-list',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        if(val == 1){
+                            this.fieldsList = data.info
+                        }else if(val == 2){
+                            this.fieldsList = data.info.map(item=>{
+                                console.log(str)
+                                let cod = "," + str + ","
+                                if( cod.indexOf(","+item.id+",") != -1 ){
+                                    item["choose"] = true
+                                }
+                                return item 
+                            })
+                        }
+                        
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
         addFn(val){//添加弹框的打开与关闭
             this.bannerTitle = "模板添加"
             this.addNow = val
             this.id = ''
+            this.askFields(1)
         },
         changeId(){//清空编辑的具体项
             this.id = ''
@@ -114,6 +139,7 @@ export default {
             this.formTitle = {
                 name:''
             }
+            this.fieldsList = []
         },
         editFn(row){//编辑弹框的打开与关闭
             this.bannerTitle = "模板编辑"
@@ -122,9 +148,10 @@ export default {
             this.formTitle = {
                 name:row.name
             }
+            this.askFields(2,row.fields)
+
         },
         pageSizeChangeFn(val){
-            // console.log(val)
             this.page_size = val
             this.init()
         },
@@ -168,6 +195,9 @@ export default {
                     duration: 3 * 1000
                 })
             })
+        },
+        downloadFn(){
+
         }
     }
 }

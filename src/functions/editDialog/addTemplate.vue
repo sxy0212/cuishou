@@ -6,10 +6,11 @@
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="选择字段" :label-width="formLabelWidth">
-                    <el-checkbox v-model="formTitle.num1" disabled>备选项1</el-checkbox>
-                    <el-checkbox v-model="formTitle.num2" disabled>备选项</el-checkbox>
-                    <el-checkbox v-model="formTitle.num3" >备选项</el-checkbox>
-                    <el-checkbox v-model="formTitle.num4" >备选项</el-checkbox>
+                    <el-checkbox v-model="item.choose"
+                        v-for="item in this.fieldsList"
+                        :key="item.id"
+                        class="red = is_required =='1'?'red':'green'"
+                     >{{item.field_name}}</el-checkbox>
                 </el-form-item>
             </el-form>
         </div>
@@ -28,7 +29,8 @@ export default {
     props:[
         'id',
         'title',//用于判断添加还是编辑
-        'formTitle'
+        'formTitle',//表单
+        'fieldsList'//多选选项
     ],
     data() {
         return{
@@ -41,6 +43,11 @@ export default {
             this.$emit("clearFormTitle")
         },
         protectFn(){
+            this.formTitle.fields = this.fieldsList.map(item=>{
+                if(item.choose == true){
+                    return item.id
+                }
+            }).join(",")
             let data = this.formTitle
             let url 
             if( this.title == '模板添加' ){
