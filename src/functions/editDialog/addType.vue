@@ -2,7 +2,7 @@
     <div>
         <div>
              <el-form :model="formTitle">
-                <el-form-item label="区域名称" :label-width="formLabelWidth">
+                <el-form-item label="案件类型" :label-width="formLabelWidth">
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
@@ -21,32 +21,26 @@ export default {
     name:"addArea",
     props:[
         'id',
-        'title'//用于判断添加还是编辑
+        'title',//用于判断添加还是编辑
+        'formTitle'
     ],
     data() {
         return{
-            formTitle:{
-                name:''
-            },
             formLabelWidth:"120px"
         }
     },
     methods:{
         cancelFn(){//更改菜单标题
-            this.formTitle.name = ''
             this.$emit("addNowChange",false)
+            this.$emit("clearFormTitle")
         },
         protectFn(){
-            // let url,data
-            // console.log(this.id,typeof(this.id))
             let data = this.formTitle
             let url 
-            if( this.title == '区域添加' ){
-                // console.log("添加")
-                url = '/api/api_backend.php?r=system-setting/area-add'
-            }else if( this.title == "区域编辑" ){
-                // console.log('编辑')
-                url = '/api/api_backend.php?r=system-setting/area-edit'
+            if( this.title == '案件类型添加' ){
+                url = '/api/api_backend.php?r=system-setting/case-type-add'
+            }else if( this.title == "案件类型编辑" ){
+                url = '/api/api_backend.php?r=system-setting/case-type-edit'
                 data.id = this.id
             }
             let conf = {
@@ -57,9 +51,7 @@ export default {
                         this.cancelFn()
                         this.$emit('saveFn')
                         this.$emit('clearId')
-                        this.formTitle = {
-                                            name:''
-                                        }
+                        this.$emit("clearFormTitle")
                         Message({
                             message: data.message,
                             type: 'success',

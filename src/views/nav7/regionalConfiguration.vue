@@ -10,7 +10,7 @@
         style="width: 98%">
         <el-table-column
           label="序号"
-          type="index"
+          prop="id"
           width="50">
         </el-table-column>
         <el-table-column
@@ -39,19 +39,22 @@
         <edit-dialog
             v-on:addNowChange = "addFn($event)"
             v-on:saveFn = "init($event)"
+            v-on:clearId = "changeId($event)"
+            v-on:clearFormTitle = "clearFormTitle($event)"
             :id="id"
             :title = "bannerTitle"
-            v-on:clearId = "changeId($event)"
+            :formTitle = "formTitle"
         ></edit-dialog>
     </el-dialog>
   </div>
 </template>
 <script>
 import '@/assets/css/system.css'
-import addArea from '@/components/editDialog/addArea.vue'
+import addArea from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
+// import indexMethod  from '@/utils/indexMethod.js'
 
 export default {
     components:{
@@ -70,13 +73,19 @@ export default {
                 miniImage: '上海市普陀区'
             }, {
                 miniImage: '闵行区'
-            }]
+            }],
+            formTitle:{//添加或是修改模块的数据
+                name:''
+            },
         }
     },
     created() {
         this.init()
     },
     methods: {
+        // methodIndex(val){
+        //     return indexMethod(val,this.page,this.page_size)
+        // },
         init(){
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/area-list',
@@ -101,10 +110,18 @@ export default {
         changeId(){//清空编辑的具体项
             this.id = ''
         },
+        clearFormTitle(){//清除子组件的数据
+            this.formTitle = {
+                name:''
+            }
+        },
         editFn(row){//编辑弹框的打开与关闭
             this.bannerTitle = "区域编辑"
             this.id = row.id
             this.addNow = true
+            this.formTitle = {
+                name:row.name
+            }
         },
         pageSizeChangeFn(val){
             // console.log(val)
@@ -112,7 +129,6 @@ export default {
             this.init()
         },
         currentPageChangeFn(val){
-            // console.log(val)
             this.page = val
             this.init()
         },
