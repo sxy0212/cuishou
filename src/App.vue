@@ -83,7 +83,7 @@ export default {
 } 
 </script>
 
-<style>
+<style  lang="scss">
 html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
 #app {
   font-family:'微软雅黑', 'Avenir', Helvetica, Arial, sans-serif;
@@ -104,4 +104,13 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
   .addTask .el-dialog__body{padding:10px 0px;}
   .addTask .el-dialog{max-width:1000px;min-width:1000px;}
   html,body,#app,.el-container{height:100%}
+  .loginForm{
+    .el-input__inner{border:none;width:300px;}
+    .el-input[data-v-26084dc2]{margin-bottom:0px;}
+    .el-tabs__nav{ width: 100%; display: flex;
+      .el-tabs__item:nth-child(1){ border-top-left-radius:10px !important }
+      .el-tabs__item:nth-child(2),.el-tabs__nav .el-tabs__item:nth-child(2) { border-top-right-radius:10px !important }
+    }
+    .el-tabs__item{ flex: 5; text-align: center}
+  } 
 </style>

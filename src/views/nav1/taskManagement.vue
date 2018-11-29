@@ -3,8 +3,7 @@
 		<div class="CenterMain  MainHp">
       <div class="TopForm">
 					<div class="AIadd">
-							<el-button type="success" @click="addTask">
-									<i class="fa fa-plus"></i>添加任务</el-button>
+							<el-button type="success" @click="addTask"><i class="fa fa-plus"></i>添加任务</el-button>
 							<el-button type="success" >队列功能</el-button>
 							<el-button type="success" >队列列表</el-button>
 					</div>
@@ -17,8 +16,7 @@
 															<div class="title" style="margin:0 15px;">任务编码：{{ form.task_coding }}</div>
 															<div class="title" style="width:30%">
 																	<el-button style="padding:5px 0" > 机器人状态：</el-button>
-																	<span v-if="form.warning_asrnumber&&form.warning_callerid">正常</span>
-																	<span v-else style="color:red">异常</span>
+																	<span >正常</span>
 															</div>
 													</div>
 													<div class="ListMain">
@@ -39,8 +37,8 @@
 																			<span class="div1"></span>
 																			<div class="list">
 																				<div class="title">外呼时间</div>
-																				<div class="time">09:00:00-12:00:00</div>
-																				<div class="time">	09:00:00-12:00:00</div>																				
+																				<div class="time">{{form.call_time.am.s}}-{{form.call_time.am.e}}</div>
+																				<div class="time">{{form.call_time.pm.s}}-{{form.call_time.pm.e}}</div>																				
 																			</div>
 																			<span class="div1"></span>
 																	</div>
@@ -48,7 +46,7 @@
 																			<span class="div1"></span>
 																			<div class="list">
 																					<div class="title">外线号码</div>
-																					<div class="time">{{form.concurrent_line }}</div>
+																					<div class="time">{{form.caller_id }}</div>
 																			</div>
 																			<span class="div1"></span>
 																			<div class="list">
@@ -72,10 +70,9 @@
 																					<i class="fa fa-headphones"></i>测试</el-button>
 																			<el-button type="primary"  v-if="parseInt(form.status) == 0"  > <i class="fa fa-power-off"></i>启动</el-button>
 																			<el-button type="primary"  v-else-if="parseInt(form.status) == 1" > <i class="fa fa-power-off"></i>关闭</el-button>
-																			<button type="button"  class="el-button el-button--success" >
-																					<i class="fa fa-pencil"></i>编辑</button>
-																			<button type="button"  class="el-button el-button--danger  is-plain">
-																					<i class="el-icon-delete"></i>删除</button>
+																			<el-button type="success">
+																					<i class="fa fa-pencil"></i>编辑</el-button>
+																			<el-button type="danger" @click="del(form.id)"><i class="el-icon-delete"></i>删除</el-button>
 																		</div>
 															</div>
 													</div>
@@ -85,7 +82,7 @@
 					</div>
 
 					<!-- 添加任务弹框  -->
-					 <div class="dial-header addTask">
+					<div class="dial-header addTask">
             <el-dialog title="任务添加" :visible.sync="Index.addTask" v-move>
 							<div style="float:left;width:50%;height:740px;display:block;background:#fff">
 								<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
@@ -192,7 +189,7 @@
 										<el-button type="primary" @click="Index.addTask = false">取消</el-button>
                 </div>
             </el-dialog>
-        </div>
+        	</div>
 
 				</div>
 			</div>
@@ -201,14 +198,13 @@
 
 <script>
 import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
+import { MessageBox } from 'element-ui';
 	export default {
 		data() {
 			return {
-				startTime: '',
-        endTime: '',
 				images: {
-              robotOff:'/static/image/off.png',
-              robotOn: '/static/image/on.png'
+              robotOff:'static/image/off.png',
+              robotOn: 'static/image/on.png'
         },
 				AddData:{            //添加任务的时候需要用到的数据
 					outLine:[],     //外线号码
@@ -216,30 +212,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 					call_result:[],   //未接通状态
 					templates:[],   //呼叫使用话术
         },
-            formInit: {
-                used_ai_count: "",
-                company_ai_count: "",
-                availue_ai_count: "",
-                asr_call_max_line: "",
-                maxConcurrency:"", //最大可选机器人数
-                maxConcurrencyData:"", //最大机器人数
-                asrcallMaxLine: "",//不超过机器人数
-                call_id_list: [],
-                callid_list_edit:[], //编辑里面的外线号码
-                arr_asr_number:[], //语音线路
-                arr_asr_number_edit:[], //编辑里的语音线路
-                staff_id:[],
-                ext_list:[],
-                smsData:[],    //短信模板里的数据
-                smsDataEdit:[], //编辑中的短信模板
-                authData:[] ,   //授权时间里的数据
-                authDataEdit:[] ,  //编辑里面的授权时间的数据
-                smsMethod:[],       //添加中的短信发送方式
-                smsMethodEdit:[],
-                staff_id_edit:[],
-                autoAllotCustomerList:""   //自动分配客户类型
-            },
-						Index:{
+					Index:{
 							addTask:false,
 							width:'width:260px',
 							width1:'width:120px'
@@ -254,8 +227,6 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
               end_time_am:"12:00",    //上午结束呼叫时间
               start_time_pm:"11:00", //下午开始呼叫时间
               end_time_pm:"21:00",    //下午结束呼叫时间
-              call_limit_day:"0",      //通话限制
-              call_limit_hour:"0",
             },
 						round_rule:[],
 						not_connected_status1:[],
@@ -285,103 +256,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 						data2:{},
 						data3:{},
 						data4:{},
-           Dates:[{
-							 ai_count: "1",
-								asr_number: "8500002",
-								asr_uuid: "6_8500002_e30ea8fe2fd3488a89921eab8c365e45",
-								asrnumber_status: 0,
-								auth_time: "2019-10-26 11:48:34",
-								auto_allot_customer_grade: "",
-								auto_allot_staff: "0",
-								batchid_str: "",
-								call_duration: "45",
-								call_fault: "0",
-								call_limit_day: "0",
-								call_limit_hour: "0",
-								caller_id: "6600002",
-								callerid_status: 0,
-								callin: 0,
-								company_id: "3",
-								concurrent_line: "1",
-								create_time: "2018-10-26 11:48:34",
-								creater: "root",
-								dropin: 0,
-								enable_daemon_call: "1",
-								end_time: null,
-								end_time_am: "12:00:00",
-								end_time_pm: "21:00:00",
-								exten_num: "0",
-								id: "309",
-								is_new_template: "0",
-								is_usable: 0,
-								name: "测试账户02",
-								remain_count: null,
-								robot_state: 1,
-								sms_fee: "0.08",
-								sms_id: "0",
-								sms_method: "0",
-								sms_switch: "0",
-								staff_id: null,
-								start_end_time:"21:00:00",
-								start_time: null,
-								start_time_am: "08:00:00",
-								start_time_pm: "11:00:00",
-								status: "0",
-								switch_on_rate: "0%",
-								task_coding: "18134005",
-								template_id: "0",
-								warning_asrnumber: 1,
-								warning_callerid: 1
-							},
-						 {
-							 ai_count: "1",
-								asr_number: "8500003",
-								asr_uuid: "6_8500003_eef8f66233841b818d8c19dcc2fe7d28",
-								asrnumber_status: 0,
-								auth_time: "2019-10-30 13:56:44",
-								auto_allot_customer_grade: "",
-								auto_allot_staff: "0",
-								batchid_str: "",
-								call_duration: "45",
-								call_fault: "2",
-								call_limit_day: "0",
-								call_limit_hour: "0",
-								caller_id: "6600007",
-								callerid_status: 0,
-								callin: 0,
-								company_id: "3",
-								concurrent_line: "1",
-								create_time: "2018-10-30 13:56:44",
-								creater: "root",
-								dropin: 0,
-								enable_daemon_call: "1",
-								end_time: null,
-								end_time_am: "12:00:00",
-								end_time_pm: "21:00:00",
-								exten_num: "0",
-								id: "310",
-								is_new_template: "0",
-								is_usable: 1,
-								name: "测试连续多少通",
-								remain_count: null,
-								robot_state: 0,
-								sms_fee: "0.08",
-								sms_id: "0",
-								sms_method: "0",
-								sms_switch: "0",
-								staff_id: "0",
-								start_end_time:"08:00:00",
-								start_time: null,
-								start_time_am: "08:00:00",
-								start_time_pm: "11:00:00",
-								status: "0",
-								switch_on_rate: "0%",
-								task_coding: "18003209",
-								template_id: "0",
-								warning_asrnumber: 1,
-								warning_callerid: 1
-							}
-					 ],
+           	Dates:[],
 			}
 		},
 		created() {
@@ -390,12 +265,21 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 			this.data3 = clone(this.form2)
 			this.data4 = clone(this.form3)
 		},
-		 beforeMount() {
-
-            // this.init()   //页面数据初始化 
-         
-        },
+		beforeMount() {
+			this.init()   //页面数据初始化 
+    },
 		methods: {
+			// 页面机器人列表
+			init(){
+				const url = '/api/api_backend.php?r=asroperate/list'
+				const conf = {
+						url,
+						success: (data)=>{
+							this.Dates = data.info
+						}
+				}
+				axiosRequest(conf)
+      },
 			// 点击添加任务时数据初始话
 			addInit(){
 				const url = "/api/api_backend.php?r=asroperate/add-init"
@@ -416,54 +300,60 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 			changeStatus2(){
 				this.form2.not_connected_status = this.not_connected_status2.join()
 			},
-		  init() {
-                const url = '/api/api_backend.php?r=asroperate/asrinfo'
-                const conf = {
-                    url,
-                    data: "",
-                    success: (data)=>{
-                        this.forms = data.info.map((item)=>{
-                            item.showWeixin = Number(data.message[0].state_wechat)
-                            item.showAi = Number(data.message[0].state_ai)
-                            return item
-                        })
-                        this.isAnyoneOn = this.forms.some(item=>item.status==="1")
-                    }
-                }
-                axiosRequest(conf)
-            },
-						addTask(){
+		  addTask(){
+				this.Index.addTask = true
+				this.addInit()
+			},
+			onSubmit(){
+				this.round_rule[0] = this.form1;
+				this.round_rule[1] = this.form2;
+				this.round_rule[2] = this.form3;
+				const data = this.form
+				data.round_rule = JSON.stringify(this.round_rule)
+				const url = "/api/api_backend.php?r=asroperate/add-handle"
+				const conf = {
+					url,
+					data:data,
+					success:(data)=>{
+						this.$alert(data.message)
+						if(data.statusCode == 1){
+							this.Index.addTask = false;
+							this.form = this.data1
+							this.form1 = this.data2
+							this.form2 = this.data3
+							this.form3 = this.data4
+							this.not_connected_status1 = []
+							this.not_connected_status2 = []
+							this.init()
+						}else{
 							this.Index.addTask = true
-							this.addInit()
-						},
-						onSubmit(){
-							this.round_rule[0] = this.form1;
-							this.round_rule[1] = this.form2;
-							this.round_rule[2] = this.form3;
-							const data = this.form
-							data.round_rule = JSON.stringify(this.round_rule)
-							const url = "/api/api_backend.php?r=asroperate/add-handle"
-							const conf = {
+						}
+						message(data)
+					}
+				}
+				axiosRequest(conf)
+			},
+			// 删除
+			del(id){
+				this.$confirm('您确定要删除吗？','提示信息',{
+						confirmButtonText: "确定",
+						cancelButtonText: '取消',
+						type: 'warning'
+				}).then(() =>{
+						const url = "/api/api_backend.php?r=asroperate/del"
+						const conf = {
 								url,
-								data:data,
+								data:{id:id},
 								success:(data)=>{
 									this.$alert(data.message)
-									if(data.statusCode == 1){
-										this.Index.addTask = false;
-										this.form = this.data1
-										this.form1 = this.data2
-										this.form2 = this.data3
-										this.form3 = this.data4
-										this.not_connected_status1 = []
-										this.not_connected_status2 = []
-									}else{
-										this.Index.addTask = true
-									}
-									message(data)
+										if(data.statusCode == 1){
+											this.init()
+										}
 								}
-							}
-							axiosRequest(conf)
 						}
+						axiosRequest(conf)
+				})
+			}
 		}
 	}
 
