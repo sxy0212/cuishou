@@ -9,7 +9,7 @@
                     <el-checkbox v-model="item.choose"
                         v-for="item in this.fieldsList"
                         :key="item.id"
-                        class="red = is_required =='1'?'red':'green'"
+                        :class="item.is_required =='1'?'red':''"
                      >{{item.field_name}}</el-checkbox>
                 </el-form-item>
             </el-form>
@@ -84,4 +84,9 @@ export default {
     }
 }
 </script>
+<style>
+.red .el-checkbox__label{color:red;}
+.el-checkbox {    margin-left: 30px;}
+</style>
+
 

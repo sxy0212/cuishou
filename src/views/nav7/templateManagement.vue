@@ -56,6 +56,7 @@ import '@/assets/css/system.css'
 import addTemplate from '@/functions/editDialog/addTemplate.vue'
 import pageChange from '@/components/pageChange.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
+import  { axiosParams } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 
 export default {
@@ -112,7 +113,6 @@ export default {
                             this.fieldsList = data.info
                         }else if(val == 2){
                             this.fieldsList = data.info.map(item=>{
-                                console.log(str)
                                 let cod = "," + str + ","
                                 if( cod.indexOf(","+item.id+",") != -1 ){
                                     item["choose"] = true
@@ -130,6 +130,9 @@ export default {
             this.bannerTitle = "模板添加"
             this.addNow = val
             this.id = ''
+            this.formTitle = {
+                name:''
+            }
             this.askFields(1)
         },
         changeId(){//清空编辑的具体项
@@ -196,8 +199,8 @@ export default {
                 })
             })
         },
-        downloadFn(){
-
+        downloadFn(row){
+            window.open('/api/api_backend.php?r=system-setting/template-download&id=' + row.id)
         }
     }
 }
