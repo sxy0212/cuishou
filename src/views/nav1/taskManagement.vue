@@ -70,8 +70,7 @@
 																					<i class="fa fa-headphones"></i>测试</el-button>
 																			<el-button type="primary"  v-if="parseInt(form.status) == 0"  > <i class="fa fa-power-off"></i>启动</el-button>
 																			<el-button type="primary"  v-else-if="parseInt(form.status) == 1" > <i class="fa fa-power-off"></i>关闭</el-button>
-																			<el-button type="success">
-																					<i class="fa fa-pencil"></i>编辑</el-button>
+																			<el-button type="success" @click="edit(form.id)"><i class="fa fa-pencil"></i>编辑</el-button>
 																			<el-button type="danger" @click="del(form.id)"><i class="el-icon-delete"></i>删除</el-button>
 																		</div>
 															</div>
@@ -174,14 +173,7 @@
                         <el-select v-model="form3.template_id" :style="Index.width" placeholder="请选择话术">
                             <el-option v-for="(item,index) in AddData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
                         </el-select>
-                    </el-form-item>
-                    
-									<!--	<el-form-item label="是否发送短信:" style="margin-top:40px;">
-											<el-select v-model="form.asr_number" :style="Index.width"  >
-												<el-option label="不发送" value="1"></el-option>
-												<el-option label="发送" value="2"></el-option>
-											</el-select>
-										</el-form-item>  -->                
+                    </el-form-item>         
                 </el-form>
 							</div>
                 <div slot="footer" class="dialog-footer">
@@ -189,8 +181,109 @@
 										<el-button type="primary" @click="Index.addTask = false">取消</el-button>
                 </div>
             </el-dialog>
-        	</div>
-
+        </div>
+				<!-- 编辑任务弹框  -->
+					<div class="dial-header addTask">
+            <el-dialog title="任务编辑" :visible.sync="Index.editTask" v-move>
+							<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+								<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
+								<el-form :model="formEdit" label-width="120px" ref="forms">
+                    <el-form-item label="任务名称:">
+                        <el-input v-model="formEdit.name" :style="Index.width"></el-input>
+                    </el-form-item>
+                    <el-form-item label="上午呼叫时间:">
+                        <el-time-select placeholder="开始时间" v-model="start_time_am":picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
+                        <span>~</span>
+                        <el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>
+                    </el-form-item>
+                    <el-form-item label="下午呼叫时间:">
+                        <el-time-select placeholder="开始时间" v-model="start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
+                        <span>~</span>
+                        <el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: form.start_time_pm}" :style="Index.width1"></el-time-select>
+                    </el-form-item>
+                   	<el-form-item label="机器人数量:">
+                        <ul>
+                            <li class="Slider"><el-slider show-stops :max="10" :min="1" v-model="formEdit.ai_count"></el-slider></li>
+                        </ul>
+                    </el-form-item>
+                     <el-form-item label="外线号码:">
+                        <el-select v-model="formEdit.caller_id" :style="Index.width" placeholder="请选择外线号码">
+                            <el-option v-for="(item,index) in editData.outLine" :value="item.out_number" :label="item.out_number" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+										<el-form-item label="语音识别线路:">
+                        <el-select v-model="formEdit.asr_number" :style="Index.width" placeholder="请选择识别线路">
+                            <el-option v-for="(item,index) in editData.recognition_lies" :label="item.asr_number" :value="item.asr_number" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="振铃时长:">
+                        <el-input v-model="formEdit.call_duration" style="width:240px;margin-right:10px;"></el-input>秒
+                    </el-form-item>
+											<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">呼叫规则</p>
+											<!--本人联系人-->
+											<el-form :model="form1Edit" label-width="120px" ref="forms">
+											<el-form-item label="本人呼叫次数:">
+													<el-input v-model="form1Edit.call_times" :style="Index.width"></el-input>
+											</el-form-item>
+											<el-form-item label="呼叫使用话术:">
+													<el-select v-model="form1Edit.template_id" :style="Index.width" placeholder="请选择话术">
+															<el-option v-for="(item,index) in editData.templates" :label="item.name" :value="item.id"  :key="index"></el-option>
+													</el-select>
+											</el-form-item>
+											<el-form-item label="未接通状态:">
+													<el-checkbox-group v-model="not_connected_status1Edit" @change="changeStatus1Edit">
+														<el-checkbox :label="item.id" v-for="(item,index) in editData.call_result" :key="index">{{item.status}}</el-checkbox>
+													</el-checkbox-group>
+											</el-form-item>
+											<el-form-item label="直接拨打:">
+													<el-select v-model="form1Edit.next_round" :style="Index.width" placeholder="请选择联系人">
+															<el-option label="第一联系人" value="1"></el-option>
+															<el-option label="第二联系人" value="2"></el-option>
+													</el-select>
+											</el-form-item>                   
+										</el-form>
+                </el-form>
+							</div>
+								<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+									<!--第一联系人-->
+								<el-form :model="form2Edit" label-width="145px" ref="forms">
+                    <el-form-item label="第一联系人呼叫次数:">
+                        <el-input v-model="form2Edit.call_times" :style="Index.width"></el-input>
+                    </el-form-item>
+                    <el-form-item label="呼叫使用话术:">
+                        <el-select v-model="form2Edit.template_id" :style="Index.width" placeholder="请选择话术">
+                            <el-option v-for="(item,index) in editData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="未接通状态:">
+											<el-checkbox-group v-model="not_connected_status2Edit" @change="changeStatus2Edit">
+												<el-checkbox :label="item.id" v-for="(item,index) in editData.call_result" :key="index">{{item.status}}</el-checkbox>
+											</el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item label="直接拨打:">
+                         <el-select v-model="form2Edit.next_round" :style="Index.width">
+                            <el-option label="第二联系人" value="2"></el-option>
+                        </el-select>
+                    </el-form-item>   
+										</el-form>
+											<!--第二联系人-->
+										<el-form :model="form3Edit" label-width="145px" ref="forms">    
+										 <el-form-item label="第二联系人呼叫次数:" style="margin-top:40px;">
+                        <el-input v-model="form3Edit.call_times" :style="Index.width"></el-input>
+                    </el-form-item>
+                    <el-form-item label="呼叫使用话术:">
+                        <el-select v-model="form3Edit.template_id" :style="Index.width" placeholder="请选择话术">
+                            <el-option v-for="(item,index) in editData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
+                        </el-select>
+                    </el-form-item>         
+                </el-form>
+							</div>
+                <div slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="onSubmit">确认保存</el-button>
+										<el-button type="primary" @click="Index.editTask = false">取消</el-button>
+                </div>
+            </el-dialog>
+        </div>
 				</div>
 			</div>
 		</section>
@@ -214,6 +307,7 @@ import { MessageBox } from 'element-ui';
         },
 					Index:{
 							addTask:false,
+							editTask:false,
 							width:'width:260px',
 							width1:'width:120px'
 						},
@@ -257,6 +351,23 @@ import { MessageBox } from 'element-ui';
 						data3:{},
 						data4:{},
            	Dates:[],
+						editData:{            //编辑任务的时候需要用到的数据
+							outLine:[],     //外线号码
+							recognition_lies:[], //语音识别线路
+							call_result:[],   //未接通状态
+							templates:[],   //呼叫使用话术
+						},
+						formEdit: {},
+						start_time_am:"", //上午开始呼叫时间
+            end_time_am:"",    //上午结束呼叫时间
+            start_time_pm:"", //下午开始呼叫时间
+            end_time_pm:"",    //下午结束呼叫时间
+						round_rule_edit:[],
+						not_connected_status1Edit:[],
+						not_connected_status2Edit:[],
+						form1Edit:{},
+						form2Edit:{},
+						form3Edit:{},
 			}
 		},
 		created() {
@@ -304,6 +415,7 @@ import { MessageBox } from 'element-ui';
 				this.Index.addTask = true
 				this.addInit()
 			},
+			// 保存添加
 			onSubmit(){
 				this.round_rule[0] = this.form1;
 				this.round_rule[1] = this.form2;
@@ -327,6 +439,90 @@ import { MessageBox } from 'element-ui';
 							this.init()
 						}else{
 							this.Index.addTask = true
+						}
+						message(data)
+					}
+				}
+				axiosRequest(conf)
+			},
+			// 点编辑获取数据
+			edit(id){
+				this.Index.editTask = true
+				const url = "/api/api_backend.php?r=asroperate/info"
+				const conf = {
+					url,
+					data:{id:id},
+					success:(data)=>{
+						this.editData.outLine = data.info.out_side_lines
+						this.editData.recognition_lies = data.info.recognition_lies
+						this.editData.call_result = data.info.call_result_status.map(item=>{
+							item.id = '' + item.id +''
+							return item
+						})
+						console.log(this.editData.call_result)
+						this.editData.templates = data.info.templates
+						this.formEdit = data.info.info
+						this.start_time_am = data.info.info.call_time.am.s
+						this.end_time_am = data.info.info.call_time.am.e
+						this.start_time_pm = data.info.info.call_time.pm.e
+						this.end_time_pm = data.info.info.call_time.pm.e
+              // start_time_pm:"11:00", //下午开始呼叫时间
+              // end_time_pm:"21:00",    //下午结束呼叫时间
+						var arr = data.info.round_rule.filter(item=>{
+							if(item.round == 0){
+								return item
+							}
+						})
+						var arr1 = data.info.round_rule.filter(item=>{
+							if(item.round == 1){
+								return item
+							}
+						})
+						var arr2= data.info.round_rule.filter(item=>{
+							if(item.round == 2){
+								return item
+							}
+						})
+						this.form1Edit = arr[0]
+						this.form1Edit.template_id = parseInt(arr[0].template_id)
+						this.form2Edit = arr1[0]
+						this.form2Edit.template_id = parseInt(arr1[0].template_id)
+						this.form3Edit = arr2[0]
+						this.form3Edit.template_id = parseInt(arr2[0].template_id)
+						this.not_connected_status1Edit = (arr[0].not_connected_status).split(",")
+						this.not_connected_status2Edit = (arr1[0].not_connected_status).split(",")
+					}
+				}
+				axiosRequest(conf)
+			},
+			changeStatus1Edit(){
+				this.form1Edit.not_connected_status = this.not_connected_status1Edit.join()
+			},
+			changeStatus2Edit(){
+				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join()
+			},
+			// 保存修改
+			onSubmit(){
+				this.round_rule_edit[0] = this.form1Edit;
+				this.round_rule_edit[1] = this.form2Edit;
+				this.round_rule_edit[2] = this.form3Edit;
+				const data = this.formEdit
+				data.start_time_am = this.start_time_am
+        data.end_time_am = this.end_time_am
+        data.start_time_pm = this.start_time_pm
+        data.end_time_pm = this.end_time_pm
+				data.round_rule = JSON.stringify(this.round_rule_edit)
+				const url = "/api/api_backend.php?r=asroperate/add-handle"
+				const conf = {
+					url,
+					data:data,
+					success:(data)=>{
+						this.$alert(data.message)
+						if(data.statusCode == 1){
+							this.Index.editTask = false;
+							this.init()
+						}else{
+							this.Index.editTask = true
 						}
 						message(data)
 					}
