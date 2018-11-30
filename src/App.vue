@@ -102,7 +102,7 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
   }
   ul li{list-style:none;}
   .addTask .el-dialog__body{padding:10px 0px;}
-  .addTask .el-dialog{max-width:1000px;min-width:1000px;}
+  .addTask .el-dialog{max-width:62%;min-width:62%;}
   html,body,#app,.el-container{height:100%}
   .loginForm{
     .el-input__inner{border:none;width:300px;}
@@ -113,4 +113,5 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
     }
     .el-tabs__item{ flex: 5; text-align: center}
   } 
+  .TopForm .el-pagination{width:350px;margin:0 auto}
 </style>

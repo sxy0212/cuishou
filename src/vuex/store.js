@@ -10,13 +10,15 @@ const store =  new Vuex.Store({
     },
   state: {
      options: [],
-     activeIndex: '/index',
+     activeIndex: '/taskManagement',
      userInfo: {},
      menuIndex: '0'
   },
   mutations : {
       add_tabs (state,data) {
-         this.state.options.push(data);
+          if(data.name != ""){
+             this.state.options.push(data); 
+          }
       },
       save_index(state, data){
          this.state.menuIndex=data?data:'0';

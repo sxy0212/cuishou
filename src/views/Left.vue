@@ -8,7 +8,7 @@
             <i :class="item.icon"></i>
             <span slot="title">{{item.name}}</span>
           </el-menu-item>
-          <el-submenu index="2" v-for="(item,index) in data" v-if="item.child.length!=0" :key="index">
+          <el-submenu :index="item.id" v-for="(item,index) in data" v-if="item.child.length!=0" :key="index">
             <template slot="title">
               <i :class="item.icon"></i>
               <span>{{item.name}}</span>
@@ -91,9 +91,16 @@ import store from '../vuex/store.js'
            {
             id:'5',
             name:'短信管理',
-            path:'/smsManagement',
+            path:'',
             icon:'fa fa-envelope-o',
             child:[]
+            // child:[{
+            //   name:"短信方案",
+            //   path:"/smsManagement"
+            // },{
+            //   name:"发送记录",
+            //   path:"/smsRecord"
+            // }]
           },
            {
             id:'6',
@@ -146,20 +153,24 @@ import store from '../vuex/store.js'
     },
  mounted () {
         //console.log(this)
-        if(this.$route.path !== '/taskManagement' && this.$route.path.indexOf('taskManagement') === -1) {
+        if(this.$route.name != ""){
+          if(this.$route.path !== '/taskManagement' && this.$route.path.indexOf('taskManagement') === -1) {
             store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'}); 
            store.commit('add_tabs', {route: this.$route.path , name: this.$route.name });
             store.commit('set_active_index', this.$route.path);
             store.commit('save_index', this.$route.query.num); 
-        } else {
-           store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'});
-            store.commit('set_active_index', '/taskManagement');
-            this.$router.push('/taskManagement');
+          } else {
+            store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'});
+              store.commit('set_active_index', '/taskManagement');
+              this.$router.push('/taskManagement');
+          }
         }
+        
     },
     
     methods:{
        handleOpen(key, keyPath) {
+         console.log(key)
             store.commit('save_index', key);  
         },
         handleClose(key, keyPath) {

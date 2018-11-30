@@ -62,7 +62,18 @@
 																	</div>  
 																	<div class="Countp">
 																			<div class="According" style="display:block">
-																					<em>当前状态:<span style="color:#8876f4"> 第二联系人第三轮呼叫</span></em>
+																				<em>当前状态:
+																					<span style="color:#8876f4" v-if="form.called_round == 0"> 无呼叫任务</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 1"> 第一轮 第一次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 2"> 第一轮 第二次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 3"> 第一轮 第三次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 4"> 第二轮 第一次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 5"> 第二轮 第二次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 6"> 第二轮 第三次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 7"> 第三轮 第一次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 8"> 第三轮 第二次呼叫</span>
+																					<span style="color:#8876f4" v-else-if="form.called_round == 9"> 第三轮 第三次呼叫</span>
+																				</em>
 																			</div> 
 																	</div>  
 																	<div class="AiButton">
@@ -178,7 +189,7 @@
 							</div>
                 <div slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="onSubmit">确认保存</el-button>
-										<el-button type="primary" @click="Index.addTask = false">取消</el-button>
+										<el-button type="primary" @click="Index.editTask = false">取消</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -279,7 +290,7 @@
                 </el-form>
 							</div>
                 <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="onSubmit">确认保存</el-button>
+                    <el-button type="primary" @click="onSubmitSave">确认保存</el-button>
 										<el-button type="primary" @click="Index.editTask = false">取消</el-button>
                 </div>
             </el-dialog>
@@ -421,6 +432,10 @@ import { MessageBox } from 'element-ui';
 				this.round_rule[1] = this.form2;
 				this.round_rule[2] = this.form3;
 				const data = this.form
+				data.start_time_am = this.form.start_time_am+':00'
+        data.end_time_am = this.form.end_time_am+":00"
+				data.start_time_pm = this.form.start_time_pm+":00" 
+        data.end_time_pm = this.form.end_time_pm + ":00"
 				data.round_rule = JSON.stringify(this.round_rule)
 				const url = "/api/api_backend.php?r=asroperate/add-handle"
 				const conf = {
@@ -459,15 +474,13 @@ import { MessageBox } from 'element-ui';
 							item.id = '' + item.id +''
 							return item
 						})
-						console.log(this.editData.call_result)
 						this.editData.templates = data.info.templates
 						this.formEdit = data.info.info
+						this.formEdit.ai_count = parseInt(data.info.info.ai_count)
 						this.start_time_am = data.info.info.call_time.am.s
 						this.end_time_am = data.info.info.call_time.am.e
 						this.start_time_pm = data.info.info.call_time.pm.e
 						this.end_time_pm = data.info.info.call_time.pm.e
-              // start_time_pm:"11:00", //下午开始呼叫时间
-              // end_time_pm:"21:00",    //下午结束呼叫时间
 						var arr = data.info.round_rule.filter(item=>{
 							if(item.round == 0){
 								return item
@@ -502,17 +515,33 @@ import { MessageBox } from 'element-ui';
 				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join()
 			},
 			// 保存修改
-			onSubmit(){
+			onSubmitSave(){
 				this.round_rule_edit[0] = this.form1Edit;
 				this.round_rule_edit[1] = this.form2Edit;
 				this.round_rule_edit[2] = this.form3Edit;
 				const data = this.formEdit
-				data.start_time_am = this.start_time_am
-        data.end_time_am = this.end_time_am
-        data.start_time_pm = this.start_time_pm
-        data.end_time_pm = this.end_time_pm
+				if(this.start_time_am.split(":").length == 3){
+					data.start_time_am = this.start_time_am
+				}else{
+					data.start_time_am = this.start_time_am+":00"
+				}
+				if(this.end_time_am.split(":").length == 3){
+					data.end_time_am = this.end_time_am
+				}else{
+					data.end_time_am = this.end_time_am+":00"
+				}
+				if(this.start_time_pm.split(":").length == 3){
+					data.start_time_pm = this.start_time_pm
+				}else{
+					data.start_time_pm = this.start_time_pm+":00"
+				}
+				if(this.end_time_pm.split(":").length == 3){
+					data.end_time_pm = this.end_time_pm
+				}else{
+					data.end_time_pm = this.end_time_pm+":00"
+				}
 				data.round_rule = JSON.stringify(this.round_rule_edit)
-				const url = "/api/api_backend.php?r=asroperate/add-handle"
+				const url = "/api/api_backend.php?r=asroperate/edit-handle"
 				const conf = {
 					url,
 					data:data,

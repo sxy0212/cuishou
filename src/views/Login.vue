@@ -49,7 +49,7 @@
                 <el-button type="primary" style="width:100%;"> <i class="el-icon-loading" v-show="logining"></i> 立即登录</el-button>
               </el-form-item>
             </el-form>         
-          </el-tab-pane>
+          </el-tab-pane>  
         </el-tabs>
       </div>
 

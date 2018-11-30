@@ -3,7 +3,9 @@ import caseManagement from './views/nav2/caseManagement.vue'
 import dataManagement from './views/nav3/dataManagement.vue'
 import dataStatistics from './views/nav31/dataStatistics.vue'
 import smsManagement from './views/nav4/smsManagement.vue'
+import smsRecord from "./views/nav4/smsRecord.vue"
 import speechScheme from './views/nav5/speechScheme.vue'
+import asrSoundScheme from "./views/nav5/asrSoundScheme.vue"
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
 
 
@@ -68,8 +70,16 @@ let routes = [
   },
   {
     path: '/smsManagement',
-    name: '短信管理',
+    name: '短信方案',
     component:  smsManagement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/smsRecord',
+    name: '发送记录',
+    component:smsRecord,
     meta: {
       keepAlive: true,
     }
@@ -78,6 +88,14 @@ let routes = [
     path: '/speechScheme',
     name: '话术方案',
     component: speechScheme,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/asrSoundScheme/:id',
+    component: asrSoundScheme,
+    name:"",
     meta: {
       keepAlive: true,
     }
