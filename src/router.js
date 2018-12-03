@@ -238,7 +238,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     let user = JSON.parse(getCookie('user'));
     if(user&&to.path=='/login'){
-      this.$route.push("/taskManagement")
+      this.$router.push({ path:'/taskManagement' })
       // next({ path: '/taskManagement' })
     }
     console.log(user)
