@@ -240,6 +240,8 @@ router.beforeEach((to, from, next) => {
     if(user&&to.path=='/login'){
       this.$router.push({ path:'/taskManagement' })
       // next({ path: '/taskManagement' })
+    }else {
+      next()
     }
     console.log(user)
     if (!user && to.path != '/login') {

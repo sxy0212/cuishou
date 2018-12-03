@@ -62,8 +62,14 @@ export default {
     this.upload()
   },
   methods:{
-    upload(){     //按F5刷新时
+    upload(){ 
+      let user = JSON.parse(getCookie('user'));
+      // if(user&&to.path=='/login'||this.$route.path == '/'){
+      //   this.$router.push({ path:'/taskManagement' })
+      // }  //按F5刷新时
       if(this.$route.path == '/' ){
+        this.$router.push("/taskManagement")
+      }else if(this.$route.path == '/login'){
         this.$router.push("/taskManagement")
       }
     },  

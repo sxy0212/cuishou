@@ -275,9 +275,6 @@ import { MessageBox } from 'element-ui';
 			this.init()   //页面数据初始化 
     },
 		methods: {
-			detial(row){
-			this.$router.push({path:'asrSoundScheme/'+row.id})
-			},
 			// 数据列表
 			init(){
 			

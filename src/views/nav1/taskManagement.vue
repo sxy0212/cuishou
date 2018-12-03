@@ -188,7 +188,7 @@
 							</div>
                 			<div slot="footer" class="dialog-footer">
                     			<el-button type="primary" @click="onSubmit">确认保存</el-button>
-								<el-button type="primary" @click="Index.editTask = false">取消</el-button>
+								<el-button type="primary" @click="Index.addTask = false">取消</el-button>
                 			</div>
            			</el-dialog>
         		</div>
@@ -381,10 +381,10 @@ import { MessageBox } from 'element-ui';
 			}
 		},
 		created() {
-			this.data1 = clone(this.form)
-			this.data2 = clone(this.form1)
-			this.data3 = clone(this.form2)
-			this.data4 = clone(this.form3)
+			this.data1 = Object.assign({}, this.form)
+			this.data2 = Object.assign({}, this.form1)
+			this.data3 = Object.assign({}, this.form2)
+			this.data4 = Object.assign({}, this.form3)
 		},
 		beforeMount() {
 			this.init()   //页面数据初始化 
