@@ -11,7 +11,7 @@
 						<el-table-column prop="bei" label="备注" ></el-table-column>
 						
 						<el-table-column  label="操作" >
-							<template scope="scope">
+							<template slot-scope="scope">
 								<el-button type="primary" plain  @click="addTask(2,scope.row)">编辑</el-button>
 								<el-button type="primary" plain  @click="del(scope.row.id)">删除</el-button>
 							
