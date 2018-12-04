@@ -22,7 +22,7 @@
 									<el-table-column prop="sound_type" label="语言模式"></el-table-column>
 									<el-table-column prop="create_time" label="创建时间" ></el-table-column>
 									<el-table-column prop="sound_type" label="操作"  width="350">
-											<template scope="scope">
+											<template slot-scope="scope">
 													<a href="backend.php?r=asr-sound-scheme/sound">
 														<el-button type="primary" plain >语音库</el-button>
 													</a>
@@ -54,18 +54,18 @@
                   </el-form-item>
                   <el-form-item label="语音模式:">
                     <el-select v-model="AddTplData.sound_type"  placeholder="请选择语音模式" >
-                      <el-option :label="item.sound_type" :value="item.sound_type" v-for="item in  AddData.sound_type"></el-option>
+                      <el-option :label="item.sound_type" :value="item.sound_type" v-for="(item,index) in AddData.sound_type" :key="index"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="选择模板:">
                     <el-select v-model="AddTplData.template_id" placeholder="请选择模板">
                       <el-option label="空模板" value="0"></el-option>
-                      <el-option :label="item.tpl_name" :value="item.id" v-for="item in  AddData.select_tpl_id" disabled></el-option>
+                      <el-option :label="item.tpl_name" :value="item.id" v-for="(item,index) in  AddData.select_tpl_id" disabled :key="index"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="语音库:">
                     <el-select v-model="AddTplData.sound_id"  placeholder="请选择语音库" >
-                      <el-option  :label="item.name" :value="item.id" v-for="item in  AddData.sound"></el-option>
+                      <el-option  :label="(item,index).name" :value="item.id" v-for="(item,index) in  AddData.sound" :key="index"></el-option>
                     </el-select>
                     <el-button type="primary" @click="addSound">新建语音库</el-button>
                   </el-form-item>
@@ -143,6 +143,12 @@ import pageChange from '@/components/pageChange.vue'
           sound_id:"",
           template_id:"0"      //选择模板
         },
+				AddTplData1:{       //新建模板里面的参数
+          name:"",
+          sound_type:"真人录音",
+          sound_id:"",
+          template_id:"0"      //选择模板
+        },
 				dataClone:{},
         AddSound:false,     //新建语音库
         AddSoundData:{ name:""},
@@ -215,6 +221,9 @@ import pageChange from '@/components/pageChange.vue'
 					this.addListTpl()
 					this.addListSound()
 				},
+				clone(obj){
+					 return JSON.parse(JSON.stringify(obj))
+				},	
 				// 保存添加模板 
 				AddSave(){
 					this.saving = true
@@ -232,14 +241,11 @@ import pageChange from '@/components/pageChange.vue'
 							this.$alert(data.message)
 							if(data.statusCode == 1){
 								this.AddTpl = false
-								this.init()
+								this.init()		
+								this.AddTplData = this.clone(this.AddTplData1)
 							}else{
 								this.AddTpl = true
 							}
-							this.AddTplData.name = ""
-							this.AddTplData.sound_type= "真人录音"
-							this.AddTplData.sound_id = ""
-							this.AddTplData.template_id = "0"   
 							this.saving = false
 						}
 					}

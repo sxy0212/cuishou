@@ -21,7 +21,7 @@
                       <el-table ref="multipleTable" :data="init.InitData" style="width:100%" border v-loading="loading" :height="init.total>=2?600:300">
                           <el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
                           <el-table-column  label="自定义话术">
-                            <template scope="scope">
+                            <template slot-scope="scope">
                               <p>名称:{{scope.row.show_name}}</p>
                               <p>内容:{{scope.row.answer}}</p>
                               <p>触发词:{{scope.row.condition}}</p>
@@ -36,10 +36,8 @@
                             </template>
                           </el-table-column>
                           <el-table-column  label="操作" width="350">
-                              <template scope="scope">
-                                  <el-button type="primary" plain @click="editInit(scope.$index,scope.row)">编辑基本信息</el-button>
-                                  <el-button type="primary" plain @click="touchClick(scope.$index,scope.row)">触发词</el-button>
-                                  <el-button type="primary" plain @click="contextClick(scope.$index,scope.row)">语境设置</el-button>
+                              <template slot-scope="scope">
+                                  <el-button type="primary" plain @click="editInit(scope.$index,scope.row)">编辑</el-button>
                                   <el-button type="danger" plain @click="delInit(scope.$index,scope.row)">删除</el-button>
                               </template>
                           </el-table-column>
@@ -64,8 +62,8 @@
         </div>
         <!-- 添加基本信息弹框 -->
         <div class="dial-header tag-dial padding">
-          <el-dialog title="基本信息" :visible.sync="baseMessage.Add">
-            <el-form label-width="90px" :model="baseMessageData">
+          <el-dialog title="基本信息" :visible.sync="baseMessage.Add" v-move>
+            <el-form label-width="100px" :model="baseMessageData">
               <el-form-item label="名称:">
                   <el-input  class="width" v-model="baseMessageData.show_name"></el-input>
               </el-form-item>
@@ -100,7 +98,7 @@
               </el-form-item>
               <el-form-item label="话术内容:">
                 <el-select placeholder="选择语音" v-model="baseMessageData.record" @change="changeSoundWord" class="width">
-                  <el-option v-for="item in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath">{{item.spath}}-{{item.word}}</el-option>
+                  <el-option v-for="(item,index) in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath">{{item.spath}}-{{item.word}}</el-option>
                 </el-select>
               </el-form-item>
               <el-form-item >
@@ -113,129 +111,197 @@
             </div>
           </el-dialog>
         </div>
-        <!-- 编辑基本信息弹框 -->
-        <div class="dial-header tag-dial padding">
-            <el-dialog title="基本信息" :visible.sync="baseMessage.Edit">
-                <el-form label-width="90px">
-                  <el-form-item label="名称:">
-                      <el-input  class="width" v-model="baseMessageDataEdit.show_name"></el-input>
-                  </el-form-item>
-                  <el-form-item label="是否可打断:">
-                    <el-select placeholder="请选择" v-model="baseMessageDataEdit.is_interrupt" class="width">
-                      <el-option label="可被打断" value="1"></el-option>
-                      <el-option label="不可被打断" value="0"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item label="类型:" v-show="baseMessageDataEdit.type != '3'">
-                    <el-select placeholder="请选择" v-model="baseMessageDataEdit.type" @change="changeType" class="width">
-                      <el-option label="普通" value= '0'></el-option>
-                      <el-option label="主线" value='1'></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item label="主线序列:"  v-show="baseMessageDataEdit.type=='1' || baseMessageDataEdit.type=='3'">
-                      <el-input  class="width" v-model="baseMessageDataEdit.name"  disabled></el-input>
-                  </el-form-item>
-                  <el-form-item label="下个节点:">
-                    <el-select placeholder="请选择" v-model="baseMessageDataEdit.nextname" class="width">
-                      <el-option label="请选择" value=".null"></el-option>
-                      <el-option label="终止" value="#"></el-option>
-                      <el-option label="转人工" value="#####"></el-option>
-                      <!-- <el-option label="挽回" value=".wanhui"></el-option> -->
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item label="等待时长(秒):">
-                      <el-input  class="width" v-model="baseMessageDataEdit.wait_time" disabled></el-input>
-                  </el-form-item>
-                  <el-form-item label="可重复次数:">
-                      <el-input  class="width" v-model="baseMessageDataEdit.max_repeat" disabled></el-input>
-                  </el-form-item>
-                  <el-form-item label="话术内容:">
-                    <el-select placeholder="选择语音" v-model="baseMessageDataEdit.record" @change="changeSoundWord" class="width">
-                      <el-option v-for="item in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath">{{item.spath}}-{{item.word}}</el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item >
-                    <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.answer" :disabled="baseMessageDataEdit.record!=0" v-if="baseMessageDataEdit.answer != ''"></el-input>
-                    <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.record_description" :disabled="baseMessageDataEdit.record!=0" v-else></el-input>
-                  </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                  <el-button type="primary" @click="EditMessageSave">确认保存</el-button>
-                  <el-button @click="baseMessage.Edit = false">关闭</el-button>  
-                </div>
+       <!--编辑-->
+			  <div class="dial-header DialogueMain tag-dial1">
+            <el-dialog title="编辑" :visible.sync="baseMessage.Edit" v-move>
+                <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
+                    <el-tab-pane label="基本信息" name="first">
+                        <el-form label-width="100px">
+                            <el-form-item label="名称:">
+                                <el-input  class="width" v-model="baseMessageDataEdit.show_name"></el-input>
+                            </el-form-item>
+                            <el-form-item label="是否可打断:">
+                                <el-select placeholder="请选择" v-model="baseMessageDataEdit.is_interrupt" class="width">
+                                <el-option label="可被打断" value="1"></el-option>
+                                <el-option label="不可被打断" value="0"></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="类型:" v-show="baseMessageDataEdit.type != '3'">
+                                <el-select placeholder="请选择" v-model="baseMessageDataEdit.type" @change="changeType" class="width">
+                                <el-option label="普通" value= '0'></el-option>
+                                <el-option label="主线" value='1'></el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="主线序列:"  v-show="baseMessageDataEdit.type=='1' || baseMessageDataEdit.type=='3'">
+                                <el-input  class="width" v-model="baseMessageDataEdit.name"  disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="下个节点:">
+                                <el-select placeholder="请选择" v-model="baseMessageDataEdit.nextname" class="width">
+                                <el-option label="请选择" value=".null"></el-option>
+                                <el-option label="终止" value="#"></el-option>
+                                <el-option label="转人工" value="#####"></el-option>
+                                <!-- <el-option label="挽回" value=".wanhui"></el-option> -->
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item label="等待时长(秒):">
+                                <el-input  class="width" v-model="baseMessageDataEdit.wait_time" disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="可重复次数:">
+                                <el-input  class="width" v-model="baseMessageDataEdit.max_repeat" disabled></el-input>
+                            </el-form-item>
+                            <el-form-item label="话术内容:">
+                                <el-select placeholder="选择语音" v-model="baseMessageDataEdit.record" @change="changeSoundWord" class="width">
+                                <el-option v-for="item in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath">{{item.spath}}-{{item.word}}</el-option>
+                                </el-select>
+                            </el-form-item>
+                            <el-form-item >
+                                <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.answer" :disabled="baseMessageDataEdit.record!=0" v-if="baseMessageDataEdit.answer != ''"></el-input>
+                                <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.record_description" :disabled="baseMessageDataEdit.record!=0" v-else></el-input>
+                            </el-form-item>
+                        </el-form>
+                        <div style="float: right;">
+                            <el-button type="primary" @click="EditMessageSave">确认保存</el-button>
+                            <el-button @click="baseMessage.Edit = false">关闭</el-button>  
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="触发词" name="second">
+                        <el-form :inline="true"  class="demo-form-inline"  @submit.native.prevent>
+                            <el-form-item label="关键字搜索:">
+                            <el-input  placeholder="关键字" v-model="touch.keyword"></el-input>
+                            </el-form-item>
+                            <el-form-item>
+                            <el-button type="primary" @click="touchSearch">搜索</el-button>
+                            </el-form-item>
+                        </el-form>
+                        <div  style="width:170px;float:left">
+                            <el-table ref="multipleTable" :data="touch.Data"  style="100%" border :height="touch.Data.length>=1?300:'100'">
+                            <el-table-column prop="type" label="通用关键词" >      
+                                <template scope="scope">
+                                <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.show}}</span>
+                                <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.show}}</span>
+                                </template>                     
+                            </el-table-column>
+                            <el-table-column  width="30">
+                                <template scope="scope">
+                                    <span @click="touchLeftPlus(scope.$index,scope.row)" style="cursor: pointer">+</span>
+                                </template>
+                            </el-table-column>
+                            </el-table>
+                            <el-button type="success" @click="touchAdd" style="padding:15px 52px;margin-top:10px">添加关键词</el-button>
+                        </div>
+                        <div style="width:1280px;float:left;margin-left:10px">
+                            <el-table ref="multipleTable" :data="touch.DataRight"  border :height="touch.total>0?300:'200'">
+                            <el-table-column type="index" label="序号"  fixed="left" width="50"></el-table-column>
+                            <el-table-column prop="name" label="来源"> 
+                                <template scope="scope">
+                                <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.name}}</span>
+                                <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.name}}</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="condition" label="关键词" ></el-table-column>
+                            <el-table-column prop="is_interrupt" label="是否可打断" width="100">
+                                <template scope="scope">
+                                <span v-show="scope.row.is_interrupt == 0">不可打断</span>
+                                <span v-show="scope.row.is_interrupt == 1">可打断</span>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="type" label="操作" width="170">
+                                <template scope="scope">
+                                    <el-button type="primary" plain @click="touchEdit(scope.$index,scope.row)" :disabled="scope.row.type=='system'">修改</el-button>
+                                    <el-button type="danger" plain @click="touchEdl(scope.$index,scope.row)" :disabled="scope.row.type=='system'">删除</el-button>
+                                </template>
+                            </el-table-column>
+                            </el-table> 
+                            <div class="pagination" v-show="touch.total>0" style="padding-top:0">
+                                <div class="block"> 
+                                    <el-pagination
+                                        @size-change="handleSizeChangeTouch"
+                                        @current-change="handleCurrentChangeTouch"
+                                        :current-page="curr"
+                                        :page-sizes="[15, 20, 25, 30]"
+                                        :page-size="touch.page_size"
+                                        layout="total, sizes, prev, pager, next, jumper"
+                                        :total="touch.total">
+                                    </el-pagination>
+                                </div>
+                            </div>
+                        </div>
+                        <div slot="footer" class="dialog-footer">
+                            <el-button @click="touch.touchShow = false">关闭</el-button>  
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="语境设置" name="third">
+                        <div style="width:230px;float:left;">
+                            <el-form label-width="10px" style="width:300px;float:left;">
+                                <el-form-item>
+                                    <el-select placeholder="请选择" v-model="contextData.name">
+                                    <el-option label="关键字触发" value=".content"></el-option>
+                                    <el-option label="直接跳转" value=".jump"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item >
+                                    <el-select placeholder="请选择下个话术" v-model="contextData.nextId">
+                                    <el-option label="选择下个话术" value=""></el-option>
+                                    <el-option v-for="item in context.nextData" :label="item.answer" :value="item.id">{{item.show_name}}-{{item.answer}}</el-option>                         
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item >
+                                    <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput" v-show="contextData.name!='.jump'">
+                                    <el-option v-for="item in context.touchData" :label="item.condition" :value="item.name"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item v-show="context.custom">
+                                    <el-input v-model="contextData.newCondition" style="width:217px"></el-input>
+                                </el-form-item>
+                                <el-form-item >
+                                    <el-select placeholder="请选择" v-model="contextData.is_interrupt">
+                                    <el-option label="可被打断" value="1"></el-option>
+                                    <el-option label="不可被打断" value="0"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                                <el-form-item >
+                                    <el-button type="success" style="padding:15px 52px;margin-top:10px;" @click="contextSave">保存</el-button>
+                                </el-form-item>
+                            </el-form>
+                        </div>
+                        <div style="width:1210px;float:left;margin-left:10px">
+                        <el-table ref="multipleTable" :data="context.Data"  border height="500">
+                            <el-table-column type="index" label="序号"  :index="index" fixed="left"></el-table-column>
+                            <el-table-column prop="type" label="类型" ></el-table-column>
+                            <el-table-column prop="nextSound" label="下个话术" ></el-table-column>
+                            <el-table-column prop="condition" label="触发词" ></el-table-column>
+                            <el-table-column prop="is_interrupt" label="是否可打断" width="80">
+                            <template scope="scope">
+                                <span v-show="scope.row.is_interrupt == '0'">不可打断</span>
+                                <span v-show="scope.row.is_interrupt == '1'">可打断</span>
+                            </template>
+                            </el-table-column>
+                            <el-table-column prop="wait_time" label="等待时长(秒)" disabled></el-table-column>
+                            <el-table-column  label="操作" width="140">
+                                <template scope="scope">
+                                    <el-button type="primary" plain @click="editContext(scope.$index,scope.row)">修改</el-button>
+                                    <el-button type="danger" plain @click="delContext(scope.$index,scope.row)">删除</el-button>
+                                </template>
+                            </el-table-column>
+                        </el-table>
+                        <div class="pagination" v-show="context.total>0" style="padding:0">
+                            <div class="block"> 
+                            <el-pagination
+                                @current-change="handleCurrentChangeContext"
+                                :current-page="curr"
+                                :page-size="context.page_size"
+                                layout="total,  prev, pager, next, jumper"
+                                :total="context.total">
+                            </el-pagination>
+                            </div>
+                        </div>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
             </el-dialog>
         </div>
-        <!-- 触发词弹框 -->
-        <div class="dial-header tag-dial1 over">
-          <el-dialog title="触发词" :visible.sync="touch.touchShow">
-            <el-form :inline="true"  class="demo-form-inline"  @submit.native.prevent>
-                <el-form-item label="关键字搜索:">
-                  <el-input  placeholder="关键字" v-model="touch.keyword"></el-input>
-                </el-form-item>
-                <el-form-item>
-                  <el-button type="primary" @click="touchSearch">搜索</el-button>
-                </el-form-item>
-              </el-form>
-              <div  style="width:170px;float:left">
-                <el-table ref="multipleTable" :data="touch.Data"  style="100%" border :height="touch.Data.length>=1?300:'100'">
-                  <el-table-column prop="type" label="通用关键词" >      
-                    <template scope="scope">
-                      <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.show}}</span>
-                      <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.show}}</span>
-                    </template>                     
-                  </el-table-column>
-                  <el-table-column  width="30">
-                    <template scope="scope">
-                        <span @click="touchLeftPlus(scope.$index,scope.row)" style="cursor: pointer">+</span>
-                    </template>
-                  </el-table-column>
-                </el-table>
-                <el-button type="success" @click="touchAdd" style="padding:15px 52px;margin-top:10px">添加关键词</el-button>
-              </div>
-              <div style="width:1280px;float:left;margin-left:10px">
-                <el-table ref="multipleTable" :data="touch.DataRight"  border :height="touch.total>0?300:'200'">
-                  <el-table-column type="index" label="序号"  fixed="left" width="50"></el-table-column>
-                  <el-table-column prop="name" label="来源"> 
-                    <template scope="scope">
-                      <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.name}}</span>
-                      <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.name}}</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="condition" label="关键词" ></el-table-column>
-                  <el-table-column prop="is_interrupt" label="是否可打断" width="100">
-                    <template scope="scope">
-                      <span v-show="scope.row.is_interrupt == 0">不可打断</span>
-                      <span v-show="scope.row.is_interrupt == 1">可打断</span>
-                    </template>
-                  </el-table-column>
-                  <el-table-column prop="type" label="操作" width="170">
-                      <template scope="scope">
-                          <el-button type="primary" plain @click="touchEdit(scope.$index,scope.row)" :disabled="scope.row.type=='system'">修改</el-button>
-                          <el-button type="danger" plain @click="touchEdl(scope.$index,scope.row)" :disabled="scope.row.type=='system'">删除</el-button>
-                      </template>
-                  </el-table-column>
-                </el-table> 
-                <div class="pagination" v-show="touch.total>0">
-                    <div class="block"> 
-                        <el-pagination
-                            @size-change="handleSizeChangeTouch"
-                            @current-change="handleCurrentChangeTouch"
-                            :current-page="curr"
-                            :page-sizes="[15, 20, 25, 30]"
-                            :page-size="touch.page_size"
-                            layout="total, sizes, prev, pager, next, jumper"
-                            :total="touch.total">
-                        </el-pagination>
-                    </div>
-                </div>
-              </div>
-              <div slot="footer" class="dialog-footer">
-                <el-button @click="touch.touchShow = false">关闭</el-button>  
-              </div>
-          </el-dialog>
-        </div>
-        <!-- 触发词中添加关键词弹框 -->
-        <div class="dial-header tag-dial">
+         <!-- 触发词中添加关键词弹框 -->
+         <div class="dial-header tag-dial">
           <el-dialog title="添加关键词" :visible.sync="touch.AddTouch" :close-on-click-modal="false" v-move>
               <el-form label-width="80px">
                   <el-form-item label="关键词标签:">
@@ -277,78 +343,8 @@
               </div>
           </el-dialog>
         </div>
-        <!-- 语境设置弹框 -->
-        <div class="dial-header tag-dial1 over">
-          <el-dialog title="语境设置" :visible.sync="context.ShowContext">
-            <div style="width:230px;float:left;">
-              <el-form label-width="10px" style="width:300px;float:left;">
-                <el-form-item>
-                    <el-select placeholder="请选择" v-model="contextData.name">
-                      <el-option label="关键字触发" value=".content"></el-option>
-                      <el-option label="直接跳转" value=".jump"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item >
-                    <el-select placeholder="请选择下个话术" v-model="contextData.nextId">
-                      <el-option label="选择下个话术" value=""></el-option>
-                      <el-option v-for="item in context.nextData" :label="item.answer" :value="item.id">{{item.show_name}}-{{item.answer}}</el-option>                         
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item >
-                    <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput" v-show="contextData.name!='.jump'">
-                      <el-option v-for="item in context.touchData" :label="item.condition" :value="item.name"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item v-show="context.custom">
-                      <el-input v-model="contextData.newCondition" style="width:217px"></el-input>
-                  </el-form-item>
-                  <el-form-item >
-                    <el-select placeholder="请选择" v-model="contextData.is_interrupt">
-                      <el-option label="可被打断" value="1"></el-option>
-                      <el-option label="不可被打断" value="0"></el-option>
-                    </el-select>
-                  </el-form-item>
-                  <el-form-item >
-                    <el-button type="success" style="padding:15px 52px;margin-top:10px;" @click="contextSave">保存</el-button>
-                  </el-form-item>
-                </el-form>
-            </div>
-            <div style="width:1210px;float:left;margin-left:10px">
-              <el-table ref="multipleTable" :data="context.Data"  border height="500">
-                <el-table-column type="index" label="序号"  :index="index" fixed="left"></el-table-column>
-                <el-table-column prop="type" label="类型" ></el-table-column>
-                <el-table-column prop="nextSound" label="下个话术" ></el-table-column>
-                <el-table-column prop="condition" label="触发词" ></el-table-column>
-                <el-table-column prop="is_interrupt" label="是否可打断" width="80">
-                  <template scope="scope">
-                    <span v-show="scope.row.is_interrupt == '0'">不可打断</span>
-                    <span v-show="scope.row.is_interrupt == '1'">可打断</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="wait_time" label="等待时长(秒)" disabled></el-table-column>
-                <el-table-column  label="操作" width="140">
-                    <template scope="scope">
-                        <el-button type="primary" plain @click="editContext(scope.$index,scope.row)">修改</el-button>
-                        <el-button type="danger" plain @click="delContext(scope.$index,scope.row)">删除</el-button>
-                    </template>
-                </el-table-column>
-              </el-table>
-              <div class="pagination" v-show="context.total>0">
-                <div class="block"> 
-                  <el-pagination
-                      @current-change="handleCurrentChangeContext"
-                      :current-page="curr"
-                      :page-size="context.page_size"
-                      layout="total,  prev, pager, next, jumper"
-                      :total="context.total">
-                  </el-pagination>
-                </div>
-              </div>
-            </div>
-          </el-dialog>
-        </div>
-        <!-- 语境设置里编辑弹框-->
-        <div class="dial-header tag-dial">
+         <!-- 语境设置里编辑弹框-->
+         <div class="dial-header tag-dial">
           <el-dialog title="编辑" :visible.sync="context.EditContext">
             <el-form label-width="80px">
               <el-form-item label="触发类型:">
@@ -391,17 +387,22 @@ import { MessageBox } from 'element-ui';
 		data() {
 			return {
         template_id:"",      //话术库id
-          curr:"1",
+          curr:1,
           loading:false,
           init:{                //页面初始化时用到的参数
             page:"1",
             page_size:"15",
-            total:"",
+            total:0,
             keywords:"",
             InitData:[],
             textAudio:""
           },
           baseMessage:{         //添加基本信息用到数据
+            Add:false, 
+            Sound:[],      //添加基本信息是话术内容
+            Edit:false      //编辑基本信息
+          },
+           baseMessage:{         //添加基本信息用到数据
             Add:false, 
             Sound:[],      //添加基本信息是话术内容
             Edit:false      //编辑基本信息
@@ -418,8 +419,19 @@ import { MessageBox } from 'element-ui';
             answer:""
           },
           baseMessageDataEdit:{         //编辑基本信息用到的参数
-            // nextname:".null",
+            show_name:"",
+            is_interrupt:"",
+            type:"",
+            name:"",
+            nextname:"",
+            wait_time:"",
+            max_repeat:"",
+            record:"",
+            answer:"",
+            record_description:""
           },
+          activeName2:'first',
+
           touch:{                   //触发词中用到的参数
             touchShow:false,        //点击触发词出现的弹框
             EditTouch:false,        //点击触发词中编辑按钮出现的弹框
@@ -429,7 +441,7 @@ import { MessageBox } from 'element-ui';
             condition:"",            //添加关键词
             name:"" ,                 //添加关键词
             DataRight:[],             //右侧数据
-            total:"",
+            total:0,
             page:"1",
             page_size:"10", 
             req_id:"",                //需要存起来的每一行的id
@@ -449,7 +461,7 @@ import { MessageBox } from 'element-ui';
             req_id:"",
             page:"1",
             page_size:"10",
-            total:"",
+            total:0,
           },
           contextData:{             //添加保存
             name:".content",
@@ -458,15 +470,36 @@ import { MessageBox } from 'element-ui';
             condition:"0",
             newCondition:"",
           },
-          editContextData:{}  //编辑
+          editContextData:{},  //编辑
+
+            // 添加语音节点
+            audioList:[],      //添加语音节点的时候选择录音的数据列表
+            add:{
+              show:false,
+              audio:""
+            },
+            edit:{
+                show:false,
+                addNext:false,
+                title:false,
+                audioList:[],     //编辑中的录音数据
+                audio:""  ,        //编辑中的试听地址
+                nextList:[],         //编辑中的下个节点数据
+                addNextList:[]        //编辑中的添加新的下级节点中的数据
+            },
+            obj:[],
+            target:"",
+            ops:"",
+            show:false
       }
 		},
-		activated(){
-			this.getId()
-		},
-        mounted(){
-          this.initData()
-        },
+			activated(){
+				this.getId() 
+				this.initData()
+			},
+        beforeMount() {
+					
+				},
         methods: {
             index(val){
               return (this.init.page-1)*this.init.page_size+val+1
@@ -477,17 +510,13 @@ import { MessageBox } from 'element-ui';
             },
             // 页面数据初始化
             initData(){
+							this.getId()
               this.loading = true
               const template_id = this.template_id
               const page = this.init.page;
               const page_size = this.init.page_size
               const keywords = this.init.keywords
-              var url = ""
-              if(keywords){
-                url = "/api_backend.php?r=sound-tpl/search-sound-bank"
-              }else{
-                url = "/api_backend.php?r=sound-tpl/sound-bank-list"
-              }
+              const url = "/api/api_backend.php?r=template/req-ans-data-list"
               const conf = {
                 url,
                 data:{
@@ -539,18 +568,18 @@ import { MessageBox } from 'element-ui';
             editInit(index,row){
               this.baseMessage.Edit = true
               this.getSoundContent()
-              const url = "/api_backend.php?r=sound-tpl/edit-sound-bank-data"
+              const url = "/api/api_backend.php?r=template/template-base-info"
               const conf = {
                   url,
                   data:{
                     template_id:this.template_id,
-                    id:row.id
+                    req_id:row.id
                   },
                   success:(data)=>{
-                    this.baseMessageDataEdit = data.info[0]
-                    if( data.info[0].type == '0'){
+                    this.baseMessageDataEdit = data.info
+                    if( data.info.type == '0'){
                       this.baseMessageDataEdit.type = '0'
-                    }else if(data.info[0].type == '1'){
+                    }else if(data.info.type == '1'){
                       this.baseMessageDataEdit.type = '1'
                     }
                   }
@@ -569,16 +598,20 @@ import { MessageBox } from 'element-ui';
                   data.answer = this.baseMessageDataEdit.answer
                 }
                 data.template_id = this.template_id
-                data.id = this.baseMessageDataEdit.id
+                data.req_id = this.baseMessageDataEdit.id
                 data.show_name = this.baseMessageDataEdit.show_name
                 data.is_interrupt = this.baseMessageDataEdit.is_interrupt
                 data.type = this.baseMessageDataEdit.type
-                data.name = this.baseMessageDataEdit.name
+								if(this.baseMessageDataEdit.type == 0){
+									data.name = ".question"
+								}else {
+									data.name = this.baseMessageDataEdit.name
+								}
                 data.nextname = this.baseMessageDataEdit.nextname
                 data.max_repeat = this.baseMessageDataEdit.max_repeat
                 data.wait_time = this.baseMessageDataEdit.wait_time
                 data.record = this.baseMessageDataEdit.record
-                const url = "/api_backend.php?r=sound-tpl/edit-sound-bank"
+                const url = "/api/api_backend.php?r=template/template-base-info-edit"
                 const conf = {
                   url,
                   data:data,
@@ -603,13 +636,13 @@ import { MessageBox } from 'element-ui';
                   type: 'warning'
                 }).then(() => {
                   const template_id = this.template_id
-                  const id = row.id
-                  const url = "/api_backend.php?r=sound-tpl/delete-sound-bank"
+                  const req_id = row.id
+                  const url = "/api/api_backend.php?r=template/template-base-info-delete"
                   const conf = {
                     url,
                     data:{
                       template_id,
-                      id
+                      req_id
                     },
                     success:(data)=>{
                       this.$alert(data.message)
@@ -628,7 +661,7 @@ import { MessageBox } from 'element-ui';
             // 添加话术基本信息
             // 点击添加的时候请求接口获取话术内容
             getSoundContent(){
-              const url = "/api_backend.php?r=sound-tpl/sound-content"
+              const url = "/api/api_backend.php?r=template/sound-content"
               const conf = {
                 url,
                 data:{
@@ -700,8 +733,11 @@ import { MessageBox } from 'element-ui';
                 this.$alert("等待时长和可重复次数为必填")
               }else{
                 const data = this.baseMessageData
+								if(this.baseMessageData.type == 0){
+									data.name = ".question"
+								}
                 data.template_id = this.template_id
-                const url = "/api_backend.php?r=sound-tpl/insert-sound-bank"
+                const url = "/api/api_backend.php?r=template/template-base-info-add"
                 const conf = {
                   url,
                   data:data,
@@ -724,7 +760,20 @@ import { MessageBox } from 'element-ui';
                  axiosRequest(conf)
                 }
             },
-
+						handleClick(tab, event) {
+                if(tab.index == 1){     //触发词
+                    this.touch.req_id = this.ids
+                    this.touch.keyword = ""
+                    this.touchInit()                //左侧数据
+                    this.touchDataRight(this.ids)     //右侧数据
+                    this.touchInitData()
+                }else if(tab.index == 2){     //语境设置
+                    this.contextData.req_id = this.ids
+                    this.contextTouch(this.ids)
+                    this.contextNext()
+                    this.contextInit(this.ids)
+                }
+            },
             // 客户等级
             touchInitData(){
               const url = "/api_backend.php?r=customer-intent-level/list"
@@ -1104,9 +1153,6 @@ import { MessageBox } from 'element-ui';
 
 </script>
 <style lang="scss" scoped>
-  .tag-dial1 .el-dialog {width:1500px;max-width:1900px;}
-  .el-table .el-table_1_column_2 >.cell{text-align:left;}
-  .el-table .el-table__header th >.cell{text-align:center;}
   .over .el-dialog__body{overflow:hidden;}
   .el-select-dropdown__item{width:215px;}
   .padding .el-dialog__body{padding:10px 60px;}
