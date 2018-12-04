@@ -93,7 +93,7 @@ export default {
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.tableData = data.info
-                        this.total = Number( data.total_count )
+                        this.total = Number( data.total )
                     }
                 }
             }
