@@ -93,7 +93,7 @@
 				<!-- 添加任务弹框  -->
 				<div class="dial-header addTask">
             		<el-dialog title="任务添加" :visible.sync="Index.addTask" v-move>
-						<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+						<div style="float:left;width:50%;height:900px;display:block;background:#fff">
 							<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
 							<el-form :model="form" label-width="120px" ref="forms">
 								<el-form-item label="任务名称:">
@@ -124,6 +124,28 @@
 										<el-option v-for="(item,index) in AddData.recognition_lies" :label="item.asr_number" :value="item.asr_number" :key="index"></el-option>
 									</el-select>
 								</el-form-item>
+								 <el-form-item label="交互方式：">
+									<el-radio-group v-model="form.agent_or_queue" @change="agentorqueueChange">
+										<div>
+											<el-radio label="mobile">转手机</el-radio>
+											<el-input v-model="form.asrtomobile" style="width:120px; margin-left:10px"></el-input>
+										</div>
+										<div>
+											<el-radio label="ext">转分机</el-radio>
+											<el-select v-model="form.exten" placeholder="请选择" style="width:100px;margin-left:10px;">
+												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
+											</el-select>
+										</div>
+										<div>
+											<el-radio label="queue">转队列</el-radio>
+											<el-input v-model="AddQueueData.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
+										</div>
+									</el-radio-group>
+									<span @click="agentorqueueChangeWord" style="display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
+										<span v-show="AddQueueData.member == ''">0</span>
+										<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
+									</span>
+								</el-form-item>
 								<el-form-item label="振铃时长:">
 									<el-input v-model="form.call_duration" style="width:240px;margin-right:10px;"></el-input>秒
 								</el-form-item>
@@ -152,7 +174,7 @@
 								</el-form>
                 			</el-form>
 							</div>
-							<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+							<div style="float:left;width:50%;height:900px;display:block;background:#fff">
 							<!--第一联系人-->
 								<el-form :model="form2" label-width="145px" ref="forms">
 									<el-form-item label="第一联系人呼叫次数:">
@@ -288,14 +310,52 @@
 							</el-form-item>         
                 		</el-form>
 					</div>
-                	<div slot="footer" class="dialog-footer">
-                    	<el-button type="primary" @click="onSubmitSave">确认保存</el-button>
-						<el-button type="primary" @click="Index.editTask = false">取消</el-button>
-                	</div>
-            	</el-dialog>
-        	</div>
+						<div slot="footer" class="dialog-footer">
+							<el-button type="primary" @click="onSubmitSave">确认保存</el-button>
+							<el-button type="primary" @click="Index.editTask = false">取消</el-button>
+						</div>
+            		</el-dialog>
+        		</div>
+			  	<!-- 添加时点击转队列按钮的时候出现的弹框 -->
+				<div class="dial-header bind">
+					<el-dialog title="选择接听的坐席" :visible.sync="AddQueueData.QueueShow" :close-on-click-modal= "false" :close-on-press-escape="false">
+						<el-form :inline="true"  class="demo-form-inline" @submit.native.prevent  label-width="80px" :model="AddQueueData">
+							<el-form-item label=" 振铃策略:" style="display:block">
+								<el-select placeholder="请选择" v-model="AddQueueData.strategy">
+									<el-option value="ringall" label="群振"></el-option>
+									<el-option value="roundrobin" label="轮询分配"></el-option>
+									<el-option value="rrmemory" label="记忆轮询分配"></el-option>
+									<el-option value="leastrecent" label="按最后一次接通分配"></el-option>
+									<el-option value="fewestcalls" label="按呼叫次数分配"></el-option>
+									<el-option value="random" label="随机分配"></el-option>
+								</el-select>
+							</el-form-item>
+							<el-form-item label=" 振铃时长:" style="display:block">
+								<el-input style="width:100px" v-model="AddQueueData.timeout"></el-input> <span>秒</span>
+							</el-form-item>
+							<el-form-item label=" 最大等待数:" style="display:block">
+								<el-input style="width:100px" v-model="AddQueueData.maxlen"></el-input> <span>个</span>
+							</el-form-item>
+						</el-form>
+						<el-table ref="multipleTables" :data="AddQueueData.Data" tooltip-effect="dark" height="200" style="width:100%" @selection-change="handleSelectionChangeQueue">
+							<el-table-column type="selection" prop="id"></el-table-column>
+							<el-table-column prop="true_name" label="用户名"></el-table-column>
+							<el-table-column prop="staff_id" label="真实姓名(工号)"></el-table-column>
+							<el-table-column prop="penalty" label="振铃顺序">
+								<template scope="scope">
+									<el-input :value="scope.row.penalty" :disabled="true"> </el-input>
+								</template>
+							</el-table-column>
+						</el-table>
+						<div slot="footer" class="dialog-footer">
+							<el-button type="primary" @click="QueueSure">确定保存</el-button>
+							<el-button type="primary" @click="AddQueueData.QueueShow=false" >取消</el-button>
+						</div>
+					</el-dialog>
+				</div>
 			</div>
 		</div>
+		
 	</section>
 </template>
 
@@ -314,7 +374,19 @@ import { MessageBox } from 'element-ui';
 					recognition_lies:[], //语音识别线路
 					call_result:[],   //未接通状态
 					templates:[],   //呼叫使用话术
+					ext_list:[]     //转分机数据
         		},
+				 AddQueueData:{            //添加任务的时候转队列需要用到的数据
+                QueueShow:false,      //转队列的时候出现的弹框
+                Data:[],      //数据
+                caller_id:"",
+                strategy:"rrmemory",//[振铃策略] 
+                timeout:"30",//[振铃时长]
+                maxlen:"10",//[最大等待数]
+                staff_id_queue:"" ,
+                multipleSelection:[],
+                member:"",    //成员个数
+            },
 				Index:{
 						addTask:false,
 						editTask:false,
@@ -331,35 +403,83 @@ import { MessageBox } from 'element-ui';
 					end_time_am:"12:00",    //上午结束呼叫时间
 					start_time_pm:"11:00", //下午开始呼叫时间
 					end_time_pm:"21:00",    //下午结束呼叫时间
+					agent_or_queue: "", //交互方式 1转手机，2转分机，3队列
+					exten_num: "", //分机号（转分机） 
+					asrtomobile: "",//手机号（转手机）
+					asrqueue: "",//队列（队列）
+					exten_num:"",//人机交互需要传给后台的值
+					exten:"",    //转分机对应的值
+					strategy:"",      //转队列需要用到的参数
+					timeout:"",
+					maxlen:"",
+					staff_id_queue:"",
             	},
 				round_rule:[],
 				not_connected_status1:[],
 				not_connected_status2:[],
 				form1:{
 					round:'0',
-				template_id:"",
+					template_id:"",
 					next_round:"1",
 					call_times:"",
 					not_connected_status:""
 				},
 				form2:{
 					round:'1',
-				template_id:"",
+				    template_id:"",
 					next_round:"2",
 					call_times:"",
 					not_connected_status:""
 				},
 				form3:{
 					round:'2',
-				template_id:"",
+					template_id:"",
 					call_times:"",
 					next_round:"3",
 					not_connected_status:""
 				},
-				data1:{},
-				data2:{},
-				data3:{},
-				data4:{},
+				data1:{
+					name:"",    //任务名称
+              		caller_id :"",// 外线号码 
+					asr_number :"",//识别线路
+					ai_count:1,// 机器人数
+					call_duration:"45",//振铃时长
+					start_time_am:"08:00", //上午开始呼叫时间
+					end_time_am:"12:00",    //上午结束呼叫时间
+					start_time_pm:"11:00", //下午开始呼叫时间
+					end_time_pm:"21:00",    //下午结束呼叫时间
+					agent_or_queue: "", //交互方式 1转手机，2转分机，3队列
+					exten_num: "", //分机号（转分机） 
+					asrtomobile: "",//手机号（转手机）
+					asrqueue: "",//队列（队列）
+					exten_num:"",//人机交互需要传给后台的值
+					exten:"",    //转分机对应的值
+					strategy:"",      //转队列需要用到的参数
+					timeout:"",
+					maxlen:"",
+					staff_id_queue:"",
+				},
+				data2:{
+					round:'0',
+					template_id:"",
+					next_round:"1",
+					call_times:"",
+					not_connected_status:""
+				},
+				data3:{
+					round:'2',
+					template_id:"",
+					call_times:"",
+					next_round:"3",
+					not_connected_status:""
+				},
+				data4:{
+					round:'2',
+					template_id:"",
+					call_times:"",
+					next_round:"3",
+					not_connected_status:""
+				},
            		Dates:[],
 				editData:{            //编辑任务的时候需要用到的数据
 					outLine:[],     //外线号码
@@ -380,12 +500,6 @@ import { MessageBox } from 'element-ui';
 				form3Edit:{},
 			}
 		},
-		created() {
-			this.data1 = Object.assign({}, this.form)
-			this.data2 = Object.assign({}, this.form1)
-			this.data3 = Object.assign({}, this.form2)
-			this.data4 = Object.assign({}, this.form3)
-		},
 		beforeMount() {
 			this.init()   //页面数据初始化 
     	},
@@ -394,14 +508,14 @@ import { MessageBox } from 'element-ui';
 			init(){
 				const url = '/api/api_backend.php?r=asroperate/list'
 				const conf = {
-						url,
-						success: (data)=>{
-							this.Dates = data.info
-						}
+					url,
+					success: (data)=>{
+						this.Dates = data.info
+					}
 				}
 				axiosRequest(conf)
       		},
-			// 点击添加任务时数据初始话
+			// 点击添加任务时数据初始化
 			addInit(){
 				const url = "/api/api_backend.php?r=asroperate/add-init"
 				const conf = {
@@ -415,6 +529,17 @@ import { MessageBox } from 'element-ui';
 				}
 				axiosRequest(conf)
 			},
+			// 转分机数据
+			addExtension(){
+				const url = "/api/api_backend.php?r=asroperate/turn-extension"
+				const conf = {
+					url,
+					success:(data)=>{
+						this.AddData.ext_list = data.info
+					}
+				}
+				axiosRequest(conf)
+			},
 			changeStatus1(){
 				this.form1.not_connected_status = this.not_connected_status1.join()
 			},
@@ -424,13 +549,113 @@ import { MessageBox } from 'element-ui';
 		  	addTask(){
 				this.Index.addTask = true
 				this.addInit()
+				this.addExtension()
 			},
+			clone(obj){
+				return JSON.parse(JSON.stringify(obj))
+			},
+			 // 人机交互队列中选择坐席
+            handleSelectionChangeQueue(val){
+                this.AddQueueData.multipleSelection = val
+            },
+            // 转队列确定保存
+            QueueSure(){
+                if(this.AddQueueData.multipleSelection.length == 0){
+                    this.$alert("选择接听坐席")
+                    this.AddQueueData.QueueShow = true
+                }else{
+                    var x = this.AddQueueData.multipleSelection.map((item)=>{
+                        return item.staff_id
+                    })
+                    this.AddQueueData.staff_id_queue = x.join(",")
+                    this.form.strategy = this.AddQueueData.strategy
+                    this.form.timeout = this.AddQueueData.timeout
+                    this.form.maxlen = this.AddQueueData.maxlen
+                    this.form.staff_id_queue = this.AddQueueData.staff_id_queue
+                    this.AddQueueData.member = parseInt(this.AddQueueData.multipleSelection.length)
+                    this.AddQueueData.QueueShow = false
+                }
+            },
+			agentorqueueChangeWord(){
+                if(this.form.agent_or_queue  == "queue"){
+                    if(this.form.caller_id == ""){
+                        this.$alert("请选择外线号码")
+                        this.form.agent_or_queue = ""
+                    }else{
+                        this.AddQueueData.QueueShow = true
+                        const caller_id = this.form.caller_id
+                        const url = "/api/api_backend.php?r=asroperate/turn-queue"   //获取转队列弹框中的数据
+                        const conf = {
+                            url,
+                            data:{caller_id},
+                            success:(data)=>{
+                                this.AddQueueData.Data = data.info
+                            }
+                        }
+                        Yt.axiosRequest(conf)
+                    }
+                 
+                }else{
+                    this.$alert("未选择转队列")
+                }
+            },
+			 // 添加时人机交互方式(队列)
+            agentorqueueChange(val){
+                if(val == "queue"){
+                    if(this.form.caller_id == ""){
+                        this.$alert("请选择外线号码")
+                        this.form.agent_or_queue = ""
+                    }else{
+                        this.AddQueueData.QueueShow = true
+                        const caller_id = this.form.caller_id
+                        const url = "/api/api_backend.php?r=asroperate/turn-queue"
+                        const conf = {
+                            url,
+                            data:{caller_id},
+                            success:(data)=>{
+                                this.AddQueueData.Data = data.info
+                            }
+                        }
+                        axiosRequest(conf)
+                        this.AddQueueData.caller_id = this.form.caller_id  
+                        this.form.agent_or_queue = val
+                    }
+                }else{
+                    this.AddQueueData.caller_id = ""
+                    this.form.agent_or_queue = val
+                }
+            },
 			// 保存添加
 			onSubmit(){
 				this.round_rule[0] = this.form1;
 				this.round_rule[1] = this.form2;
 				this.round_rule[2] = this.form3;
 				const data = this.form
+				if(this.form.agent_or_queue == "mobile"){
+                    const x= this.form.asrtomobile
+                    if(x){
+                        data.exten_num = "mobile" + x
+                    }else{
+                        data.exten_num = 0
+                    }
+                    
+                }else if(this.form.agent_or_queue == "ext"){
+                    const x= this.form.exten
+                    if(x){
+                        data.exten_num =  "ext" + x
+                    }else{
+                        data.exten_num = 0
+                    }
+                    
+                }else if(this.form.agent_or_queue == "queue"){
+                   	data.exten_num = "queue" 
+                    data.strategy = this.AddQueueData.strategy
+                    data.timeout = this.AddQueueData.timeout
+                    data.maxlen = this.AddQueueData.maxlen
+                    data.staff_id_queue = this.AddQueueData.staff_id_queue
+                }else{
+                    data.exten_num = 0
+                }
 				data.start_time_am = this.form.start_time_am+':00'
         		data.end_time_am = this.form.end_time_am+":00"
 				data.start_time_pm = this.form.start_time_pm+":00" 
@@ -444,10 +669,10 @@ import { MessageBox } from 'element-ui';
 						this.$alert(data.message)
 						if(data.statusCode == 1){
 							this.Index.addTask = false;
-							this.form = this.data1
-							this.form1 = this.data2
-							this.form2 = this.data3
-							this.form3 = this.data4
+							this.form = this.clone(this.data1)
+							this.form1 = this.clone(this.data2)
+							this.form2 = this.clone(this.data3)
+							this.form3 = this.clone(this.data4)
 							this.not_connected_status1 = []
 							this.not_connected_status2 = []
 							this.init()
