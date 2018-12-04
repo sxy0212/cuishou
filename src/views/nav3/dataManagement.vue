@@ -3,74 +3,23 @@
     <div class="upB"> 
         <el-button type="primary" plain @click='addFn(true)'>导入资料</el-button><el-button type="success" plain @click='addFn(true)'>下载模板</el-button>
     </div>
-      <el-form :inline="true" :model="formInline" class="demo-form-inline">
-		<el-form-item label="催收区域">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="委托方">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="案件类型">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="委案日期">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="案件等级">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-        <el-form-item>
-            <el-button type="primary" size="mini" plain @click='addFn(true)'>搜索</el-button>
-        </el-form-item>
-	</el-form>
-    
-    <div class="tableCover">
-      <el-table
-        border
-        :data="tableData"
-        style="width: 98%">
-        <el-table-column
-          label="序号"
-          prop="id"
-          width="50">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="区域名称"
-          >
-        </el-table-column>
-        <el-table-column
-          label="操作"
-          >
-          <template slot-scope="scope">
-            <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <page-change 
+    <div-form
+        :formInline="formInline"
+    >
+    </div-form>
+
+    <div-table
+        :tableData="tableData"
+    >
+    </div-table>
+    <page-change 
         :total="total"
         :page="page"
         :page_size ="page_size"
         v-on:pageSizeChange='pageSizeChangeFn($event)'
         v-on:currentPageChange='currentPageChangeFn($event)'
-      ></page-change>
-    </div>
+    ></page-change>
+    
     <el-dialog :title="bannerTitle" :visible.sync="addNow" >
         <edit-dialog
             v-on:addNowChange = "addFn($event)"
@@ -85,17 +34,22 @@
   </div>
 </template>
 <script>
-import '@/assets/css/system.css'
+
 import addImport from '@/functions/editDialog/addArea.vue'
+import formDataMan from '@/functions/formCollection/formDataMan.vue'
+import tableDataMan from '@/functions/tableCollection/tableDataMan.vue'
 import pageChange from '@/components/pageChange.vue'
+
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
-// import indexMethod  from '@/utils/indexMethod.js'
+
 
 export default {
     components:{
         'edit-dialog':addImport,
-        'page-change':pageChange
+        'page-change':pageChange,
+        'div-form':formDataMan,
+        'div-table':tableDataMan
     },
     data() {
         return {
@@ -123,9 +77,6 @@ export default {
         this.init()
     },
     methods: {
-        // methodIndex(val){
-        //     return indexMethod(val,this.page,this.page_size)
-        // },
         init(){
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/area-list',
@@ -214,7 +165,7 @@ export default {
 }
 </script>
 <style>
-.upB{margin-bottom:10px;}
+.upB{margin-bottom:20px;}
 </style>
 
 
