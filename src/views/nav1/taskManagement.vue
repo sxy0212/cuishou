@@ -93,7 +93,7 @@
 				<!-- 添加任务弹框  -->
 				<div class="dial-header addTask">
             		<el-dialog title="任务添加" :visible.sync="Index.addTask" v-move>
-						<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+						<div style="float:left;width:50%;height:900px;display:block;background:#fff">
 							<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
 							<el-form :model="form" label-width="120px" ref="forms">
 								<el-form-item label="任务名称:">
@@ -132,7 +132,7 @@
 										</div>
 										<div>
 											<el-radio label="ext">转分机</el-radio>
-											<el-select v-model="form.exten_num" placeholder="请选择" style="width:100px;margin-left:10px;">
+											<el-select v-model="form.exten" placeholder="请选择" style="width:100px;margin-left:10px;">
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
 											</el-select>
 										</div>
@@ -174,7 +174,7 @@
 								</el-form>
                 			</el-form>
 							</div>
-							<div style="float:left;width:50%;height:740px;display:block;background:#fff">
+							<div style="float:left;width:50%;height:900px;display:block;background:#fff">
 							<!--第一联系人-->
 								<el-form :model="form2" label-width="145px" ref="forms">
 									<el-form-item label="第一联系人呼叫次数:">
@@ -407,7 +407,8 @@ import { MessageBox } from 'element-ui';
 					exten_num: "", //分机号（转分机） 
 					asrtomobile: "",//手机号（转手机）
 					asrqueue: "",//队列（队列）
-					exten:"",    //人机交互需要传给后台的值
+					exten_num:"",//人机交互需要传给后台的值
+					exten:"",    //转分机对应的值
 					strategy:"",      //转队列需要用到的参数
 					timeout:"",
 					maxlen:"",
@@ -451,7 +452,8 @@ import { MessageBox } from 'element-ui';
 					exten_num: "", //分机号（转分机） 
 					asrtomobile: "",//手机号（转手机）
 					asrqueue: "",//队列（队列）
-					exten:"",    //人机交互需要传给后台的值
+					exten_num:"",//人机交互需要传给后台的值
+					exten:"",    //转分机对应的值
 					strategy:"",      //转队列需要用到的参数
 					timeout:"",
 					maxlen:"",
@@ -506,10 +508,10 @@ import { MessageBox } from 'element-ui';
 			init(){
 				const url = '/api/api_backend.php?r=asroperate/list'
 				const conf = {
-						url,
-						success: (data)=>{
-							this.Dates = data.info
-						}
+					url,
+					success: (data)=>{
+						this.Dates = data.info
+					}
 				}
 				axiosRequest(conf)
       		},
@@ -632,7 +634,7 @@ import { MessageBox } from 'element-ui';
 				if(this.form.agent_or_queue == "mobile"){
                     const x= this.form.asrtomobile
                     if(x){
-                        data.exten = "mobile" + x
+                        data.exten_num = "mobile" + x
                     }else{
                         data.exten_num = 0
                     }
