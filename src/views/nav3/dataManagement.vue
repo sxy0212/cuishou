@@ -4,7 +4,11 @@
         <el-button type="primary" plain @click='addFn(true)'>导入资料</el-button><el-button type="success" plain @click='addFn(true)'>下载模板</el-button>
     </div>
     <div-form
-        :formInline="formInline"
+        :formInline='formInline'
+        :areaList='areaList'
+        :typeList='typeList'
+        :clientList='clientList'
+        v-on:addFn = 'searchFn($event)'
     >
     </div-form>
 
@@ -71,24 +75,34 @@ export default {
                 name:''
             },
             formInline: {
-				user: '',
-				region: ''
+				collection_area: '',
+                client: '',
+                case_type:''
             },
             fileList: [
-                {
-                    name: 'food.jpeg', 
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }, 
                 {
                     name: 'food2.jpeg', 
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
+            ],
+            areaList:[
+
+            ],
+            clientList:[
+
+            ],
+            typeList:[
+
             ]
+            
             
         }
     },
     created() {
         this.init()
+        this.getAreaList()
+        this.getClientList()
+        this.getTypeList()
     },
     methods: {
         init(){
@@ -101,8 +115,59 @@ export default {
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.tableData = data.info.info
-                        // this.formTitle
                         this.total = Number( data.info.total )
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        searchFn(){//搜索
+            let data = this.formInline
+            data.page = this.page
+            data.page_size = this.page_size
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/search-batch-list',
+                data,
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.tableData = data.info
+                        this.total = Number( data.info.length )
+                    }else if(data.statusCode == 0 ){
+                        this.tableData = []
+                        this.total = 0
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        getAreaList(){//获取基本数据
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/collection-area',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.areaList = data.info
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        getClientList(){//获取基本数据
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/client',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.clientList = data.info
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        getTypeList(){//获取基本数据
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/case-type',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.typeList = data.info
                     }
                 }
             }

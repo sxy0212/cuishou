@@ -40,7 +40,7 @@
           >
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="money"
           label="总金额"
           >
         </el-table-column>
