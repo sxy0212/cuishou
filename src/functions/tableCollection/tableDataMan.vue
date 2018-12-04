@@ -2,7 +2,13 @@
     <el-table
         border
         :data="tableData"
-        style="width: 98%">
+        style="width: 98%"
+        @selection-change="handleSelectionChange"
+    >
+         <el-table-column
+            type="selection"
+            width="55">
+        </el-table-column>
         <el-table-column
           label="序号"
           prop="id"
@@ -10,15 +16,56 @@
         </el-table-column>
         <el-table-column
           prop="name"
-          label="区域名称"
+          label="批次名称"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="催收区域"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="委托方"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="案件类型"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="委案日期"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="户数"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="总金额"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="上传时间"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="name"
+          label="批次备注"
           >
         </el-table-column>
         <el-table-column
           label="操作"
           >
           <template slot-scope="scope">
-            <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
+            <el-button size="mini" type="success" round @click="editFn(scope.row)">追加</el-button>
             <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
+            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">导出</el-button>
           </template>
         </el-table-column>
     </el-table>
@@ -28,7 +75,12 @@ export default {
     name:'tableDataMan',
     props:[
         'tableData'
-    ]
+    ],
+    methods:{
+        handleSelectionChange(val){
+            this.$emit('handleSelectionChange',val)
+        }
+    }
 }
 </script>
 

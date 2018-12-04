@@ -10,6 +10,7 @@
 
     <div-table
         :tableData="tableData"
+        v-on:handleSelectionChange = 'handleSelectionChange($event)'
     >
     </div-table>
     <page-change 
@@ -26,16 +27,18 @@
             v-on:saveFn = "init($event)"
             v-on:clearId = "changeId($event)"
             v-on:clearFormTitle = "clearFormTitle($event)"
+            v-on:submitUpload = "submitUpload($event)"
             :id="id"
             :title = "bannerTitle"
             :formTitle = "formTitle"
+            :fileList = 'fileList'
         ></edit-dialog>
     </el-dialog>
   </div>
 </template>
 <script>
 
-import addImport from '@/functions/editDialog/addArea.vue'
+import addDataMan from '@/functions/editDialog/addDataMan.vue'
 import formDataMan from '@/functions/formCollection/formDataMan.vue'
 import tableDataMan from '@/functions/tableCollection/tableDataMan.vue'
 import pageChange from '@/components/pageChange.vue'
@@ -46,7 +49,7 @@ import { Message } from 'element-ui'
 
 export default {
     components:{
-        'edit-dialog':addImport,
+        'edit-dialog':addDataMan,
         'page-change':pageChange,
         'div-form':formDataMan,
         'div-table':tableDataMan
@@ -57,7 +60,7 @@ export default {
             page:1,
             page_size:10,
             total:0,
-            bannerTitle:"区域添加",
+            bannerTitle:"导入资料",
             addNow:false,
             tableData: [{
                 miniImage: '上海市普陀区'
@@ -70,7 +73,18 @@ export default {
             formInline: {
 				user: '',
 				region: ''
-			},
+            },
+            fileList: [
+                {
+                    name: 'food.jpeg', 
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                }, 
+                {
+                    name: 'food2.jpeg', 
+                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
+                }
+            ]
+            
         }
     },
     created() {
@@ -95,7 +109,7 @@ export default {
             axiosRequest(conf)
         },
         addFn(val){//添加弹框的打开与关闭
-            this.bannerTitle = "区域添加"
+            this.bannerTitle = "导入资料"
             this.addNow = val
             this.id = ''
         },
@@ -160,6 +174,12 @@ export default {
                     duration: 3 * 1000
                 })
             })
+        },
+        handleSelectionChange(val){
+            console.log(val)
+        },
+        submitUpload(){//导入，上传
+
         }
     }
 }
