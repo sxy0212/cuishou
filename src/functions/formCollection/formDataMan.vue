@@ -18,12 +18,6 @@
 				<el-option label="区域二" value="beijing"></el-option>
 			</el-select>
 		</el-form-item>
-		<el-form-item label="委案日期">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
 		<el-form-item label="案件等级">
 			<el-select v-model="formInline.region" placeholder="活动区域">
 				<el-option label="区域一" value="shanghai"></el-option>

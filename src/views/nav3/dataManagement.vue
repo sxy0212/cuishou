@@ -93,16 +93,16 @@ export default {
     methods: {
         init(){
             let conf = {
-                url : '/api/api_backend.php?r=system-setting/area-list',
+                url : '/api/api_backend.php?r=asrcall-case-batch/case-batch-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
                 },
                 success:(data)=>{
                     if( data.statusCode == 1 ){
-                        this.tableData = data.info
-                        this.formTitle
-                        this.total = Number( data.total_count )
+                        this.tableData = data.info.info
+                        // this.formTitle
+                        this.total = Number( data.info.total )
                     }
                 }
             }

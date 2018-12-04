@@ -22,18 +22,6 @@
                     <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="委托日期">
-                <el-select v-model="formTitle.region" placeholder="活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="退案日期">
-                <el-select v-model="formTitle.region" placeholder="活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
-            </el-form-item>
             <el-form-item label="备注" :label-width="formLabelWidth">
                 <el-input v-model="formTitle.name" 
                     type="textarea"

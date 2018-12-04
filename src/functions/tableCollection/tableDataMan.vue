@@ -10,37 +10,32 @@
             width="55">
         </el-table-column>
         <el-table-column
-          label="序号"
+          label="资料编号"
           prop="id"
-          width="50">
+          width="80">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="batch_name"
           label="批次名称"
           >
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="collection_area"
           label="催收区域"
           >
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="client"
           label="委托方"
           >
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="case_type"
           label="案件类型"
           >
         </el-table-column>
         <el-table-column
-          prop="name"
-          label="委案日期"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="name"
+          prop="row_count"
           label="户数"
           >
         </el-table-column>
@@ -50,12 +45,12 @@
           >
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="create_time"
           label="上传时间"
           >
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="remark"
           label="批次备注"
           >
         </el-table-column>
@@ -63,9 +58,10 @@
           label="操作"
           >
           <template slot-scope="scope">
-            <el-button size="mini" type="success" round @click="editFn(scope.row)">追加</el-button>
-            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
-            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">导出</el-button>
+            <el-button size="mini" type="success" plain round @click="editFn(scope.row)">追加</el-button>
+            <el-button size="mini" type="danger" plain round @click="deleteFn(scope.row)">删除</el-button>
+            <el-button size="mini" type="info" plain round @click="deleteFn(scope.row)">导出</el-button>
+            <el-button size="mini" type="primary" plain round @click="deleteFn(scope.row)">添加到任务</el-button>
           </template>
         </el-table-column>
     </el-table>
