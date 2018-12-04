@@ -50,7 +50,7 @@
           <el-dialog title="新建模板" :visible.sync="AddTpl" :close-on-click-modal="false" :close-on-press-escape="false" :show-close="!saving" v-move>
               <el-form label-width="100px">
                   <el-form-item label="方案名称：">
-                      <el-input v-model="AddTplData.name" style="width: 450px"></el-input>
+                      <el-input v-model="AddTplData.name" style="width: 100%"></el-input>
                   </el-form-item>
                   <el-form-item label="语音模式:">
                     <el-select v-model="AddTplData.sound_type"  placeholder="请选择语音模式" >
@@ -65,7 +65,7 @@
                   </el-form-item>
                   <el-form-item label="语音库:">
                     <el-select v-model="AddTplData.sound_id"  placeholder="请选择语音库" >
-                      <el-option  :label="(item,index).name" :value="item.id" v-for="(item,index) in  AddData.sound" :key="index"></el-option>
+                      <el-option  :label="item.name" :value="item.id" v-for="(item,index) in  AddData.sound" :key="index"></el-option>
                     </el-select>
                     <el-button type="primary" @click="addSound">新建语音库</el-button>
                   </el-form-item>
