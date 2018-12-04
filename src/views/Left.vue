@@ -93,14 +93,13 @@ import store from '../vuex/store.js'
             name:'短信管理',
             path:'',
             icon:'fa fa-envelope-o',
-            child:[]
-            // child:[{
-            //   name:"短信方案",
-            //   path:"/smsManagement"
-            // },{
-            //   name:"发送记录",
-            //   path:"/smsRecord"
-            // }]
+            child:[{
+              name:"短信方案",
+              path:"/smsManagement"
+            },{
+              name:"发送记录",
+              path:"/smsRecord"
+            }]
           },
            {
             id:'6',

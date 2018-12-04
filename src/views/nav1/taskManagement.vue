@@ -68,16 +68,24 @@
 										<div class="Countp">
 											<div class="According" style="display:block">
 												<em>当前状态:
-													<span style="color:#8876f4" v-if="form.called_round == 0"> 无呼叫任务</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 1"> 第一轮 第一次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 2"> 第一轮 第二次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 3"> 第一轮 第三次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 4"> 第二轮 第一次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 5"> 第二轮 第二次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 6"> 第二轮 第三次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 7"> 第三轮 第一次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 8"> 第三轮 第二次呼叫</span>
-													<span style="color:#8876f4" v-else-if="form.called_round == 9"> 第三轮 第三次呼叫</span>
+													<span style="color:#8876f4" v-if="form.called_round == 0">本人
+														<span style="color:#8876f4" v-if="form.called_times == 0">未开始呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 1">第一次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 2">第二次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 3">第三次呼叫</span>
+													</span>
+													<span style="color:#8876f4" v-if="form.called_round == 1">第一联系人
+														<span style="color:#8876f4" v-if="form.called_times == 0">未开始呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 1">第一次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 2">第二次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 3">第三次呼叫</span>
+													</span>
+													<span style="color:#8876f4" v-if="form.called_round == 2">第二联系人
+														<span style="color:#8876f4" v-if="form.called_times == 0">未开始呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 1">第一次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 2">第二次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.called_times == 3">第三次呼叫</span>
+													</span>
 												</em>
 											</div> 
 										</div>  
