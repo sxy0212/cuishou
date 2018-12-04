@@ -2,28 +2,40 @@
     <div>
         <el-form :model="formTitle">
             <el-form-item label="批次名称" :label-width="formLabelWidth">
-                <el-input v-model="formTitle.name" autocomplete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="委托方">
-                <el-select v-model="formTitle.region" placeholder="活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
-                </el-select>
+                <el-input v-model="formTitle.batch_name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="催收区域">
-                <el-select v-model="formTitle.region" placeholder="活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="formTitle.collection_area" placeholder="请选择催收区域">
+                    <el-option 
+                        v-for="item in areaList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="委托方">
+                <el-select v-model="formTitle.client" placeholder="请选择委托方">
+                    <el-option 
+                        v-for="item in clientList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="案件类型">
-                <el-select v-model="formTitle.region" placeholder="活动区域">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="formTitle.case_type" placeholder="请选择案件类型">
+                    <el-option 
+                        v-for="item in typeList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="备注" :label-width="formLabelWidth">
-                <el-input v-model="formTitle.name" 
+                <el-input v-model="formTitle.remark" 
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4}"
                     placeholder="请输入内容"
@@ -33,7 +45,7 @@
         <el-upload
             class="upload-demo"
             ref="upload"
-            action="https://jsonplaceholder.typicode.com/posts/"
+            action="/api/api_backend.php?r=asrcall-case-batch/import-batch"
             :file-list="fileList"
             :auto-upload="false">
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
@@ -51,7 +63,10 @@ export default {
         'id',
         'title',//用于判断添加还是编辑
         'formTitle',
-        'fileList'
+        'fileList',
+        'areaList',
+        'typeList',
+        'clientList'
     ],
     data() {
         return{
@@ -64,7 +79,7 @@ export default {
             this.$emit("clearFormTitle")
         },
         submitUpload(){
-            this.$emit("submitUpload")
+            this.$refs.upload.submit()
         },
         protectFn(){
             let data = this.formTitle

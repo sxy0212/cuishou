@@ -32,11 +32,13 @@
             v-on:saveFn = "init($event)"
             v-on:clearId = "changeId($event)"
             v-on:clearFormTitle = "clearFormTitle($event)"
-            v-on:submitUpload = "submitUpload($event)"
             :id="id"
             :title = "bannerTitle"
             :formTitle = "formTitle"
             :fileList = 'fileList'
+            :areaList='areaList'
+            :typeList='typeList'
+            :clientList='clientList'
         ></edit-dialog>
     </el-dialog>
     <el-dialog title="下载模板" :visible.sync="addDown" >
@@ -79,12 +81,12 @@ export default {
                 miniImage: '闵行区'
             }],
             formTitle:{//添加或是修改模块的数据
-                name:''
-            },
-            formInline: {
-				collection_area: '',
-                client: '',
-                case_type:''
+                batch_name:'',
+                collection_area:'',
+                client:'',
+                case_type:'',
+                remark:'',
+                
             },
             fileList: [
                 {
@@ -92,6 +94,12 @@ export default {
                     url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
                 }
             ],
+            formInline: {
+				collection_area: '',
+                client: '',
+                case_type:''
+            },
+            
             areaList:[
 
             ],
@@ -190,7 +198,6 @@ export default {
         },
         downloadFn(){//添加弹框的打开与关闭
             this.addDown = true
-            
         },
        
         changeId(){//清空编辑的具体项
@@ -257,9 +264,6 @@ export default {
         },
         handleSelectionChange(val){
             console.log(val)
-        },
-        submitUpload(){//导入，上传
-
         }
     }
 }
