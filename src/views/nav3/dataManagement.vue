@@ -1,7 +1,7 @@
 <template>
   <div class="cover">
     <div class="upB"> 
-        <el-button type="primary" plain @click='addFn(true)'>导入资料</el-button><el-button type="success" plain @click='addFn(true)'>下载模板</el-button>
+        <el-button type="primary" plain @click='addFn(true)'>导入资料</el-button><el-button type="success" plain @click='downloadFn(true)'>下载模板</el-button>
     </div>
     <div-form
         :formInline='formInline'
@@ -14,6 +14,7 @@
 
     <div-table
         :tableData="tableData"
+        
         v-on:handleSelectionChange = 'handleSelectionChange($event)'
     >
     </div-table>
@@ -38,11 +39,15 @@
             :fileList = 'fileList'
         ></edit-dialog>
     </el-dialog>
+    <el-dialog title="下载模板" :visible.sync="addDown" >
+        <div-dialog></div-dialog>
+    </el-dialog>
   </div>
 </template>
 <script>
 
 import addDataMan from '@/functions/editDialog/addDataMan.vue'
+import addDownload from '@/functions/editDialog/addDownload.vue'
 import formDataMan from '@/functions/formCollection/formDataMan.vue'
 import tableDataMan from '@/functions/tableCollection/tableDataMan.vue'
 import pageChange from '@/components/pageChange.vue'
@@ -56,7 +61,8 @@ export default {
         'edit-dialog':addDataMan,
         'page-change':pageChange,
         'div-form':formDataMan,
-        'div-table':tableDataMan
+        'div-table':tableDataMan,
+        'div-dialog':addDownload
     },
     data() {
         return {
@@ -66,6 +72,7 @@ export default {
             total:0,
             bannerTitle:"导入资料",
             addNow:false,
+            addDown:false,//是否打开下载模板
             tableData: [{
                 miniImage: '上海市普陀区'
             }, {
@@ -92,6 +99,9 @@ export default {
 
             ],
             typeList:[
+
+            ],
+            tableDownload:[//下载模板数据
 
             ]
             
@@ -178,6 +188,11 @@ export default {
             this.addNow = val
             this.id = ''
         },
+        downloadFn(){//添加弹框的打开与关闭
+            this.addDown = true
+            
+        },
+       
         changeId(){//清空编辑的具体项
             this.id = ''
         },
