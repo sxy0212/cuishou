@@ -30,7 +30,7 @@
                             </template>
                           </el-table-column>
                           <el-table-column prop="record" label="录音状况" width="100">
-                            <template scope="scope">
+                            <template slot-scope="scope">
                                 <el-button type="primary" plain @click="listen(scope.row.record)" v-if="scope.row.record">试听</el-button>
                                 <el-button type="danger" plain v-else-if="scope.row.record == ''">等待录音</el-button>
                             </template>
@@ -98,7 +98,7 @@
               </el-form-item>
               <el-form-item label="话术内容:">
                 <el-select placeholder="选择语音" v-model="baseMessageData.record" @change="changeSoundWord" class="width">
-                  <el-option v-for="(item,index) in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath">{{item.spath}}-{{item.word}}</el-option>
+                  <el-option v-for="(item,index) in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath" :key="index">{{item.spath}}-{{item.word}}</el-option>
                 </el-select>
               </el-form-item>
               <el-form-item >
@@ -151,7 +151,7 @@
                             </el-form-item>
                             <el-form-item label="话术内容:">
                                 <el-select placeholder="选择语音" v-model="baseMessageDataEdit.record" @change="changeSoundWord" class="width">
-                                <el-option v-for="item in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath">{{item.spath}}-{{item.word}}</el-option>
+                                <el-option v-for="(item,index) in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath" :key="index">{{item.spath}}-{{item.word}}</el-option>
                                 </el-select>
                             </el-form-item>
                             <el-form-item >
@@ -176,13 +176,13 @@
                         <div  style="width:170px;float:left">
                             <el-table ref="multipleTable" :data="touch.Data"  style="100%" border :height="touch.Data.length>=1?300:'100'">
                             <el-table-column prop="type" label="通用关键词" >      
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                 <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.show}}</span>
                                 <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.show}}</span>
                                 </template>                     
                             </el-table-column>
                             <el-table-column  width="30">
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                     <span @click="touchLeftPlus(scope.$index,scope.row)" style="cursor: pointer">+</span>
                                 </template>
                             </el-table-column>
@@ -193,20 +193,20 @@
                             <el-table ref="multipleTable" :data="touch.DataRight"  border :height="touch.total>0?300:'200'">
                             <el-table-column type="index" label="序号"  fixed="left" width="50"></el-table-column>
                             <el-table-column prop="name" label="来源"> 
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                 <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.name}}</span>
                                 <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.name}}</span>
                                 </template>
                             </el-table-column>
                             <el-table-column prop="condition" label="关键词" ></el-table-column>
                             <el-table-column prop="is_interrupt" label="是否可打断" width="100">
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                 <span v-show="scope.row.is_interrupt == 0">不可打断</span>
                                 <span v-show="scope.row.is_interrupt == 1">可打断</span>
                                 </template>
                             </el-table-column>
                             <el-table-column prop="type" label="操作" width="170">
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                     <el-button type="primary" plain @click="touchEdit(scope.$index,scope.row)" :disabled="scope.row.type=='system'">修改</el-button>
                                     <el-button type="danger" plain @click="touchEdl(scope.$index,scope.row)" :disabled="scope.row.type=='system'">删除</el-button>
                                 </template>
@@ -242,12 +242,12 @@
                                 <el-form-item >
                                     <el-select placeholder="请选择下个话术" v-model="contextData.nextId">
                                     <el-option label="选择下个话术" value=""></el-option>
-                                    <el-option v-for="item in context.nextData" :label="item.answer" :value="item.id">{{item.show_name}}-{{item.answer}}</el-option>                         
+                                    <el-option v-for="(item,index) in context.nextData" :label="item.answer" :value="item.id" :key="index">{{item.show_name}}-{{item.answer}}</el-option>                         
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item >
                                     <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput" v-show="contextData.name!='.jump'">
-                                    <el-option v-for="item in context.touchData" :label="item.condition" :value="item.name"></el-option>
+                                    <el-option v-for="(item,index) in context.touchData" :label="item.condition" :value="item.name" :key="index"></el-option>
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item v-show="context.custom">
@@ -271,14 +271,14 @@
                             <el-table-column prop="nextSound" label="下个话术" ></el-table-column>
                             <el-table-column prop="condition" label="触发词" ></el-table-column>
                             <el-table-column prop="is_interrupt" label="是否可打断" width="80">
-                            <template scope="scope">
+                            <template slot-scope="scope">
                                 <span v-show="scope.row.is_interrupt == '0'">不可打断</span>
                                 <span v-show="scope.row.is_interrupt == '1'">可打断</span>
                             </template>
                             </el-table-column>
                             <el-table-column prop="wait_time" label="等待时长(秒)" disabled></el-table-column>
                             <el-table-column  label="操作" width="140">
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                     <el-button type="primary" plain @click="editContext(scope.$index,scope.row)">修改</el-button>
                                     <el-button type="danger" plain @click="delContext(scope.$index,scope.row)">删除</el-button>
                                 </template>
@@ -356,7 +356,7 @@
               <el-form-item label="下个话术:">
                 <el-select placeholder="请选择下个话术" v-model="editContextData.answer">
                   <el-option label="选择下个话术" value=""></el-option>
-                  <el-option v-for="item in context.nextData" :label="item.show_name" :value="item.id"></el-option>                         
+                  <el-option v-for="(item,index) in context.nextData" :label="item.show_name" :value="item.id" :key="index"></el-option>                         
                 </el-select>
               </el-form-item>
               <el-form-item label="打断话术:">

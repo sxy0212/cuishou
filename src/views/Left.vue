@@ -104,9 +104,15 @@ import store from '../vuex/store.js'
            {
             id:'6',
             name:'话术方案',
-            path:'/speechScheme',
+            path:'',
             icon:'fa fa-file-sound-o',
-            child:[]
+            child:[{
+              name:"话术管理",
+              path:"/speechScheme"
+            },{
+              name:"自主学习",
+              path:"/Learning"
+            }]
           },
            {
             id:'7',
@@ -115,8 +121,21 @@ import store from '../vuex/store.js'
             icon:'fa fa-sitemap',
             child:[]
           },
-           {
+          {
             id:'8',
+            name:'催收部门',
+            path:'',
+            icon:'fa fa-users',
+            child:[{
+              name:"部门管理",
+              path:"/departmentManagement"
+            },{
+              name:"催收员管理",
+              path:"/collectorManagement"
+            }]
+          },
+           {
+            id:'9',
             name:'系统设置',
             path:'',
             icon:'fa fa-gear',

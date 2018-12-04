@@ -270,7 +270,7 @@
 										<div style="margin-bottom:5px;">
 											<el-radio label="ext" >转分机</el-radio>
 											<el-select v-model="formEdit.extNum" placeholder="请选择" style="width:100px;margin-left:10px;">
-												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name"></el-option>
+												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
 											</el-select>
 										</div>
 										<div>
@@ -378,7 +378,7 @@
 							<el-table-column prop="true_name" label="用户名"></el-table-column>
 							<el-table-column prop="staff_id" label="真实姓名(工号)"></el-table-column>
 							<el-table-column prop="penalty" label="振铃顺序">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-input :value="scope.row.penalty" :disabled="true"> </el-input>
 								</template>
 							</el-table-column>
@@ -415,7 +415,7 @@
 							<el-table-column prop="true_name" label="用户名"></el-table-column>
 							<el-table-column prop="staff_id" label="真实姓名(工号)"></el-table-column>
 							<el-table-column prop="penalty" label="振铃顺序">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-input :value="scope.row.penalty" :disabled="true"> </el-input>
 								</template>
 							</el-table-column>

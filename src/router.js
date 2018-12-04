@@ -6,6 +6,7 @@ import smsManagement from './views/nav4/smsManagement.vue'
 import smsRecord from "./views/nav4/smsRecord.vue"
 import speechScheme from './views/nav5/speechScheme.vue'
 import asrSoundScheme from "./views/nav5/asrSoundScheme.vue"
+import learning from './views/nav5/learning.vue'
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
 
 
@@ -16,6 +17,8 @@ import accountManagement from './views/nav7/accountManagement.vue'
 import templateManagement from './views/nav7/templateManagement.vue'
 import levelSetting from './views/nav7/levelSetting.vue'
 
+import collectorManagement from './views/nav8/collectorManagement.vue'
+import departmentManagement from './views/nav8/departmentManagement.vue'
 import Login from './views/Login.vue'
 import NotFound from './views/404.vue'
 import Index from "./views/Index.vue";
@@ -86,8 +89,16 @@ let routes = [
   },
   {
     path: '/speechScheme',
-    name: '话术方案',
+    name: '话术管理',
     component: speechScheme,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/Learning',
+    component: learning,
+    name:"自主学习",
     meta: {
       keepAlive: true,
     }
@@ -96,6 +107,22 @@ let routes = [
     path: '/asrSoundScheme/:id',
     component: asrSoundScheme,
     name:"",
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/departmentManagement',
+    name: '部门管理',
+    component: departmentManagement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/collectorManagement',
+    name: '催收员管理',
+    component: collectorManagement,
     meta: {
       keepAlive: true,
     }
