@@ -246,11 +246,11 @@
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item >
-                                    <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput">
+                                    <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput" v-show="contextData.content_type!='.jump'">
                                     <el-option v-for="(item,index) in context.touchData" :label="item.condition" :value="item.name" :key="index"></el-option>
                                     </el-select>
                                 </el-form-item>
-                                <el-form-item v-show="context.custom">
+                                <el-form-item v-show="context.custom&&contextData.content_type!='.jump'" >
                                     <el-input v-model="contextData.newCondition" style="width:217px"></el-input>
                                 </el-form-item>
                                 <el-form-item >
@@ -264,11 +264,11 @@
                                 </el-form-item>
                             </el-form>
                         </div>
-                        <div style="width:1210px;float:left;margin-left:10px">
+                        <div style="width:1200px;float:left;margin-left:10px">
                         <el-table ref="multipleTable" :data="context.Data"  border height="500">
                             <el-table-column type="index" label="序号"  :index="index" fixed="left"></el-table-column>
                             <el-table-column prop="type" label="类型" ></el-table-column>
-                            <el-table-column prop="nextSound" label="下个话术" ></el-table-column>
+                            <el-table-column prop="nextName" label="下个话术" ></el-table-column>
                             <el-table-column prop="condition" label="触发词" ></el-table-column>
                             <el-table-column prop="is_interrupt" label="是否可打断" width="80">
                             <template slot-scope="scope">
@@ -303,17 +303,17 @@
          <!-- 触发词中添加关键词弹框 -->
          <div class="dial-header tag-dial">
           <el-dialog title="添加关键词" :visible.sync="touch.AddTouch" :close-on-click-modal="false" v-move>
-              <el-form label-width="100px">
+              <el-form label-width="100px" :model="touchAddData">
                   <el-form-item label="关键词标签:">
-                    <el-input style="width:200px" v-model="touch.name"></el-input>
+                    <el-input style="width:200px" v-model="touchAddData.name"></el-input>
                   </el-form-item>
                   <el-form-item label="关键词">
-                      <el-input style="width: 200px" type="textarea" placeholder="请输入关键词(多个关键词可用逗号隔开)" v-model="touch.condition"></el-input>
+                      <el-input style="width: 200px" type="textarea" placeholder="请输入关键词(多个关键词可用逗号隔开)" v-model="touchAddData.condition"></el-input>
                   </el-form-item>
 									 <el-form-item label="是否可被打断:">
-                    <el-select placeholder="请选择" v-model="touch.is_interrupt">
-                      <el-option label="可被打断" value="1"></el-option>
-                      <el-option label="不可被打断" value="0"></el-option>
+                    <el-select placeholder="请选择" v-model="touchAddData.is_interrupt">
+                      <el-option label="可被打断"  value="1"></el-option>
+                      <el-option label="不可被打断"  value="0"></el-option>
                     </el-select>
                   </el-form-item>
               </el-form>
@@ -449,7 +449,11 @@ import { MessageBox } from 'element-ui';
             record_description:""
           },
           activeName2:'first',
-
+					touchAddData:{
+						condition:"",            //添加关键词
+            name:"" ,                 //添加关键词
+						is_interrupt:"1",          //添加中是否可被打断
+					},
           touch:{                   //触发词中用到的参数
             touchShow:false,        //点击触发词出现的弹框
             EditTouch:false,        //点击触发词右侧数据编辑按钮出现的弹框
@@ -457,9 +461,6 @@ import { MessageBox } from 'element-ui';
             AddTouch:false,         //点击触发词中添加关键词出现的弹框
             Data:[],
             keyword:"",              //搜索
-            condition:"",            //添加关键词
-            name:"" ,                 //添加关键词
-						is_interrupt:"",          //添加中是否可被打断
             DataRight:[],             //右侧数据
             total:0,
             page:1,
@@ -488,7 +489,7 @@ import { MessageBox } from 'element-ui';
             total:0,
           },
           contextData:{             //添加保存
-            content_type:".jump",
+            content_type:".content",
             is_interrupt:'1',
             nextId:"",
             condition:"0",
@@ -588,8 +589,9 @@ import { MessageBox } from 'element-ui';
                     document.getElementById("audioPlay").pause()
                 }
             },
-            // 编辑基本信息时获取数据
+            // 编辑时获取数据
             editInit(index,row){
+							this. activeName2 = 'first'
 							this.req_id = row.id
               this.baseMessage.Edit = true
               this.getSoundContent()
@@ -878,15 +880,12 @@ import { MessageBox } from 'element-ui';
 							this.touch.is_interrupt = ""
             },
             touchAddSave(){
+							const data = this.touchAddData
+							data.template_id = this.template_id
               const url = "/api/api_backend.php?r=template/trigger-add"
               const conf = {
                 url,
-                data:{
-                  template_id : this.template_id,
-                  condition : this.touch.condition,
-                  name : this.touch.name,
-									is_interrupt:this.touch.is_interrupt
-                },
+                data:data,
                 success:(data)=>{
                   this.$alert(data.message)
                   if(data.statusCode == 1){
@@ -967,7 +966,8 @@ import { MessageBox } from 'element-ui';
 									template_id:this.template_id,
 									req_id :this.req_id,
 									trigger_id : this.touchEditData.id,
-									is_interrupt :this.touchEditData.is_interrupt
+									is_interrupt :this.touchEditData.is_interrupt,
+									condition:this.touchEditData.condition
 								},
                 success:(data)=>{
                   this.$alert(data.message)
@@ -1000,6 +1000,7 @@ import { MessageBox } from 'element-ui';
                       this.$alert(data.message)
                       if(data.statusCode == 1){
                         this.touchDataRight()
+												this.touchInit()
                       }
                     }
                   }
@@ -1065,7 +1066,8 @@ import { MessageBox } from 'element-ui';
                   this.$alert(data.message)
                   if(data.statusCode == 1){
                     this.contextInit()
-                    this.contextData.content_type = ".jump"
+										this.contextTouch()
+                    this.contextData.content_type = ".content"
                     this.contextData.is_interrupt = '1'
                     this.contextData.nextId = ""
                     this.contextData.condition = "0"
