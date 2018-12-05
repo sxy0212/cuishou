@@ -47,7 +47,6 @@
 			</el-select>
 		</el-form-item>
 	</el-form>
-	<div class="middleLine"></div>
 	<div class="marginU">
 		<el-form :inline="true" :model="formInline" class="demo-form-inline">
 			<el-form-item label="部门">
@@ -348,7 +347,6 @@ export default {
 </script>
 <style>
 .blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;margin:10px 0;}
-.middleLine{width:100%;height:1px;background-color:black;}
 .marginU{margin-top:10px;}
 .el-form-item{margin-bottom:12px;}
 .el-form-item__content,.el-form-item__label{line-height:30px;}
