@@ -4,6 +4,7 @@
         border
         :data="tableData"
         style="width: 98%"
+        @row-click='rowClick'
       >
       <el-table-column
         label="资料编号"
@@ -81,6 +82,7 @@
   </div>
 </template>
 <script>
+import router from '@/router.js'
 export default {
     name:'tableDataMan',
     props:[
@@ -104,6 +106,10 @@ export default {
       },
       sureToAddTask(val){
         this.$emit('sureToAddTask',val)
+      },
+      rowClick(row,event,column){//单击
+        console.log(row,event,column)
+        router.push('/caseManagement')
       }
     }
 }
