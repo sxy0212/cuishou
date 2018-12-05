@@ -201,6 +201,13 @@ export default {
             this.id = ''
             this.fileList =[]
             this.action = '/api/api_backend.php?r=asrcall-case-batch/import-batch'
+            this.formTitle = {
+                batch_name:'',
+                collection_area:'',
+                client:'',
+                case_type:'',
+                remark:''
+            }
         },
         changeAddNow(val){
             this.addNow = val
@@ -239,7 +246,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api/api_backend.php?r=asrcall-case-batch/del-batch',
+                    url : '/api/api_backend.php?r=asrcall-case-batch/fake-del-batch',
                     data : {
                         batch_id:row.id
                     },
