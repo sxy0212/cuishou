@@ -15,6 +15,7 @@ import router from './router'
 import Vuex from 'vuex'
 import store from './vuex/store'
 import 'font-awesome/css/font-awesome.min.css'
+import '../static/css/animate.css'
 Vue.config.productionTip = false
 Vue.config.axios = axios
 Vue.use(Element)

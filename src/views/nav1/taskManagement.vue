@@ -9,7 +9,7 @@
 				</div>
 				<div class="AIlist">
 					<ul class="el-row" style="padding-left:0">
-						<li v-for="(form,index) in Dates" class="el-col el-col-8" style="min-height:300px;max-height:350px;margin-bottom:5px" :key="form.id">
+						<li v-for="(form,index) in Dates" class="el-col el-col-8" style="min-height:300px;max-height:350px;margin-bottom:5px" :key="index">
 							<div class="grid-content bg-purple">
 								<div class="AiTop" style="display:flex;justify-content:space-between;">
 									<div class="title" style="width:30%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" :title="form.name">任务名称：{{ form.name }}</div>
@@ -61,30 +61,32 @@
 											</div> 
 										</div>  
 										<div class="Countp">
-											<div class="According" style="display:block">
-												<em>剩余资料：<span style="color:red"> 0 机器人未启动</span></em>
+											<div class="According" style="display:block" v-show="form.status == 0">
+												<em>剩余资料：<span style="color:red"> {{form.remain_count}} 机器人未启动</span></em>
+											</div> 
+											<div class="According" style="display:block" v-show="form.status == 1">
+												<em>剩余资料：<span style="color:red"> {{form.remain_count}}</span></em>
 											</div> 
 										</div>  
 										<div class="Countp">
 											<div class="According" style="display:block">
 												<em>当前状态:
-													<span style="color:#8876f4" v-if="form.called_round == 0">本人
-														<span style="color:#8876f4" v-if="form.called_times == 0">未开始呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 1">第一次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 2">第二次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 3">第三次呼叫</span>
+													<span style="color:#8876f4" v-if="form.calling_round == -1">呼叫已完成
 													</span>
-													<span style="color:#8876f4" v-if="form.called_round == 1">第一联系人
-														<span style="color:#8876f4" v-if="form.called_times == 0">未开始呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 1">第一次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 2">第二次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 3">第三次呼叫</span>
+													<span style="color:#8876f4" v-else-if="form.calling_round == 0">本人
+														<span style="color:#8876f4" v-if="form.calling_times == 0">第一次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.calling_times == 1">第二次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.calling_times == 2">第三次呼叫</span>
 													</span>
-													<span style="color:#8876f4" v-if="form.called_round == 2">第二联系人
-														<span style="color:#8876f4" v-if="form.called_times == 0">未开始呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 1">第一次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 2">第二次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.called_times == 3">第三次呼叫</span>
+													<span style="color:#8876f4" v-else-if="form.calling_round == 1">第一联系人
+														<span style="color:#8876f4" v-if="form.calling_times == 0">第一次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.calling_times == 1">第二次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.calling_times == 2">第三次呼叫</span>
+													</span>
+													<span style="color:#8876f4" v-else-if="form.calling_round == 2">第二联系人
+														<span style="color:#8876f4" v-if="form.calling_times == 0">第一次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.calling_times == 1">第二次呼叫</span>
+														<span style="color:#8876f4" v-else-if="form.calling_times == 2">第三次呼叫</span>
 													</span>
 												</em>
 											</div> 
@@ -92,8 +94,8 @@
 										<div class="AiButton">
 											<el-button type="danger" style="margin-left:16px" >
 													<i class="fa fa-headphones"></i>测试</el-button>
-											<el-button type="primary"  v-if="parseInt(form.status) == 0"  > <i class="fa fa-power-off"></i>启动</el-button>
-											<el-button type="primary"  v-else-if="parseInt(form.status) == 1" > <i class="fa fa-power-off"></i>关闭</el-button>
+											<el-button type="primary"  v-if="parseInt(form.status) == 0"   @click="close(form.id,form.status)"> <i class="fa fa-power-off"></i>启动</el-button>
+											<el-button type="primary"  v-else-if="parseInt(form.status) == 1"  @click="close(form.id,form.status)"> <i class="fa fa-power-off"></i>关闭</el-button>
 											<el-button type="success" @click="edit(form.id)"><i class="fa fa-pencil"></i>编辑</el-button>
 											<el-button type="danger" @click="del(form.id)"><i class="el-icon-delete"></i>删除</el-button>
 										</div>
@@ -586,6 +588,11 @@ import { MessageBox } from 'element-ui';
 				form1Edit:{},
 				form2Edit:{},
 				form3Edit:{},
+				closeData:{
+					status:"",
+					status1:"",
+					status2:""
+				}
 			}
 		},
 		beforeMount() {
@@ -612,7 +619,18 @@ import { MessageBox } from 'element-ui';
 						this.AddData.outLine = data.info.out_side_lines
 						this.AddData.recognition_lies = data.info.recognition_lies
 						this.AddData.call_result = data.info.call_result_status
-						this.AddData.templates = data.info.templates
+					}
+				}
+				axiosRequest(conf)
+			},
+			// 点击添加时获取话术
+			AddInitSound(){
+				const url = "/api/api_backend.php?r=template/template-list-all"
+				const conf = {
+					url,
+					success:(data)=>{
+						this.AddData.templates = data.info
+						this.editData.templates = data.info
 					}
 				}
 				axiosRequest(conf)
@@ -637,6 +655,7 @@ import { MessageBox } from 'element-ui';
 		  	addTask(){
 				this.Index.addTask = true
 				this.addInit()
+				this.AddInitSound()
 				this.addExtension()
 			},
 			clone(obj){
@@ -775,6 +794,7 @@ import { MessageBox } from 'element-ui';
 			// 点编辑获取数据
 			edit(id){
 				this.addExtension()
+				this.AddInitSound()
 				this.Index.editTask = true
 				const url = "/api/api_backend.php?r=asroperate/info"
 				const conf = {
@@ -787,7 +807,7 @@ import { MessageBox } from 'element-ui';
 							item.id = '' + item.id +''
 							return item
 						})
-						this.editData.templates = data.info.templates
+						// this.editData.templates = data.info.templates
 						this.formEdit = data.info.info
 						this.formEdit.ai_count = parseInt(data.info.info.ai_count)
 						this.start_time_am = data.info.info.call_time.am.s
@@ -1039,6 +1059,28 @@ import { MessageBox } from 'element-ui';
 				}
 				axiosRequest(conf)
 			},
+			// 关闭或启动机器人
+            close(id,status){
+				var statusId = ""
+				if(status == 0){
+					statusId = 1
+				}else{
+					statusId = 2
+				}
+                const url = "/api/api_backend.php?r=asroperate/start-and-close"
+                const conf = {
+                	url,
+                    data:{
+                        id:id,
+                        status:statusId
+                    },
+                    success:(data)=>{ 
+						this.$alert(data.message)
+                        this.init()
+                    }
+                }
+                axiosRequest(conf) 
+            },
 			// 删除
 			del(id){
 				this.$confirm('您确定要删除吗？','提示信息',{
