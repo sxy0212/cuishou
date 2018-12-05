@@ -29,7 +29,7 @@
                               <p v-show="scope.row.is_interrupt == 0">类型: <span style="color:#0099FF"> {{scope.row.type}}</span> <span style="color:#FF6600">不可以打断</span> </p>
                             </template>
                           </el-table-column>
-                          <el-table-column prop="record" label="录音状况" width="100">
+                          <el-table-column prop="record" label="录音状况">
                             <template slot-scope="scope">
                                 <el-button type="primary" plain @click="listen(scope.row.record)" v-if="scope.row.record">试听</el-button>
                                 <el-button type="danger" plain v-else-if="scope.row.record == ''">等待录音</el-button>
@@ -174,11 +174,11 @@
                             </el-form-item>
                         </el-form>
                         <div  style="width:170px;float:left">
-                            <el-table ref="multipleTable" :data="touch.Data"  style="100%" border :height="touch.Data.length>=1?300:'100'">
+                            <el-table ref="multipleTable" :data="touch.Data"  style="100%" border :height="touch.Data.length>=1?300:'100'" @row-dblclick="dblclickTouchEdit">
                             <el-table-column prop="type" label="通用关键词" >      
                                 <template slot-scope="scope">
-                                <span v-show="scope.row.type=='private'" style="color:#FF0000">{{scope.row.show}}</span>
-                                <span v-show="scope.row.type=='system'" style="color:#0099FF">{{scope.row.show}}</span>
+																	<span v-show="scope.row.type=='private'" style="color:#FF0000;cursor: pointer;" >{{scope.row.show}}</span>
+																	<span v-show="scope.row.type=='system'" style="color:#0099FF;cursor: pointer;">{{scope.row.show}}</span>
                                 </template>                     
                             </el-table-column>
                             <el-table-column  width="30">
@@ -189,7 +189,7 @@
                             </el-table>
                             <el-button type="success" @click="touchAdd" style="padding:15px 52px;margin-top:10px">添加关键词</el-button>
                         </div>
-                        <div style="width:1280px;float:left;margin-left:10px">
+                        <div style="width:1260px;float:left;margin-left:10px">
                             <el-table ref="multipleTable" :data="touch.DataRight"  border :height="touch.total>0?300:'200'">
                             <el-table-column type="index" label="序号"  fixed="left" width="50"></el-table-column>
                             <el-table-column prop="name" label="来源"> 
@@ -205,7 +205,7 @@
                                 <span v-show="scope.row.is_interrupt == 1">可打断</span>
                                 </template>
                             </el-table-column>
-                            <el-table-column prop="type" label="操作" width="170">
+                            <el-table-column prop="type" label="操作" width="200">
                                 <template slot-scope="scope">
                                     <el-button type="primary" plain @click="touchEdit(scope.$index,scope.row)" :disabled="scope.row.type=='system'">修改</el-button>
                                     <el-button type="danger" plain @click="touchEdl(scope.$index,scope.row)" :disabled="scope.row.type=='system'">删除</el-button>
@@ -234,7 +234,7 @@
                         <div style="width:230px;float:left;">
                             <el-form label-width="10px" style="width:300px;float:left;">
                                 <el-form-item>
-                                    <el-select placeholder="请选择" v-model="contextData.name">
+                                    <el-select placeholder="请选择" v-model="contextData.content_type">
                                     <el-option label="关键字触发" value=".content"></el-option>
                                     <el-option label="直接跳转" value=".jump"></el-option>
                                     </el-select>
@@ -242,11 +242,11 @@
                                 <el-form-item >
                                     <el-select placeholder="请选择下个话术" v-model="contextData.nextId">
                                     <el-option label="选择下个话术" value=""></el-option>
-                                    <el-option v-for="(item,index) in context.nextData" :label="item.answer" :value="item.id" :key="index">{{item.show_name}}-{{item.answer}}</el-option>                         
+                                    <el-option v-for="(item,index) in context.nextData" :label="item.answer" :value="item.id" :key="index">{{item.show}}</el-option>                         
                                     </el-select>
                                 </el-form-item>
                                 <el-form-item >
-                                    <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput" v-show="contextData.name!='.jump'">
+                                    <el-select placeholder="请选择触发词(可输入)" v-model="contextData.condition" @change="changeTouchInput">
                                     <el-option v-for="(item,index) in context.touchData" :label="item.condition" :value="item.name" :key="index"></el-option>
                                     </el-select>
                                 </el-form-item>
@@ -277,7 +277,7 @@
                             </template>
                             </el-table-column>
                             <el-table-column prop="wait_time" label="等待时长(秒)" disabled></el-table-column>
-                            <el-table-column  label="操作" width="140">
+                            <el-table-column  label="操作" width="180">
                                 <template slot-scope="scope">
                                     <el-button type="primary" plain @click="editContext(scope.$index,scope.row)">修改</el-button>
                                     <el-button type="danger" plain @click="delContext(scope.$index,scope.row)">删除</el-button>
@@ -303,18 +303,19 @@
          <!-- 触发词中添加关键词弹框 -->
          <div class="dial-header tag-dial">
           <el-dialog title="添加关键词" :visible.sync="touch.AddTouch" :close-on-click-modal="false" v-move>
-              <el-form label-width="80px">
+              <el-form label-width="100px">
                   <el-form-item label="关键词标签:">
                     <el-input style="width:200px" v-model="touch.name"></el-input>
                   </el-form-item>
                   <el-form-item label="关键词">
                       <el-input style="width: 200px" type="textarea" placeholder="请输入关键词(多个关键词可用逗号隔开)" v-model="touch.condition"></el-input>
                   </el-form-item>
-                  <!-- <el-form-item label="意向等级:">
-                    <el-select placeholder="请选择" v-model="touch.leval">
-                      <el-option :label="item.name" :value="item.id" v-for="item in touch.levalData" :disabled="item.start != 0 && item.end!=100"></el-option>
+									 <el-form-item label="是否可被打断:">
+                    <el-select placeholder="请选择" v-model="touch.is_interrupt">
+                      <el-option label="可被打断" value="1"></el-option>
+                      <el-option label="不可被打断" value="0"></el-option>
                     </el-select>
-                  </el-form-item> -->
+                  </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
                   <el-button type="primary" @click="touchAddSave">添加</el-button>
@@ -322,13 +323,29 @@
               </div>
           </el-dialog>
         </div>
-        <!-- 触发词中的编辑弹框 -->
+				 <!-- 触发词中左侧数据的编辑弹框 -->
+        <div class="dial-header tag-dial">
+          <el-dialog title="编辑" :visible.sync="touch.EditTouchLeft" :close-on-click-modal="false" v-move>
+              <el-form label-width="90px">
+								<el-form-item label="名称:">
+                  <el-input style="width: 300px" type="textarea" :rows="4" v-model="touchEditDataLeft.name"></el-input>
+                </el-form-item>
+                  <el-form-item label="关键词:">
+                      <el-input style="width: 300px" type="textarea" :rows="4" v-model="touchEditDataLeft.condition"></el-input>
+                  </el-form-item>
+              </el-form>
+              <div slot="footer" class="dialog-footer">
+                  <el-button type="primary" @click="touchEditSaveLeft">确认修改</el-button>
+                  <el-button @click="touch.EditTouchLeft = false">关闭</el-button>  
+              </div>
+          </el-dialog>
+        </div>
+        <!-- 触发词中右侧数据的编辑弹框 -->
         <div class="dial-header tag-dial">
           <el-dialog title="编辑" :visible.sync="touch.EditTouch" :close-on-click-modal="false" v-move>
-              <el-form label-width="90px">
+              <el-form label-width="100px">
                   <el-form-item label="关键词">
                       <el-input style="width: 300px" type="textarea" :rows="4" v-model="touchEditData.condition"></el-input>
-                      <!-- <p style="padding-left:180px;margin:0;color:red">*系统关键词不可编辑</p> -->
                   </el-form-item>
                   <el-form-item label="是否可被打断:">
                     <el-select placeholder="请选择" v-model="touchEditData.is_interrupt">
@@ -346,7 +363,7 @@
          <!-- 语境设置里编辑弹框-->
          <div class="dial-header tag-dial">
           <el-dialog title="编辑" :visible.sync="context.EditContext">
-            <el-form label-width="80px">
+            <el-form label-width="100px">
               <el-form-item label="触发类型:">
                 <el-select placeholder="请选择" v-model="editContextData.type" disabled>
                   <el-option label="关键字触发" value=".content"></el-option>
@@ -386,12 +403,13 @@ import { MessageBox } from 'element-ui';
 	export default {
 		data() {
 			return {
-        template_id:"",      //话术库id
+        template_id:"",      //点击话术方案带过来的id
+				req_id:"",						//话术库中点击编辑获取到的每行的id
           curr:1,
           loading:false,
           init:{                //页面初始化时用到的参数
-            page:"1",
-            page_size:"15",
+            page:1,
+            page_size:15,
             total:0,
             keywords:"",
             InitData:[],
@@ -434,20 +452,26 @@ import { MessageBox } from 'element-ui';
 
           touch:{                   //触发词中用到的参数
             touchShow:false,        //点击触发词出现的弹框
-            EditTouch:false,        //点击触发词中编辑按钮出现的弹框
+            EditTouch:false,        //点击触发词右侧数据编辑按钮出现的弹框
+            EditTouchLeft:false,        //点击触发词左侧数据编辑按钮出现的弹框
             AddTouch:false,         //点击触发词中添加关键词出现的弹框
             Data:[],
             keyword:"",              //搜索
             condition:"",            //添加关键词
             name:"" ,                 //添加关键词
+						is_interrupt:"",          //添加中是否可被打断
             DataRight:[],             //右侧数据
             total:0,
-            page:"1",
-            page_size:"10", 
+            page:1,
+            page_size:10, 
             req_id:"",                //需要存起来的每一行的id
             levalData:[]             //等级
           },
-          touchEditData:{
+					touchEditDataLeft:{      //点击触发词左侧数据编辑用到参数
+            condition:"",
+            name:""
+          },
+          touchEditData:{         //点击触发词右侧数据编辑用到的参数
             condition:"",
             is_interrupt:""
           },
@@ -459,12 +483,12 @@ import { MessageBox } from 'element-ui';
             touchData:[],     //触发词的数据
             Data:[],
             req_id:"",
-            page:"1",
-            page_size:"10",
+            page:1,
+            page_size:10,
             total:0,
           },
           contextData:{             //添加保存
-            name:".content",
+            content_type:".jump",
             is_interrupt:'1',
             nextId:"",
             condition:"0",
@@ -566,6 +590,7 @@ import { MessageBox } from 'element-ui';
             },
             // 编辑基本信息时获取数据
             editInit(index,row){
+							this.req_id = row.id
               this.baseMessage.Edit = true
               this.getSoundContent()
               const url = "/api/api_backend.php?r=template/template-base-info"
@@ -762,42 +787,20 @@ import { MessageBox } from 'element-ui';
             },
 						handleClick(tab, event) {
                 if(tab.index == 1){     //触发词
-                    this.touch.req_id = this.ids
+                    this.touch.req_id = this.req_id
                     this.touch.keyword = ""
                     this.touchInit()                //左侧数据
-                    this.touchDataRight(this.ids)     //右侧数据
-                    this.touchInitData()
+                    this.touchDataRight()     //右侧数据
                 }else if(tab.index == 2){     //语境设置
-                    this.contextData.req_id = this.ids
-                    this.contextTouch(this.ids)
+                    this.contextData.req_id = this.req_id
+                    this.contextTouch()
                     this.contextNext()
-                    this.contextInit(this.ids)
+                    this.contextInit()
                 }
-            },
-            // 客户等级
-            touchInitData(){
-              const url = "/api_backend.php?r=customer-intent-level/list"
-              const conf = {
-                url,
-                success:(data)=>{
-                  this.touch.levalData = data.info
-                }
-              }
-               axiosRequest(conf)
-            },
-           
-            // 点击触发词
-            touchClick(index,row){
-              this.touch.req_id = row.id
-              this.touch.touchShow = true
-              this.touch.keyword = ""
-              this.touchInit()                //左侧数据
-              this.touchDataRight(row.id)     //右侧数据
-              this.touchInitData()
             },
             // 点击触发词请求到的数据(左侧)
             touchInit(){
-              const url = "/api_backend.php?r=sound-tpl/sound-trigger-list"
+              const url = "/api/api_backend.php?r=template/trigger-usable-list"
               const conf = {
                 url,
                 data:{
@@ -809,9 +812,48 @@ import { MessageBox } from 'element-ui';
               }
                axiosRequest(conf)
             },
+						// 触发词左侧数据双击进行编辑
+						dblclickTouchEdit(row,event){
+							this.touch.EditTouchLeft = true;
+							const url = "/api/api_backend.php?r=template/trigger-info"
+							const conf = {
+								url,
+								data:{
+									template_id:this.template_id,
+									trigger_id:row.id
+								},
+								success:(data)=>{
+									this.touchEditDataLeft = data.info
+								}
+							}
+							axiosRequest(conf)
+						},
+						//  触发词左侧数据编辑保存
+						touchEditSaveLeft(){
+							const url = "/api/api_backend.php?r=template/trigger-edit"
+							const conf = {
+								url,
+								data:{
+									template_id:this.template_id,
+									name:this.touchEditDataLeft.name,
+									condition:this.touchEditDataLeft.condition,
+									trigger_id:this.touchEditDataLeft.id
+								},
+								success:(data)=>{
+									this.$alert(data.message)
+                  if(data.statusCode == 1){
+                    this.touch.EditTouchLeft = false
+                    this.touchInit()
+                  }else{
+                    this.touch.EditTouchLeft = true
+                  }
+								}
+							}
+							axiosRequest(conf)
+						},
             // 触发词中搜索
             touchSearch(){
-              const url = "/api_backend.php?r=sound-tpl/sound-trigger-list-search"
+              const url = "/api/api_backend.php?r=template/trigger-search"
               const conf = {
                 url,
                 data:{
@@ -833,15 +875,17 @@ import { MessageBox } from 'element-ui';
               this.touch.AddTouch = true
               this.touch.condition = ""
               this.touch.name = ""
+							this.touch.is_interrupt = ""
             },
             touchAddSave(){
-              const url = "/api_backend.php?r=sound-tpl/insert-sound-trigger"
+              const url = "/api/api_backend.php?r=template/trigger-add"
               const conf = {
                 url,
                 data:{
                   template_id : this.template_id,
                   condition : this.touch.condition,
-                  name : this.touch.name
+                  name : this.touch.name,
+									is_interrupt:this.touch.is_interrupt
                 },
                 success:(data)=>{
                   this.$alert(data.message)
@@ -857,19 +901,18 @@ import { MessageBox } from 'element-ui';
             },
             // 左侧点击+号
             touchLeftPlus(index,row){
-              const url = "/api_backend.php?r=sound-tpl/add-trigger-list"
+              const url = "/api/api_backend.php?r=template/req-ans-trigger-add"
               const conf = {
                 url,
                 data:{
                   template_id : this.template_id,
-                  req_id:this.touch.req_id,
-                  type:row.type,
-                  name:row.id
+                  req_id:this.req_id,
+                  trigger_id:row.id,
                 },
                 success:(data)=>{
                   this.$alert(data.message)
                   if(data.statusCode == 1){
-                    this.touchDataRight(this.touch.req_id)
+                    this.touchDataRight()
                     this.initData()
                     this.touchInit()
                   }
@@ -878,15 +921,15 @@ import { MessageBox } from 'element-ui';
                axiosRequest(conf)
             },
             // 触发词中请求到的数据(右侧)
-            touchDataRight(id){
-              const url = "/api_backend.php?r=sound-tpl/trigger-list"
+            touchDataRight(){
+              const url = "/api/api_backend.php?r=template/req-ans-trigger-list"
               const page = this.touch.page
               const page_size = this.touch.page_size
               const conf = {
                 url,
                 data:{
                   template_id:this.template_id,
-                  req_id:id,
+                  req_id:this.req_id,
                   page:page,
                   page_size:page_size
                 },
@@ -904,41 +947,33 @@ import { MessageBox } from 'element-ui';
             //分页
             handleSizeChangeTouch(val){
               this.touch.page_size = val
-              this.touchDataRight(this.touch.req_id)
+              this.touchDataRight()
             },
             handleCurrentChangeTouch(val){
               this.touch.page = val
-              this.touchDataRight(this.touch.req_id)
+              this.touchDataRight()
             },
             // 右侧数据编辑
             touchEdit(index,row){
               this.touch.EditTouch = true
-              const url = "/api_backend.php?r=sound-tpl/edit-trigger-data"
-              const conf = {
-                url,
-                data:{
-                  template_id:this.template_id,
-                  id:row.id
-                },
-                success:(data)=>{
-                  this.touchEditData = data.info[0]
-                }
-              }
-               axiosRequest(conf)
+							this.touchEditData = row
             },
             // 编辑保存
             touchEditSave(){
-              const data = this.touchEditData
-              data.template_id = this.template_id
-              const url = "/api_backend.php?r=sound-tpl/edit-trigger"
+              const url = "/api/api_backend.php?r=template/req-ans-trigger-edit"
               const conf = {
                 url,
-                data:data,
+                data:{
+									template_id:this.template_id,
+									req_id :this.req_id,
+									trigger_id : this.touchEditData.id,
+									is_interrupt :this.touchEditData.is_interrupt
+								},
                 success:(data)=>{
                   this.$alert(data.message)
                   if(data.statusCode == 1){
                     this.touch.EditTouch = false
-                    this.touchDataRight(this.touch.req_id)
+                    this.touchDataRight()
                   }else{
                     this.touch.EditTouch = true
                   }
@@ -953,17 +988,18 @@ import { MessageBox } from 'element-ui';
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  const url = "/api_backend.php?r=sound-tpl/delete-trigger"
+                  const url = "/api/api_backend.php?r=template/req-ans-trigger-delete"
                   const conf = {
                     url,
                     data:{
                       template_id : this.template_id,
-                      id:row.id
+											req_id:this.req_id,
+                      trigger_id:row.id
                     },
                     success:(data)=>{
                       this.$alert(data.message)
                       if(data.statusCode == 1){
-                        this.touchDataRight(this.touch.req_id)
+                        this.touchDataRight()
                       }
                     }
                   }
@@ -979,11 +1015,12 @@ import { MessageBox } from 'element-ui';
             // 点击语境设置
             // 获取下个话术列表
             contextNext(){
-              const url = "/api_backend.php?r=sound-tpl/nextname-list"
+              const url = "/api/api_backend.php?r=template/content-next-list"
               const conf = {
                 url,
                 data:{
-                  template_id : this.template_id
+                  template_id : this.template_id,
+									req_id:this.req_id
                 },
                 success:(data)=>{
                   this.context.nextData = data.info
@@ -992,13 +1029,13 @@ import { MessageBox } from 'element-ui';
                axiosRequest(conf)
             },
             // 获取触发词列表
-            contextTouch(req_id){
-              const url = "/api_backend.php?r=sound-tpl/system-trigger"
+            contextTouch(){
+              const url = "/api/api_backend.php?r=template/content-common-type-list"
               const conf = {
                 url,
                 data:{
                   template_id : this.template_id,
-                  req_id:req_id
+                  req_id:this.req_id
                 },
                 success:(data)=>{
                   this.context.touchData = data.info
@@ -1007,13 +1044,6 @@ import { MessageBox } from 'element-ui';
               }
                axiosRequest(conf)
             },
-            contextClick(index,row){
-              this.context.ShowContext = true
-              this.contextData.req_id = row.id
-              this.contextTouch(row.id)
-              this.contextNext()
-              this.contextInit(row.id)
-            },   
             // 可手动输入触发词
             changeTouchInput(val){
               if(val == '0'){
@@ -1026,21 +1056,20 @@ import { MessageBox } from 'element-ui';
             contextSave(){
               const data = this.contextData
               data.template_id = this.template_id
-              data.req_id = this.contextData.req_id
-              const url = "/api_backend.php?r=sound-tpl/insert-language-environment"
+              data.req_id = this.req_id
+              const url = "/api/api_backend.php?r=template/content-add"
               const conf = {
                 url,
                 data:data,
                 success:(data)=>{
                   this.$alert(data.message)
                   if(data.statusCode == 1){
-                    this.contextInit(this.contextData.req_id)
-                    this.contextData.name = ".content"
+                    this.contextInit()
+                    this.contextData.content_type = ".jump"
                     this.contextData.is_interrupt = '1'
                     this.contextData.nextId = ""
                     this.contextData.condition = "0"
                     this.contextData.newCondition = ""
-                    this.contextTouch(this.contextData.req_id)
                     this.context.custom = true
                   }
                 }
@@ -1048,15 +1077,15 @@ import { MessageBox } from 'element-ui';
                axiosRequest(conf)
             },
             // 右侧数据列表
-            contextInit(req_id){
-              const url = "/api_backend.php?r=sound-tpl/language-environment-list"
+            contextInit(){
+              const url = "/api/api_backend.php?r=template/content-list"
               const page = this.context.page
               const page_size = this.context.page_size
               const conf = {
                 url,
                 data:{
                   template_id : this.template_id,
-                  req_id:req_id,
+                  req_id:this.req_id,
                   page:page,
                   page_size:page_size
                 },
@@ -1080,31 +1109,33 @@ import { MessageBox } from 'element-ui';
             // 编辑
             editContext(index,row){
               this.context.EditContext = true
-              const url = "/api_backend.php?r=sound-tpl/edit-language-environment-data"
+              const url = "/api/api_backend.php?r=template/content-info"
               const conf = {
                 url,
                 data:{
                   template_id : this.template_id,
-                  id:row.id
+									req_id:this.req_id,
+                  content_id:row.id
                 },
                 success:(data)=>{
-                  this.editContextData = data.info[0]
+                  this.editContextData = data.info
                 }
               }
                axiosRequest(conf)
             },
             // 保存编辑
             editContextSave(){
-              const url = "/api_backend.php?r=sound-tpl/edit-language-environment"
+              const url = "/api/api_backend.php?r=template/content-edit"
               const conf = {
                 url,
                 data:{
                   template_id:this.template_id,
-                  req_id:this.contextData.req_id,
-                  id: this.editContextData.id,
-                  name: this.editContextData.type,
+                  req_id:this.req_id,
+									content_id:this.editContextData.id,
+                  content_type: this.editContextData.type,
                   nextId: this.editContextData.answer,
                   is_interrupt: this.editContextData.is_interrupt,
+									newCondition:this.editContextData.newCondition,
                   condition:this.editContextData.condition
                 },
                 success:(data)=>{
@@ -1126,7 +1157,7 @@ import { MessageBox } from 'element-ui';
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  const url = "/api_backend.php?r=sound-tpl/delete-language-environment"
+                  const url = "/api/api_backend.php?r=template/content-delete"
                   const conf = {
                     url,
                     data:{
@@ -1136,7 +1167,7 @@ import { MessageBox } from 'element-ui';
                     success:(data)=>{
                       this.$alert(data.message)
                       if(data.statusCode == 1){
-                        this.contextInit(this.contextData.req_id)
+                        this.contextInit()
                       }
                     }
                   }
@@ -1152,9 +1183,11 @@ import { MessageBox } from 'element-ui';
 	}
 
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   .over .el-dialog__body{overflow:hidden;}
   .el-select-dropdown__item{width:215px;}
   .padding .el-dialog__body{padding:10px 60px;}
   .width{width:260px}
+	.TableList .el-table .el-table_1_column_2 >.cell{text-align:left;}
+	.TableList .el-table .el-table__row td:nth-of-type(2) .cell{text-align:left}
 </style>

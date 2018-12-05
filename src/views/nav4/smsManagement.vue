@@ -29,7 +29,7 @@
       ></page-change>
 					<!-- 添加或方案弹框  -->
 					<div class="dial-header addTask">
-            <el-dialog :title="addOrEdit.title" :visible.sync="addOrEdit.show" v-move>
+            <el-dialog title="添加方案" :visible.sync="add.show" v-move>
 							<el-form :model="form" label-width="120px" ref="forms">
 								<el-form-item label="方案名称:">
 										<el-input v-model="form.name" :style="Index.width"></el-input>
@@ -192,6 +192,9 @@ import { MessageBox } from 'element-ui';
 						bei:"备注备注"
 					},
 					],
+					add:{
+						show:false
+					},
 				addOrEdit:{
 					title:"",
 					show:false
@@ -279,9 +282,17 @@ import { MessageBox } from 'element-ui';
 			init(){
 			
       },
-			// 点击添加任务时数据初始话
+			// 点击添加任务时数据初始化
 			addInit(){
-				
+					const url = "/api/api_backend.php?r=sms-rule/add-init"
+					const conf = {
+						url,
+						success:(data)=>{
+							this.AddData.call_result = data.info.call_result_status
+							console.log(data)
+						}
+					}
+					axiosRequest(conf)
 			},
 			changeStatus1(){
 				this.form1.not_connected_status = this.not_connected_status1.join()
@@ -289,24 +300,8 @@ import { MessageBox } from 'element-ui';
 			changeStatus2(){
 				this.form2.not_connected_status = this.not_connected_status2.join()
 			},
-		  addTask(num,row){
-				this.addOrEdit.show = true
-				if(num == 1){
-					this.addOrEdit.title = "添加方案"
-					this.form = {}
-				}else if(num == 2){
-					this.addOrEdit.show = true;
-					this.addOrEdit.title = "修改方案"
-					const url = ""
-					const conf = {
-						url,
-						data:{id:row.id},
-						success:(data)=>{
-							console.log(data)
-						}
-					}
-					axiosRequest(conf)
-				}
+		  addTask(){
+				this.add.show = true
 				this.addInit()
 			},
 			// 保存添加
