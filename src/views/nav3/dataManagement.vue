@@ -14,8 +14,14 @@
 
     <div-table
         :tableData="tableData"
-        
-        v-on:handleSelectionChange = 'handleSelectionChange($event)'
+        :taskList='taskList'
+        :taskValue='taskValue'
+        :addTask='addTask'
+        v-on:deleteFn='deleteFn($event)'
+        v-on:exportFn='exportFn($event)'
+        v-on:addToFn='addToFn($event)'
+        v-on:addToTask='addToTask($event)'
+        v-on:sureToAddTask='sureToAddTask($event)'
     >
     </div-table>
     <page-change 
@@ -28,11 +34,14 @@
     
     <el-dialog :title="bannerTitle" :visible.sync="addNow" >
         <edit-dialog
-            v-on:addNowChange = "addFn($event)"
-            v-on:saveFn = "init($event)"
-            v-on:clearId = "changeId($event)"
-            v-on:clearFormTitle = "clearFormTitle($event)"
+            v-on:init='init($event)'
+            v-on:changeAddNow="changeAddNow($event)"
+            v-on:addNowChange="addFn($event)"
+            v-on:saveFn="init($event)"
+            v-on:clearId="changeId($event)"
+            v-on:clearFormTitle="clearFormTitle($event)"
             :id="id"
+            :action="action"
             :title = "bannerTitle"
             :formTitle = "formTitle"
             :fileList = 'fileList'
@@ -42,7 +51,9 @@
         ></edit-dialog>
     </el-dialog>
     <el-dialog title="下载模板" :visible.sync="addDown" >
-        <div-dialog></div-dialog>
+        <div-dialog
+            
+        ></div-dialog>
     </el-dialog>
   </div>
 </template>
@@ -75,45 +86,38 @@ export default {
             bannerTitle:"导入资料",
             addNow:false,
             addDown:false,//是否打开下载模板
-            tableData: [{
-                miniImage: '上海市普陀区'
-            }, {
-                miniImage: '闵行区'
-            }],
+            addTask:false,//是否添加外呼任务
+            tableData: [],
             formTitle:{//添加或是修改模块的数据
                 batch_name:'',
                 collection_area:'',
                 client:'',
                 case_type:'',
                 remark:'',
-                
             },
-            fileList: [
-                {
-                    name: 'food2.jpeg', 
-                    url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                }
-            ],
+            fileList: [],
+            action:'',
             formInline: {
 				collection_area: '',
                 client: '',
                 case_type:''
             },
-            
-            areaList:[
+            areaList:[//区域资料
 
             ],
-            clientList:[
+            clientList:[//客户资料
 
             ],
-            typeList:[
+            typeList:[//类型资料
+
+            ],
+            taskList:[//任务列表
 
             ],
             tableDownload:[//下载模板数据
 
-            ]
-            
-            
+            ],
+            taskValue:''//添加外呼任务选项
         }
     },
     created() {
@@ -195,11 +199,15 @@ export default {
             this.bannerTitle = "导入资料"
             this.addNow = val
             this.id = ''
+            this.fileList =[]
+            this.action = '/api/api_backend.php?r=asrcall-case-batch/import-batch'
         },
-        downloadFn(){//添加弹框的打开与关闭
-            this.addDown = true
+        changeAddNow(val){
+            this.addNow = val
         },
-       
+        downloadFn(val){//添加弹框的打开与关闭
+            this.addDown = val
+        },
         changeId(){//清空编辑的具体项
             this.id = ''
         },
@@ -208,13 +216,12 @@ export default {
                 name:''
             }
         },
-        editFn(row){//编辑弹框的打开与关闭
-            this.bannerTitle = "区域编辑"
+        addToFn(row){//追加
+            this.bannerTitle = "资料追加"
             this.id = row.id
             this.addNow = true
-            this.formTitle = {
-                name:row.name
-            }
+            this.fileList =[]
+            this.action = '/api/api_backend.php?r=asrcall-case-batch/superaddition'
         },
         pageSizeChangeFn(val){
             // console.log(val)
@@ -226,15 +233,15 @@ export default {
             this.init()
         },
         deleteFn(row){
-             this.$confirm('确定删除这一条？', '提示', {
+            this.$confirm('确定删除这一条？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api/api_backend.php?r=system-setting/area-del',
+                    url : '/api/api_backend.php?r=asrcall-case-batch/del-batch',
                     data : {
-                        id:row.id
+                        batch_id:row.id
                     },
                     success:(data)=>{
                         if( data.statusCode == 1 ){
@@ -262,9 +269,57 @@ export default {
                 })
             })
         },
-        handleSelectionChange(val){
-            console.log(val)
+        exportFn(row){//导出
+            window.open('/api/api_backend.php?r=asrcall-case-batch/export-batch&batch_id='+row.id)
+        },
+        addToTask(){//添加到任务
+            this.addTask= true
+            this.taskValue = ''
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/config-list',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.taskList = data.info
+                    }else if(data.statusCode == 0){
+                        Message({
+                            message: data.message,
+                            type: 'erro',
+                            duration: 3 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        sureToAddTask(row){
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/config-list',
+                data:{
+                    batch_id:row.id,
+                    config_id:this.taskValue
+                },
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.init()
+                        this.addTask= false
+                        this.taskValue = ''
+                        Message({
+                            message: '添加成功！',
+                            type: 'success',
+                            duration: 3 * 1000
+                        })
+                    }else if(data.statusCode == 0){
+                        Message({
+                            message: data.message,
+                            type: 'erro',
+                            duration: 3 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
         }
+        
     }
 }
 </script>

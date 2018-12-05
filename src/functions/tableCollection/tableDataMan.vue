@@ -1,10 +1,10 @@
 <template>
+  <div>
     <el-table
         border
         :data="tableData"
         style="width: 98%"
-        @selection-change="handleSelectionChange"
-    >
+      >
       <el-table-column
         label="资料编号"
         prop="id"
@@ -55,24 +55,56 @@
         width='250'
       >
         <template slot-scope="scope">
-          <el-button size="mini" type="success" plain round @click="editFn(scope.row)">追加</el-button>
+          <el-button size="mini" type="success" plain round @click="addToFn(scope.row)">追加</el-button>
           <el-button size="mini" type="danger" plain round @click="deleteFn(scope.row)">删除</el-button>
-          <el-button size="mini" type="info" plain round @click="deleteFn(scope.row)">导出</el-button>
-          <el-button size="mini" type="primary" plain round @click="deleteFn(scope.row)">添加到任务</el-button>
+          <el-button size="mini" type="info" plain round @click="exportFn(scope.row)">导出</el-button>
+          <el-button size="mini" type="primary" plain round @click="addToTask(scope.row)">添加到任务</el-button>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog title="添加到外呼任务" :visible.sync="addTask" >
+        <div>
+            <el-select v-model="taskValue" placeholder="请选择">
+              <el-option
+                v-for="item in taskList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+          </el-select>
+        </div>
+       
+        <div slot="footer" class="dialog-footer">
+            <el-button @click="sureToAddTask">确认添加</el-button>
+        </div>
+    </el-dialog>
+  </div>
 </template>
 <script>
 export default {
     name:'tableDataMan',
     props:[
-        'tableData'
+        'tableData',
+        'taskValue',
+        'taskList',
+        'addTask'
     ],
     methods:{
-        handleSelectionChange(val){
-            this.$emit('handleSelectionChange',val)
-        }
+      deleteFn(val){
+        this.$emit('deleteFn',val)
+      },
+      exportFn(val){
+        this.$emit('exportFn',val)
+      },
+      addToFn(val){
+        this.$emit('addToFn',val)
+      },
+      addToTask(val){
+        this.$emit('addToTask',val)
+      },
+      sureToAddTask(val){
+        this.$emit('sureToAddTask',val)
+      }
     }
 }
 </script>

@@ -20,6 +20,7 @@
 import tableTemplate from '@/functions/tableCollection/tableTemplate.vue'
 import pageChange from '@/components/pageChange.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
+import { Message } from 'element-ui'
 
 export default {
     name:'addDownload',

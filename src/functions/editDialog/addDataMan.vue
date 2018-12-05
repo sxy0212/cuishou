@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-form :model="formTitle">
+        <el-form :model="formTitle" v-if="formShow">
             <el-form-item label="批次名称" :label-width="formLabelWidth">
                 <el-input v-model="formTitle.batch_name" autocomplete="off"></el-input>
             </el-form-item>
@@ -45,12 +45,16 @@
         <el-upload
             class="upload-demo"
             ref="upload"
-            action="/api/api_backend.php?r=asrcall-case-batch/import-batch"
+            :action="action"
+            :data="data"
+            :on-success="successFn"
             :file-list="fileList"
-            :auto-upload="false">
+            :auto-upload="false"
+            :limit="1"
+        >
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+            <el-button v-show="formShow" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定上传</el-button>
+            <el-button v-show="!formShow" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定追加</el-button>
         </el-upload>
     </div>
 </template>
@@ -66,11 +70,27 @@ export default {
         'fileList',
         'areaList',
         'typeList',
-        'clientList'
+        'clientList',
+        'action'
     ],
+    computed:{
+        formShow(){
+            return this.title=='导入资料'
+        },
+        data(){
+            if(this.formShow){
+                return  this.formTitle
+            }else{
+                let obj = {}
+                obj['batch_id'] = this.id
+                return obj
+            }
+                    
+        }
+    },
     data() {
         return{
-            formLabelWidth:"70px"
+            formLabelWidth:"70px",
         }
     },
     methods:{
@@ -81,40 +101,24 @@ export default {
         submitUpload(){
             this.$refs.upload.submit()
         },
-        protectFn(){
-            let data = this.formTitle
-            let url 
-            if( this.title == '区域添加' ){
-                url = '/api/api_backend.php?r=system-setting/area-add'
-            }else if( this.title == "区域编辑" ){
-                url = '/api/api_backend.php?r=system-setting/area-edit'
-                data.id = this.id
+        successFn(res,file, fileList) {
+            if(res.statusCode == 1){
+                this.$emit('changeAddNow',false)
+                this.$emit('init')
+                Message({
+                    message: res.message,
+                    type: 'success',
+                    duration: 3 * 1000
+                })
+            }else{
+                Message({
+                    message: res.message,
+                    type: 'erro',
+                    duration: 3 * 1000
+                })
             }
-            let conf = {
-                url ,
-                data,
-                success:(data)=>{
-                    if( data.statusCode == 1 ){
-                        this.cancelFn()
-                        this.$emit('saveFn')
-                        this.$emit('clearId')
-                        this.$emit("clearFormTitle")
-                        Message({
-                            message: data.message,
-                            type: 'success',
-                            duration: 3 * 1000
-                        })
-                    }else if(data.statusCode == 0){
-                        Message({
-                            message: data.message,
-                            type: 'erro',
-                            duration: 3 * 1000
-                        })
-                    }
-                }
-            }
-            axiosRequest(conf)
-        }
+        },
+        
     }
 }
 </script>
