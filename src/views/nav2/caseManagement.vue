@@ -1,44 +1,24 @@
 <template>
   <div class="cover">
-	  <div-form
-	  	:formFirst='formFirst'
-	  >
-
-	  </div-form>
-		
-	<div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="searchFn" size="mini">查询</el-button>
-            <el-button type="info" @click="searchFn" size="mini">清空</el-button>
-        </div>
+		<div-form
+			:formFirst='formFirst'
+			:levelList='levelList'
+			:batchList='batchList'
+			:departmentList='departmentList'
+			:clientList='clientList'
+		>
+		</div-form>
+		<div slot="footer" class="dialog-footer">
+			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
+			<el-button type="info" @click="searchFn" size="mini">清空</el-button>
+		</div>
     <div> 
     <div class="blueB">
-		<el-form ref="form" :model="form" label-width="120px">
-			<el-form-item label="分配案件：">
-				<el-button type="primary" @click="searchFn" size="mini">快速分配</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">手动分配</el-button>
-			</el-form-item>
-			<el-form-item label="案件操作：">
-				<el-button type="primary" @click="searchFn" size="mini">暂停案件</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">关闭案件</el-button>
-				<el-button type="primary" @click="searchFn" size="mini">退案</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">恢复案件</el-button>
-				<el-button type="info" @click="searchFn" size="mini">修改催收区域</el-button>
-			</el-form-item>
-			<el-form-item label="导出操作：">
-				<el-button type="primary" @click="searchFn" size="mini">导出查询结果</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">导出所选案件</el-button>
-				<el-button type="primary" @click="searchFn" size="mini">导出所选电话</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">导出催收记录</el-button>
-			</el-form-item>
-			<el-form-item label="案件标色：">
-				<el-button type="primary" @click="searchFn" size="mini">导出查询结果</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">导出所选案件</el-button>
-				<el-button type="primary" @click="searchFn" size="mini">导出所选电话</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">导出催收记录</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">导出催收记录</el-button>
-            	<el-button type="info" @click="searchFn" size="mini">导出催收记录</el-button>
-			</el-form-item>
-		</el-form>
+		<second-form
+			:form='form'
+			
+		>
+		</second-form>
 	</div>
 	</div>
     <div class="tableCover">
@@ -128,6 +108,7 @@ import '@/assets/css/system.css'
 import addImport from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
+import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -138,7 +119,8 @@ export default {
     components:{
         'edit-dialog':addImport,
 		'page-change':pageChange,
-		'div-form':formCaseFirst
+		'div-form':formCaseFirst,
+		'second-form':formCaseSecond
 	},
 	data() {
         return {
@@ -151,6 +133,10 @@ export default {
           		name: '',
 				region: ''
 			},
+			levelList:[],//案件等级
+			batchList:[],//批次列表
+			departmentList:[],//部门列表
+			clientList:[],//委托方列表
 			formFirst:{//搜索条件
 				case_name:'',
 				case_mobile:'',
@@ -161,9 +147,7 @@ export default {
 				case_back_date:'',
 				case_money:'',
 				id:'',
-
-
-
+				case_last_collection_date:''
 			},
 			formInline: {
 				user: '',
@@ -188,6 +172,9 @@ export default {
     created() {
 		this.init()
 		console.log(store)
+		this.getBatchList()
+		this.getDepartmentList()
+		this.getClientList()
     },
     methods: {
 		handleSelectionChange(val){
@@ -198,6 +185,40 @@ export default {
 		},
         onSubmit(){
 
+		},
+		getBatchList(){
+			let conf = {
+                url : '/api/api_backend.php?r=collection/init-search',
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.levelList = data.info.case_level
+                        this.batchList = data.info.batch_id
+                    }
+                }
+            }
+            axiosRequest(conf)
+		},
+		getDepartmentList(){
+			let conf = {
+                url : '/api/api_backend.php?r=collection/depart-search',
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.departmentList = data.info.depart
+                    }
+                }
+            }
+            axiosRequest(conf)
+		},
+		getClientList(){
+			let conf = {
+                url : '/api/api_backend.php?r=collection/client-search',
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.clientList = data.info
+                    }
+                }
+            }
+            axiosRequest(conf)
 		},
         init(){
             let conf = {

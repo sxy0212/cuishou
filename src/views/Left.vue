@@ -54,119 +54,12 @@
 </template>
 <script type="text/ecmascript-6">
 import store from '../vuex/store.js'
+import  { axiosRequest } from '@/assets/js/Yt.js'
   export default {
     data(){
       return {
         open:true,
-        data:[
-          {
-            id:'1',
-            name:'任务管理',
-            path:'/taskManagement',
-            icon:'fa fa-tasks',
-            child:[]
-          },
-          {
-            id:'2',
-            name:'案件管理',
-            path:'/caseManagement',
-            icon:'fa fa-address-card-o',
-            child:[]
-          },
-           {
-            id:'3',
-            name:'数据统计',
-            path:'/dataStatistics',
-            icon:'fa fa-bar-chart-o ',
-            child:[]
-          },
-          
-           {
-            id:'4',
-            name:'资料管理',
-            path:'/dataManagement',
-            icon:'fa fa-file-text-o',
-            child:[]
-          },
-           {
-            id:'5',
-            name:'短信管理',
-            path:'',
-            icon:'fa fa-envelope-o',
-            child:[{
-              name:"短信方案",
-              path:"/smsManagement"
-            },{
-              name:"发送记录",
-              path:"/smsRecord"
-            }]
-          },
-           {
-            id:'6',
-            name:'话术方案',
-            path:'',
-            icon:'fa fa-file-sound-o',
-            child:[{
-              name:"话术管理",
-              path:"/speechScheme"
-            },{
-              name:"自主学习",
-              path:"/Learning"
-            }]
-          },
-           {
-            id:'7',
-            name:'权限管理',
-            path:'/privilegeManagement',
-            icon:'fa fa-sitemap',
-            child:[]
-          },
-          {
-            id:'8',
-            name:'催收部门',
-            path:'',
-            icon:'fa fa-users',
-            child:[{
-              name:"部门管理",
-              path:"/departmentManagement"
-            },{
-              name:"催收员管理",
-              path:"/collectorManagement"
-            }]
-          },
-           {
-            id:'9',
-            name:'系统设置',
-            path:'',
-            icon:'fa fa-gear',
-            child:[
-              {
-              name:'催收区域配置',
-              path:'/regionalConfiguration'
-            },
-             {
-              name:'委托方配置',
-              path:'/clientConfiguration'
-            },
-             {
-              name:'案件类型配置',
-              path:'/caseConfiguration'
-            },
-             {
-              name:'账号管理',
-              path:'/accountManagement'
-            },
-             {
-              name:'模板管理',
-              path:'/templateManagement'
-            },
-            {
-              name:'案件等级设置',
-              path:'/levelSetting'
-            }
-            ]
-          },
-        ]
+        data:[]
       }
     },
  mounted () {
@@ -185,7 +78,17 @@ import store from '../vuex/store.js'
         }
         
     },
-    
+    created(){
+      let conf = {
+          url : '/api/api_backend.php?r=system-setting/load-menu',
+          success:(data)=>{
+            if( data.statusCode == 1 ){
+              this.data = data.info
+            }
+          }
+      }
+      axiosRequest(conf)
+    },
     methods:{
        handleOpen(key, keyPath) {
          console.log(key)
