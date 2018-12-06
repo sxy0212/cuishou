@@ -13,7 +13,8 @@ const store =  new Vuex.Store({
         activeIndex: '/taskManagement',
         userInfo: {},
         menuIndex: '0',
-        caseBatchId:''//案件管理当前批次
+        caseBatchId:'',//案件管理当前批次
+        menusList:''//侧边连数据
     },
     mutations : {
         add_tabs (state,data) {
@@ -43,6 +44,9 @@ const store =  new Vuex.Store({
         },
         changeBatchId( state, info ){
             state.caseBatchId = info
+        },
+        changeMenusList( state, info ){
+            state.menusList = info
         }
     }
 });
