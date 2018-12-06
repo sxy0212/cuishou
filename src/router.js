@@ -7,6 +7,7 @@ import smsRecord from "./views/nav4/smsRecord.vue"
 import speechScheme from './views/nav5/speechScheme.vue'
 import asrSoundScheme from "./views/nav5/asrSoundScheme.vue"
 import learning from './views/nav5/learning.vue'
+import sound from './views/nav5/sound.vue'
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
 
 
@@ -106,6 +107,14 @@ let routes = [
   {
     path: '/asrSoundScheme/:id',
     component: asrSoundScheme,
+    name:"",
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/sound/:id',
+    component: sound,
     name:"",
     meta: {
       keepAlive: true,

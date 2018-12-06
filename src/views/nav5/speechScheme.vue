@@ -23,9 +23,7 @@
 									<el-table-column prop="create_time" label="创建时间" ></el-table-column>
 									<el-table-column prop="sound_type" label="操作"  width="350">
 											<template slot-scope="scope">
-													<a href="backend.php?r=asr-sound-scheme/sound">
-														<el-button type="primary" plain >语音库</el-button>
-													</a>
+													<el-button type="primary" plain @click="sound(scope.row)">语音库</el-button>
 													<el-button type="primary" plain @click="asrSound(scope.row)">话术库</el-button>
 													<a href="backend.php?r=asr-voice-repository/tree">
 														<el-button type="primary" plain @click="flow(scope.$index,scope.row)">流程图</el-button>
@@ -363,6 +361,10 @@ import pageChange from '@/components/pageChange.vue'
 						asrSound(row){
 							this.$router.push({path:'asrSoundScheme/'+row.id})
 						},
+            // 进入语音库
+            sound(row){
+              this.$router.push({path:"sound/"+row.sound_id})
+            },
             detile(index,row){
               setCookie('telephone_detail',row.id)
             },

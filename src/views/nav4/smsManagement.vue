@@ -427,6 +427,7 @@ import { MessageBox } from 'element-ui';
 					success:(data)=>{
 						this.formEdit.name = data.info.rule_info.name
 						this.formEdit.remark = data.info.rule_info.remark
+						this.formEdit.id = data.info.rule_info.id
 						console.log(data)
 						this.AddData.call_result = 	this.AddData.call_result.map(item=>{
 							item.id = '' + item.id +''
@@ -472,7 +473,6 @@ import { MessageBox } from 'element-ui';
 				this.round_rule_edit[1] = this.form2Edit
 				this.round_rule_edit[2] = this.form3Edit
 				const data = this.formEdit
-				console.log(this.formEdit)
 				data.round_info = JSON.stringify(this.round_rule_edit)
 				const url = "/api/api_backend.php?r=sms-rule/edit-handle"
 				const conf = {
