@@ -226,7 +226,7 @@
 								<el-form :model="form" label-width="145px" ref="forms">    
 									<el-form-item label="是否发送短信:" style="margin-top:40px;">
                         				<el-select v-model="form.sms_rules" :style="Index.width" >
-											<el-option value="" label="不发送短信" ></el-option>
+											<el-option value="0" label="不发送短信" ></el-option>
 											<el-option v-for="(item,index) in AddData.smsList" :value="item.id" :label="item.name" :key="index"></el-option>
 										</el-select>
 									</el-form-item>        
@@ -360,7 +360,7 @@
 						<el-form :model="formEdit" label-width="145px" ref="forms">    
 							<el-form-item label="是否发送短信:" style="margin-top:40px;">
 								<el-select v-model="formEdit.sms_rules" :style="Index.width" >
-									<el-option value="" label="不发送短信" ></el-option>
+									<el-option value="0" label="不发送短信" ></el-option>
 									<el-option v-for="(item,index) in AddData.smsList" :value="item.id" :label="item.name" :key="index"></el-option>
 								</el-select>
 							</el-form-item>        
@@ -518,7 +518,7 @@ import { MessageBox } from 'element-ui';
 					timeout:"",
 					maxlen:"",
 					staff_id_queue:"",
-					sms_rules:""      //短信
+					sms_rules:"0"      //短信
             	},
 				round_rule:[],
 				not_connected_status1:[],
@@ -564,7 +564,7 @@ import { MessageBox } from 'element-ui';
 					timeout:"",
 					maxlen:"",
 					staff_id_queue:"",
-					sms_rules:""
+					sms_rules:"0"
 				},
 				data2:{
 					round:'0',
