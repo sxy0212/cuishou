@@ -16,7 +16,7 @@
 							</template>
 						</el-table-column>
 				</el-table>
-					<!-- 添加或方案弹框  -->
+					<!-- 添加方案弹框  -->
 					<div class="dial-header addTask1">
             <el-dialog title="添加方案" :visible.sync="addOrEdit.addShow" v-move>
 							<el-form :model="form" label-width="120px" ref="form">
@@ -25,7 +25,7 @@
 								</el-form-item>
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
-							<el-form :model="form1" label-width="120px" ref="forms" style="width:33.3%;display:inline-block;background:#fff">
+							<el-form :model="form1" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
 											<el-form-item label="本人号码接通:">
 												<el-select v-model="form1.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
@@ -47,7 +47,8 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
-													<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
+											 	<el-checkbox :indeterminate="isIndeterminate1"  @change="handleCheckAllChange1">全选</el-checkbox>
+												<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
 											</el-form-item>
@@ -55,8 +56,8 @@
 													<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-										<el-form :model="form2" label-width="120px" ref="forms" style="width:33.3%;display:inline-block;background:#fff">
-											<el-form-item label="本人号码接通:">
+										<el-form :model="form2" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+											<el-form-item label="第一联系人号码接通:">
 												<el-select v-model="form2.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
@@ -65,7 +66,7 @@
 											<el-form-item label="发送内容:">
 												<el-input v-model="form2.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
-											<el-form-item label="本人号码未接通:">
+											<el-form-item label="第一联系人号码未接通:">
 												<el-select v-model="form2.not_connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
@@ -77,6 +78,7 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
+													<el-checkbox :indeterminate="isIndeterminate2"  @change="handleCheckAllChange2">全选</el-checkbox>
 													<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
@@ -85,9 +87,9 @@
 													<el-input v-model="form2.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-										<el-form :model="form3" label-width="120px" ref="forms" style="width:31%;display:inline-block;background:#fff">
-											<el-form-item label="本人号码接通:">
-												<el-select v-model="form3.connected_send" :style="Index.width" placeholder="请选择外线号码">
+										<el-form :model="form3" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+											<el-form-item label="第二联系人号码接通:">
+												<el-select v-model="form3.connected_send" :style="Index.width" >
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
 												</el-select>
@@ -95,8 +97,8 @@
 											<el-form-item label="发送内容:">
 												<el-input v-model="form3.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
-											<el-form-item label="本人号码未接通:">
-												<el-select v-model="form3.not_connected_send" :style="Index.width" placeholder="请选择外线号码">
+											<el-form-item label="第二联系人号码未接通:">
+												<el-select v-model="form3.not_connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
 												</el-select>
@@ -107,6 +109,7 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
+													<el-checkbox :indeterminate="isIndeterminate3"  @change="handleCheckAllChange3">全选</el-checkbox>
 													<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
@@ -138,7 +141,7 @@
 								</el-form-item>
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
-							<el-form :model="form1Edit" label-width="120px" ref="forms" style="width:33.3%;display:inline-block;background:#fff">
+							<el-form :model="form1Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
 											<el-form-item label="本人号码接通:">
 												<el-select v-model="form1Edit.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
@@ -160,6 +163,7 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
+													<el-checkbox :indeterminate="isIndeterminate1Edit"  @change="handleCheckAllChange1Edit">全选</el-checkbox>
 													<el-checkbox-group v-model="not_connected_status1Edit" @change="changeStatus1Edit">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
@@ -168,8 +172,8 @@
 													<el-input v-model="form1Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-										<el-form :model="form2Edit" label-width="120px" ref="forms" style="width:33.3%;display:inline-block;background:#fff">
-											<el-form-item label="本人号码接通:">
+										<el-form :model="form2Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+											<el-form-item label="第一联系人号码接通:">
 												<el-select v-model="form2Edit.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
@@ -178,7 +182,7 @@
 											<el-form-item label="发送内容:">
 												<el-input v-model="form2Edit.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
-											<el-form-item label="本人号码未接通:">
+											<el-form-item label="第一联系人号码未接通:">
 												<el-select v-model="form2Edit.not_connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
@@ -190,7 +194,8 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
-													<el-checkbox-group v-model="not_connected_status2Edit" @change="changeStatus2Edit">
+											<el-checkbox :indeterminate="isIndeterminate2Edit"  @change="handleCheckAllChange2Edit">全选</el-checkbox>
+												<el-checkbox-group v-model="not_connected_status2Edit" @change="changeStatus2Edit">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
 											</el-form-item>
@@ -198,8 +203,8 @@
 													<el-input v-model="form2Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-										<el-form :model="form3Edit" label-width="120px" ref="forms" style="width:31%;display:inline-block;background:#fff">
-											<el-form-item label="本人号码接通:">
+										<el-form :model="form3Edit" label-width="160px" ref="forms" style="width:31%;display:inline-block;background:#fff">
+											<el-form-item label="第二联系人号码接通:">
 												<el-select v-model="form3Edit.connected_send" :style="Index.width" placeholder="请选择外线号码">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
@@ -208,7 +213,7 @@
 											<el-form-item label="发送内容:">
 												<el-input v-model="form3Edit.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
-											<el-form-item label="本人号码未接通:">
+											<el-form-item label="第二联系人号码未接通:">
 												<el-select v-model="form3Edit.not_connected_send" :style="Index.width" placeholder="请选择外线号码">
 													<el-option value="0" label="不发送" ></el-option>
 													<el-option value="1" label="发送" ></el-option>
@@ -220,6 +225,7 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
+											<el-checkbox :indeterminate="isIndeterminate3Edit"  @change="handleCheckAllChange3Edit">全选</el-checkbox>
 													<el-checkbox-group v-model="not_connected_status3Edit" @change="changeStatus3Edit">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
@@ -257,6 +263,12 @@ import { MessageBox } from 'element-ui';
     },
 		data() {
 			return {
+				isIndeterminate1: true,
+				isIndeterminate2: true,
+				isIndeterminate3: true,
+				isIndeterminate1Edit: true,
+				isIndeterminate2Edit: true,
+				isIndeterminate3Edit: true,
 				infos:[],
 					addOrEdit:{
 						addShow:false,
@@ -281,8 +293,8 @@ import { MessageBox } from 'element-ui';
 						form1:{
 							round:"0",
 							times:"",
-							connected_send:"",
-							not_connected_send:"",
+							connected_send:"0",
+							not_connected_send:"0",
 							not_connected_status:"",
 							connected_content:"",
 							not_connected_content:""
@@ -290,8 +302,8 @@ import { MessageBox } from 'element-ui';
 						form2:{
 							round:"1",
 							times:"",
-							connected_send:"",
-							not_connected_send:"",
+							connected_send:"0",
+							not_connected_send:"0",
 							not_connected_status:"",
 							connected_content:"",
 							not_connected_content:""
@@ -299,8 +311,8 @@ import { MessageBox } from 'element-ui';
 						form3:{
 							round:"2",
 							times:"",
-							connected_send:"",
-							not_connected_send:"",
+							connected_send:"0",
+							not_connected_send:"0",
 							not_connected_status:"",
 							connected_content:"",
 							not_connected_content:""
@@ -367,24 +379,81 @@ import { MessageBox } from 'element-ui';
 					const conf = {
 						url,
 						success:(data)=>{
-							this.AddData.call_result = data.info.call_result_status
+							this.AddData.call_result = 	data.info.call_result_status.map(item=>{
+							item.id = item.id.toString()
+							return item
+						})
 						}
 					}
 					axiosRequest(conf)
 			},
-			changeStatus1(){
-				this.form1.not_connected_status = this.not_connected_status1.join()
+			changeStatus1(val){
+				let checkedCount = val.length;
+				if(checkedCount < this.AddData.call_result.length){
+					this.isIndeterminate = true
+				}
+				this.form1.not_connected_status = this.not_connected_status1.join(",")
 			},
 			changeStatus2(){
-				this.form2.not_connected_status = this.not_connected_status2.join()
+					let checkedCount = val.length;
+				if(checkedCount < this.AddData.call_result.length){
+					this.isIndeterminate = true
+				}
+				this.form2.not_connected_status = this.not_connected_status2.join(",")
 			},
 			changeStatus3(){
-				this.form3.not_connected_status = this.not_connected_status3.join()
+				let checkedCount = val.length;
+				if(checkedCount < this.AddData.call_result.length){
+					this.isIndeterminate = true
+				}
+				this.form3.not_connected_status = this.not_connected_status3.join(",")
 			},
 		  addTask(){
 				this.addOrEdit.addShow = true
 				this.addInit()
 			},
+			 handleCheckAllChange1(val) {
+        this.not_connected_status1 = val ? this.AddData.call_result.map(item=>{
+							return item.id
+				}) : [];
+				this.form1.not_connected_status = this.not_connected_status1.join(",")
+        this.isIndeterminate1 = false;
+      },
+			handleCheckAllChange2(val) {
+        this.not_connected_status2 = val ? this.AddData.call_result.map(item=>{
+							return item.id
+				}) : [];
+				this.form2.not_connected_status = this.not_connected_status2.join(",")
+        this.isIndeterminate2 = false;
+      },
+			handleCheckAllChange3(val) {
+        this.not_connected_status3 = val ? this.AddData.call_result.map(item=>{
+							return item.id
+				}) : [];
+				this.form3.not_connected_status = this.not_connected_status3.join(",")
+        this.isIndeterminate3 = false;
+      },
+			handleCheckAllChange1Edit(val) {
+        this.not_connected_status1Edit = val ? this.AddData.call_result.map(item=>{
+							return item.id
+				}) : [];
+				this.form1Edit.not_connected_status = this.not_connected_status1Edit.join(",")
+        this.isIndeterminate1Edit = false;
+      },
+			handleCheckAllChange2Edit(val) {
+        this.not_connected_status2Edit = val ? this.AddData.call_result.map(item=>{
+							return item.id
+				}) : [];
+				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join(",")
+        this.isIndeterminate2Edit = false;
+      },
+			handleCheckAllChange3Edit(val) {
+        this.not_connected_status3Edit = val ? this.AddData.call_result.map(item=>{
+							return item.id
+				}) : [];
+				this.form3Edit.not_connected_status = this.not_connected_status3Edit.join(",")
+        this.isIndeterminate3Edit = false;
+      },
 			// 保存添加
 			onSubmit(){
 				this.round_info[0] = this.form1
@@ -428,11 +497,7 @@ import { MessageBox } from 'element-ui';
 						this.formEdit.name = data.info.rule_info.name
 						this.formEdit.remark = data.info.rule_info.remark
 						this.formEdit.id = data.info.rule_info.id
-						console.log(data)
-						this.AddData.call_result = 	this.AddData.call_result.map(item=>{
-							item.id = '' + item.id +''
-							return item
-						})
+						
 						var arr1 = data.info.round_list.filter(item=>{
 							if(item.round == 0){
 								return item
@@ -454,18 +519,33 @@ import { MessageBox } from 'element-ui';
 						this.not_connected_status1Edit = (arr1[0].not_connected_status).split(",")
 						this.not_connected_status2Edit = (arr2[0].not_connected_status).split(",")
 						this.not_connected_status3Edit = (arr3[0].not_connected_status).split(",")
+						if(this.not_connected_status1Edit.length == this.AddData.call_result.length){
+							this.isIndeterminate1Edit = true
+						}else{
+							this.isIndeterminate1Edit = false
+						}
+						if(this.not_connected_status2Edit.length == this.AddData.call_result.length){
+							this.isIndeterminate2Edit = true
+						}else{
+							this.isIndeterminate2Edit = false
+						}
+							if(this.not_connected_status3Edit.length == this.AddData.call_result.length){
+							this.isIndeterminate3Edit = true
+						}else{
+							this.isIndeterminate3Edit = false
+						}
 					}
 				}
 				axiosRequest(conf)
 			},
 			changeStatus1Edit(){
-				this.form1Edit.not_connected_status = this.not_connected_status1Edit.join()
+				this.form1Edit.not_connected_status = this.not_connected_status1Edit.join(",")
 			},
 			changeStatus2Edit(){
-				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join()
+				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join(",")
 			},
 			changeStatus3Edit(){
-				this.form3Edit.not_connected_status = this.not_connected_status3Edit.join()
+				this.form3Edit.not_connected_status = this.not_connected_status3Edit.join(",")
 			},
 			// 保存修改
 			onSubmitEdit(){

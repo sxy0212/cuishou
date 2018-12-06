@@ -8,10 +8,10 @@
                             <!--顶部操作-->
                             <div class="VoiceTop">
                                 <ul>
-                                    <li style="float:left">
+                                    <li style="float:left;margin-right:20px;">
                                         <el-form ref="form" :model="form" label-width="80px">
                                             <el-form-item label="语音库：">
-                                                <el-select v-model="asr_number" placeholder="请选择语音库">
+                                                <el-select v-model="asr_number" placeholder="请选择语音库" @change="changeAsr">
                                                     <el-option v-for="(item,index) in soundList"  :label="item.name" :value="item.id" :key="index"></el-option>
                                                 </el-select>
                                             </el-form-item>
@@ -27,11 +27,11 @@
                             <div class="TableList TextLeft">
                                 <audio style="width:100%" :src="audio" controls="controls" id="audioPlay" hidden autoplay></audio>  
                                 <el-table  :data="infos" style="width: 100%" border>
-                                    <el-table-column  type="index" label="序号" :index="index"  width="60"></el-table-column>
+                                    <el-table-column  type="index" label="序号" :index="index1"  width="60"></el-table-column>
                                     <el-table-column prop="word" label="语言描述" ></el-table-column>
                                     <el-table-column prop="spath" label="语音文件" ></el-table-column>
                                     <el-table-column  label="操作" width="400">
-                                        <template scope="scope">
+                                        <template slot-scope="scope">
                                             <el-button  plain @click="play(scope.$index, scope.row)">试听</el-button>
                                             <el-button type="success" plain @click="editUpdate(scope.$index, scope.row)" v-if="scope.row.status==0" disabled>重录中</el-button>
                                             <el-button type="success" plain @click="editUpdate(scope.$index, scope.row)" v-else>修改描述</el-button>                                          
@@ -73,7 +73,7 @@
         <!--语音文件添加弹窗-->
         <div class="dial-header tag-dial">
             <el-dialog title="语音文件上传" :visible.sync="Voice.UploadFile" v-move>
-                    <el-form :model="form" label-width="100px">
+                    <el-form :model="files" label-width="120px">
                         <el-form-item label="选择语音库：">
                         <el-select v-model="asr_number" placeholder="请选择语音库">
                             <el-option v-for="(item,index) in soundList"  :label="item.name" :value="item.id" :key="index"></el-option>
@@ -108,7 +108,7 @@
         <!--语音包上传弹窗-->
         <div class="dial-header tag-dial">
             <el-dialog title="语音包上传" :visible.sync="Voice.UploadZip" v-move>
-                <el-form :model="form" label-width="90px">
+                <el-form :model="form" label-width="120px">
                     <el-form-item label="选择语音库：">
                       <el-select v-model="asr_number" placeholder="请选择语音库">
                           <el-option v-for="(item,index) in soundList"  :label="item.name" :value="item.id" :key="index"></el-option>
@@ -120,9 +120,11 @@
                                 action="/api/api_backend.php?r=sound/sound-file-package-upload"
                                 :before-remove="beforeRemoveZip"
                                 :on-success="successZip"
+                                ref="uploads"
                                 :before-upload="beforeUploadZip"
                                 multiple
                                 :limit="1"
+                               :auto-upload="false"
                                 :on-exceed="handleExceed" :data="zip" :file-list="fileListZip">
                                 <el-button type="primary" plain size="small" ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
                         </el-upload>
@@ -136,8 +138,8 @@
         </div>
         <!--修改描述文本弹窗层-->
         <div class="dial-header">
-            <el-dialog title="修改描述" :visible.sync="Voice.Retake">
-                <el-form ref="form" :model="form" label-width="80px">
+            <el-dialog title="修改描述" :visible.sync="Voice.Retake" v-move>
+                <el-form ref="form" :model="form" label-width="120px">
                     <el-form-item label="原来文本：">
                         <div class="ConentText">{{Voice.text}}</div>
                     </el-form-item>
@@ -153,7 +155,7 @@
         </div>
         <!--语音替换-->
         <div class="dial-header upload">
-            <el-dialog title="上传重录语音:" :visible.sync="Voice.upLoad" >
+            <el-dialog title="上传重录语音:" :visible.sync="Voice.upLoad" v-move>
             <el-form>
                 <el-form-item label="选择上传语音：">
                     <el-upload
@@ -162,8 +164,10 @@
                         :before-remove="beforeRemove"
                         :on-success="success"
                         :before-upload="beforeUpload"
+                        ref="uploadss"
                         multiple
                         :limit="1"
+                        :auto-upload="false"
                         :on-exceed="handleExceed" :data="updata" :file-list="rerecord.fileList">
                         <el-button type="primary" plain style="width:70px"><i class="fa fa-upload" styte="width:40px">选择</i></el-button>
                     </el-upload>
@@ -191,28 +195,25 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         total:0,
         currentPage:1,
         infos:[],
-			value:"",
+			  value:"",
             name:"",
             Data:[],
             options:[],
             audio:"", //录音播放的地址
             updata:{id:"",sound_file:""}, //语音重录上传的参数
             DescribeText: '',
-           
-            robots: [],
             rerecord:{
                 asr_number: '',
                 word:"",
                 index:"",
                 fileList:[]
-            },//语音重录
-            robotss:[],
+            },//修改描述
             files:{
               sound_id: '',
               word:"",
               sound_file:""
             }, //语音文件上传参数
-            zip:{id: '',zip_file:""}, //语音包上传参数
+            zip:{sound_id: '',zip_file:""}, //语音包上传参数
             Voice: {
                 tabs: 'first',
                 width: 'width: 478px;',
@@ -227,7 +228,6 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                 index:""
             },
             form: {},
-            texts:[],
            
             path:"",
             data:{}, 
@@ -255,7 +255,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         axiosRequest(conf)
       },
 			// 序号
-      index(val){
+      index1(val){
         return (this.page-1)*this.page_size+val+1
       },
       // 获取cookie
@@ -288,12 +288,9 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             // 改变语音线路页面数据改变
             changeAsr(val){
                 this.asr_number = val
-                this.initData()
+                this.init()
             },
-            // 上传语音文件时选择语音线路的
-            fileData(val){
-                this.file.asr_number = val
-            },
+            // 播放录音
             play(index,row){
                 this.audio = row.sound_dir;
                 if(document.getElementById("audioPlay").paused){
@@ -310,11 +307,11 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             }, 
             handleSizeChange(val) {
                 this.page_size = val;
-                this.initData();
+                this.init();
             },
             handleCurrentChange(val) {
                 this.page = val;
-                this.initData();
+                this.init();
             },
             // 删除操作
             handleDelete(index,row) {
@@ -374,18 +371,17 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                 this.updata.id = row.id       
                 this.Voice.upLoad = true
             },
-            beforeUpload (response,file,files) {
-                this.updata.sound_file = response.name
+            beforeUpload (file) {
+                this.updata.sound_file = file
             },
-            success(response,file,files){
-                if(response.statusCode == 1){
-                    this.audio = response.info
-                    this.$alert(response.message)
-                    this.init()
-                }else{
-                    this.$alert(response.message)
-                    this.rerecord.fileList = []
-                }
+            success(response,file,files){ 
+              this.$alert(response.message)
+              if(data.statusCode == 1){
+                  this.Voice.upLoad = false 
+                  this.init()
+              }else{
+                this.Voice.upLoad = true
+              }
             },
             handleExceed(files, fileList) {
                 this.$message.warning(`当前限制选择 1 个文件`);
@@ -394,10 +390,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                 return this.$confirm(`确定移除 ${ file.name }？`);
             },
             sure(){
-                this.Voice.upLoad = false
-            },
-            editDescribe(index,row){
-
+                 this.$refs.uploadss.submit();
             },
             // 语音文件上传
             soundAdd(){
@@ -410,8 +403,9 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             addFile(){
                 this.$refs.upload.submit(); 
             },
-            beforeUploadFile(response,file,files) {
-                this.files.sound_file = response.name
+
+            beforeUploadFile(file) {
+                this.files.sound_file = file
                 this.files.sound_id = this.asr_number
             },
             successFile(response,file,files){ 
@@ -432,26 +426,23 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             // 语音包上传
             zipAdd(){
                 this.Voice.UploadZip = true
-                this.zip.id = ""
+                this.zip.sound_id = ""
                 this.fileListZip = []
             },
             addZip(){  
-                if(!this.zip.id||!this.zip.zip_file){
-                    this.$alert("两项为必填项")
-                    this.Voice.UploadZip = true
-                }else{
-                    this.Voice.UploadZip = false
-                    this.init()
-                }
+               this.$refs.uploads.submit(); 
             },
-            beforeUploadZip(response) {
-                this.zip.zip_file = response.name
-                this.zip.id = this.asr_number
+            beforeUploadZip(file) {
+                this.zip.zip_file = file
+                this.zip.sound_id = this.asr_number
             },
             successZip(response,file,files){
               this.$alert(response.message)
                 if(response.statusCode == 0){
                   this.fileListZip = []
+                  this.Voice.UploadZip = true
+                }else{
+                  this.Voice.UploadZip = false
                 }
             },
             handleExceedZip(files, fileList) {

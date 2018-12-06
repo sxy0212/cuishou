@@ -154,12 +154,12 @@
 										<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="AddQueueData.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
+											<span @click="agentorqueueChangeWord" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
+												<span v-show="AddQueueData.member == ''">0</span>
+												<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
+											</span>
 										</div>
 									</el-radio-group>
-									<span @click="agentorqueueChangeWord" style="display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
-										<span v-show="AddQueueData.member == ''">0</span>
-										<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
-									</span>
 								</el-form-item>
 								<el-form-item label="振铃时长:">
 									<el-input v-model="form.call_duration" style="width:240px;margin-right:10px;"></el-input>秒
@@ -221,6 +221,15 @@
 											<el-option v-for="(item,index) in AddData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
 										</el-select>
 									</el-form-item>         
+                				</el-form>
+								<!--短信-->
+								<el-form :model="form" label-width="145px" ref="forms">    
+									<el-form-item label="是否发送短信:" style="margin-top:40px;">
+                        				<el-select v-model="form.sms_rules" :style="Index.width" >
+											<el-option value="" label="不发送短信" ></el-option>
+											<el-option v-for="(item,index) in AddData.smsList" :value="item.id" :label="item.name" :key="index"></el-option>
+										</el-select>
+									</el-form-item>        
                 				</el-form>
 							</div>
                 			<div slot="footer" class="dialog-footer">
@@ -347,6 +356,15 @@
 								</el-select>
 							</el-form-item>         
                 		</el-form>
+						<!--短信-->
+						<el-form :model="formEdit" label-width="145px" ref="forms">    
+							<el-form-item label="是否发送短信:" style="margin-top:40px;">
+								<el-select v-model="formEdit.sms_rules" :style="Index.width" >
+									<el-option value="" label="不发送短信" ></el-option>
+									<el-option v-for="(item,index) in AddData.smsList" :value="item.id" :label="item.name" :key="index"></el-option>
+								</el-select>
+							</el-form-item>        
+						</el-form>
 					</div>
 						<div slot="footer" class="dialog-footer">
 							<el-button type="primary" @click="onSubmitSave">确认保存</el-button>
@@ -449,7 +467,8 @@ import { MessageBox } from 'element-ui';
 					recognition_lies:[], //语音识别线路
 					call_result:[],   //未接通状态
 					templates:[],   //呼叫使用话术
-					ext_list:[]     //转分机数据
+					ext_list:[],     //转分机数据
+					smsList:[]                //短信
         		},
 				AddQueueData:{            //添加任务的时候转队列需要用到的数据
 					QueueShow:false,      //转队列的时候出现的弹框
@@ -499,6 +518,7 @@ import { MessageBox } from 'element-ui';
 					timeout:"",
 					maxlen:"",
 					staff_id_queue:"",
+					sms_rules:""      //短信
             	},
 				round_rule:[],
 				not_connected_status1:[],
@@ -544,6 +564,7 @@ import { MessageBox } from 'element-ui';
 					timeout:"",
 					maxlen:"",
 					staff_id_queue:"",
+					sms_rules:""
 				},
 				data2:{
 					round:'0',
@@ -635,6 +656,17 @@ import { MessageBox } from 'element-ui';
 				}
 				axiosRequest(conf)
 			},
+			// 点击获取短信
+			AddInitSms(){
+				const url = "/api/api_backend.php?r=sms-rule/list"
+				const conf = {
+					url,
+					success:(data)=>{
+						this.AddData.smsList = data.info
+					}
+				}
+				axiosRequest(conf)
+			},
 			// 转分机数据
 			addExtension(){
 				const url = "/api/api_backend.php?r=asroperate/turn-extension"
@@ -657,6 +689,7 @@ import { MessageBox } from 'element-ui';
 				this.addInit()
 				this.AddInitSound()
 				this.addExtension()
+				this.AddInitSms()
 			},
 			clone(obj){
 				return JSON.parse(JSON.stringify(obj))
@@ -795,6 +828,7 @@ import { MessageBox } from 'element-ui';
 			edit(id){
 				this.addExtension()
 				this.AddInitSound()
+				this.AddInitSms()
 				this.Index.editTask = true
 				const url = "/api/api_backend.php?r=asroperate/info"
 				const conf = {
@@ -1051,6 +1085,12 @@ import { MessageBox } from 'element-ui';
 						if(data.statusCode == 1){
 							this.Index.editTask = false;
 							this.init()
+							this.formEdit = {}
+							this.form1Edit = {}
+							this.form2Edit = {}
+							this.form3Edit = {}
+							this.not_connected_status1Edit = []
+							this.not_connected_status2Edit = []
 						}else{
 							this.Index.editTask = true
 						}
