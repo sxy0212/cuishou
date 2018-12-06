@@ -63,22 +63,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog title="添加到外呼任务" :visible.sync="addTask" >
-        <div>
-            <el-select v-model="taskValue" placeholder="请选择">
-              <el-option
-                v-for="item in taskList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id">
-              </el-option>
-          </el-select>
-        </div>
-       
-        <div slot="footer" class="dialog-footer">
-            <el-button @click="sureToAddTask">确认添加</el-button>
-        </div>
-    </el-dialog>
+    
   </div>
 </template>
 <script>
@@ -86,10 +71,8 @@ import router from '@/router.js'
 export default {
     name:'tableDataMan',
     props:[
-        'tableData',
-        'taskValue',
-        'taskList',
-        'addTask'
+      'tableData',
+      'addTask',
     ],
     methods:{
       deleteFn(val){
@@ -104,12 +87,11 @@ export default {
       addToTask(val){
         this.$emit('addToTask',val)
       },
-      sureToAddTask(val){
-        this.$emit('sureToAddTask',val)
-      },
+      
+     
       rowClick(row,event,column){//单击
-        console.log(row,event,column)
-        router.push('/caseManagement')
+        // console.log(row,event,column)
+        // router.push('/caseManagement')
       }
     }
 }

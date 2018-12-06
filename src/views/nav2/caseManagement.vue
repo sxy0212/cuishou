@@ -1,89 +1,11 @@
 <template>
   <div class="cover">
-	<el-form :inline="true" :model="formInline" class="demo-form-inline">
-		<el-form-item label="姓名">
-			<el-input v-model="formInline.user" placeholder="审批人"></el-input>
-		</el-form-item>
-		<el-form-item label="联系方式">
-			<el-input v-model="formInline.user" placeholder="审批人"></el-input>
-		</el-form-item>
-		<el-form-item label="证件号">
-			<el-input v-model="formInline.user" placeholder="审批人"></el-input>
-		</el-form-item>
-		<el-form-item label="案件状态">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="委托方">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="委案时间">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="退案时间">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-		<el-form-item label="委案金额">
-			<el-input v-model="formInline.user" placeholder="审批人"></el-input>
-		</el-form-item>
-		<el-form-item label="案件id">
-			<el-input v-model="formInline.user" placeholder="审批人"></el-input>
-		</el-form-item>
-		<el-form-item label="案件等级">
-			<el-select v-model="formInline.region" placeholder="活动区域">
-				<el-option label="区域一" value="shanghai"></el-option>
-				<el-option label="区域二" value="beijing"></el-option>
-			</el-select>
-		</el-form-item>
-	</el-form>
-	<div class="marginU">
-		<el-form :inline="true" :model="formInline" class="demo-form-inline">
-			<el-form-item label="部门">
-				<el-select v-model="formInline.region" placeholder="活动区域">
-					<el-option label="区域一" value="shanghai"></el-option>
-					<el-option label="区域二" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="催收员">
-				<el-select v-model="formInline.region" placeholder="活动区域">
-					<el-option label="区域一" value="shanghai"></el-option>
-					<el-option label="区域二" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="所属批次">
-				<el-select v-model="formInline.region" placeholder="活动区域">
-					<el-option label="区域一" value="shanghai"></el-option>
-					<el-option label="区域二" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="标色搜索">
-				<el-select v-model="formInline.region" placeholder="活动区域">
-					<el-option label="区域一" value="shanghai"></el-option>
-					<el-option label="区域二" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="最后跟进">
-				<el-select v-model="formInline.region" placeholder="活动区域">
-					<el-option label="区域一" value="shanghai"></el-option>
-					<el-option label="区域二" value="beijing"></el-option>
-				</el-select>
-			</el-form-item>
-			<el-form-item label="关键词：">
-				<el-input v-model="formInline.key" placeholder="审批人"></el-input>
-			</el-form-item>
-		</el-form>
-	</div>
+	  <div-form
+	  	:formFirst='formFirst'
+	  >
+
+	  </div-form>
+		
 	<div slot="footer" class="dialog-footer">
             <el-button type="primary" @click="searchFn" size="mini">查询</el-button>
             <el-button type="info" @click="searchFn" size="mini">清空</el-button>
@@ -224,6 +146,20 @@ export default {
 			form: {
           		name: '',
 				region: ''
+			},
+			formFirst:{//搜索条件
+				case_name:'',
+				case_mobile:'',
+				case_id_num:'',
+				case_status:'',
+				case_client:'',
+				case_date:'',
+				case_back_date:'',
+				case_money:'',
+				id:'',
+
+
+
 			},
 			formInline: {
 				user: '',

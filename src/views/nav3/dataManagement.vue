@@ -14,14 +14,11 @@
 
     <div-table
         :tableData="tableData"
-        :taskList='taskList'
-        :taskValue='taskValue'
         :addTask='addTask'
         v-on:deleteFn='deleteFn($event)'
         v-on:exportFn='exportFn($event)'
         v-on:addToFn='addToFn($event)'
         v-on:addToTask='addToTask($event)'
-        v-on:sureToAddTask='sureToAddTask($event)'
     >
     </div-table>
     <page-change 
@@ -52,14 +49,21 @@
     </el-dialog>
     <el-dialog title="下载模板" :visible.sync="addDown" >
         <div-dialog
-            
         ></div-dialog>
+    </el-dialog>
+    <el-dialog title="添加到外呼任务" :visible.sync="addTask" >
+        <task-dialog
+            :formTask='formTask'
+            :taskList='taskList'
+            v-on:sureToAddTask='sureToAddTask($event)'
+        ></task-dialog>
     </el-dialog>
   </div>
 </template>
 <script>
 
 import addDataMan from '@/functions/editDialog/addDataMan.vue'
+import addTask from '@/functions/editDialog/addTask.vue'
 import addDownload from '@/functions/editDialog/addDownload.vue'
 import formDataMan from '@/functions/formCollection/formDataMan.vue'
 import tableDataMan from '@/functions/tableCollection/tableDataMan.vue'
@@ -75,11 +79,13 @@ export default {
         'page-change':pageChange,
         'div-form':formDataMan,
         'div-table':tableDataMan,
-        'div-dialog':addDownload
+        'div-dialog':addDownload,
+        'task-dialog':addTask
     },
     data() {
         return {
             id:'',//编辑还是添加
+            batch_id:'',//哪个外呼任务
             page:1,
             page_size:10,
             total:0,
@@ -117,7 +123,9 @@ export default {
             tableDownload:[//下载模板数据
 
             ],
-            taskValue:''//添加外呼任务选项
+            formTask:{//添加外呼数据
+                value:''
+            }
         }
     },
     created() {
@@ -279,9 +287,12 @@ export default {
         exportFn(row){//导出
             window.open('/api/api_backend.php?r=asrcall-case-batch/export-batch&batch_id='+row.id)
         },
-        addToTask(){//添加到任务
+        addToTask(row){//添加到任务
             this.addTask= true
-            this.taskValue = ''
+            this.batch_id = row.id
+            this.formTask = {
+                            value:''
+                        }
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/config-list',
                 success:(data)=>{
@@ -298,20 +309,23 @@ export default {
             }
             axiosRequest(conf)
         },
-        sureToAddTask(row){
+        sureToAddTask(){
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/config-list',
+                url : '/api/api_backend.php?r=asrcall-case-batch/add-to-config',
                 data:{
-                    batch_id:row.id,
-                    config_id:this.taskValue
+                    batch_id:this.batch_id,
+                    config_id:this.formTask.value
                 },
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.init()
                         this.addTask= false
-                        this.taskValue = ''
+                        this.batch_id = ''
+                        this.formTask = {
+                            value:''
+                        }
                         Message({
-                            message: '添加成功！',
+                            message: data.message,
                             type: 'success',
                             duration: 3 * 1000
                         })
