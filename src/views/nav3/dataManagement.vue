@@ -109,7 +109,6 @@ export default {
                 case_type:''
             },
             areaList:[//区域资料
-
             ],
             clientList:[//客户资料
 
@@ -203,7 +202,7 @@ export default {
             }
             axiosRequest(conf)
         },
-        addFn(val){//添加弹框的打开与关闭
+        addFn(val){//添加
             this.bannerTitle = "导入资料"
             this.addNow = val
             this.id = ''
@@ -239,7 +238,6 @@ export default {
             this.action = '/api/api_backend.php?r=asrcall-case-batch/superaddition'
         },
         pageSizeChangeFn(val){
-            // console.log(val)
             this.page_size = val
             this.init()
         },
@@ -287,7 +285,7 @@ export default {
         exportFn(row){//导出
             window.open('/api/api_backend.php?r=asrcall-case-batch/export-batch&batch_id='+row.id)
         },
-        addToTask(row){//添加到任务
+        addToTask(row){//获取任务
             this.addTask= true
             this.batch_id = row.id
             this.formTask = {
@@ -309,7 +307,7 @@ export default {
             }
             axiosRequest(conf)
         },
-        sureToAddTask(){
+        sureToAddTask(){//添加到外呼任务
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/add-to-config',
                 data:{

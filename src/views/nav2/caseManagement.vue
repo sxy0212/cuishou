@@ -127,16 +127,20 @@
 import '@/assets/css/system.css'
 import addImport from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
+import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
+
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
+import store from '@/vuex/store.js'
 // import indexMethod  from '@/utils/indexMethod.js'
 
 export default {
     components:{
         'edit-dialog':addImport,
-        'page-change':pageChange
-    },
-    data() {
+		'page-change':pageChange,
+		'div-form':formCaseFirst
+	},
+	data() {
         return {
 			totalNum:'',//案件总数
 			titalAmount:'',//总额
@@ -182,7 +186,8 @@ export default {
         }
     },
     created() {
-        this.init()
+		this.init()
+		console.log(store)
     },
     methods: {
 		handleSelectionChange(val){

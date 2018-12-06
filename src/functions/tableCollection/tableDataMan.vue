@@ -4,7 +4,7 @@
         border
         :data="tableData"
         style="width: 98%"
-        @row-click='rowClick'
+        @row-dblclick='rowDblclick'
       >
       <el-table-column
         label="资料编号"
@@ -63,11 +63,11 @@
         </template>
       </el-table-column>
     </el-table>
-    
   </div>
 </template>
 <script>
 import router from '@/router.js'
+import store from '@/vuex/store.js'
 export default {
     name:'tableDataMan',
     props:[
@@ -87,11 +87,9 @@ export default {
       addToTask(val){
         this.$emit('addToTask',val)
       },
-      
-     
-      rowClick(row,event,column){//单击
-        // console.log(row,event,column)
-        // router.push('/caseManagement')
+      rowDblclick(row,event){//单击
+        store.commit('changeBatchId', row.id)
+        router.push('/caseManagement')
       }
     }
 }
