@@ -190,7 +190,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                 this.form.condition = row.msg
                 this.Knowledge.NodeAdd = true
                 const id = row.id
-                const url = "/api_backend.php?r=asrcall-record-noanswer/answer-sound"
+                const url = "/api/api_backend.php?r=asrcall-record-noanswer/answer-sound"
                 const conf = {
                     url,
                     data:{
@@ -206,7 +206,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                 console.log(val)
             },
             addNodeSave(){
-                const url ="/api_backend.php?r=asrcall-record-noanswer/add-node"
+                const url ="/api/api_backend.php?r=asrcall-record-noanswer/add-node"
                 const data = this.form
                 const conf = {
                     url,
@@ -218,7 +218,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                             this.Knowledge.NodeAdd = false
                             this.form.condition = ""
                             this.form.answerid = ""
-                            this.init("/api_backend.php?r=asrcall-record-noanswer/no-answer-list",this.noAnswerData);//无应答的页面数据初始化
+                            this.init("/api/api_backend.php?r=asrcall-record-noanswer/no-answer-list",this.noAnswerData);//无应答的页面数据初始化
                         }else{
                             this.$alert(data.message)
                             this.Knowledge.NodeAdd = true

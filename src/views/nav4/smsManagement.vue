@@ -19,119 +19,110 @@
 					<!-- 添加或方案弹框  -->
 					<div class="dial-header addTask1">
             <el-dialog title="添加方案" :visible.sync="add.show" v-move>
-							<el-form :model="form" label-width="120px" ref="forms">
+							<el-form :model="form" label-width="120px" ref="form">
 								<el-form-item label="方案名称:">
 										<el-input v-model="form.name" :style="Index.width"></el-input>
 								</el-form-item>
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
-							<div>
-								<div style="float:left;width:33.3%;display:block;background:#fff">
-									<el-form :model="form" label-width="120px" ref="forms">
+							<el-form :model="form1" label-width="120px" ref="forms" style="width:33.3%;display:inline-block;background:#fff">
 											<el-form-item label="本人号码接通:">
-												<el-select v-model="form.caller_id" :style="Index.width">
-													<el-option value="1" label="不发送"></el-option>
-													<el-option value="2" label="发送" ></el-option>
+												<el-select v-model="form1.connected_send" :style="Index.width">
+													<el-option value="0" label="不发送" ></el-option>
+													<el-option value="1" label="发送" ></el-option>
 												</el-select>
 											</el-form-item>
 											<el-form-item label="发送内容:">
-												<el-input v-model="form.name" :style="Index.width" type="textarea" :rows="4"></el-input>
+												<el-input v-model="form1.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 											<el-form-item label="本人号码未接通:">
-												<el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码">
-													<el-option value="1" label="不发送" ></el-option>
-													<el-option value="2" label="发送" ></el-option>
+												<el-select v-model="form1.not_connected_send" :style="Index.width">
+													<el-option value="0" label="不发送" ></el-option>
+													<el-option value="1" label="发送" ></el-option>
 												</el-select>
 											</el-form-item>
-											<el-form-item label="机器人数量:">
+											<el-form-item label="呼叫次数:">
 													<p style="display:inline-block">第</p> 
-														<el-input v-model="form.name" style="width:50px;"></el-input> 
-													<p style="display:inline-block">次</p>
-											</el-form-item>
-											<el-form-item label="未接通:">
-												<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
-													<el-checkbox label="1" v-for="(item,index) in AddData.call_result" :label="item.id">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-													<el-input v-model="form.name" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-										</el-form>
-								</div>
-								<div style="float:left;width:33.3%;display:block;background:#fff">
-										<el-form :model="form1" label-width="120px" ref="forms">
-											<el-form-item label="本人号码接通:">
-												<el-select v-model="form.connected_send" :style="Index.width" placeholder="请选择外线号码">
-													<el-option value="1" label="不发送" ></el-option>
-													<el-option value="2" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-												<el-input v-model="form.name" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-											<el-form-item label="本人号码未接通:">
-												<el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码">
-													<el-option value="1" label="不发送" ></el-option>
-													<el-option value="2" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="机器人数量:">
-													<p style="display:inline-block">第</p> 
-														<el-input v-model="form.name" style="width:50px;"></el-input> 
+														<el-input v-model="form1.times" style="width:50px;"></el-input> 
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
 													<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
-													<el-checkbox label="1" v-for="(item,index) in AddData.call_result" :label="item.id">{{item.status}}</el-checkbox>
+													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
 												</el-checkbox-group>
 											</el-form-item>
 											<el-form-item label="发送内容:">
-													<el-input v-model="form.name" :style="Index.width" type="textarea" :rows="4"></el-input>
+													<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-								</div>
-								<div style="float:left;width:33.3%;display:block;background:#fff">
-										<el-form :model="form" label-width="120px" ref="forms">
+										<el-form :model="form2" label-width="120px" ref="forms" style="width:33.3%;display:inline-block;background:#fff">
 											<el-form-item label="本人号码接通:">
-												<el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码">
-													<el-option value="1" label="不发送" ></el-option>
-													<el-option value="2" label="发送" ></el-option>
+												<el-select v-model="form2.connected_send" :style="Index.width">
+													<el-option value="0" label="不发送" ></el-option>
+													<el-option value="1" label="发送" ></el-option>
 												</el-select>
 											</el-form-item>
 											<el-form-item label="发送内容:">
-												<el-input v-model="form.name" :style="Index.width" type="textarea" :rows="4"></el-input>
+												<el-input v-model="form2.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 											<el-form-item label="本人号码未接通:">
-												<el-select v-model="form.caller_id" :style="Index.width" placeholder="请选择外线号码">
-													<el-option value="1" label="不发送" ></el-option>
-													<el-option value="2" label="发送" ></el-option>
+												<el-select v-model="form2.not_connected_send" :style="Index.width">
+													<el-option value="0" label="不发送" ></el-option>
+													<el-option value="1" label="发送" ></el-option>
 												</el-select>
 											</el-form-item>
-											<el-form-item label="机器人数量:">
-												<p style="display:inline-block">第</p> 
-												<el-input v-model="form.name" style="width:50px;"></el-input> 
-												<p style="display:inline-block">次</p>
+											<el-form-item label="呼叫次数:">
+													<p style="display:inline-block">第</p> 
+														<el-input v-model="form2.times" style="width:50px;"></el-input> 
+													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
-													<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
-														<el-checkbox v-for="(item,index) in AddData.call_result" :label="item.id">{{item.status}}</el-checkbox>
-													</el-checkbox-group>
+													<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
+													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
+												</el-checkbox-group>
 											</el-form-item>
-										
 											<el-form-item label="发送内容:">
-													<el-input v-model="form.name" :style="Index.width" type="textarea" :rows="4"></el-input>
+													<el-input v-model="form2.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-								</div>
-							</div>
-							<div>
+										<el-form :model="form3" label-width="120px" ref="forms" style="width:31%;display:inline-block;background:#fff">
+											<el-form-item label="本人号码接通:">
+												<el-select v-model="form3.connected_send" :style="Index.width" placeholder="请选择外线号码">
+													<el-option value="0" label="不发送" ></el-option>
+													<el-option value="1" label="发送" ></el-option>
+												</el-select>
+											</el-form-item>
+											<el-form-item label="发送内容:">
+												<el-input v-model="form3.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+											</el-form-item>
+											<el-form-item label="本人号码未接通:">
+												<el-select v-model="form3.not_connected_send" :style="Index.width" placeholder="请选择外线号码">
+													<el-option value="0" label="不发送" ></el-option>
+													<el-option value="1" label="发送" ></el-option>
+												</el-select>
+											</el-form-item>
+											<el-form-item label="呼叫次数:">
+													<p style="display:inline-block">第</p> 
+														<el-input v-model="form3.times" style="width:50px;"></el-input> 
+													<p style="display:inline-block">次</p>
+											</el-form-item>
+											<el-form-item label="未接通:">
+													<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
+													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
+												</el-checkbox-group>
+											</el-form-item>
+											<el-form-item label="发送内容:">
+													<el-input v-model="form3.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+											</el-form-item>
+										</el-form>
+						
 								<el-form :model="form" label-width="120px" ref="forms">
 									<el-form-item label="备注:">
 											<el-input v-model="form.remark" type="textarea" :rows="5"></el-input>
 									</el-form-item>
 								</el-form>
 							
-							</div>
+						
                 <div slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="onSubmit">确认保存</el-button>
 										<el-button type="primary" @click="Index.editTask = false">取消</el-button>
@@ -174,34 +165,65 @@ import { MessageBox } from 'element-ui';
 							name:"",   
     					remark :"", 
             },
-						round_rule:[],
+						round_info:[],
 						not_connected_status1:[],
 						not_connected_status2:[],
+						not_connected_status3:[],
+						not_connected_content:"",
 						form1:{
-							round:'0',
-   						template_id:"",
-							next_round:"1",
-							call_times:"",
-							not_connected_status:""
+							round:"0",
+							times:"",
+							connected_send:"",
+							not_connected_send:"",
+							not_connected_status:"",
+							connected_content:"",
+							not_connected_content:""
 						},
 						form2:{
-							round:'1',
-   						template_id:"",
-							next_round:"2",
-							call_times:"",
-							not_connected_status:""
+							round:"1",
+							times:"",
+							connected_send:"",
+							not_connected_send:"",
+							not_connected_status:"",
+							connected_content:"",
+							not_connected_content:""
 						},
 						form3:{
-							round:'2',
-   						template_id:"",
-							call_times:"",
-							next_round:"3",
-							not_connected_status:""
+							round:"2",
+							times:"",
+							connected_send:"",
+							not_connected_send:"",
+							not_connected_status:"",
+							connected_content:"",
+							not_connected_content:""
 						},
-						data1:{},
-						data2:{},
-						data3:{},
-						data4:{},
+						data1:{
+							round:"0",
+							times:"",
+							connected_send:"",
+							not_connected_send:"",
+							not_connected_status:"",
+							connected_content:"",
+							not_connected_content:""
+						},
+						data2:{
+							round:"1",
+							times:"",
+							connected_send:"",
+							not_connected_send:"",
+							not_connected_status:"",
+							connected_content:"",
+							not_connected_content:""
+						},
+						data3:{
+							round:"2",
+							times:"",
+							connected_send:"",
+							not_connected_send:"",
+							not_connected_status:"",
+							connected_content:"",
+							not_connected_content:""
+						},
            	Dates:[],
 						editData:{            //编辑任务的时候需要用到的数据
 							outLine:[],     //外线号码
@@ -210,10 +232,6 @@ import { MessageBox } from 'element-ui';
 							templates:[],   //呼叫使用话术
 						},
 						formEdit: {},
-						start_time_am:"", //上午开始呼叫时间
-            end_time_am:"",    //上午结束呼叫时间
-            start_time_pm:"", //下午开始呼叫时间
-            end_time_pm:"",    //下午结束呼叫时间
 						round_rule_edit:[],
 						not_connected_status1Edit:[],
 						not_connected_status2Edit:[],
@@ -222,16 +240,13 @@ import { MessageBox } from 'element-ui';
 						form3Edit:{},
 			}
 		},
-		created() {
-			this.data1 = clone(this.form)
-			this.data2 = clone(this.form1)
-			this.data3 = clone(this.form2)
-			this.data4 = clone(this.form3)
-		},
 		beforeMount() {
 			this.init()   //页面数据初始化 
     },
 		methods: {
+			clone(obj){
+				return JSON.parse(JSON.stringify(obj))
+			},
 			// 数据列表
 			init(){
 				const url = "/api/api_backend.php?r=sms-rule/list"
@@ -239,7 +254,6 @@ import { MessageBox } from 'element-ui';
 					url,
 					success:(data)=>{
 						this.infos = data.info
-						console.log(data)
 					}
 				}
 				axiosRequest(conf)
@@ -251,7 +265,6 @@ import { MessageBox } from 'element-ui';
 						url,
 						success:(data)=>{
 							this.AddData.call_result = data.info.call_result_status
-							console.log(data)
 						}
 					}
 					axiosRequest(conf)
@@ -262,13 +275,43 @@ import { MessageBox } from 'element-ui';
 			changeStatus2(){
 				this.form2.not_connected_status = this.not_connected_status2.join()
 			},
+			changeStatus3(){
+				this.form3.not_connected_status = this.not_connected_status3.join()
+			},
 		  addTask(){
 				this.add.show = true
 				this.addInit()
 			},
 			// 保存添加
 			onSubmit(){
-			
+				this.round_info[0] = this.form1
+				this.round_info[1] = this.form2
+				this.round_info[2] = this.form3
+				const data = this.form
+				data.round_info = JSON.stringify(this.round_info)
+				const url = "/api/api_backend.php?r=sms-rule/add-handle"
+				const conf = {
+					url,
+					data:data,
+					success:(data)=>{
+						this.$alert(data.message)
+						if(data.statusCode==1){
+							this.add.show = false
+							this.form1 = this.clone(this.data1)
+							this.form2 = this.clone(this.data2)
+							this.form3 = this.clone(this.data3)
+							this.not_connected_status1 = []
+							this.not_connected_status2 = []
+							this.not_connected_status3 = []
+							this.form.name = ""
+							this.form.remark = ""
+							this.init()
+						}else{
+							this.add.show = true
+						}
+					}
+				}
+				axiosRequest(conf)
 			},
 			// 点编辑获取数据
 			edit(id){
