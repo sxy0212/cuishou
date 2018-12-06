@@ -12,12 +12,10 @@
             :limit="1" :file-list="fileList">
             <el-button type="success" style="margin-left:18px;">批量添加</el-button>
       </el-upload>
-      <el-button type="primary" plain style="margin-left:18px;">
-        <a href="/upload/staffTemplate.xlsx" download="模板.xlsx" style="color:#409EFF">
+      <a href="/upload/staffTemplate.xlsx" download="模板.xlsx" style="display: inline-block;color: rgb(64, 158, 255);margin-left: 18px;width: 100px;line-height: 40px;height: 40px;border: 1px solid;border-radius: 5px;text-align: center;">
         下载模板
-        </a>
-      </el-button>
-		</div>
+      </a>
+    </div>
     <div style="margin-top:60px;">
       <div style="width:30%;float:left">
         <el-tree :data="Dates" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps2">
@@ -411,14 +409,12 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       // 右侧编辑
       addMemberEdit(index,row){
-        this.addMemberDioEdit = true;
+        this.addMemberDioEdit = true
         const url = "/api/api_backend.php?r=collect-depart/staff-show"
         const conf = {
           url,
-          data:{
-            id:row.id
-          },
-          success:(data)=>{
+          data:{id:row.id},
+           success:(data)=>{
             this.formMemberEdit = data.info.info
             this.DatesEdit = data.info.tree
           }
@@ -469,7 +465,6 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         }
         axiosRequest(conf)
       },
-      	// 成员删除
 			del(id){
         this.$confirm('确定删除?', '提示', {
                   confirmButtonText: '确定',
@@ -506,7 +501,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         this.page_size = val
         this.init()
       }
-		}
+    }
   }
 </script>
 <style lang="scss" >

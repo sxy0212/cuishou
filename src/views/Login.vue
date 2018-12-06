@@ -7,18 +7,18 @@
           <el-tab-pane label="管理员登录" name="first" >
             <el-form :model="ruleForm2"  label-position="left" label-width="0px" class="demo-ruleForm login-container">
               <p class="title">
-                <img src="/static/image/login_top.png" style="width:25px;height:25px;">
+                <img src="static/image/login_top.png" style="width:25px;height:25px;">
                 <span style="margin-left:5px;">言小催管理员</span>
               </p>
               <el-form-item prop="account">
                 <div class="input">
-                  <img src="/static/image/login_user.png">
+                  <img src="static/image/login_user.png">
                   <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号" autofocus="true"></el-input>
                 </div>
               </el-form-item>
               <el-form-item prop="checkPass">
                 <div class="input">
-                  <img src="/static/image/login_pass.png">
+                  <img src="static/image/login_pass.png">
                   <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleReset2"></el-input>
                 </div>
               </el-form-item>

@@ -12,7 +12,7 @@
         接通总量 <span style="color:red">{{tip.conn}}</span> ;接通率<span style="color:red">{{tip.per_conn}}</span>
       </div>
       <div>
-      	<el-button type="primary" @click="exportData">导出数据</el-button>
+      	<el-button type="primary" @click="exportData" :disabled="batch_id == ''">导出数据</el-button>
       </div>
     </div>
 		<div id="container" v-loading="loading"></div>
