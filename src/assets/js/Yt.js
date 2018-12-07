@@ -91,6 +91,7 @@ function formatDate(date, fmt) {
                 confirmButtonText: '确定',
                 callback: action => {
                     goHome()
+                    setCookie("user","")
                 }
             });                  
         }
