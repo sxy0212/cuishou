@@ -1,87 +1,31 @@
 <template>
   <div class="cover">
 		<div-form
-			:formFirst='formFirst'
+			:conditions='conditions'
 			:levelList='levelList'
 			:batchList='batchList'
 			:departmentList='departmentList'
 			:clientList='clientList'
+			v-on:searchFn='searchFn($event)'
+			v-on:clearFn='clearFn($event)'
 		>
 		</div-form>
-		<div slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
-			<el-button type="info" @click="searchFn" size="mini">清空</el-button>
-		</div>
-    <div> 
+	<div> 
     <div class="blueB">
 		<second-form
 			:form='form'
-			
-		>
-		</second-form>
+		></second-form>
 	</div>
 	</div>
     <div class="tableCover">
 		<div class="totalT">
 			查询统计：	案件总数：{{totalNum}}件，总金额：￥{{titalAmount}}
 		</div>
-		<el-table
-			border
-			:data="tableData"
-			style="width: 98%"
-			@selection-change="handleSelectionChange"
-			>
-			<el-table-column
-			label="选框"
-			type="selection"
-			width="55">
-			</el-table-column>
-			<el-table-column
-			label="案件id"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="姓名"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="催收区域"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			prop="name"
-			label="催收状态"
-			>
-			</el-table-column>
-			<el-table-column
-			label="所属批次"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="证件号码"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="委案金额"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="已还款"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="委案余额"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="上次通话"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="委案日期"
-			prop="id">
-			</el-table-column>
-		</el-table>
+		<div-table
+			:tableData='tableData'
+			v-on:handleSelectionChange='handleSelectionChange($event)'
+		></div-table>
+		
 		<page-change 
 			:total="total"
 			:page="page"
@@ -109,18 +53,20 @@ import addImport from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
 import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
+import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 import store from '@/vuex/store.js'
-// import indexMethod  from '@/utils/indexMethod.js'
+
 
 export default {
     components:{
         'edit-dialog':addImport,
 		'page-change':pageChange,
 		'div-form':formCaseFirst,
-		'second-form':formCaseSecond
+		'second-form':formCaseSecond,
+		'div-table':tableCaseMan
 	},
 	data() {
         return {
@@ -137,17 +83,35 @@ export default {
 			batchList:[],//批次列表
 			departmentList:[],//部门列表
 			clientList:[],//委托方列表
-			formFirst:{//搜索条件
+			conditions:{//搜索条件
 				case_name:'',
 				case_mobile:'',
 				case_id_num:'',
 				case_status:'',
-				case_client:'',
-				case_date:'',
-				case_back_date:'',
+				case_client:[                                               //委托方,选填
+		"\u5c0f\u82f9\u679c",
+		"\u5c0f\u9999\u8549"
+	],
+				case_date:[                                               //委案日期,选填
+			"2018-11-01",
+			"2018-11-30"
+		],
+				case_back_date:[                                               //委案日期,选填
+			"2018-11-01",
+			"2018-11-30"
+		],
 				case_money:'',
 				id:'',
-				case_last_collection_date:''
+				case_last_collection_date:[                                               //委案日期,选填
+			"2018-11-01",
+			"2018-11-30"
+		],
+				talk_recode:'',
+				talk_time:[                                                 //通话时长,选填
+		"10",
+		"30"
+	]
+
 			},
 			formInline: {
 				user: '',
@@ -183,10 +147,13 @@ export default {
 		searchFn(){
 
 		},
+		clearFn(){
+
+		},
         onSubmit(){
 
 		},
-		getBatchList(){
+		getBatchList(){//获取批次列表
 			let conf = {
                 url : '/api/api_backend.php?r=collection/init-search',
                 success:(data)=>{
@@ -198,7 +165,7 @@ export default {
             }
             axiosRequest(conf)
 		},
-		getDepartmentList(){
+		getDepartmentList(){//获取案件列表
 			let conf = {
                 url : '/api/api_backend.php?r=collection/depart-search',
                 success:(data)=>{
@@ -221,12 +188,16 @@ export default {
             axiosRequest(conf)
 		},
         init(){
+			
             let conf = {
-                url : '/api/api_backend.php?r=system-setting/area-list',
-                data : {
-                    page:this.page,
-                    page_size:this.page_size
-                },
+				url : '/api/api_backend.php?r=collection/search',
+				data:{
+					"conditions":JSON.stringify(this.conditions),
+					"case_client":this.conditions.case_client,
+					"talk_recode":this.conditions.talk_recode,
+					"talk_time":this.conditions.talk_time,
+
+				},
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.tableData = data.info

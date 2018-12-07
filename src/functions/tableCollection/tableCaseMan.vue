@@ -1,0 +1,73 @@
+<template>
+    <el-table
+        border
+        :data="tableData"
+        style="width: 98%"
+        @selection-change="handleSelectionChange"
+        >
+        <el-table-column
+        label="选框"
+        type="selection"
+        width="55">
+        </el-table-column>
+        <el-table-column
+        label="案件id"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="姓名"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="催收区域"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        prop="name"
+        label="催收状态"
+        >
+        </el-table-column>
+        <el-table-column
+        label="所属批次"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="证件号码"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="委案金额"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="已还款"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="委案余额"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="上次通话"
+        prop="id">
+        </el-table-column>
+        <el-table-column
+        label="委案日期"
+        prop="id">
+        </el-table-column>
+    </el-table>
+</template>
+<script>
+export default {
+    name:'tableCaseMan',
+    props:[
+        'tableData'
+    ],
+    methods:{
+        handleSelectionChange(val){
+            this.$emit('handleSelectionChange',val)
+        }
+    }
+}
+</script>
+

@@ -10,7 +10,8 @@
         style="width: 98%">
         <el-table-column
           label="序号"
-          prop="id"
+          type='index'
+          :index='methodIndex'
           width="50">
         </el-table-column>
         <el-table-column
@@ -54,7 +55,7 @@ import addArea from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
-// import indexMethod  from '@/utils/indexMethod.js'
+import indexMethod  from '@/utils/indexMethod.js'
 
 export default {
     components:{
@@ -83,9 +84,9 @@ export default {
         this.init()
     },
     methods: {
-        // methodIndex(val){
-        //     return indexMethod(val,this.page,this.page_size)
-        // },
+        methodIndex(val){
+            return indexMethod(val,this.page,this.page_size)
+        },
         init(){
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/area-list',

@@ -15,6 +15,8 @@
     <div-table
         :tableData="tableData"
         :addTask='addTask'
+        :page='page'
+        :page_size='page_size'
         v-on:deleteFn='deleteFn($event)'
         v-on:exportFn='exportFn($event)'
         v-on:addToFn='addToFn($event)'
@@ -48,8 +50,7 @@
         ></edit-dialog>
     </el-dialog>
     <el-dialog title="下载模板" :visible.sync="addDown" >
-        <div-dialog
-        ></div-dialog>
+        <div-dialog></div-dialog>
     </el-dialog>
     <el-dialog title="添加到外呼任务" :visible.sync="addTask" >
         <task-dialog

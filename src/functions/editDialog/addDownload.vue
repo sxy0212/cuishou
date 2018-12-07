@@ -3,6 +3,8 @@
         <div-table
             :templateUse='templateUse'
             :tableData='tableData'
+            :page="page"
+            :page_size ="page_size"
             v-on:downloadFn = 'downloadFn($event)'
         >
         </div-table>

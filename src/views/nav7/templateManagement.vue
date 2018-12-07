@@ -5,7 +5,10 @@
     </div>
     <div class="tableCover">
         <div-table
+            :templateUse='templateUse'
             :tableData = 'tableData'
+            :page="page"
+            :page_size ="page_size"
             v-on:editFn='editFn($event)'
             v-on:deleteFn='deleteFn($event)'
             v-on:downloadFn='downloadFn($event)'
@@ -43,6 +46,7 @@ import  { axiosRequest } from '@/assets/js/Yt.js'
 import  { axiosParams } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 
+
 export default {
     components:{
         'edit-dialog':addTemplate,
@@ -74,6 +78,7 @@ export default {
         this.init()
     },
     methods: {
+        
         init(){
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/template-list',

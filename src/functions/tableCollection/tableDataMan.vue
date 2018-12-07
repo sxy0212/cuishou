@@ -7,9 +7,10 @@
         @row-dblclick='rowDblclick'
       >
       <el-table-column
-        label="资料编号"
-        prop="id"
-        width="80">
+        label="序号"
+        type='index'
+        :index="methodIndex"
+        width="50">
       </el-table-column>
       <el-table-column
         prop="batch_name"
@@ -68,11 +69,14 @@
 <script>
 import router from '@/router.js'
 import store from '@/vuex/store.js'
+import indexMethod  from '@/utils/indexMethod.js'
 export default {
     name:'tableDataMan',
     props:[
       'tableData',
       'addTask',
+      'page',
+      'page_size',
     ],
     methods:{
       deleteFn(val){
@@ -90,7 +94,10 @@ export default {
       rowDblclick(row,event){//单击
         store.commit('changeBatchId', row.id)
         router.push('/caseManagement')
-      }
+      },
+      methodIndex(val){
+          return indexMethod(val,this.page,this.page_size)
+      },
     }
 }
 </script>

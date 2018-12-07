@@ -4,34 +4,14 @@
         <el-button @click='addFn(true)'>添加委托方</el-button>
     </div>
     <div class="tableCover">
-      <el-table
-        border
-        :data="tableData"
-        style="width: 98%">
-        <el-table-column
-          label="序号"
-          prop="id"
-          width="50">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="委托方名称"
-          >
-        </el-table-column>
-        <el-table-column
-          prop="prefix"
-          label="前缀"
-          >
-        </el-table-column>
-        <el-table-column
-          label="操作"
-          >
-          <template slot-scope="scope">
-            <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+        <div-table
+            :tableData='tableData'
+            :page='page'
+            :page_size='page_size'
+            v-on:editFn='editFn($event)'
+            v-on:deleteFn='deleteFn($event)'
+        ></div-table>
+      
       <page-change 
         :total="total"
         :page="page"
@@ -56,13 +36,15 @@
 import '@/assets/css/system.css'
 import addClient from '@/functions/editDialog/addClient.vue'
 import pageChange from '@/components/pageChange.vue'
+import tableClientCon from '@/functions/tableCollection/tableClientCon.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 
 export default {
     components:{
         'edit-dialog':addClient,
-        'page-change':pageChange
+        'page-change':pageChange,
+        'div-table':tableClientCon
     },
     data() {
         return {
