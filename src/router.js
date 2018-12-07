@@ -8,6 +8,7 @@ import speechScheme from './views/nav5/speechScheme.vue'
 import asrSoundScheme from "./views/nav5/asrSoundScheme.vue"
 import learning from './views/nav5/learning.vue'
 import sound from './views/nav5/sound.vue'
+import templateTree from "./views/nav5/templateTree.vue"
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
 
 
@@ -107,6 +108,14 @@ let routes = [
   {
     path: '/asrSoundScheme/:id',
     component: asrSoundScheme,
+    name:"",
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/templateTree/:id',
+    component: templateTree,
     name:"",
     meta: {
       keepAlive: true,

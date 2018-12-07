@@ -25,9 +25,7 @@
 											<template slot-scope="scope">
 													<el-button type="primary" plain @click="sound(scope.row)">语音库</el-button>
 													<el-button type="primary" plain @click="asrSound(scope.row)">话术库</el-button>
-													<a href="backend.php?r=asr-voice-repository/tree">
-														<el-button type="primary" plain @click="flow(scope.$index,scope.row)">流程图</el-button>
-													</a>
+													<el-button type="primary" plain @click="tree(scope.$index,scope.row)">流程图</el-button>
 													<el-button type="primary" plain @click="edit(scope.$index,scope.row)">修改</el-button>
 													<el-button type="danger" plain @click="del(scope.$index,scope.row)">删除</el-button>
 											</template>
@@ -365,11 +363,9 @@ import pageChange from '@/components/pageChange.vue'
             sound(row){
               this.$router.push({path:"sound/"+row.sound_id})
             },
-            detile(index,row){
-              setCookie('telephone_detail',row.id)
-            },
-            flow(index,row){
-              setCookie('flow_id',row.id)
+            // 进入流程图
+            tree(index,row){
+               this.$router.push({path:"templateTree/"+row.id})
             }
 		}
 	}

@@ -652,8 +652,10 @@ import store from '@/vuex/store.js'
 				const conf = {
 					url,
 					success:(data)=>{
-						this.AddData.templates = data.info
-						this.editData.templates = data.info
+						var arr = data.info
+						arr.unshift({id:"0",name:"未选择话术"})
+						this.AddData.templates = arr
+						this.editData.templates = arr
 					}
 				}
 				axiosRequest(conf)
@@ -886,11 +888,11 @@ import store from '@/vuex/store.js'
 						}
 						this.EditQueueData.member = data.info.queue_count
 						this.form1Edit = arr[0]
-						this.form1Edit.template_id = parseInt(arr[0].template_id)
+						this.form1Edit.template_id =arr[0].template_id
 						this.form2Edit = arr1[0]
-						this.form2Edit.template_id = parseInt(arr1[0].template_id)
+						this.form2Edit.template_id =arr1[0].template_id
 						this.form3Edit = arr2[0]
-						this.form3Edit.template_id = parseInt(arr2[0].template_id)
+						this.form3Edit.template_id = arr2[0].template_id
 						this.not_connected_status1Edit = (arr[0].not_connected_status).split(",")
 						this.not_connected_status2Edit = (arr1[0].not_connected_status).split(",")
 					}

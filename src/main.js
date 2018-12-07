@@ -6,7 +6,7 @@ import axios from 'axios'
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/common.css' // css
-
+import $ from 'jquery'
 // import router from './router'
 // import VueRouter from 'vue-router'
 import router from './router'
@@ -16,6 +16,9 @@ import Vuex from 'vuex'
 import store from './vuex/store'
 import 'font-awesome/css/font-awesome.min.css'
 import '../static/css/animate.css'
+// import '../static/css/bootstrap.min.css'
+import '../static/css/orgtree.css'
+import '../static/js/jquery.lenchart'
 Vue.config.productionTip = false
 Vue.config.axios = axios
 Vue.use(Element)
