@@ -36,21 +36,26 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="委托方">
-                <el-select v-model="conditions.case_client" placeholder="委托方">
-                    <el-option 
-                        v-for="item in clientList"
+                <el-select v-model="conditions.case_client" filterable :filter-method = 'filterFn' placeholder="请选择">
+                    <el-option
+                        v-for="item in filterList"
                         :label="item.batch_name" 
                         :value="item.batch_id"
-                        :key='item.batch_id'
-                    ></el-option>
+                        :key='item.batch_id'>
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="委案金额">
-                <el-input v-model="conditions.case_money" placeholder="请输入委案金额"></el-input>
+                <el-input v-model="conditions.case_money1" placeholder="最低金额"></el-input>
             </el-form-item>
-            
+            <el-form-item label="-">
+                <el-input  v-model="conditions.case_money2" placeholder="最高金额"></el-input>
+            </el-form-item>
             <el-form-item label="通话时长：">
-                <el-input v-model="conditions.talk_time" placeholder="请输入通话时长"></el-input>
+                <el-input v-model="conditions.talk_time1" placeholder="最小时长"></el-input>
+            </el-form-item>
+            <el-form-item label="-">
+                <el-input  v-model="conditions.talk_time2" placeholder="最大时长"></el-input>
             </el-form-item>
             <el-form-item label="委案时间">
                 <el-date-picker
@@ -71,19 +76,23 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="部门">
-                <el-select v-model="conditions.depart_id" placeholder="请选择部门">
-                    <el-option 
+                 <el-select v-model="conditions.depart_id" @change="changeFn" placeholder="请选择部门">
+                    <el-option
                         v-for="item in departmentList"
-                        :label="item.true_name" 
-                        :value="item.id"
-                        :key='item.id'
-                    ></el-option>
+                        :key="item.id"
+                        :label="item.depart_name"
+                        :value="item.id">
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="催收员">
-                <el-select v-model="conditions.region" placeholder="催收员">
-                    <el-option label="区域一" value="shanghai"></el-option>
-                    <el-option label="区域二" value="beijing"></el-option>
+                <el-select v-model="conditions.staff_id" placeholder="催收员">
+                    <el-option
+                        v-for="item in staffList"
+                        :key="item.id"
+                        :label="item.true_name"
+                        :value="item.id">
+                    </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="所属批次">
@@ -118,14 +127,10 @@
             </el-form-item>
             
         </el-form>
-        <div slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
-			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
-		</div>
     </div>
 </template>
 <script>
-
+import  { axiosRequest } from '@/assets/js/Yt.js'
 export default {
     name:'formCaseFirst',
     props:[
@@ -134,14 +139,34 @@ export default {
         'batchList',
         'departmentList',
         'clientList',
+        'staffList',
     ],
-    methods:{
-        searchFn(){
-
-        },
-        clearFn(){
-
+    data(){
+        return{
+            filterList:[]
         }
+
+    },
+    methods:{
+        changeFn(val){
+            this.$emit('changeFn',val)
+            this.$emit('getDepartmentList',2)
+        },
+        filterFn(val){
+            let conf = {
+                url : '/api/api_backend.php?r=collection/client-search',
+                data:{
+                    case_client:val
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.filterList = data.info
+                    }
+                }
+            }
+            axiosRequest(conf)
+        }
+        
     }
 }
 </script>

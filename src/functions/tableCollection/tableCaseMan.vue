@@ -16,44 +16,40 @@
         </el-table-column>
         <el-table-column
         label="姓名"
-        prop="id">
+        prop="case_name">
         </el-table-column>
         <el-table-column
         label="催收区域"
-        prop="id">
+        prop="collection_area">
         </el-table-column>
         <el-table-column
-        prop="name"
+        prop="case_status"
         label="催收状态"
         >
         </el-table-column>
         <el-table-column
         label="所属批次"
-        prop="id">
+        prop="batch_id">
         </el-table-column>
         <el-table-column
         label="证件号码"
-        prop="id">
+        prop="case_id_num">
         </el-table-column>
         <el-table-column
         label="委案金额"
-        prop="id">
+        prop="case_money">
         </el-table-column>
         <el-table-column
         label="已还款"
-        prop="id">
-        </el-table-column>
-        <el-table-column
-        label="委案余额"
-        prop="id">
+        prop="case_paid">
         </el-table-column>
         <el-table-column
         label="上次通话"
-        prop="id">
+        prop="case_last_collection_date">
         </el-table-column>
         <el-table-column
         label="委案日期"
-        prop="id">
+        prop="case_date">
         </el-table-column>
     </el-table>
 </template>
