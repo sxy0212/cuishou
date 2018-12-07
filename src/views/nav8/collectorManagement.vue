@@ -29,9 +29,9 @@
 	  </el-form>
     <p style="height: 30px;background: rgba(255, 153, 51, 1);line-height: 30px;color:#fff">任务数量:{{tip.total_task_count}},跟进数:{{tip.total_case_count}},跟进率:{{tip.task_case_count_percent}},委案金额:{{tip.total_case_money}},已还款额:{{tip.total_case_paid}},还款率:{{tip.paid_money_percent}}</p>
     <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total>0?500:100" @selection-change="handleSelectionChange">
-      <el-table-column type="index" label="序号" width="60"  :index="index"></el-table-column>
       <el-table-column type="selection"  width="60"  ></el-table-column>
-      <el-table-column prop="staff_id" label="姓名"></el-table-column>  
+      <el-table-column type="index" label="序号" width="60"  :index="index"></el-table-column>
+      <el-table-column prop="staff_name" label="姓名"></el-table-column>  
       <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
       <el-table-column prop="allocate_time" label="最后分配时间"></el-table-column>  
       <el-table-column prop="task_count" label="任务数量"></el-table-column>  
@@ -202,7 +202,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
       },
       // 导出
       exportDate(){
-
+        window.open('/api/api_backend.php?r=collect-depart/manage-export&depart_id='+this.form.depart_id+'&name='+this.form.name+'&case_paid='+this.form.case_paid+'&case_money='+this.form.case_money+'&alloc_time='+this.form.alloc_time)
       }
       
     }

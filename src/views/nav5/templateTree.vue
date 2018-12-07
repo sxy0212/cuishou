@@ -1111,6 +1111,7 @@ import { MessageBox } from 'element-ui';
               template_id:this.template_id
             },
             success:(data)=>{
+                $(".orgWrap").empty()
                 this.show = false
                 this.obj.push(data.info)
                 // this.obj = data.info
