@@ -83,35 +83,41 @@ export default {
 			batchList:[],//批次列表
 			departmentList:[],//部门列表
 			clientList:[],//委托方列表
+			talk_recode:'',
 			conditions:{//搜索条件
 				case_name:'',
 				case_mobile:'',
 				case_id_num:'',
 				case_status:'',
-				case_client:[                                               //委托方,选填
-		"\u5c0f\u82f9\u679c",
-		"\u5c0f\u9999\u8549"
-	],
-				case_date:[                                               //委案日期,选填
-			"2018-11-01",
-			"2018-11-30"
-		],
-				case_back_date:[                                               //委案日期,选填
-			"2018-11-01",
-			"2018-11-30"
-		],
-				case_money:'',
-				id:'',
-				case_last_collection_date:[                                               //委案日期,选填
-			"2018-11-01",
-			"2018-11-30"
-		],
 				talk_recode:'',
+				case_level:'',
+				batch_id:'',
+				case_color:'',
+				id:'',
+				case_money:[                                              //委案金额,选填
+					"100",
+					"1000"
+				],
+				case_client:[                                               //委托方,选填
+					"\u5c0f\u82f9\u679c",
+					"\u5c0f\u9999\u8549"
+				],
+				case_date:[                                               //委案日期,选填
+					"2018-11-01",
+					"2018-11-30"
+				],
+				case_back_date:[                                               //委案日期,选填
+					"2018-11-01",
+					"2018-11-30"
+				],
+				case_last_collection_date:[                                               //委案日期,选填
+					"2018-11-01",
+					"2018-11-30"
+				],
 				talk_time:[                                                 //通话时长,选填
-		"10",
-		"30"
-	]
-
+					"10",
+					"30"
+				]
 			},
 			formInline: {
 				user: '',
@@ -188,15 +194,10 @@ export default {
             axiosRequest(conf)
 		},
         init(){
-			
-            let conf = {
+			let conf = {
 				url : '/api/api_backend.php?r=collection/search',
 				data:{
-					"conditions":JSON.stringify(this.conditions),
-					"case_client":this.conditions.case_client,
-					"talk_recode":this.conditions.talk_recode,
-					"talk_time":this.conditions.talk_time,
-
+					conditions:JSON.stringify(this.conditions),
 				},
                 success:(data)=>{
                     if( data.statusCode == 1 ){

@@ -13,9 +13,7 @@
             <el-form-item label="关键词：">
                 <el-input v-model="conditions.talk_recode" placeholder="请输入关键词"></el-input>
             </el-form-item>
-             <el-form-item label="委案金额">
-                <el-input v-model="conditions.case_money" placeholder="请输入委案金额"></el-input>
-            </el-form-item>
+            
              <el-form-item label="案件id">
                 <el-input v-model="conditions.id" placeholder="请输入案件id"></el-input>
             </el-form-item>
@@ -25,6 +23,16 @@
                     <el-option label="暂停" value="1"></el-option>
                     <el-option label="关闭" value="2"></el-option>
                     <el-option label="退安" value="3"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="案件等级">
+                <el-select v-model="conditions.case_level" placeholder="案件等级">
+                    <el-option 
+                        v-for='item in levelList'
+                        :key='item.id'
+                        :label='item.name'
+                        :value='item.id'
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="委托方">
@@ -37,15 +45,12 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="案件等级">
-                <el-select v-model="conditions.case_level" placeholder="案件等级">
-                    <el-option 
-                        v-for='item in levelList'
-                        :key='item.id'
-                        :label='item.name'
-                        :value='item.id'
-                    ></el-option>
-                </el-select>
+            <el-form-item label="委案金额">
+                <el-input v-model="conditions.case_money" placeholder="请输入委案金额"></el-input>
+            </el-form-item>
+            
+            <el-form-item label="通话时长：">
+                <el-input v-model="conditions.talk_time" placeholder="请输入通话时长"></el-input>
             </el-form-item>
             <el-form-item label="委案时间">
                 <el-date-picker
@@ -65,11 +70,8 @@
                     end-placeholder="结束日期">
                 </el-date-picker>
             </el-form-item>
-           
-           
-            
-            <!-- <el-form-item label="部门">
-                <el-select v-model="conditions.case_client" placeholder="请选择部门">
+            <el-form-item label="部门">
+                <el-select v-model="conditions.depart_id" placeholder="请选择部门">
                     <el-option 
                         v-for="item in departmentList"
                         :label="item.true_name" 
@@ -77,7 +79,7 @@
                         :key='item.id'
                     ></el-option>
                 </el-select>
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item label="催收员">
                 <el-select v-model="conditions.region" placeholder="催收员">
                     <el-option label="区域一" value="shanghai"></el-option>
@@ -85,7 +87,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="所属批次">
-                <el-select v-model="conditions.region" placeholder="所属批次">
+                <el-select v-model="conditions.batch_id" placeholder="所属批次">
                     <el-option 
                         v-for="item in batchList"
                         :key='item'
@@ -95,7 +97,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="标色搜索">
-                <el-select v-model="conditions.region" placeholder="标色搜索">
+                <el-select v-model="conditions.case_color" placeholder="标色搜索">
                     <el-option label="玫红色" value="0"></el-option>
                     <el-option label="天蓝色" value="1"></el-option>
                     <el-option label="紫红色" value="2"></el-option>
@@ -115,9 +117,6 @@
                 </el-date-picker>
             </el-form-item>
             
-            <el-form-item label="通话时长：">
-                <el-input v-model="conditions.talk_time" placeholder="请输入通话时长"></el-input>
-            </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
