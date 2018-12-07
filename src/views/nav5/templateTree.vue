@@ -1,16 +1,16 @@
 <template> 
 	<section>
-        <div class="CenterMain  MainHp">
-            <div class="TopForm">
-                <div class="CallCount">  
-                    <div class="orgWrap" style="margin-left:0px"></div>
-                    <div class="AIadd" style="float:right">
-                        <el-button type="success" @click="addMessage"><i class="fa fa-plus"></i>添加基本信息</el-button> 
-                        <!-- <el-button type="success">测试</el-button> -->
-                    </div>
-                </div>
-            </div>
+    <div class="CenterMain  MainHp">
+      <div class="TopForm">
+        <div class="AIadd" >
+          <el-button type="success" @click="addMessage"><i class="fa fa-plus"></i>添加语音节点</el-button> 
         </div>
+        <div class="CallCount">  
+          <div v-show="show" v-loading.fullscreen.lock="show"></div>
+          <div class="orgWrap" style="margin-left:0px"></div>
+        </div>
+      </div>
+    </div>
         <!-- 添加基本信息弹框 -->
         <div class="dial-header tag-dial padding">
           <el-dialog title="基本信息" :visible.sync="baseMessage.Add" v-move>
@@ -483,35 +483,7 @@ import { MessageBox } from 'element-ui';
             getId(){
               this.template_id = this.$route.params&&this.$route.params.id
             },
-            // 页面数据初始化
-            // initData(){
-						// 	this.getId()
-            //   this.loading = true
-            //   const template_id = this.template_id
-            //   const page = this.init.page;
-            //   const page_size = this.init.page_size
-            //   const keywords = this.init.keywords
-            //   const url = "/api/api_backend.php?r=template/req-ans-data-list"
-            //   const conf = {
-            //     url,
-            //     data:{
-            //       template_id,
-            //       page,
-            //       page_size,
-            //       keywords
-            //     },
-            //     success:(data)=>{
-            //       this.loading = false
-            //       this.init.InitData = data.info.info
-            //       if(data.statusCode == 1){
-            //         this.init.total = parseInt(data.info.total);
-            //       }else{
-            //         this.init.total = 0;
-            //       }
-            //     }
-            //   }
-            //    axiosRequest(conf)
-            // },
+            
             // 页面搜索
             search(){
               this.loading = true
@@ -596,7 +568,8 @@ import { MessageBox } from 'element-ui';
                     this.$alert(data.message)
                     if(data.statusCode == 1){ 
                       this.baseMessage.Edit = false
-                      this.initData()
+                      $(".orgWrap").empty()
+                      this.node()
                     }else{
                       this.baseMessage.Edit = true
                     }
@@ -719,19 +692,14 @@ import { MessageBox } from 'element-ui';
                   url,
                   data:data,
                   success:(data)=>{
+                    this.$alert(data.message)
                     if(data.statusCode == 1){
                         this.baseMessage.Add = false
-                        this.initData() 
-                        this.$alert(data.message)
+                         $(".orgWrap").empty()
+                        this.node() 
                       }else{
                         this.baseMessage.Add = true
-                        this.$message({
-                          showClose: true,
-                          message: data.message,
-                          duration:5000,
-                          type: 'error'
-                        });
-                      }
+                    }
                   }
                 }
                  axiosRequest(conf)
@@ -1135,7 +1103,7 @@ import { MessageBox } from 'element-ui';
           node(){
             var _this = this
               this.show = true
-            // this.obj = {}
+              this.obj = []
             const url = "/api/api_backend.php?r=template-tree/tree-list"
             const conf = {
             url,
@@ -1154,14 +1122,14 @@ import { MessageBox } from 'element-ui';
                         var value = data.data;
                          this.ops = $dom
                         if (value && Object.keys(value).length) {
-
-                            
-
                             // 点击节点出现弹框
                             $dom.dblclick((e)=>{
-                              _this. activeName2 = 'first'
+                              _this.baseMessageDataEdit = {}
+                              _this.activeName2 = 'first'
                               _this.req_id = data.id
                               _this.baseMessage.Edit = true
+                              _this.target = e.target
+                              console.log(e.target)
                               _this.getSoundContent()
                               const url = "/api/api_backend.php?r=template/template-base-info"
                               const conf = {
