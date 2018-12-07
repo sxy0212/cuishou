@@ -875,9 +875,9 @@ import { MessageBox } from 'element-ui';
             // 触发词中添加关键词
             touchAdd (){
               this.touch.AddTouch = true
-              this.touch.condition = ""
-              this.touch.name = ""
-							this.touch.is_interrupt = ""
+              this.touchAddData.condition = ""
+              this.touchAddData.name = ""
+              this.touchAddData.is_interrupt = "1"
             },
             touchAddSave(){
 							const data = this.touchAddData

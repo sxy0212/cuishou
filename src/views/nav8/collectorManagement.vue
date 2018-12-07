@@ -203,7 +203,11 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
       // 导出
       exportDate(){
         window.open('/api/api_backend.php?r=collect-depart/manage-export&depart_id='+this.form.depart_id+'&name='+this.form.name+'&case_paid='+this.form.case_paid+'&case_money='+this.form.case_money+'&alloc_time='+this.form.alloc_time)
-      }
+      },
+      // 查看任务
+      check(index,row){
+        this.$router.push({path:'/caseManagement/'+row.staff_id})
+      },
       
     }
   }

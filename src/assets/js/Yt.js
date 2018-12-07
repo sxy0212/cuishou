@@ -37,6 +37,9 @@ function formatDate(date, fmt) {
          oDate.setDate(oDate.getDate() + day);
        document.cookie = name + '=' + value + ';expires=' + oDate;
     }
+    function  delCookie(name){
+        setCookie(name, '', '1s')
+    }
    function  axiosParams(data) {
         const params = new URLSearchParams();
         if (data) {
@@ -171,6 +174,7 @@ export{
     formatDate,
     getCookie,
     setCookie,
+    delCookie,
     axiosParams,
     axiosRequest ,
     goHome,
