@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import router from '@/router.js'
 
 function formatDate(date, fmt) {
         if (/(y+)/.test(fmt)) {
@@ -36,9 +37,6 @@ function formatDate(date, fmt) {
          var oDate = new Date();
          oDate.setDate(oDate.getDate() + day);
        document.cookie = name + '=' + value + ';expires=' + oDate;
-    }
-    function  delCookie(name){
-        setCookie(name, '', '1s')
     }
    function  axiosParams(data) {
         const params = new URLSearchParams();
@@ -87,7 +85,6 @@ function formatDate(date, fmt) {
                 }
             })
     }
-    // 登录过期提示
     function message(data){
         if(data.statusCode == 0 && data.message == "请先登录"){
             Vue.prototype.$alert(data.message, '提示', {
@@ -99,7 +96,7 @@ function formatDate(date, fmt) {
         }
     }
     function  goHome() {
-        Vue.prototype.$router.push({ path: '/login' });
+        router.push({ path: '/login' });
     }
 //实现元素跟随鼠标点击拖动
 // 引用，写在元素上v-move
@@ -174,7 +171,6 @@ export{
     formatDate,
     getCookie,
     setCookie,
-    delCookie,
     axiosParams,
     axiosRequest ,
     goHome,

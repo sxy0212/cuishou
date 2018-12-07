@@ -287,7 +287,7 @@ router.beforeEach((to, from, next) => {
     }else {
       next()
     }
-    console.log(!user)
+    console.log(user)
     if(!user){
       next({path:'/login'})
     }
