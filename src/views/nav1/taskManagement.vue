@@ -455,6 +455,7 @@
 <script>
 import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 import { MessageBox } from 'element-ui';
+import store from '@/vuex/store.js'
 	export default {
 		data() {
 			return {
@@ -622,6 +623,7 @@ import { MessageBox } from 'element-ui';
 		methods: {
 			// 页面机器人列表
 			init(){
+				console.log(store)
 				const url = '/api/api_backend.php?r=asroperate/list'
 				const conf = {
 					url,

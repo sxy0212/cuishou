@@ -45,9 +45,9 @@ const store =  new Vuex.Store({
         changeBatchId( state, info ){
             state.caseBatchId = info
         },
-        changeMenusList( state, info ){
-            state.menusList = info
-        }
+        // changeMenusList( state, info ){
+        //     state.menusList = info
+        // }
     }
 });
 

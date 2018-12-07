@@ -58,21 +58,36 @@ import store from '@/vuex/store.js'
   export default {
     data(){
       return {
-        open:true
+        open:true,
+        menus:[]
       }
     },
-    computed:{
-      menus(){
-        return store.state.menusList
-      }
-    },
+    // computed:{
+    //   menus(){
+    //     return store.state.menusList
+    //   }
+    // },
+    // created(){
+    //   // this.menus = store.state.menusList
+    //   console.log(store.state.menusList)
+    // },
     mounted () {
+      let conf = {
+          url : '/api/api_backend.php?r=system-setting/load-menu',
+          success:(data)=>{
+            if( data.statusCode == 1 ){
+              this.menus=data.info
+            }
+          }
+      }
+      axiosRequest(conf)
       if(this.$route.name != ""){
         if(this.$route.path !== '/taskManagement' && this.$route.path.indexOf('taskManagement') === -1) {
           store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'}); 
           store.commit('add_tabs', {route: this.$route.path , name: this.$route.name });
           store.commit('set_active_index', this.$route.path);
           store.commit('save_index', this.$route.query.num); 
+        
         } else {
           store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'});
           store.commit('set_active_index', '/taskManagement');
