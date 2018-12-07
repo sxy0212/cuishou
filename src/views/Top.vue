@@ -18,7 +18,8 @@
 </template>
 
 <script type="text/ecmascript-6">
-import store from '../vuex/store.js'
+import {axiosRequest,delCookie,setCookie} from '@/assets/js/Yt.js'
+import store from '@/vuex/store.js'
   	export default {
 			inject:['reload'],
 			data() {
@@ -56,14 +57,29 @@ import store from '../vuex/store.js'
 			//退出登录
 			logout() {
 				this.$confirm('确认退出吗?', '提示', {
-					type: 'warning'
-				}).then(() => {
-				
-				}).catch(() => {
-
-				});
-
-
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+              const url = "/api/api_backend.php?r=login/logout"
+              const conf = {
+                url,
+                success:(data)=>{
+									if(data.statusCode == 1){
+										this.$router.push({path:'/login'})
+										setCookie('user',"")
+									}else{
+										this.$alert(data.message)
+									}
+                }
+              }
+              axiosRequest(conf)
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '取消退出'
+            });          
+        });
 			},
 		
 		},

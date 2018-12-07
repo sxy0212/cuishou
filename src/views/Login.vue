@@ -8,7 +8,7 @@
             <el-form :model="ruleForm2"  label-position="left" label-width="0px" class="demo-ruleForm login-container">
               <p class="title">
                 <img src="static/image/login_top.png" style="width:25px;height:25px;">
-                <span style="margin-left:5px;">言小催管理员</span>
+                <span style="margin-left:5px;">言小信管理员</span>
               </p>
               <el-form-item prop="account">
                 <div class="input">
@@ -31,7 +31,7 @@
             <el-form :model="ruleForm2"  label-position="left" label-width="0px" class="demo-ruleForm login-container">
               <p class="title">
                 <img src="static/image/login_top.png" style="width:25px;height:25px;">
-                <span style="margin-left:5px;">言小催催收员</span>
+                <span style="margin-left:5px;">言小信催收员</span>
               </p>
               <el-form-item prop="account">
                 <div class="input">

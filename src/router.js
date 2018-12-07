@@ -49,7 +49,7 @@ let routes = [
     }
   },
   {
-    path: '/caseManagement',
+    path: '/caseManagement/:staff_id',
     name: '案件管理',
     component:  caseManagement,
     meta: {
@@ -281,14 +281,16 @@ const router = new Router({
       routes
 })
 router.beforeEach((to, from, next) => {
-    let user = JSON.parse(getCookie('user'));
+    let user = getCookie('user');
     if(user&&to.path=='/login'){
-      this.$router.push({ path:'/taskManagement' })
-      // next({ path: '/taskManagement' })
+      next({ path: '/taskManagement' })
     }else {
       next()
     }
-    console.log(user)
+    console.log(!user)
+    if(!user){
+      next({path:'/login'})
+    }
     if (!user && to.path != '/login') {
       next({ path: '/login' })
     } else {

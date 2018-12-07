@@ -62,10 +62,11 @@
 										</div>  
 										<div class="Countp">
 											<div class="According" style="display:block" v-show="form.status == 0">
-												<em>剩余资料：<span style="color:red"> {{form.remain_count}} 机器人未启动</span></em>
+												<em>剩余资料：<span style="color:red">名称:{{form.remain_name}},数量:{{form.remain_count}} 机器人未启动</span></em>
 											</div> 
 											<div class="According" style="display:block" v-show="form.status == 1">
-												<em>剩余资料：<span style="color:red"> {{form.remain_count}}</span></em>
+												<em>剩余资料：<span style="color:red">名称:{{form.remain_name}},数量:{{form.remain_count}} <em>呼叫中：{{ form.callin }}</em>
+                                                <em>通话中：{{ form.dropin }}</em></span></em>
 											</div> 
 										</div>  
 										<div class="Countp">
@@ -614,12 +615,25 @@ import store from '@/vuex/store.js'
 					status:"",
 					status1:"",
 					status2:""
-				}
+				},
+				isAnyoneOn:false,     //检测启动是否开启
 			}
 		},
 		beforeMount() {
 			this.init()   //页面数据初始化 
     	},
+		 watch:{
+            //监测是否有开启按钮
+            isAnyoneOn :{
+                handler: function (val) {
+                    if( val ){
+                        this.timer = setInterval(this.init,5000)
+                    }else if(!val){
+                        clearInterval(this.timer)
+                    }
+                },
+            }
+        },
 		methods: {
 			// 页面机器人列表
 			init(){
@@ -629,6 +643,7 @@ import store from '@/vuex/store.js'
 					url,
 					success: (data)=>{
 						this.Dates = data.info
+						this.isAnyoneOn = this.Dates.some(item=>item.status==="1")
 					}
 				}
 				axiosRequest(conf)

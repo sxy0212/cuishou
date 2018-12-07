@@ -357,6 +357,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                       if(data.statusCode == 1){
                           this.Voice.Retake = false 
                           this.init()
+                          this.rerecord.word = ""
                       }else{
                         this.Voice.Retake = true
                       }

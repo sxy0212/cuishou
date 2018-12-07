@@ -5,11 +5,18 @@
 			:levelList='levelList'
 			:batchList='batchList'
 			:departmentList='departmentList'
+			:staffList='staffList'
+			:val='val'
 			:clientList='clientList'
-			v-on:searchFn='searchFn($event)'
-			v-on:clearFn='clearFn($event)'
+			v-on:changeFn='changeFn($event)'
+			v-on:getDepartmentList='getDepartmentList($event)'
 		>
 		</div-form>
+		    <div slot="footer" class="dialog-footer">
+			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
+			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
+		</div>
+    
 	<div> 
     <div class="blueB">
 		<second-form
@@ -83,6 +90,7 @@ export default {
 			batchList:[],//批次列表
 			departmentList:[],//部门列表
 			clientList:[],//委托方列表
+			staffList:[],//催收员列表
 			talk_recode:'',
 			conditions:{//搜索条件
 				case_name:'',
@@ -94,30 +102,36 @@ export default {
 				batch_id:'',
 				case_color:'',
 				id:'',
+				staff_id:'',//催收员
+				talk_time1:'',
+				talk_time2:'',
+				case_money1:'',
+				case_money2:'',
 				case_money:[                                              //委案金额,选填
-					"100",
-					"1000"
+					"",
+					""
 				],
+				
 				case_client:[                                               //委托方,选填
-					"\u5c0f\u82f9\u679c",
-					"\u5c0f\u9999\u8549"
+					"",
+					""
 				],
 				case_date:[                                               //委案日期,选填
-					"2018-11-01",
-					"2018-11-30"
+					"",
+					""
 				],
 				case_back_date:[                                               //委案日期,选填
-					"2018-11-01",
-					"2018-11-30"
+					"",
+					""
 				],
 				case_last_collection_date:[                                               //委案日期,选填
-					"2018-11-01",
-					"2018-11-30"
+					"",
+					""
 				],
 				talk_time:[                                                 //通话时长,选填
-					"10",
-					"30"
-				]
+					"",
+					""
+				],
 			},
 			formInline: {
 				user: '',
@@ -136,17 +150,35 @@ export default {
             }],
             formTitle:{//添加或是修改模块的数据
                 name:''
-            },
+			},
+			val:''//代表当前是否选择部门
         }
     },
     created() {
 		this.init()
 		console.log(store)
 		this.getBatchList()
-		this.getDepartmentList()
+		this.getDepartmentList(1)
 		this.getClientList()
     },
     methods: {
+		init(){
+			this.conditions.talk_time = [this.conditions.talk_time1,this.conditions.talk_time2]
+			this.conditions.case_money = [this.conditions.case_money1,this.conditions.case_money2]
+			let conf = {
+				url : '/api/api_backend.php?r=collection/search',
+				data:{
+					data:JSON.stringify(this.conditions),
+				},
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.tableData = data.info.info
+                        // this.total = Number( data.total )
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
 		handleSelectionChange(val){
 			console.log(val)
 		},
@@ -158,6 +190,9 @@ export default {
 		},
         onSubmit(){
 
+		},
+		changeFn(val){
+			this.val = val
 		},
 		getBatchList(){//获取批次列表
 			let conf = {
@@ -171,12 +206,22 @@ export default {
             }
             axiosRequest(conf)
 		},
-		getDepartmentList(){//获取案件列表
+		getDepartmentList(num){//获取案件列表
+			let data = {
+				'id' : this.val
+			}
 			let conf = {
-                url : '/api/api_backend.php?r=collection/depart-search',
+				url : '/api/api_backend.php?r=collection/depart-search',
+				data,
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.departmentList = data.info.depart
+						if(num == 1){
+							this.departmentList = data.info.depart
+						}else if(num == 2){
+							this.staffList = data.info.staff
+						}
+						this.val = ''
+						
                     }
                 }
             }
@@ -193,22 +238,7 @@ export default {
             }
             axiosRequest(conf)
 		},
-        init(){
-			let conf = {
-				url : '/api/api_backend.php?r=collection/search',
-				data:{
-					conditions:JSON.stringify(this.conditions),
-				},
-                success:(data)=>{
-                    if( data.statusCode == 1 ){
-                        this.tableData = data.info
-                        this.formTitle
-                        this.total = Number( data.total )
-                    }
-                }
-            }
-            axiosRequest(conf)
-        },
+        
         addFn(val){//添加弹框的打开与关闭
             this.bannerTitle = "区域添加"
             this.addNow = val
