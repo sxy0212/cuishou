@@ -642,8 +642,13 @@ import store from '@/vuex/store.js'
 				const conf = {
 					url,
 					success: (data)=>{
+						message(data)
 						this.Dates = data.info
 						this.isAnyoneOn = this.Dates.some(item=>item.status==="1")
+<<<<<<< HEAD
+=======
+						
+>>>>>>> 0fe1eed00d6d6e8e4c8f13055e2b327adf115a2f
 					}
 				}
 				axiosRequest(conf)
