@@ -7,29 +7,33 @@
 			:batchList='batchList'
 			:departmentList='departmentList'
 			:staffList='staffList'
+			:clientList='clientList'
+			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
-			:clientList='clientList'
+			
 		>
 		</div-form>
 		<div slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
+			<el-button type="primary" @click="init" size="mini">查询</el-button>
 			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
 		</div>
     <div> 
     <div class="blueB">
 		<second-form
 			:form='form'
+			v-on:changeArea='changeArea'
 		>
 		</second-form>
 	</div>
 	</div>
     <div class="tableCover">
 		<div class="totalT">
-			查询统计：	案件总数：{{totalNum}}件，总金额：￥{{titalAmount}}
+			查询统计：	案件总数：{{case_num}}件，总金额：￥{{case_all_money}}
 		</div>
 		<div-table
 			:tableData='tableData'
+			v-on:handleSelectionChange='handleSelectionChange($event)'
 		></div-table>
 		<page-change 
 			:total="total"
@@ -64,8 +68,8 @@ export default {
 	},
 	data() {
         return {
-			totalNum:'',//案件总数
-			titalAmount:'',//总额
+			case_num:'',//案件总数
+			case_all_money:'',//总额
 			formKey:{
 				key:''
 			},
@@ -102,7 +106,8 @@ export default {
 					"",
 					""
 				],
-				case_date: [        "",
+				case_date: [        
+					"",
 					""
 				],
 				case_back_date: [
@@ -127,14 +132,28 @@ export default {
             page_size:10,
             total:0,
             addNow:false,
-            tableData: [{
-                miniImage: '上海市普陀区'
-            }, {
-                miniImage: '闵行区'
-            }],
+            tableData: [],
             formTitle:{//添加或是修改模块的数据
                 name:''
-            },
+			},
+			caseStatusList:[//案件状态
+                {
+                    value:'0',
+                    label:'正常状态'
+                },
+                {
+                    value:'1',
+                    label:'暂停'
+                },
+                {
+                    value:'2',
+                    label:'关闭'
+                },
+                {
+                    value:'3',
+                    label:'退案'
+                }
+            ]
         }
     },
     created() {
@@ -147,10 +166,7 @@ export default {
 		handleSelectionChange(val){
 			console.log(val)
 		},
-		searchFn(){
-
-		},
-        getBatchList(){
+		getBatchList(){
 			let conf = {
                 url : '/api/api_backend.php?r=collection/init-search',
                 success:(data)=>{
@@ -197,13 +213,22 @@ export default {
             let conf = {
 				url : '/api/api_backend.php?r=collection/search',
 				data:{
-					conditions:JSON.stringify(this.conditions)
+					data:JSON.stringify(this.conditions)
 					// page:this.page,
                 	// page_size:this.page_size
 				},
                 success:(data)=>{
                     if( data.statusCode == 1 ){
-                        this.tableData = data.info.info
+						this.tableData = data.info.info.map(item=>{
+							this.caseStatusList.forEach(one=>{
+								if(one.value == item.case_status){
+									item.case_status = one.label
+								}
+							})
+							return item
+						})
+						this.case_all_money = data.info.case_all_money
+						this.case_num = data.info.case_num
                     }
                 }
             }
@@ -218,6 +243,50 @@ export default {
             this.init()
 		},
 		clearFn(){
+			this.conditions = {
+				case_name: "",
+				case_mobile: "",
+				case_id_num: "",
+				case_status: "",
+				talk_recode: "",
+				case_level: "",
+				batch_id: "",
+				depart_id:'',
+				staff_id:'',
+				case_color: "",
+				id: "",
+				talk_time1:'',
+				talk_time2:'',
+				case_money1:'',
+				case_money2:'',
+				case_money: [        
+					"",
+					""
+				],
+				case_client: [ 
+					"",
+					""
+				],
+				case_date: [        
+					"",
+					""
+				],
+				case_back_date: [
+					"",
+					""
+				],
+				case_last_collection_date: [        
+					"",
+					""
+				],
+				talk_time: [        
+					"",
+					""
+				]
+			}
+			
+		},
+		changeArea(){//修改区域
 
 		}
         

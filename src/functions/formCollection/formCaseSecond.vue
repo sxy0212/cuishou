@@ -9,7 +9,7 @@
             <el-button type="info" @click="searchFn" size="mini">关闭案件</el-button>
             <el-button type="primary" @click="searchFn" size="mini">退案</el-button>
             <el-button type="info" @click="searchFn" size="mini">恢复案件</el-button>
-            <el-button type="info" @click="searchFn" size="mini">修改催收区域</el-button>
+            <el-button type="info" @click="changeArea" size="mini">修改催收区域</el-button>
         </el-form-item>
         <el-form-item label="导出操作：">
             <el-button type="primary" @click="searchFn" size="mini">导出查询结果</el-button>
@@ -71,6 +71,9 @@ export default {
     methods:{
         searchFn(){
 
+        },
+        changeArea(){
+            this.$emit('changeArea')
         }
     }
 }

@@ -10,7 +10,7 @@
             <el-form-item label="证件号">
                 <el-input v-model="conditions.case_id_num" placeholder="请输入证件号"></el-input>
             </el-form-item>
-            <el-form-item label="关键词：">
+            <el-form-item label="关键词">
                 <el-input v-model="conditions.talk_recode" placeholder="请输入关键词"></el-input>
             </el-form-item>
             
@@ -19,10 +19,12 @@
             </el-form-item>
             <el-form-item label="案件状态">
                 <el-select v-model="conditions.case_status" placeholder="案件状态">
-                    <el-option label="正常状态" value="0"></el-option>
-                    <el-option label="暂停" value="1"></el-option>
-                    <el-option label="关闭" value="2"></el-option>
-                    <el-option label="退安" value="3"></el-option>
+                    <el-option 
+                        :label="item.label" 
+                        :value="item.value"
+                        v-for='item in caseStatusList'
+                        :key="item.value"
+                    ></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="案件等级">
@@ -36,7 +38,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="委托方">
-                <el-select v-model="conditions.case_client" filterable :filter-method = 'filterFn' placeholder="请选择">
+                <el-select v-model="conditions.case_client" filterable :filter-method = 'filterFn' @change="inputChange" placeholder="请选择">
                     <el-option
                         v-for="item in filterList"
                         :label="item.batch_name" 
@@ -46,16 +48,16 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="委案金额">
-                <el-input v-model="conditions.case_money1" placeholder="最低金额"></el-input>
+                <el-input v-model="conditions.case_money1" type='number' placeholder="最低金额"></el-input>
             </el-form-item>
             <el-form-item label="-">
-                <el-input  v-model="conditions.case_money2" placeholder="最高金额"></el-input>
+                <el-input  v-model="conditions.case_money2" type='number'  placeholder="最高金额"></el-input>
             </el-form-item>
-            <el-form-item label="通话时长：">
-                <el-input v-model="conditions.talk_time1" placeholder="最小时长"></el-input>
+            <el-form-item label="通话时长">
+                <el-input v-model="conditions.talk_time1" type='number' placeholder="最小时长"></el-input>
             </el-form-item>
             <el-form-item label="-">
-                <el-input  v-model="conditions.talk_time2" placeholder="最大时长"></el-input>
+                <el-input  v-model="conditions.talk_time2" type='number' placeholder="最大时长"></el-input>
             </el-form-item>
             <el-form-item label="委案时间">
                 <el-date-picker
@@ -139,10 +141,12 @@ export default {
         'batchList',
         'departmentList',
         'staffList',
+        'caseStatusList',
     ],
     data(){
         return{
-            filterList:[]
+            filterList:[],
+            
         }
 
     },
@@ -160,6 +164,24 @@ export default {
                 success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.filterList = data.info
+                    }else if(data.statusCode == 0){
+                        this.filterList = []
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        inputChange(val){
+            let conf = {
+                url : '/api/api_backend.php?r=collection/client-search',
+                data:{
+                    case_client:val
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.filterList = data.info
+                    }else if(data.statusCode == 0){
+                        this.filterList = []
                     }
                 }
             }

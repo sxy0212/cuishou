@@ -28,6 +28,11 @@
         >
         </el-table-column>
         <el-table-column
+        prop="staff_id"
+        label="是否分配"
+        >
+        </el-table-column>
+        <el-table-column
         label="所属批次"
         prop="batch_id">
         </el-table-column>
