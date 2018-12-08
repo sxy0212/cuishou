@@ -118,4 +118,5 @@ export default {
 
 </script>
 <style lang="scss" >
+  .el-tabs__content{margin-left:60px;margin-top:-10px;overflow:visible}
 </style>
