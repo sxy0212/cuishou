@@ -19,7 +19,7 @@ const store =  new Vuex.Store({
     mutations : {
         add_tabs (state,data) {
             if(data.name != ""){
-            state.options.push(data); 
+                state.options.push(data); 
             }
         },
         save_index(state, data){
@@ -45,11 +45,12 @@ const store =  new Vuex.Store({
         changeBatchId( state, info ){
             state.caseBatchId = info
         },
-        // changeMenusList( state, info ){
-        //     state.menusList = info
-        // }
+        clearOptions( state ){
+            state.options = []
+        }
+        
     }
-});
+})
 
 
 export default store

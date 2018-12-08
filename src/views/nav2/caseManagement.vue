@@ -6,14 +6,11 @@
 			:levelList='levelList'
 			:batchList='batchList'
 			:departmentList='departmentList'
-<<<<<<< HEAD
 			:staffList='staffList'
 			:val='val'
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
-=======
 			:clientList='clientList'
->>>>>>> 147ed7090b6aae823710641041cf5be350f21236
 		>
 		</div-form>
 		<div slot="footer" class="dialog-footer">
@@ -123,13 +120,8 @@ import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 import store from '@/vuex/store.js'
-<<<<<<< HEAD
 import router from '@/router.js'
-
-=======
 // import indexMethod  from '@/utils/indexMethod.js'
->>>>>>> 147ed7090b6aae823710641041cf5be350f21236
-
 export default {
     components:{
         'edit-dialog':addImport,
@@ -190,15 +182,9 @@ export default {
 		this.init()
 		console.log(store)
 		this.getBatchList()
-<<<<<<< HEAD
 		this.getDepartmentList(1)
 	},
-=======
-		this.getDepartmentList()
-		this.getClientList()
-    },
->>>>>>> 147ed7090b6aae823710641041cf5be350f21236
-    methods: {
+	methods: {
 		handleSelectionChange(val){
 			console.log(val)
 		},
@@ -231,10 +217,6 @@ export default {
             }
             axiosRequest(conf)
 		},
-<<<<<<< HEAD
-		
-        
-=======
 		getClientList(){
 			let conf = {
                 url : '/api/api_backend.php?r=collection/client-search',
@@ -263,8 +245,7 @@ export default {
             }
             axiosRequest(conf)
         },
->>>>>>> 147ed7090b6aae823710641041cf5be350f21236
-        addFn(val){//添加弹框的打开与关闭
+		addFn(val){//添加弹框的打开与关闭
             this.bannerTitle = "区域添加"
             this.addNow = val
             this.id = ''

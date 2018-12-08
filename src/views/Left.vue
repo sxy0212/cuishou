@@ -62,15 +62,6 @@ import store from '@/vuex/store.js'
         menus:[]
       }
     },
-    // computed:{
-    //   menus(){
-    //     return store.state.menusList
-    //   }
-    // },
-    // created(){
-    //   // this.menus = store.state.menusList
-    //   console.log(store.state.menusList)
-    // },
     mounted () {
       let conf = {
           url : '/api/api_backend.php?r=system-setting/load-menu',
@@ -97,17 +88,17 @@ import store from '@/vuex/store.js'
     },
     methods:{
       handleOpen(key, keyPath) {
-        store.commit('save_index', key);  
+        store.commit('save_index', key); 
       },
       handleClose(key, keyPath) {
-        console.log(key,keyPath);
+        console.log(key,keyPath)
       },
       handleSelect(key,path){
         console.log(key,path)
-        store.commit('save_index', path[1]);
+        store.commit('save_index', path[1])
       },
       handleIconClick(ev) {
-        console.log(ev);
+        console.log(ev)
       },
     },
   }

@@ -21,35 +21,35 @@
 import {axiosRequest,delCookie,setCookie} from '@/assets/js/Yt.js'
 import store from '@/vuex/store.js'
   	export default {
-			inject:['reload'],
-			data() {
-				return {
-					collapsed:false,
-					sysUserName: '',
-					sysUserAvatar: '',
-					form: {
-						name: '',
-						region: '',
-						date1: '',
-						date2: '',
-						delivery: false,
-						type: [],
-						resource: '',
-						desc: ''
-					},
+		inject:['reload'],
+		data() {
+			return {
+				collapsed:false,
+				sysUserName: '',
+				sysUserAvatar: '',
+				form: {
+					name: '',
+					region: '',
+					date1: '',
+					date2: '',
+					delivery: false,
+					type: [],
+					resource: '',
+					desc: ''
+				},
 			}
 		},
 		methods: {
 			onSubmit() {
-				console.log('submit!');
+				console.log('submit!')
 			},
 			handleopen() {
-				//console.log('handleopen');
+				//console.log('handleopen')
 			},
 			handleclose() {
-				//console.log('handleclose');
+				//console.log('handleclose')
 			},
-			handleselect: function (a, b) {
+			handleselect() {
 			},
 			shuxian(){
 				this.reload()
@@ -57,47 +57,46 @@ import store from '@/vuex/store.js'
 			//退出登录
 			logout() {
 				this.$confirm('确认退出吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }).then(() => {
-              const url = "/api/api_backend.php?r=login/logout"
-              const conf = {
-                url,
-                success:(data)=>{
-									if(data.statusCode == 1){
-										this.$router.push({path:'/login'})
-										setCookie('user',"")
-									}else{
-										this.$alert(data.message)
-									}
-                }
-              }
-              axiosRequest(conf)
-          }).catch(() => {
-            this.$message({
-              type: 'info',
-              message: '取消退出'
-            });          
-        });
+					confirmButtonText: '确定',
+					cancelButtonText: '取消',
+					type: 'warning'
+				}).then(() => {
+					const url = "/api/api_backend.php?r=login/logout"
+					const conf = {
+						url,
+						success:(data)=>{
+							if(data.statusCode == 1){
+								store.commit('clearOptions')
+								this.$router.push({path:'/login'})
+								setCookie('user',"")
+							}else{
+								this.$alert(data.message)
+							}
+						}
+					}
+					axiosRequest(conf)
+				}).catch(() => {
+					this.$message({
+						type: 'info',
+						message: '取消退出'
+					})         
+				})
 			},
-		
 		},
 		mounted() {
-			var user = sessionStorage.getItem('user');
+			var user = sessionStorage.getItem('user')
 			if (user) {
-				user = JSON.parse(user);
-				this.sysUserName = user.name || '';
-				this.sysUserAvatar = user.avatar || '';
+				user = JSON.parse(user)
+				this.sysUserName = user.name || ''
+				this.sysUserAvatar = user.avatar || ''
 			}
-
 		}
 	}
 
 </script>
 
 <style lang="scss" scoped >	
-	 #app .title{
+	#app .title{
 		color:#fff;
 	}
 	.title{
@@ -108,9 +107,9 @@ import store from '@/vuex/store.js'
 		padding-left:20px;
 	}
 	.header{
-		    overflow: hidden;
-    width: 100%;
-    background: #23262E;
+		overflow: hidden;
+		width: 100%;
+		background: #23262E;
 		height:60px;
 	}
 	.drop{
