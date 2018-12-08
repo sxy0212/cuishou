@@ -22,7 +22,7 @@
     <div class="blueB">
 		<second-form
 			:form='form'
-			v-on:changeArea='changeArea'
+			v-on:changeArea='changeArea($event)'
 		>
 		</second-form>
 	</div>
@@ -151,8 +151,9 @@ export default {
                     label:'退案'
                 }
 			],
-			multipList:[]//多样的选择
-        }
+			multipList:[],//多样的选择,
+			areaList:[]//区域列表
+		}
     },
     created() {
 		this.init()
@@ -164,7 +165,7 @@ export default {
 		handleSelectionChange(val){
 			this.multipList = val
 		},
-		getBatchList(){
+		getBatchList(){//获取批次列表
 			let conf = {
                 url : '/api/api_backend.php?r=collection/init-search',
                 success:(data)=>{
@@ -179,7 +180,7 @@ export default {
 		changeFn(val){
 			this.id = val
 		},
-		getDepartmentList(num){
+		getDepartmentList(num){//获取部门或是催收员列表
 			let data = {
 				id:this.id
 			}
@@ -299,9 +300,47 @@ export default {
 			
 		},
 		changeArea(){//修改区域
-
-		}
-        
+			if( !!this.multipList.length ){//去获取区域列表
+				let conf = {
+					url : '/api/api_backend.php?r=collection/area-query',
+					success:(data)=>{
+						if( data.statusCode == 1 ){
+							this.areaList = data.info
+							this.saveArea(this.areaList[1])
+						}
+					}
+				}
+				axiosRequest(conf)
+			}
+		},
+		saveArea( num ){//保存区域
+			console.log(this.multipList)
+			let ids = this.multipList.map(item=>{
+				console.log(typeof(item.id))
+				return item.id
+			})
+			console.log(typeof(ids))
+			let data = JSON.stringify( {
+							"case_status":"",                       //案件状态，三者选填其一
+							"case_color":"",                       //案件标色，三者选填其一
+							"collection_area":num.id                   //催收区域，三者选填其一
+						} )
+						
+			let conf = {
+					url : '/api/api_backend.php?r=collection/update',
+					data:{
+						id: ids,
+						data:data
+					},
+					success:(data)=>{
+						if( data.statusCode == 1 ){
+							// this.areaList = data.info
+						}
+					}
+				}
+				axiosRequest(conf)
+			}
+		
     }
 }
 </script>
