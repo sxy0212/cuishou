@@ -1,5 +1,6 @@
 <template>
-  <div class="cover">
+<div>
+	<div class="cover">
 		<div-form
 			:conditions='conditions'
 			:levelList='levelList'
@@ -7,17 +8,15 @@
 			:departmentList='departmentList'
 			:staffList='staffList'
 			:val='val'
-			:clientList='clientList'
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
 		>
 		</div-form>
-		    <div slot="footer" class="dialog-footer">
+		<div slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
 			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
 		</div>
-    
-	<div> 
+    <div> 
     <div class="blueB">
 		<second-form
 			:form='form'
@@ -53,6 +52,8 @@
         ></edit-dialog>
     </el-dialog>
   </div>
+</div>
+ 
 </template>
 <script>
 import '@/assets/css/system.css'
@@ -65,6 +66,7 @@ import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 import store from '@/vuex/store.js'
+import router from '@/router.js'
 
 
 export default {
@@ -155,12 +157,13 @@ export default {
         }
     },
     created() {
+		// this.$route.params&&this.$route.params.staff_id
+		// console.log(route.params&&route.params.staff_id)
 		this.init()
 		console.log(store)
 		this.getBatchList()
 		this.getDepartmentList(1)
-		this.getClientList()
-    },
+	},
     methods: {
 		init(){
 			this.conditions.talk_time = [this.conditions.talk_time1,this.conditions.talk_time2]
@@ -227,17 +230,7 @@ export default {
             }
             axiosRequest(conf)
 		},
-		getClientList(){
-			let conf = {
-                url : '/api/api_backend.php?r=collection/client-search',
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-						this.clientList = data.info
-                    }
-                }
-            }
-            axiosRequest(conf)
-		},
+		
         
         addFn(val){//添加弹框的打开与关闭
             this.bannerTitle = "区域添加"

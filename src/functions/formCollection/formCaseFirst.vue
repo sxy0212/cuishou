@@ -138,7 +138,6 @@ export default {
         'levelList',
         'batchList',
         'departmentList',
-        'clientList',
         'staffList',
     ],
     data(){
