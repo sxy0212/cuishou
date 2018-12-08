@@ -19,7 +19,7 @@ const store =  new Vuex.Store({
     mutations : {
         add_tabs (state,data) {
             if(data.name != ""){
-                state.options.push(data); 
+                state.options.push(data) 
             }
         },
         save_index(state, data){
@@ -38,14 +38,13 @@ const store =  new Vuex.Store({
         set_active_index (state, index) {
             state.activeIndex = index;
         },
-        // 设置详情信息
-        save_detail_info (state, info) {
+        save_detail_info (state, info) {// 设置详情信息
             state.userInfo = info;
         },
         changeBatchId( state, info ){
             state.caseBatchId = info
         },
-        clearOptions( state ){
+        clearOptions( state ){//退出登录时，清空tab框
             state.options = []
         }
         

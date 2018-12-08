@@ -54,8 +54,7 @@ import store from '@/vuex/store.js'
 			shuxian(){
 				this.reload()
 			},
-			//退出登录
-			logout() {
+			logout() {//退出登录
 				this.$confirm('确认退出吗?', '提示', {
 					confirmButtonText: '确定',
 					cancelButtonText: '取消',

@@ -104,7 +104,6 @@ import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
               setCookie('user',2);
               this.$router.push({ path: '/taskManagement' })
               this.loading = false
-              // this.getMenusList()//登录成功获取侧边栏数据
             }else{
               this.$alert(data.message)
               this.logining = false
@@ -117,19 +116,6 @@ import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
       handleClick(){
 
       },
-      // getMenusList(){
-      //   console.log('取数据')
-      //   let conf = {
-      //       url : '/api/api_backend.php?r=system-setting/load-menu',
-      //       success:(data)=>{
-      //         if( data.statusCode == 1 ){
-      //           store.commit('changeMenusList', data.info)
-      //         }
-      //       }
-      //   }
-      //   axiosRequest(conf)
-   
-      // }
     },
   }
 
