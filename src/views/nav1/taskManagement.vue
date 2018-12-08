@@ -454,7 +454,7 @@
 </template>
 
 <script>
-import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
+import {axiosRequest,clone,message,getCookie} from '@/assets/js/Yt.js'
 import { MessageBox } from 'element-ui';
 import store from '@/vuex/store.js'
 	export default {
@@ -636,18 +636,22 @@ import store from '@/vuex/store.js'
         },
 		methods: {
 			// 页面机器人列表
+			
 			init(){
-				console.log(store)
-				const url = '/api/api_backend.php?r=asroperate/list'
-				const conf = {
-					url,
-					success: (data)=>{
-						message(data)
-						this.Dates = data.info
-						this.isAnyoneOn = this.Dates.some(item=>item.status==="1")
+				if(getCookie("user")){
+					console.log(store)
+					const url = '/api/api_backend.php?r=asroperate/list'
+					const conf = {
+						url,
+						success: (data)=>{
+							// message(data)
+							this.Dates = data.info
+							this.isAnyoneOn = this.Dates.some(item=>item.status==="1")
+						}
 					}
+					axiosRequest(conf)
 				}
-				axiosRequest(conf)
+				
       		},
 			// 点击添加任务时数据初始化
 			addInit(){

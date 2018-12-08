@@ -37,6 +37,7 @@ let routes = [
     name: 'login',
     component: Login,
     meta: {
+      keep:true,
       keepAlive: false
     }
   },

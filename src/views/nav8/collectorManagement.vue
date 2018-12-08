@@ -206,7 +206,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
       },
       // 查看任务
       check(index,row){
-        this.$router.push({path:'/caseManagement/'+row.staff_id})
+        this.$router.push({path:'/caseManagement/',query:{staff_id:row.id}})
       },
       
     }
