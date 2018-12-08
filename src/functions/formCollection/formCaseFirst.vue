@@ -187,7 +187,6 @@ export default {
             }
             axiosRequest(conf)
         }
-        
     }
 }
 </script>

@@ -94,15 +94,12 @@ export default {
 				staff_id:'',
 				case_color: "",
 				id: "",
+				case_client:'',//委托方
 				talk_time1:'',
 				talk_time2:'',
 				case_money1:'',
 				case_money2:'',
 				case_money: [        
-					"",
-					""
-				],
-				case_client: [ 
 					"",
 					""
 				],
@@ -153,7 +150,8 @@ export default {
                     value:'3',
                     label:'退案'
                 }
-            ]
+			],
+			multipList:[]//多样的选择
         }
     },
     created() {
@@ -164,7 +162,7 @@ export default {
 	},
 	methods: {
 		handleSelectionChange(val){
-			console.log(val)
+			this.multipList = val
 		},
 		getBatchList(){
 			let conf = {
@@ -202,18 +200,35 @@ export default {
             axiosRequest(conf)
 		},
 		init(){
-			this.conditions.talk_time=[
-				this.conditions.talk_time1,
-				this.conditions.talk_time2
-			]
-			this.conditions.case_money=[
-				this.conditions.case_money1,
-				this.conditions.case_money2
-			]
+			let data = {//端口需要的数据键值对必须是正好的，多余的没用的键值对会报错，所以这样单独来取
+				case_name: this.conditions.case_time,
+				case_mobile: this.conditions.case_mobile,
+				case_id_num:  this.conditions.case_id_num,
+				case_status:  this.conditions.case_status,
+				talk_recode:  this.conditions.talk_recode,
+				case_level:  this.conditions.case_level,
+				batch_id:  this.conditions.batch_id,
+				depart_id: this.conditions.depart_id,
+				staff_id: this.conditions.staff_id,
+				case_color:  this.conditions.case_color,
+				id:  this.conditions.id,
+				case_client: this.conditions.case_client,//委托方
+				case_money: [
+					this.conditions.case_money1,
+					this.conditions.case_money2
+				],
+				case_date: this.conditions.case_date,
+				case_back_date: this.conditions.case_back_date,
+				case_last_collection_date: this.conditions.case_last_collection_date,
+				talk_time: [
+					this.conditions.talk_time1,
+					this.conditions.talk_time2
+				]
+			}
             let conf = {
 				url : '/api/api_backend.php?r=collection/search',
 				data:{
-					data:JSON.stringify(this.conditions)
+					data:JSON.stringify(data)
 					// page:this.page,
                 	// page_size:this.page_size
 				},
@@ -242,7 +257,7 @@ export default {
             this.page = val
             this.init()
 		},
-		clearFn(){
+		clearFn(){//清空，将数组的数据全部手写清空
 			this.conditions = {
 				case_name: "",
 				case_mobile: "",
@@ -255,15 +270,12 @@ export default {
 				staff_id:'',
 				case_color: "",
 				id: "",
+				case_client:"",
 				talk_time1:'',
 				talk_time2:'',
 				case_money1:'',
 				case_money2:'',
 				case_money: [        
-					"",
-					""
-				],
-				case_client: [ 
 					"",
 					""
 				],
