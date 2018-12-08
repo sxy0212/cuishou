@@ -2,12 +2,11 @@
 <div>
 	<div class="cover">
 		<div-form
-			:formFirst='formFirst'
+			:conditions='conditions'
 			:levelList='levelList'
 			:batchList='batchList'
 			:departmentList='departmentList'
 			:staffList='staffList'
-			:val='val'
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
 			:clientList='clientList'
@@ -15,13 +14,12 @@
 		</div-form>
 		<div slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
-			<el-button type="info" @click="searchFn" size="mini">清空</el-button>
+			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
 		</div>
     <div> 
     <div class="blueB">
 		<second-form
 			:form='form'
-			
 		>
 		</second-form>
 	</div>
@@ -30,63 +28,9 @@
 		<div class="totalT">
 			查询统计：	案件总数：{{totalNum}}件，总金额：￥{{titalAmount}}
 		</div>
-		<el-table
-			border
-			:data="tableData"
-			style="width: 98%"
-			@selection-change="handleSelectionChange"
-			>
-			<el-table-column
-			label="选框"
-			type="selection"
-			width="55">
-			</el-table-column>
-			<el-table-column
-			label="案件id"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="姓名"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="催收区域"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			prop="name"
-			label="催收状态"
-			>
-			</el-table-column>
-			<el-table-column
-			label="所属批次"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="证件号码"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="委案金额"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="已还款"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="委案余额"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="上次通话"
-			prop="id">
-			</el-table-column>
-			<el-table-column
-			label="委案日期"
-			prop="id">
-			</el-table-column>
-		</el-table>
+		<div-table
+			:tableData='tableData'
+		></div-table>
 		<page-change 
 			:total="total"
 			:page="page"
@@ -95,27 +39,16 @@
 			v-on:currentPageChange='currentPageChangeFn($event)'
 		></page-change>
     </div>
-    <el-dialog :title="bannerTitle" :visible.sync="addNow" >
-        <edit-dialog
-            v-on:addNowChange = "addFn($event)"
-            v-on:saveFn = "init($event)"
-            v-on:clearId = "changeId($event)"
-            v-on:clearFormTitle = "clearFormTitle($event)"
-            :id="id"
-            :title = "bannerTitle"
-            :formTitle = "formTitle"
-        ></edit-dialog>
-    </el-dialog>
-  </div>
+   </div>
 </div>
  
 </template>
 <script>
 import '@/assets/css/system.css'
-import addImport from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
 import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
+import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -124,10 +57,10 @@ import router from '@/router.js'
 // import indexMethod  from '@/utils/indexMethod.js'
 export default {
     components:{
-        'edit-dialog':addImport,
-		'page-change':pageChange,
+        'page-change':pageChange,
 		'div-form':formCaseFirst,
-		'second-form':formCaseSecond
+		'second-form':formCaseSecond,
+		'div-table':tableCaseMan
 	},
 	data() {
         return {
@@ -144,27 +77,55 @@ export default {
 			batchList:[],//批次列表
 			departmentList:[],//部门列表
 			clientList:[],//委托方列表
-			formFirst:{//搜索条件
-				case_name:'',
-				case_mobile:'',
-				case_id_num:'',
-				case_status:'',
-				case_client:'',
-				case_date:'',
-				case_back_date:'',
-				case_money:'',
-				id:'',
-				case_last_collection_date:''
+			staffList:[],//催收员列表
+			conditions:{//搜索条件
+				case_name: "",
+				case_mobile: "",
+				case_id_num: "",
+				case_status: "",
+				talk_recode: "",
+				case_level: "",
+				batch_id: "",
+				depart_id:'',
+				staff_id:'',
+				case_color: "",
+				id: "",
+				talk_time1:'',
+				talk_time2:'',
+				case_money1:'',
+				case_money2:'',
+				case_money: [        
+					"",
+					""
+				],
+				case_client: [ 
+					"",
+					""
+				],
+				case_date: [        "",
+					""
+				],
+				case_back_date: [
+					"",
+					""
+				],
+				case_last_collection_date: [        
+					"",
+					""
+				],
+				talk_time: [        
+					"",
+					""
+				]
 			},
 			formInline: {
 				user: '',
 				region: ''
 			},
-            id:'',//编辑还是添加
+            id:'',//查询部门还是催收员
             page:1,
             page_size:10,
             total:0,
-            bannerTitle:"区域添加",
             addNow:false,
             tableData: [{
                 miniImage: '上海市普陀区'
@@ -177,8 +138,6 @@ export default {
         }
     },
     created() {
-		// this.$route.params&&this.$route.params.staff_id
-		// console.log(route.params&&route.params.staff_id)
 		this.init()
 		console.log(store)
 		this.getBatchList()
@@ -191,10 +150,7 @@ export default {
 		searchFn(){
 
 		},
-        onSubmit(){
-
-		},
-		getBatchList(){
+        getBatchList(){
 			let conf = {
                 url : '/api/api_backend.php?r=collection/init-search',
                 success:(data)=>{
@@ -206,112 +162,65 @@ export default {
             }
             axiosRequest(conf)
 		},
-		getDepartmentList(){
+		changeFn(val){
+			this.id = val
+		},
+		getDepartmentList(num){
+			let data = {
+				id:this.id
+			}
 			let conf = {
-                url : '/api/api_backend.php?r=collection/depart-search',
+				url : '/api/api_backend.php?r=collection/depart-search',
+				data,
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.departmentList = data.info.depart
+						if(num == 1){
+							this.departmentList = data.info.depart
+						}else if(num ==2){
+							this.staffList = data.info.staff
+						}
+						this.id = ''
                     }
                 }
             }
             axiosRequest(conf)
 		},
-		getClientList(){
-			let conf = {
-                url : '/api/api_backend.php?r=collection/client-search',
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-						this.clientList = data.info
-                    }
-                }
-            }
-            axiosRequest(conf)
-		},
-        init(){
+		init(){
+			this.conditions.talk_time=[
+				this.conditions.talk_time1,
+				this.conditions.talk_time2
+			]
+			this.conditions.case_money=[
+				this.conditions.case_money1,
+				this.conditions.case_money2
+			]
             let conf = {
-                url : '/api/api_backend.php?r=system-setting/area-list',
-                data : {
-                    page:this.page,
-                    page_size:this.page_size
-                },
+				url : '/api/api_backend.php?r=collection/search',
+				data:{
+					conditions:JSON.stringify(this.conditions)
+					// page:this.page,
+                	// page_size:this.page_size
+				},
                 success:(data)=>{
                     if( data.statusCode == 1 ){
-                        this.tableData = data.info
-                        this.formTitle
-                        this.total = Number( data.total )
+                        this.tableData = data.info.info
                     }
                 }
             }
             axiosRequest(conf)
         },
-		addFn(val){//添加弹框的打开与关闭
-            this.bannerTitle = "区域添加"
-            this.addNow = val
-            this.id = ''
-        },
-        changeId(){//清空编辑的具体项
-            this.id = ''
-        },
-        clearFormTitle(){//清除子组件的数据
-            this.formTitle = {
-                name:''
-            }
-        },
-        editFn(row){//编辑弹框的打开与关闭
-            this.bannerTitle = "区域编辑"
-            this.id = row.id
-            this.addNow = true
-            this.formTitle = {
-                name:row.name
-            }
-        },
-        pageSizeChangeFn(val){
-            // console.log(val)
+		pageSizeChangeFn(val){
             this.page_size = val
             this.init()
         },
         currentPageChangeFn(val){
             this.page = val
             this.init()
-        },
-        deleteFn(row){
-             this.$confirm('确定删除这一条？', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-            }).then(() => {
-                let conf = {
-                    url : '/api/api_backend.php?r=system-setting/area-del',
-                    data : {
-                        id:row.id
-                    },
-                    success:(data)=>{
-                        if( data.statusCode == 1 ){
-                            this.init()
-                            Message({
-                                message: data.message,
-                                type: 'success',
-                                duration: 3 * 1000
-                            })
-                        }else if(data.statusCode == 0){
-                            Message({
-                                message: data.message,
-                                type: 'erro',
-                                duration: 3 * 1000
-                            })
-                        }
-                    }
-                }
-                axiosRequest(conf)
-            }).catch( () =>{
-                Message({
-                    message:'取消删除',
-                    type: 'erro',
-                    duration: 3 * 1000
-                })
-            })
-        }
+		},
+		clearFn(){
+
+		}
+        
     }
 }
 </script>
