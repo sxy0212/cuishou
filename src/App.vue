@@ -32,7 +32,7 @@
     </el-container>
     </el-container>
     <!-- 登录页 -->
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
+    <router-view v-if="$route.meta.keep"></router-view>
   </div>
 </template>
 

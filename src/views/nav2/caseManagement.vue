@@ -1,38 +1,87 @@
 <template>
   <div class="cover">
 		<div-form
-			:conditions='conditions'
+			:formFirst='formFirst'
 			:levelList='levelList'
 			:batchList='batchList'
 			:departmentList='departmentList'
-			:staffList='staffList'
-			:val='val'
 			:clientList='clientList'
-			v-on:changeFn='changeFn($event)'
-			v-on:getDepartmentList='getDepartmentList($event)'
 		>
 		</div-form>
-		    <div slot="footer" class="dialog-footer">
+		<div slot="footer" class="dialog-footer">
 			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
-			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
+			<el-button type="info" @click="searchFn" size="mini">清空</el-button>
 		</div>
-    
-	<div> 
+    <div> 
     <div class="blueB">
 		<second-form
 			:form='form'
-		></second-form>
+			
+		>
+		</second-form>
 	</div>
 	</div>
     <div class="tableCover">
 		<div class="totalT">
 			查询统计：	案件总数：{{totalNum}}件，总金额：￥{{titalAmount}}
 		</div>
-		<div-table
-			:tableData='tableData'
-			v-on:handleSelectionChange='handleSelectionChange($event)'
-		></div-table>
-		
+		<el-table
+			border
+			:data="tableData"
+			style="width: 98%"
+			@selection-change="handleSelectionChange"
+			>
+			<el-table-column
+			label="选框"
+			type="selection"
+			width="55">
+			</el-table-column>
+			<el-table-column
+			label="案件id"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="姓名"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="催收区域"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			prop="name"
+			label="催收状态"
+			>
+			</el-table-column>
+			<el-table-column
+			label="所属批次"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="证件号码"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="委案金额"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="已还款"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="委案余额"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="上次通话"
+			prop="id">
+			</el-table-column>
+			<el-table-column
+			label="委案日期"
+			prop="id">
+			</el-table-column>
+		</el-table>
 		<page-change 
 			:total="total"
 			:page="page"
@@ -60,20 +109,18 @@ import addImport from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
 import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
-import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 import store from '@/vuex/store.js'
-
+// import indexMethod  from '@/utils/indexMethod.js'
 
 export default {
     components:{
         'edit-dialog':addImport,
 		'page-change':pageChange,
 		'div-form':formCaseFirst,
-		'second-form':formCaseSecond,
-		'div-table':tableCaseMan
+		'second-form':formCaseSecond
 	},
 	data() {
         return {
@@ -90,48 +137,17 @@ export default {
 			batchList:[],//批次列表
 			departmentList:[],//部门列表
 			clientList:[],//委托方列表
-			staffList:[],//催收员列表
-			talk_recode:'',
-			conditions:{//搜索条件
+			formFirst:{//搜索条件
 				case_name:'',
 				case_mobile:'',
 				case_id_num:'',
 				case_status:'',
-				talk_recode:'',
-				case_level:'',
-				batch_id:'',
-				case_color:'',
+				case_client:'',
+				case_date:'',
+				case_back_date:'',
+				case_money:'',
 				id:'',
-				staff_id:'',//催收员
-				talk_time1:'',
-				talk_time2:'',
-				case_money1:'',
-				case_money2:'',
-				case_money:[                                              //委案金额,选填
-					"",
-					""
-				],
-				
-				case_client:[                                               //委托方,选填
-					"",
-					""
-				],
-				case_date:[                                               //委案日期,选填
-					"",
-					""
-				],
-				case_back_date:[                                               //委案日期,选填
-					"",
-					""
-				],
-				case_last_collection_date:[                                               //委案日期,选填
-					"",
-					""
-				],
-				talk_time:[                                                 //通话时长,选填
-					"",
-					""
-				],
+				case_last_collection_date:''
 			},
 			formInline: {
 				user: '',
@@ -150,51 +166,27 @@ export default {
             }],
             formTitle:{//添加或是修改模块的数据
                 name:''
-			},
-			val:''//代表当前是否选择部门
+            },
         }
     },
     created() {
 		this.init()
 		console.log(store)
 		this.getBatchList()
-		this.getDepartmentList(1)
+		this.getDepartmentList()
 		this.getClientList()
     },
     methods: {
-		init(){
-			this.conditions.talk_time = [this.conditions.talk_time1,this.conditions.talk_time2]
-			this.conditions.case_money = [this.conditions.case_money1,this.conditions.case_money2]
-			let conf = {
-				url : '/api/api_backend.php?r=collection/search',
-				data:{
-					data:JSON.stringify(this.conditions),
-				},
-                success:(data)=>{
-                    if( data.statusCode == 1 ){
-                        this.tableData = data.info.info
-                        // this.total = Number( data.total )
-                    }
-                }
-            }
-            axiosRequest(conf)
-        },
 		handleSelectionChange(val){
 			console.log(val)
 		},
 		searchFn(){
 
 		},
-		clearFn(){
-
-		},
         onSubmit(){
 
 		},
-		changeFn(val){
-			this.val = val
-		},
-		getBatchList(){//获取批次列表
+		getBatchList(){
 			let conf = {
                 url : '/api/api_backend.php?r=collection/init-search',
                 success:(data)=>{
@@ -206,22 +198,12 @@ export default {
             }
             axiosRequest(conf)
 		},
-		getDepartmentList(num){//获取案件列表
-			let data = {
-				'id' : this.val
-			}
+		getDepartmentList(){
 			let conf = {
-				url : '/api/api_backend.php?r=collection/depart-search',
-				data,
+                url : '/api/api_backend.php?r=collection/depart-search',
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						if(num == 1){
-							this.departmentList = data.info.depart
-						}else if(num == 2){
-							this.staffList = data.info.staff
-						}
-						this.val = ''
-						
+						this.departmentList = data.info.depart
                     }
                 }
             }
@@ -238,7 +220,23 @@ export default {
             }
             axiosRequest(conf)
 		},
-        
+        init(){
+            let conf = {
+                url : '/api/api_backend.php?r=system-setting/area-list',
+                data : {
+                    page:this.page,
+                    page_size:this.page_size
+                },
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.tableData = data.info
+                        this.formTitle
+                        this.total = Number( data.total )
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
         addFn(val){//添加弹框的打开与关闭
             this.bannerTitle = "区域添加"
             this.addNow = val
