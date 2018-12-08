@@ -4,6 +4,7 @@ import dataManagement from './views/nav3/dataManagement.vue'
 import dataStatistics from './views/nav31/dataStatistics.vue'
 import smsManagement from './views/nav4/smsManagement.vue'
 import smsRecord from "./views/nav4/smsRecord.vue"
+import smsSend from './views/nav4/smsSend.vue'
 import speechScheme from './views/nav5/speechScheme.vue'
 import asrSoundScheme from "./views/nav5/asrSoundScheme.vue"
 import learning from './views/nav5/learning.vue'
@@ -86,6 +87,14 @@ let routes = [
     path: '/smsRecord',
     name: '发送记录',
     component:smsRecord,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/smsSend',
+    name: '发送短信',
+    component:smsSend,
     meta: {
       keepAlive: true,
     }

@@ -377,7 +377,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             },
             success(response,file,files){ 
               this.$alert(response.message)
-              if(data.statusCode == 1){
+              if(response.statusCode == 1){
                   this.Voice.upLoad = false 
                   this.init()
               }else{
