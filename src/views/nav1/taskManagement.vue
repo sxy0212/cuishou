@@ -636,7 +636,6 @@ import store from '@/vuex/store.js'
         },
 		methods: {
 			// 页面机器人列表
-			
 			init(){
 				if(getCookie("user")){
 					console.log(store)

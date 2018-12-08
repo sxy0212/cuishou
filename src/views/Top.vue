@@ -4,10 +4,11 @@
 			<div class="title">	言通催收系统</div>
 			<div class="drop">
 			<span @click="shuxian" style="margin-right:20px;cursor:pointer;">刷新</span>
+			<span> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
 			<el-dropdown trigger="hover" >
-				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />用户名</span>
+				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{info.true_name}}</span>
 				<el-dropdown-menu slot="dropdown" style="cursor: pointer;">
-					<el-dropdown-item>我的消息</el-dropdown-item>
+					<el-dropdown-item>公司代号:{{info.company_id}}</el-dropdown-item>
 					<el-dropdown-item>设置</el-dropdown-item>
 					<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
 				</el-dropdown-menu>
@@ -25,6 +26,10 @@ import store from '@/vuex/store.js'
 		data() {
 			return {
 				collapsed:false,
+				info:{
+					true_name:"",
+					company_id:""
+				},
 				sysUserName: '',
 				sysUserAvatar: '',
 				form: {
@@ -38,6 +43,15 @@ import store from '@/vuex/store.js'
 					desc: ''
 				},
 			}
+		},
+		beforeMount() {
+				var  conf = {
+				url:"/api/api_backend.php?r=user/index",
+				success:(data)=>{
+					this.info = data
+				}
+			}
+			axiosRequest(conf)
 		},
 		methods: {
 			onSubmit() {

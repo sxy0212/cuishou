@@ -34,13 +34,23 @@ axios.interceptors.response.use(
      * code为非20000是抛错 可结合自己业务进行修改
      */
     // return response;
-   console.log(response.data.statusCode);
     const res = response.data
     if (response.data.statusCode == 0 &&response.data.message =="请先登录") {
-      Message.error("登录已超时，请重新登录");
-      router.push("/login")
-      delCookie("user")
-      location.reload()
+      MessageBox.confirm(
+        '登录已过期,请重新登录',
+        {
+          confirmButtonText: '重新登录',
+          type: 'warning',
+          showClose:false,
+          showCancelButton:false,
+          closeOnClickModal:false,
+          closeOnPressEscape:false
+        }
+      ).then(() => {
+        router.push("/login")
+        delCookie("user")
+        location.reload()
+      })
       return false
    }else {
       return response
