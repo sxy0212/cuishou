@@ -192,6 +192,7 @@ export default {
 			multipList:[],//多样的选择,
 			areaList:[],//区域列表
 			filterList:[],//委托方
+			case_id:null,//搜索结果
 		}
 	},
 	activated(){
@@ -315,6 +316,7 @@ export default {
 						this.total = Number( data.info.total )
 						this.case_all_money = data.info.case_all_money
 						this.case_num = data.info.case_num
+						this.case_id = data.info.case_id
                     }
                 }
             }
@@ -528,6 +530,7 @@ export default {
 			}
 			let data = this.formDistribute
 			data.split_status = num
+			data.case_id = this.case_id
 			let conf = {
 				url : '/api/api_backend.php?r=collection/case-split',
 				data:{
@@ -535,8 +538,7 @@ export default {
 				},
 				success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.init()
-						this.multipList = []
+						this.ableNum = data.info.case_all_num
 						Message({
 							message: data.message,
 							type: 'success',
@@ -558,32 +560,36 @@ export default {
 		cancelDistribute(){
 			this.distributeNow  = false
 		},
-		sureToDistribute(){//确定分配
-		
-			// let conf = {
-			// 		url : '/api/api_backend.php?r=collection/update',
-			// 		data:{
-			// 			data:	this.formDistribute
-			// 		},
-			// 		success:(data)=>{
-			// 			if( data.statusCode == 1 ){
-			// 				this.init()
-			// 				this.multipList = []
-			// 				Message({
-			// 					message: data.message,
-			// 					type: 'success',
-			// 					duration: 3 * 1000
-			// 				})
-			// 			}else{
-			// 				Message({
-			// 					message: data.message,
-			// 					type: 'info',
-			// 					duration: 3 * 1000
-			// 				})
-			// 			}
-			// 		}
-			// 	}
-			// 	axiosRequest(conf)
+		sureToDistribute(num){//确定分配
+			let data = this.formDistribute
+			data.split_status = num
+			data.case_id = this.case_id
+			// this.getDepartmentList(2)
+			let conf = {
+					url : '/api/api_backend.php?r=collection/case-split',
+					data:{
+						data:JSON.stringify( data )
+					},
+					success:(data)=>{
+						if( data.statusCode == 1 ){
+							// this.distributeNow  = false
+							// this.init()
+							// this.multipList = []
+							// Message({
+							// 	message: data.message,
+							// 	type: 'success',
+							// 	duration: 3 * 1000
+							// })
+						}else{
+							Message({
+								message: data.message,
+								type: 'info',
+								duration: 3 * 1000
+							})
+						}
+					}
+				}
+				axiosRequest(conf)
 		},
 		
 		

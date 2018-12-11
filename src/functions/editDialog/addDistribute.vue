@@ -55,7 +55,7 @@ export default {
             this.$emit('getDepartmentList',2)
         },
         sureToDistribute(){
-            this.$emit('sureToDistribute')
+            this.$emit('sureToDistribute',1)
         },
         cancelDistribute(){
             this.$emit('cancelDistribute')
