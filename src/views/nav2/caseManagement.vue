@@ -171,13 +171,14 @@ export default {
 		}
 	},
 	activated(){
-console.log(this.$route.params&&this.$route.params.staff_id)
+		console.log(this.$route.query.staff_id,this.$route.query.depart_id,this.$route.query.batch_id)
+		this.conditions.staff_id = this.$route.query.staff_id
+		this.conditions.depart_id = this.$route.query.depart_id
+		this.conditions.batch_id = this.$route.query.batch_id
+		this.init()
 	},
     created() {
-		// console.log(router.params&&$router.params.staff_id)
-		
 		this.init()
-		console.log(store)
 		this.getBatchList()
 		this.getDepartmentList(1)
 	},

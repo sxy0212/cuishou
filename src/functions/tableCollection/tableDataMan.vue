@@ -93,8 +93,14 @@ export default {
       },
       rowDblclick(row,event){//单击
         store.commit('changeBatchId', row.id)
-        router.push('/caseManagement')
-      },
+        router.push( {
+          path:'/caseManagement/',
+          query:{
+            batch_id:row.id
+            }
+          }
+        )
+      },     
       methodIndex(val){
           return indexMethod(val,this.page,this.page_size)
       },
