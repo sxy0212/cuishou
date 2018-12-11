@@ -31,7 +31,7 @@
                           </el-table-column>
                           <el-table-column prop="record" label="录音状况">
                             <template slot-scope="scope">
-                                <el-button type="primary" plain @click="listen(item)" v-if="scope.row.record.length>0" v-for="(item,index) in scope.row.record">试听</el-button>
+                                <el-button type="primary" plain @click="listen(item)" v-if="scope.row.record.length>0" v-for="(item,index) in scope.row.record" :key="index">试听</el-button>
                                 <el-button type="danger" plain v-else-if="scope.row.record.length == 0">等待录音</el-button>
                             </template>
                           </el-table-column>
