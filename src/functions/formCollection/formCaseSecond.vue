@@ -1,8 +1,8 @@
 <template>
     <el-form ref="form" :model="form" label-width="120px">
         <el-form-item label="分配案件：">
-            <el-button type="primary" @click="searchFn" size="mini">快速分配</el-button>
-            <el-button type="info" @click="searchFn" size="mini">手动分配</el-button>
+            <el-button type="primary" @click="distributeFn(2)" size="mini">快速分配</el-button>
+            <el-button type="info" @click="distributeFn(1)" size="mini">手动分配</el-button>
         </el-form-item>
         <el-form-item label="案件操作：">
             <el-button type="primary" @click="pauseFn('1')" size="mini">暂停案件</el-button>
@@ -81,6 +81,9 @@ export default {
         },
         pauseFn(val){
             this.$emit('pauseFn',val)
+        },
+        distributeFn(val){
+            this.$emit('distributeFn',val)
         }
     }
 }

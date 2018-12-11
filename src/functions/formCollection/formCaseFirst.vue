@@ -18,7 +18,11 @@
                 <el-input v-model="conditions.id" placeholder="请输入案件id"></el-input>
             </el-form-item>
             <el-form-item label="案件状态">
-                <el-select v-model="conditions.case_status" placeholder="案件状态">
+                <el-select v-model="conditions.case_status" placeholder="请选择案件状态">
+                    <el-option 
+                        label="请选择案件状态" 
+                        value=""
+                    ></el-option>
                     <el-option 
                         :label="item.label" 
                         :value="item.value"
@@ -30,6 +34,10 @@
             <el-form-item label="案件等级">
                 <el-select v-model="conditions.case_level" placeholder="案件等级">
                     <el-option 
+                        label="请选择案件等级" 
+                        value=""
+                    ></el-option>
+                    <el-option 
                         v-for='item in levelList'
                         :key='item.id'
                         :label='item.name'
@@ -38,11 +46,11 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="委托方">
-                <el-select v-model="special" filterable :filter-method = 'filterFn' @change="filterFn" placeholder="请选择">
+                <el-select v-model="special" filterable :filter-method = 'filterFn' @change="filterFn" placeholder="请选择委托方">
                     <el-option
                         v-for="item in filterList"
                         :label="item.name" 
-                        :value="item.id"
+                        :value="item.name"
                         :key='item.id'>
                     </el-option>
                 </el-select>
@@ -79,6 +87,10 @@
             </el-form-item>
             <el-form-item label="部门">
                  <el-select v-model="conditions.depart_id" @change="changeFn" placeholder="请选择部门">
+                    <el-option 
+                        label="请选择部门" 
+                        value=""
+                    ></el-option>
                     <el-option
                         v-for="item in departmentList"
                         :key="item.id"
@@ -88,7 +100,11 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="催收员">
-                <el-select v-model="conditions.staff_id" placeholder="催收员">
+                <el-select v-model="conditions.staff_id" placeholder="请选择催收员">
+                    <el-option 
+                        label="请选择催收员" 
+                        value=""
+                    ></el-option>
                     <el-option
                         v-for="item in staffList"
                         :key="item.id"
@@ -98,7 +114,11 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="所属批次">
-                <el-select v-model="conditions.batch_id" placeholder="所属批次">
+                <el-select v-model="conditions.batch_id" placeholder="请选择批次">
+                    <el-option 
+                        label="请选择批次" 
+                        value=""
+                    ></el-option>
                     <el-option 
                         v-for="item in batchList"
                         :key='item'
@@ -127,12 +147,11 @@
                     end-placeholder="结束日期">
                 </el-date-picker>
             </el-form-item>
-            
         </el-form>
     </div>
 </template>
 <script>
-import  { axiosRequest } from '@/assets/js/Yt.js'
+
 export default {
     name:'formCaseFirst',
     props:[
@@ -141,12 +160,12 @@ export default {
         'batchList',
         'departmentList',
         'staffList',
+        'filterList',
         'caseStatusList',
     ],
     data(){
         return{
-            filterList:[],
-            special:''//委托方
+           special:''//委托方
         }
     },
     methods:{
@@ -155,41 +174,9 @@ export default {
             this.$emit('getDepartmentList',2)
         },
         filterFn(val){
-            let conf = {
-                url : '/api/api_backend.php?r=collection/client-search',
-                data:{
-                    case_client:val
-                },
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-                        this.filterList = data.info.client
-                        // console.log(data.info)
-                        this.$emit('changeCaseClient',data.info.client_batch_id)
-                        // this.conditions.case_client = data.info.client_batch_id
-                        
-                    }else if(data.statusCode == 0){
-                        this.filterList = []
-                    }
-                }
-            }
-            axiosRequest(conf)
+            this.$emit('filterFn',val)
         },
-        // inputChange(val){
-        //     let conf = {
-        //         url : '/api/api_backend.php?r=collection/client-search',
-        //         data:{
-        //             case_client:val
-        //         },
-        //         success:(data)=>{
-		// 			if( data.statusCode == 1 ){
-		// 				this.filterList = data.info
-        //             }else if(data.statusCode == 0){
-        //                 this.filterList = []
-        //             }
-        //         }
-        //     }
-        //     axiosRequest(conf)
-        // }
+        
     }
 }
 </script>

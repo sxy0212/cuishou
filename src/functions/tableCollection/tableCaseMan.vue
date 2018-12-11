@@ -70,8 +70,8 @@ export default {
             tableRowClassName({row, rowIndex}) {
                 if (row.case_color == 1) {
                     return 'one'
-                } else if (row.case_color == 0) {
-                    return 'zero'
+                } else if (row.case_color == 7 ) {
+                    return 'seven'
                 } else if(row.case_color == 2){
                     return 'two'
                 }else if(row.case_color == 3){

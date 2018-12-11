@@ -4,6 +4,7 @@
 		<div-form
 			:conditions='conditions'
 			:levelList='levelList'
+			:filterList='filterList'
 			:batchList='batchList'
 			:departmentList='departmentList'
 			:staffList='staffList'
@@ -11,7 +12,8 @@
 			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
-			v-on:changeCaseClient='changeCaseClient($event)'
+			v-on:filterFn='filterFn($event)'
+			
 			
 		>
 		</div-form>
@@ -26,6 +28,7 @@
 			v-on:changeArea='changeArea($event)'
 			v-on:pauseFn='pauseFn($event)'
 			v-on:colorChange='colorChange($event)'
+			v-on:distributeFn='distributeFn($event)'
 		>
 		</second-form>
 	</div>
@@ -54,6 +57,18 @@
 			v-on:cancelFn='cancelFn($event)'
         ></edit-dialog>
     </el-dialog>
+	<el-dialog title="手动分配" :visible.sync="distributeNow" >
+        <second-dialog
+			:formDistribute='formDistribute'
+			:departmentList='departmentList'
+			:ableNum='ableNum'
+			:staffList='staffList'
+			v-on:cancelDistribute='cancelDistribute($event)'
+			v-on:sureToDistribute='sureToDistribute($event)'
+			v-on:changeFn='changeFn($event)'
+			v-on:getDepartmentList='getDepartmentList($event)'
+		></second-dialog>
+    </el-dialog>
    </div>
 </div>
  
@@ -65,6 +80,7 @@ import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
 import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
 import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 import addChangeArea from '@/functions/editDialog/addChangeArea.vue'
+import addDistribute from '@/functions/editDialog/addDistribute.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -77,14 +93,21 @@ export default {
 		'div-form':formCaseFirst,
 		'second-form':formCaseSecond,
 		'div-table':tableCaseMan,
-		'edit-dialog':addChangeArea
+		'edit-dialog':addChangeArea,
+		'second-dialog':addDistribute
 	},
 	data() {
         return {
+			ableNum:0,//可分配数量
+			distributeNow:false,//分配
 			bannerTitle:'修改区域',
 			addChangeAreaNow:false,//修改区域
 			case_num:'',//案件总数
 			case_all_money:'',//总额
+			formDistribute:{
+				depart:'',
+				staff:''
+			},
 			formKey:{
 				key:''
 			},
@@ -167,7 +190,8 @@ export default {
                 }
 			],
 			multipList:[],//多样的选择,
-			areaList:[]//区域列表
+			areaList:[],//区域列表
+			filterList:[],//委托方
 		}
 	},
 	activated(){
@@ -181,10 +205,11 @@ export default {
 		this.init()
 		this.getBatchList()
 		this.getDepartmentList(1)
+		this.filterFn('')
 	},
 	methods: {
 		changeCaseClient(val){
-			this.conditions.case_client = val
+			t = val
 		},
 		handleSelectionChange(val){
 			this.multipList = val
@@ -224,9 +249,27 @@ export default {
             }
             axiosRequest(conf)
 		},
+		filterFn(val){//获取委托方
+            let conf = {
+                url : '/api/api_backend.php?r=collection/client-search',
+                data:{
+                    case_client:val
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        this.filterList = data.info.client
+						this.conditions.case_client = data.info.client_batch_id
+                    }else if(data.statusCode == 0){
+                        this.filterList = []
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
 		init(){
-			let data = {//端口需要的数据键值对必须是正好的，多余的没用的键值对会报错，所以这样单独来取
-				case_name: this.conditions.case_time,
+			//端口需要的数据键值对必须是正好的，多余的没用的键值对会报错，所以这样单独来取
+			let data = {
+				case_name: this.conditions.case_name,
 				case_mobile: this.conditions.case_mobile,
 				case_id_num:  this.conditions.case_id_num,
 				case_status:  this.conditions.case_status,
@@ -392,7 +435,7 @@ export default {
 		cancelFn(){
 			this.addChangeAreaNow = false
 		},
-		pauseFn(str){
+		pauseFn(str){//暂停案件
 			if( !!this.multipList.length ){
 				let ids = this.multipList.map(item=>{
 						return item.id
@@ -478,7 +521,71 @@ export default {
 					duration: 3 * 1000
 				})
 			}
-		}
+		},
+		distributeFn(num){//准备分配
+			if(num == 1){
+				this.distributeNow  = true
+			}
+			let data = this.formDistribute
+			data.split_status = num
+			let conf = {
+				url : '/api/api_backend.php?r=collection/case-split',
+				data:{
+					data:data
+				},
+				success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.init()
+						this.multipList = []
+						Message({
+							message: data.message,
+							type: 'success',
+							duration: 3 * 1000
+						})
+					}else{
+						Message({
+							message: data.message,
+							type: 'info',
+							duration: 3 * 1000
+						})
+					}
+				}
+			}
+			axiosRequest(conf)
+			
+
+		},
+		cancelDistribute(){
+			this.distributeNow  = false
+		},
+		sureToDistribute(){//确定分配
+		
+			// let conf = {
+			// 		url : '/api/api_backend.php?r=collection/update',
+			// 		data:{
+			// 			data:	this.formDistribute
+			// 		},
+			// 		success:(data)=>{
+			// 			if( data.statusCode == 1 ){
+			// 				this.init()
+			// 				this.multipList = []
+			// 				Message({
+			// 					message: data.message,
+			// 					type: 'success',
+			// 					duration: 3 * 1000
+			// 				})
+			// 			}else{
+			// 				Message({
+			// 					message: data.message,
+			// 					type: 'info',
+			// 					duration: 3 * 1000
+			// 				})
+			// 			}
+			// 		}
+			// 	}
+			// 	axiosRequest(conf)
+		},
+		
 		
     }
 }
@@ -491,21 +598,12 @@ export default {
 .el-input__inner{height:30px;line-height:30px;}
 .dialog-footer{text-align:right;}
 .totalT{width:98%;font-size:14px;line-height:23px;color: #909399;border:1px solid grey;}
-.el-table__body .one{background-color:white;border-color:white;}
-.el-table__body .two{background-color:rgba(255, 51, 255, 1);
-    border-color:rgba(255, 51, 255, 1);}
-.el-table__body  .three{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
-.el-table__body  .four{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
-.el-table__body  .five{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
-.el-table__body  .six{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
-.el-table__body  .seven{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
-.el-table__body .one:hover,.el-table__body .one:active,.el-table__body .one:seven{background-color:white; border-color:white;}
-.el-table__body .two:hover,.el-table__body .two:active,.el-table__body .two:focus{background-color:rgba(255, 51, 255, 1); border-color:rgba(255, 51, 255, 1);}
-.el-table__body .three:hover,.el-table__body .three:active,.el-table__body .three:focus{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
-.el-table__body .four:hover,.el-table__body .four:active,.el-table__body .four:focus{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
-.el-table__body .five:hover,.el-table__body .five:active,.el-table__body.five:focus{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
-.el-table__body .six:hover,.el-table__body .six:active,.el-table__body .six:focus{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
-.el-table__body .seven:hover,.el-table__body .seven:active,.el-table__body.seven:focus{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
+.el-table__body .two{color:rgba(255, 51, 255, 1); }
+.el-table__body .three{color: rgba(0, 204, 255, 1);}
+.el-table__body .four{color:rgba(128, 0, 128, 1);}
+.el-table__body .five{color:rgba(0, 204, 0, 1);}
+.el-table__body .six{color:rgba(102, 51, 0, 1);}
+.el-table__body .seven{color:rgba(255, 204, 0, 1);}
 
 </style>
 
