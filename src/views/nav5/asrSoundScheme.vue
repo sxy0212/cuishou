@@ -31,8 +31,8 @@
                           </el-table-column>
                           <el-table-column prop="record" label="录音状况">
                             <template slot-scope="scope">
-                                <el-button type="primary" plain @click="listen(scope.row.record)" v-if="scope.row.record">试听</el-button>
-                                <el-button type="danger" plain v-else-if="scope.row.record == ''">等待录音</el-button>
+                                <el-button type="primary" plain @click="listen(item)" v-if="scope.row.record.length>0" v-for="(item,index) in scope.row.record">试听</el-button>
+                                <el-button type="danger" plain v-else-if="scope.row.record.length == 0">等待录音</el-button>
                             </template>
                           </el-table-column>
                           <el-table-column  label="操作" width="350">
@@ -646,6 +646,7 @@ import { MessageBox } from 'element-ui';
                 data.max_repeat = this.baseMessageDataEdit.max_repeat
                 data.wait_time = this.baseMessageDataEdit.wait_time
                 data.record = this.baseMessageDataEdit.record
+                data.compose_record = this.baseMessageDataEdit.compose_record
                 const url = "/api/api_backend.php?r=template/template-base-info-edit"
                 const conf = {
                   url,
