@@ -163,9 +163,9 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.filterList = data.info
+						// this.filterList = data.info
                     }else if(data.statusCode == 0){
-                        this.filterList = []
+                        // this.filterList = []
                     }
                 }
             }

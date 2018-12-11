@@ -43,6 +43,13 @@
 			v-on:currentPageChange='currentPageChangeFn($event)'
 		></page-change>
     </div>
+	<el-dialog :title="bannerTitle" :visible.sync="addChangeAreaNow" >
+        <edit-dialog
+			:areaList='areaList'
+			:formTitle='formTitle'
+			v-on:protectFn='protectFn($event)'
+        ></edit-dialog>
+    </el-dialog>
    </div>
 </div>
  
@@ -53,6 +60,7 @@ import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
 import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
 import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
+import addChangeArea from '@/functions/editDialog/addChangeArea.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -64,10 +72,13 @@ export default {
         'page-change':pageChange,
 		'div-form':formCaseFirst,
 		'second-form':formCaseSecond,
-		'div-table':tableCaseMan
+		'div-table':tableCaseMan,
+		'edit-dialog':addChangeArea
 	},
 	data() {
         return {
+			bannerTitle:'修改区域',
+			addChangeAreaNow:false,//修改区域
 			case_num:'',//案件总数
 			case_all_money:'',//总额
 			formKey:{
@@ -130,8 +141,8 @@ export default {
             total:0,
             addNow:false,
             tableData: [],
-            formTitle:{//添加或是修改模块的数据
-                name:''
+            formTitle:{//添加或是修改模块
+                id:''
 			},
 			caseStatusList:[//案件状态
                 {
@@ -301,45 +312,63 @@ export default {
 		},
 		changeArea(){//修改区域
 			if( !!this.multipList.length ){//去获取区域列表
+				this.addChangeAreaNow = true
 				let conf = {
 					url : '/api/api_backend.php?r=collection/area-query',
 					success:(data)=>{
 						if( data.statusCode == 1 ){
 							this.areaList = data.info
-							this.saveArea(this.areaList[1])
 						}
 					}
 				}
 				axiosRequest(conf)
+			}else{
+				Message({
+					message: '请先选择要修改的数据',
+					type: 'info',
+					duration: 3 * 1000
+				})
 			}
 		},
-		saveArea( num ){//保存区域
-			console.log(this.multipList)
+		protectFn(){//保存区域
 			let ids = this.multipList.map(item=>{
-				console.log(typeof(item.id))
 				return item.id
 			})
-			console.log(typeof(ids))
 			let data = JSON.stringify( {
 							"case_status":"",                       //案件状态，三者选填其一
 							"case_color":"",                       //案件标色，三者选填其一
-							"collection_area":num.id                   //催收区域，三者选填其一
+							"collection_area":this.formTitle.id                   //催收区域，三者选填其一
 						} )
 						
 			let conf = {
-					url : '/api/api_backend.php?r=collection/update',
-					data:{
-						id: ids,
-						data:data
-					},
-					success:(data)=>{
-						if( data.statusCode == 1 ){
-							// this.areaList = data.info
+				url : '/api/api_backend.php?r=collection/update',
+				data:{
+					id: ids,
+					data:data
+				},
+				success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.formTitle={
+							id:''
 						}
+						this.addChangeAreaNow = false
+						this.init()
+						Message({
+							message: data.message,
+							type: 'success',
+							duration: 3 * 1000
+						})
+					}else{
+						Message({
+							message: data.message,
+							type: 'info',
+							duration: 3 * 1000
+						})
 					}
 				}
-				axiosRequest(conf)
 			}
+			axiosRequest(conf)
+		}
 		
     }
 }
