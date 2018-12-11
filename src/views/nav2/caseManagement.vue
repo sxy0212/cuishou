@@ -531,7 +531,7 @@ export default {
 			let conf = {
 				url : '/api/api_backend.php?r=collection/case-split',
 				data:{
-					data:data
+					data:JSON.stringify( data )
 				},
 				success:(data)=>{
 					if( data.statusCode == 1 ){
