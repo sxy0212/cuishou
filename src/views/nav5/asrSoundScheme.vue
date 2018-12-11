@@ -101,8 +101,11 @@
                   <el-option v-for="(item,index) in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath" :key="index">{{item.spath}}-{{item.word}}</el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item >
+              <el-form-item v-show="baseMessageData.record != '-100'">
                 <el-input type="textarea" class="width" :rows="5" v-model="baseMessageData.answer" :disabled="baseMessageData.record!=0"></el-input>
+              </el-form-item>
+               <el-form-item label="组合方式:" v-show="baseMessageData.record == '-100'">
+                <el-input type="textarea" class="width" :rows="5" v-model="baseMessageData.compose_record" ></el-input>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -154,9 +157,12 @@
                                 <el-option v-for="(item,index) in baseMessage.Sound" :value="item.id" :title="item.word" :label="item.spath" :key="index">{{item.spath}}-{{item.word}}</el-option>
                                 </el-select>
                             </el-form-item>
-                            <el-form-item >
+                            <el-form-item>
                                 <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.answer" :disabled="baseMessageDataEdit.record!=0" v-if="baseMessageDataEdit.answer != ''"></el-input>
                                 <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.record_description" :disabled="baseMessageDataEdit.record!=0" v-else></el-input>
+                            </el-form-item>
+                            <el-form-item label="组合方式:" v-show="baseMessageDataEdit.record == '-100'">
+                              <el-input type="textarea" class="width" :rows="5" v-model="baseMessageDataEdit.compose_record" ></el-input>
                             </el-form-item>
                         </el-form>
                         <div style="float: right;">
@@ -434,7 +440,8 @@ import { MessageBox } from 'element-ui';
             max_repeat:"3",
             wait_time:'3',
             record:"",
-            answer:""
+            answer:"",
+            compose_record:""     //组合方式内容
           },
           baseMessageDataEdit:{         //编辑基本信息用到的参数
             show_name:"",
@@ -446,7 +453,8 @@ import { MessageBox } from 'element-ui';
             max_repeat:"",
             record:"",
             answer:"",
-            record_description:""
+            record_description:"",
+            compose_record:""     //组合方式内容
           },
           activeName2:'first',
 					touchAddData:{
@@ -701,6 +709,7 @@ import { MessageBox } from 'element-ui';
                     this.baseMessage.Sound = []
                   }
                   this.baseMessage.Sound.push({id:"0",spath:"无录音,填写描述"})
+                  this.baseMessage.Sound.unshift({id:"-100",spath:"组合录音"})
                 }
               }
                axiosRequest(conf)
