@@ -3,6 +3,7 @@
     <div style="margin-bottom:10px;">
       <el-button type="success" @click="addBranch" style="diaplay:inline-block;float:left"><i class="fa fa-plus"></i>添加部门</el-button>
       <el-button type="success" @click="addMember" style="diaplay:inline-block;float:left">添加成员</el-button>
+       <el-button type="success" @click="exportMember" style="diaplay:inline-block;float:left">导出成员</el-button>
        <el-upload style="diaplay:inline-block;float:left"
             class="upload-demo"
             action="/api/api_backend.php?r=collect-depart/staff-batch-add"
@@ -41,11 +42,12 @@
           <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
           <el-table-column prop="login_name" label="账号"></el-table-column>  
           <el-table-column prop="phone" label="联系方式"></el-table-column>  
-          <el-table-column  label="操作" width="300">
+          <el-table-column  label="操作" width="320">
             <template slot-scope="scope">
-              <el-button type="primary" plain  @click="addMemberEdit(scope.$index,scope.row)">编辑</el-button>
-              <el-button type="primary" plain  @click="editPassword(scope.$index,scope.row)">修改密码</el-button>
-              <el-button type="primary" plain  @click="del(scope.row.id)">删除</el-button>
+              <el-button type="primary" plain  @click="addMemberEdit(scope.$index,scope.row)" style="padding:10px">编辑</el-button>
+              <el-button type="primary" plain  @click="editPassword(scope.$index,scope.row)" style="padding:10px">修改密码</el-button>
+              <el-button type="primary" plain  @click="copyName(scope.$index,scope.row)" style="padding:10px">复制账号</el-button>
+              <el-button type="primary" plain  @click="del(scope.row.id)" style="padding:10px">删除</el-button>
             </template>
           </el-table-column>
 				</el-table>
@@ -246,20 +248,6 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
           url,
           success:(data)=>{
             this.Dates = data.info
-            var arr = []
-            this.Dates.forEach(item=>{
-              if(item.child.length>0){
-                arr.push(item.child)
-              }else{
-                arr.push(item)
-              }
-              console.log(item)
-            })
-            console.log(arr)
-            // for(var x = 0;x<this.Dates.length;x++){
-            //   console.log()
-            // }
-            console.log(this.Dates)
           }
         }
         axiosRequest(conf)
@@ -474,6 +462,27 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         }
         axiosRequest(conf)
       },
+      // 复制
+      exportMember(){
+        window.open('/api/api_backend.php?r=collect-depart/staff-export')
+      },
+      copyName(index,row){
+        this.Copy(row.login_name)
+      },  
+      Copy(str){ 
+        var save = function(e){ 
+        e.clipboardData.setData('text/plain', str); 
+        e.preventDefault(); 
+        } 
+        document.addEventListener('copy', save); 
+        document.execCommand('copy'); 
+        document.removeEventListener('copy',save); 
+        this.$message({
+          message: '复制成功',
+          type: 'success'
+        });
+      },
+      // 删除
 			del(id){
         this.$confirm('确定删除?', '提示', {
                   confirmButtonText: '确定',

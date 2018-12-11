@@ -111,7 +111,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
         staff_id_arr:[],
       }
 		},
-		beforeMount() {
+		activated() {
       this.initList()
       this.init(0)
     },

@@ -251,12 +251,12 @@
 								<el-form-item label="上午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_am":picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}" :style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="下午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: form.start_time_pm}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: start_time_pm}" :style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="机器人数量:">
 									<ul>
@@ -928,7 +928,7 @@ import store from '@/vuex/store.js'
 						this.formEdit.ai_count = parseInt(data.info.info.ai_count)
 						this.start_time_am = data.info.info.call_time.am.s
 						this.end_time_am = data.info.info.call_time.am.e
-						this.start_time_pm = data.info.info.call_time.pm.e
+						this.start_time_pm = data.info.info.call_time.pm.s
 						this.end_time_pm = data.info.info.call_time.pm.e
 						var arr = data.info.round_rule.filter(item=>{
 							if(item.round == 0){
