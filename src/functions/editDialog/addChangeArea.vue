@@ -42,7 +42,7 @@ export default {
             this.$emit('protectFn')
         },
         cancelFn(){
-
+            this.$emit('cancelFn')
         }
     }
 }

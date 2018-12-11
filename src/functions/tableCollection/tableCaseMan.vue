@@ -4,6 +4,7 @@
         :data="tableData"
         style="width: 98%"
         @selection-change="handleSelectionChange"
+        :row-class-name="tableRowClassName"
         >
         <el-table-column
         label="选框"
@@ -64,11 +65,34 @@ export default {
     props:[
         'tableData'
     ],
+    data(){
+        return{
+            tableRowClassName({row, rowIndex}) {
+                if (row.case_color == 1) {
+                    return 'one'
+                } else if (row.case_color == 0) {
+                    return 'zero'
+                } else if(row.case_color == 2){
+                    return 'two'
+                }else if(row.case_color == 3){
+                    return 'three'
+                }else if(row.case_color == 4){
+                    return 'four'
+                }else if(row.case_color == 5){
+                    return 'five'
+                }else if(row.case_color == 6){
+                    return 'six'
+                }
+            }
+        }
+    },
     methods:{
         handleSelectionChange(val){
             this.$emit('handleSelectionChange',val)
-        }
+        },
     }
 }
 </script>
+
+
 

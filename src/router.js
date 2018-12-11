@@ -51,7 +51,7 @@ let routes = [
     }
   },
   {
-    path: '/caseManagement',
+    path: '/caseManagement/:staff_id',
     name: '案件管理',
     component:  caseManagement,
     meta: {

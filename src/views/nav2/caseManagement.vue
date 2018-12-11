@@ -11,6 +11,7 @@
 			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
+			v-on:changeCaseClient='changeCaseClient($event)'
 			
 		>
 		</div-form>
@@ -50,6 +51,7 @@
 			:areaList='areaList'
 			:formTitle='formTitle'
 			v-on:protectFn='protectFn($event)'
+			v-on:cancelFn='cancelFn($event)'
         ></edit-dialog>
     </el-dialog>
    </div>
@@ -167,14 +169,22 @@ export default {
 			multipList:[],//多样的选择,
 			areaList:[]//区域列表
 		}
-    },
+	},
+	activated(){
+console.log(this.$route.params&&this.$route.params.staff_id)
+	},
     created() {
+		// console.log(router.params&&$router.params.staff_id)
+		
 		this.init()
 		console.log(store)
 		this.getBatchList()
 		this.getDepartmentList(1)
 	},
 	methods: {
+		changeCaseClient(val){
+			this.conditions.case_client = val
+		},
 		handleSelectionChange(val){
 			this.multipList = val
 		},
@@ -237,14 +247,15 @@ export default {
 				talk_time: [
 					this.conditions.talk_time1,
 					this.conditions.talk_time2
-				]
+				],
+				
 			}
             let conf = {
 				url : '/api/api_backend.php?r=collection/search',
 				data:{
-					data:JSON.stringify(data)
-					// page:this.page,
-                	// page_size:this.page_size
+					data:JSON.stringify(data),
+					page:this.page,
+                	page_size:this.page_size
 				},
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -252,10 +263,12 @@ export default {
 							this.caseStatusList.forEach(one=>{
 								if(one.value == item.case_status){
 									item.case_status = one.label
+									
 								}
 							})
 							return item
 						})
+						this.total = Number( data.info.total )
 						this.case_all_money = data.info.case_all_money
 						this.case_num = data.info.case_num
                     }
@@ -375,6 +388,9 @@ export default {
 			}
 			axiosRequest(conf)
 		},
+		cancelFn(){
+			this.addChangeAreaNow = false
+		},
 		pauseFn(str){
 			if( !!this.multipList.length ){
 				let ids = this.multipList.map(item=>{
@@ -474,6 +490,22 @@ export default {
 .el-input__inner{height:30px;line-height:30px;}
 .dialog-footer{text-align:right;}
 .totalT{width:98%;font-size:14px;line-height:23px;color: #909399;border:1px solid grey;}
+.el-table__body .one{background-color:white;border-color:white;}
+.el-table__body .two{background-color:rgba(255, 51, 255, 1);
+    border-color:rgba(255, 51, 255, 1);}
+.el-table__body  .three{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
+.el-table__body  .four{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
+.el-table__body  .five{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
+.el-table__body  .six{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
+.el-table__body  .seven{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
+.el-table__body .one:hover,.el-table__body .one:active,.el-table__body .one:seven{background-color:white; border-color:white;}
+.el-table__body .two:hover,.el-table__body .two:active,.el-table__body .two:focus{background-color:rgba(255, 51, 255, 1); border-color:rgba(255, 51, 255, 1);}
+.el-table__body .three:hover,.el-table__body .three:active,.el-table__body .three:focus{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
+.el-table__body .four:hover,.el-table__body .four:active,.el-table__body .four:focus{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
+.el-table__body .five:hover,.el-table__body .five:active,.el-table__body.five:focus{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
+.el-table__body .six:hover,.el-table__body .six:active,.el-table__body .six:focus{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
+.el-table__body .seven:hover,.el-table__body .seven:active,.el-table__body.seven:focus{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
+
 </style>
 
 

@@ -38,12 +38,12 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="委托方">
-                <el-select v-model="conditions.case_client" filterable :filter-method = 'filterFn' @change="inputChange" placeholder="请选择">
+                <el-select v-model="special" filterable :filter-method = 'filterFn' @change="filterFn" placeholder="请选择">
                     <el-option
                         v-for="item in filterList"
-                        :label="item.batch_name" 
-                        :value="item.batch_id"
-                        :key='item.batch_id'>
+                        :label="item.name" 
+                        :value="item.id"
+                        :key='item.id'>
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -109,13 +109,13 @@
             </el-form-item>
             <el-form-item label="标色搜索">
                 <el-select v-model="conditions.case_color" placeholder="标色搜索">
-                    <el-option label="玫红色" value="0"></el-option>
-                    <el-option label="天蓝色" value="1"></el-option>
-                    <el-option label="紫红色" value="2"></el-option>
-                    <el-option label="翠绿色" value="3"></el-option>
+                    <el-option label="正常色" value="1"></el-option>
+                    <el-option label="玫红色" value="2"></el-option>
+                    <el-option label="天蓝色" value="3"></el-option>
                     <el-option label="紫色" value="4"></el-option>
-                    <el-option label="棕色" value="5"></el-option>
-                    <el-option label="蓝色" value="6"></el-option>
+                    <el-option label="翠绿色" value="5"></el-option>
+                    <el-option label="棕色" value="6"></el-option>
+                    <el-option label="黄色" value="7"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="最后跟进">
@@ -146,6 +146,7 @@ export default {
     data(){
         return{
             filterList:[],
+            special:''//委托方
         }
     },
     methods:{
@@ -161,30 +162,34 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						// this.filterList = data.info
-                    }else if(data.statusCode == 0){
-                        // this.filterList = []
-                    }
-                }
-            }
-            axiosRequest(conf)
-        },
-        inputChange(val){
-            let conf = {
-                url : '/api/api_backend.php?r=collection/client-search',
-                data:{
-                    case_client:val
-                },
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-						this.filterList = data.info
+                        this.filterList = data.info.client
+                        // console.log(data.info)
+                        this.$emit('changeCaseClient',data.info.client_batch_id)
+                        // this.conditions.case_client = data.info.client_batch_id
+                        
                     }else if(data.statusCode == 0){
                         this.filterList = []
                     }
                 }
             }
             axiosRequest(conf)
-        }
+        },
+        // inputChange(val){
+        //     let conf = {
+        //         url : '/api/api_backend.php?r=collection/client-search',
+        //         data:{
+        //             case_client:val
+        //         },
+        //         success:(data)=>{
+		// 			if( data.statusCode == 1 ){
+		// 				this.filterList = data.info
+        //             }else if(data.statusCode == 0){
+        //                 this.filterList = []
+        //             }
+        //         }
+        //     }
+        //     axiosRequest(conf)
+        // }
     }
 }
 </script>

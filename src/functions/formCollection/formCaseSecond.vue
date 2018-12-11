@@ -37,11 +37,7 @@ export default {
     data(){
         return {
             colorList:[
-                {
-                    class:'zero',
-                    code:'0',
-                },
-                {
+               {
                     class:'one',
                     code:'1',
                 },
@@ -65,12 +61,20 @@ export default {
                     class:'six',
                     code:'6',  
                 },
+                {
+                    class:'seven',
+                    code:'7',
+                },
+                
             ]
         }
     },
     methods:{
-        colorChange(){
-            this.$emit('colorChange')
+        searchFn(){
+
+        },
+        colorChange(val){
+            this.$emit('colorChange',val)
         },
         changeArea(){
             this.$emit('changeArea')
@@ -81,24 +85,24 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .demo-box.demo-tag .el-tag+.el-tag{margin-left:10px}.demo-box.demo-tag .button-new-tag{margin-left:10px;height:32px;line-height:30px;padding-top:0;padding-bottom:0}.demo-box.demo-tag .input-new-tag{width:90px;margin-left:10px;vertical-align:bottom}
-.zero{background-color:white;border-color:white;}
-.one{background-color:rgba(255, 51, 255, 1);
+.one{background-color:white;border-color:white;}
+.two{background-color:rgba(255, 51, 255, 1);
     border-color:rgba(255, 51, 255, 1);}
-.two{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
-.three{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
-.four{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
-.five{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
-.six{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
+.three{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
+.four{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
+.five{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
+.six{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
+.seven{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
 .demoSpan{width:20px;height:20px;}
-.colorCover .zero:hover,.colorCover .zero:active,.colorCover .zero:focus{background-color:white; border-color:white;}
-.colorCover .one:hover,.colorCover .one:active,.colorCover .one:focus{background-color:rgba(255, 51, 255, 1); border-color:rgba(255, 51, 255, 1);}
-.colorCover .two:hover,.colorCover .two:active,.colorCover .two:focus{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
-.colorCover .three:hover,.colorCover .three:active,.colorCover .three:focus{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
-.colorCover .four:hover,.colorCover .four:active,.colorCover .four:focus{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
-.colorCover .five:hover,.colorCover .five:active,.colorCover .five:focus{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
-.colorCover .six:hover,.colorCover .six:active,.colorCover .six:focus{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
+.colorCover .one:hover,.colorCover .one:active,.colorCover .one:focus{background-color:white; border-color:white;}
+.colorCover .two:hover,.colorCover .two:active,.colorCover .two:focus{background-color:rgba(255, 51, 255, 1); border-color:rgba(255, 51, 255, 1);}
+.colorCover .three:hover,.colorCover .three:active,.colorCover .three:focus{background-color: rgba(0, 204, 255, 1);border-color: rgba(0, 204, 255, 1);}
+.colorCover .four:hover,.colorCover .four:active,.colorCover .four:focus{background-color:rgba(128, 0, 128, 1);border-color:rgba(128, 0, 128, 1);}
+.colorCover .five:hover,.colorCover .five:active,.colorCover .five:focus{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
+.colorCover .six:hover,.colorCover .six:active,.colorCover .six:focus{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
+.colorCover .seven:hover,.colorCover .seven:active,.colorCover .seven:focus{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
 </style>
 
 
