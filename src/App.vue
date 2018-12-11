@@ -21,7 +21,7 @@
         </keep-alive>
       </el-aside>
      
-        <el-main style="min-height:550px;max-height:750px;overflow:auto;margin-top:60px;" >
+        <el-main style="min-height:550px;max-height:750px;overflow:scroll;margin-top:60px;" >
           <!-- Body --> 
           <keep-alive>
           <router-view v-if="isRouterAlive"></router-view>
