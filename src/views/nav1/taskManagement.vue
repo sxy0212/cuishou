@@ -471,7 +471,7 @@
 						<el-table :data="showQueue.tableData" style="width: 100%" border>
 							<el-table-column type="expand" label="点击查看详情" width="80"> 
 								<template slot-scope="props">
-									<el-form label-position="left" inline class="demo-table-expand" v-for="(item,index) in  props.row.config_info">
+									<el-form label-position="left" inline class="demo-table-expand" v-for="(item,index) in  props.row.config_info" :key="index">
 										<el-form-item label='队列中机器人名称:' >
 											<span>{{props.row.config_info[index].name}}</span>
 										</el-form-item>
@@ -489,7 +489,7 @@
 							<el-table-column label="任务编号" prop="task_coding"></el-table-column>
 							<el-table-column label="创建时间" prop="create_time" width="170"> </el-table-column>
 							<el-table-column label="操作">
-								<template scope="scope">
+								<template slot-scope="scope">
 									<el-button type="danger" @click="delQueue(scope.$index,scope.row)">删除</el-button>
 								</template> 
 							</el-table-column>
