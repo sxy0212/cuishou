@@ -109,11 +109,6 @@
             </el-form-item> 
           </div>
           <div>
-            <el-form-item label="登录账号:">
-                <el-input v-model="formMember.login_name"></el-input>
-            </el-form-item> 
-          </div>
-          <div>
             <el-form-item label="登录密码:">
                 <el-input v-model="formMember.password"></el-input>
             </el-form-item> 
@@ -148,7 +143,7 @@
           </div>
           <div>
             <el-form-item label="登录账号:">
-                <el-input v-model="formMemberEdit.login_name"></el-input>
+                <el-input v-model="formMemberEdit.login_name" disabled></el-input>
             </el-form-item> 
           </div>
           <div>
@@ -205,7 +200,6 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         addMemberDio:false,    //添加成员
         formMember:{
           depart_id :"",
-          login_name:"",
           true_name:"",
           password:"",
           phone:"",
@@ -333,7 +327,6 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             this.$alert(data.message)
             if(data.statusCode == 1){
               this.formMember.depart_id = ""
-              this.formMember.login_name = ""
               this.formMember.true_name = ""
               this.formMember.password = ""
               this.formMember.phone = ""
