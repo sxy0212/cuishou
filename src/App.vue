@@ -24,7 +24,7 @@
         <el-main style="min-height:550px;max-height:750px;overflow:scroll;margin-top:60px;" >
           <!-- Body --> 
           <keep-alive>
-          <router-view v-if="isRouterAlive"></router-view>
+            <router-view v-if="isRouterAlive"></router-view>
           </keep-alive>
         </el-main>
       
@@ -73,12 +73,11 @@ export default {
       // if(user&&to.path=='/login'||this.$route.path == '/'){
       //   this.$router.push({ path:'/taskManagement' })
       // }  //按F5刷新时
-      // if(this.$route.path == '/' ){
-      //   this.$router.push("/taskManagement")
-      // }else if(this.$route.path == '/login'){
-      //   this.$router.push("/taskManagement")
-      // }
-      this.$router.push("/taskManagement")
+      if(this.$route.path == '/' ){
+        this.$router.push("/taskManagement")
+      }else if(this.$route.path == '/login'){
+        this.$router.push("/taskManagement")
+      }
       // if(user == "5"){
       //   this.$router.push("/login")
       // }
@@ -86,8 +85,8 @@ export default {
     reload(){            //单页面刷新
     //  location.replace("/#/form");
     // location.reload()
-    console.log(this.$route.path)
-    this.$router.push(this.$route.path)
+    // console.log(this.$route.path)
+    // this.$router.push(this.$route.path)
       console.log('刷新')
       this.isRouterAlive = false
       this.$nextTick(function(){
@@ -121,7 +120,7 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
   .addTask .el-dialog{max-width:62%;min-width:62%;}
   html,body,#app,.el-container{height:100%}
   .loginForm{
-    .el-input__inner{border:none;width:260px;}
+    .el-input__inner{border:none;width:300px;}
     .el-tabs__nav{ width: 100%; display: flex;
       .el-tabs__item:nth-child(1){ border-top-left-radius:10px !important }
       .el-tabs__item:nth-child(2),.el-tabs__nav .el-tabs__item:nth-child(2) { border-top-right-radius:10px !important }

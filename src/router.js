@@ -47,7 +47,7 @@ let routes = [
     name: '任务管理',
     component:  taskManagement,
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   },
   {

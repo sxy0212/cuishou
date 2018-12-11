@@ -42,7 +42,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
         }
 			}
 		},
-		beforeMount() {
+		activated() {
 			this.initBatch()
 			this.init()   //页面数据初始化 
     },

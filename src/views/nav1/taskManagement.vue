@@ -619,9 +619,9 @@ import store from '@/vuex/store.js'
 				isAnyoneOn:false,     //检测启动是否开启
 			}
 		},
-		beforeMount() {
-			this.init()   //页面数据初始化 
-    	},
+		mounted() {
+			this.init()   //页面数据初始化 	
+		},
 		 watch:{
             //监测是否有开启按钮
             isAnyoneOn :{
@@ -637,7 +637,7 @@ import store from '@/vuex/store.js'
 		methods: {
 			// 页面机器人列表
 			init(){
-				if(getCookie("user")){
+				if(getCookie("user")&&this.$route.path == '/taskManagement'){
 					console.log(store)
 					const url = '/api/api_backend.php?r=asroperate/list'
 					const conf = {
