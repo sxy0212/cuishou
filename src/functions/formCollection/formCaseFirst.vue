@@ -146,9 +146,7 @@ export default {
     data(){
         return{
             filterList:[],
-            
         }
-
     },
     methods:{
         changeFn(val){

@@ -5,10 +5,10 @@
             <el-button type="info" @click="searchFn" size="mini">手动分配</el-button>
         </el-form-item>
         <el-form-item label="案件操作：">
-            <el-button type="primary" @click="searchFn" size="mini">暂停案件</el-button>
-            <el-button type="info" @click="searchFn" size="mini">关闭案件</el-button>
-            <el-button type="primary" @click="searchFn" size="mini">退案</el-button>
-            <el-button type="info" @click="searchFn" size="mini">恢复案件</el-button>
+            <el-button type="primary" @click="pauseFn('1')" size="mini">暂停案件</el-button>
+            <el-button type="info" @click="pauseFn('2')" size="mini">关闭案件</el-button>
+            <el-button type="primary" @click="pauseFn('3')" size="mini">退案</el-button>
+            <el-button type="info" @click="pauseFn('0')" size="mini">恢复案件</el-button>
             <el-button type="info" @click="changeArea" size="mini">修改催收区域</el-button>
         </el-form-item>
         <el-form-item label="导出操作：">
@@ -74,6 +74,9 @@ export default {
         },
         changeArea(){
             this.$emit('changeArea')
+        },
+        pauseFn(val){
+            this.$emit('pauseFn',val)
         }
     }
 }

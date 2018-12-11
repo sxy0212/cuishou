@@ -23,6 +23,7 @@
 		<second-form
 			:form='form'
 			v-on:changeArea='changeArea($event)'
+			v-on:pauseFn='pauseFn($event)'
 		>
 		</second-form>
 	</div>
@@ -353,6 +354,7 @@ export default {
 						}
 						this.addChangeAreaNow = false
 						this.init()
+						this.multipList = []
 						Message({
 							message: data.message,
 							type: 'success',
@@ -368,6 +370,53 @@ export default {
 				}
 			}
 			axiosRequest(conf)
+		},
+		pauseFn(str){
+			if( !!this.multipList.length ){
+				let ids = this.multipList.map(item=>{
+						return item.id
+				})
+				let data = JSON.stringify( {
+					"case_status":str,                       //案件状态，三者选填其一
+					"case_color":"",                       //案件标色，三者选填其一
+					"collection_area":''                   //催收区域，三者选填其一
+				} )
+				let conf = {
+					url : '/api/api_backend.php?r=collection/update',
+					data:{
+						id: ids,
+						data:data
+					},
+					success:(data)=>{
+						if( data.statusCode == 1 ){
+							this.formTitle={
+								id:''
+							}
+							this.init()
+							this.multipList = []
+							Message({
+								message: data.message,
+								type: 'success',
+								duration: 3 * 1000
+							})
+						}else{
+							Message({
+								message: data.message,
+								type: 'info',
+								duration: 3 * 1000
+							})
+						}
+					}
+				}
+				axiosRequest(conf)
+			}else{
+				Message({
+					message: '请先选择要修改的数据',
+					type: 'info',
+					duration: 3 * 1000
+				})
+			}
+			
 		}
 		
     }
