@@ -6,8 +6,6 @@ background-position: left top; color: #fff; font-family: 'Source Sans Pro';
  background: #fff;
 }
 .loginForm .el-tabs--border-card{border-radius: 6px;}
-.input{display: flex;border:1px solid #409EFF;border-radius: 20px;margin-bottom: 20px;}
-.input img{width:20px;height:20px;margin-left: 25px;margin-top:10px;}
 body {overflow: hidden;}
 input,button,select{font: 14px Helvetica Neue,Helvetica,PingFang SC,\5FAE\8F6F\96C5\9ED1,Tahoma,Arial,sans-serif;}
 #wrapper{ background: #FFF !important}
@@ -16,7 +14,7 @@ input,button,select{font: 14px Helvetica Neue,Helvetica,PingFang SC,\5FAE\8F6F\9
 .loginForm .title{font-size: 18px; text-align: center; padding-bottom:20px;display: flex;justify-content: center; }
 .Form{ padding-top:50px; }
 .Form1{height: 180px}
-.el-input{ margin-bottom: 20px}
+.el-input{ margin-bottom: 0px}
 .el-input-group__prepend{ width: 20px; padding: 0px 10px; text-align: center; background: none; color: #fff; border-color: rgba(0, 0, 0,.2) }
 .el-input__inner{ background: none;border-color: rgba(0, 0, 0,.2); color: #333}
 #tab-first,#tab-second{color:#a4a3a3}

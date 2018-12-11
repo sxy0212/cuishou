@@ -5,20 +5,20 @@
       <div class="loginForm" > 
         <el-tabs v-model="activeName" type="border-card" @tab-click="handleClick" >
           <el-tab-pane label="管理员登录" name="first" >
-            <el-form :model="ruleForm2"  label-position="left" label-width="0px" class="demo-ruleForm login-container">
+            <el-form :model="ruleForm2"  label-width="0px">
               <p class="title">
                 <img src="static/image/login_top.png" style="width:25px;height:25px;">
                 <span style="margin-left:5px;">言小信管理员</span>
               </p>
               <el-form-item prop="account">
-                <div class="input">
-                  <img src="static/image/login_user.png">
+                <div class="input" style="display: flex;border:1px solid #409EFF;border-radius: 20px;margin-bottom: 20px;">
+                  <img src="static/image/login_user.png" style="width:20px;height:20px;margin-left: 25px;margin-top:10px;">
                   <el-input type="text" v-model="ruleForm2.username" auto-complete="off" placeholder="账号" autofocus="true"></el-input>
                 </div>
               </el-form-item>
               <el-form-item prop="checkPass">
-                <div class="input">
-                  <img src="static/image/login_pass.png">
+                <div class="input" style="display: flex;border:1px solid #409EFF;border-radius: 20px;margin-bottom: 20px;">
+                  <img src="static/image/login_pass.png" style="width:20px;height:20px;margin-left: 25px;margin-top:10px;">
                   <el-input type="password" v-model="ruleForm2.password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleReset2"></el-input>
                 </div>
               </el-form-item>
@@ -28,20 +28,20 @@
             </el-form>
           </el-tab-pane>
           <el-tab-pane label="催收员登录" name="second">
-            <el-form :model="ruleForm2"  label-position="left" label-width="0px" class="demo-ruleForm login-container">
+            <el-form :model="ruleForm2"  label-width="0px">
               <p class="title">
                 <img src="static/image/login_top.png" style="width:25px;height:25px;">
                 <span style="margin-left:5px;">言小信催收员</span>
               </p>
               <el-form-item prop="account">
-                <div class="input">
-                  <img src="static/image/login_user.png">
+                <div class="input" style="display: flex;border:1px solid #409EFF;border-radius: 20px;margin-bottom: 20px;">
+                  <img src="static/image/login_user.png" style="width:20px;height:20px;margin-left: 25px;margin-top:10px;">
                   <el-input type="text"  auto-complete="off" placeholder="账号"></el-input>
                 </div>
               </el-form-item>
               <el-form-item prop="checkPass">
-                <div class="input">
-                  <img src="static/image/login_pass.png">
+                <div class="input" style="display: flex;border:1px solid #409EFF;border-radius: 20px;margin-bottom: 20px;">
+                  <img src="static/image/login_pass.png" style="width:20px;height:20px;margin-left: 25px;margin-top:10px;">
                   <el-input type="password"  auto-complete="off" placeholder="密码" @keyup.enter.native="handleReset2"></el-input>
                 </div>
               </el-form-item>

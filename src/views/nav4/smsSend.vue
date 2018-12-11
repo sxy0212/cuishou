@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div>
+    <div class="smssend">
       <div style="float:left;width:40%">
         <el-form ref="form" :model="form" label-width="100px" :inline="true" @submit.native.prevent>
           <div>
@@ -117,6 +117,6 @@ export default {
 	}
 
 </script>
-<style lang="scss" >
-  .el-tabs__content{margin-left:60px;margin-top:-10px;overflow:visible}
+<style lang="scss">
+.smssend .el-tabs__content{margin-left:60px;margin-top:-10px;overflow:visible}
 </style>
