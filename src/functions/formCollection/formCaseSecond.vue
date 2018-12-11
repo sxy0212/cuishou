@@ -19,10 +19,10 @@
         </el-form-item>
         <el-form-item label="案件标色：" class="colorCover">
             <el-button type="info" 
-             v-for='item in colorList'
-                :key='item.id'
+                v-for='item in colorList'
+                :key='item.code'
                 :class="item.class"
-                @click="searchFn" size="medium"></el-button>
+                @click="colorChange(item.code)" size="medium"></el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -69,8 +69,8 @@ export default {
         }
     },
     methods:{
-        searchFn(){
-
+        colorChange(){
+            this.$emit('colorChange')
         },
         changeArea(){
             this.$emit('changeArea')
