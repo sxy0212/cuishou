@@ -8,7 +8,7 @@
     </div>
 		<div style="padding-bottom:10px;font-size:20px;display:flex;justify-content: space-between;">
       <div>
-        呼出总量<span style="color:red">{{tip.all}}</span>; 
+        案件总量<span style="color:red">{{tip.all}}</span>; 
         接通总量 <span style="color:red">{{tip.conn}}</span> ;接通率<span style="color:red">{{tip.per_conn}}</span>
       </div>
       <div>

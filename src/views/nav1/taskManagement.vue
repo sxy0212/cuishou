@@ -4,8 +4,8 @@
       		<div class="TopForm">
 				<div class="AIadd">
 					<el-button type="success" @click="addTask"><i class="fa fa-plus"></i>添加任务</el-button>
-					<el-button type="success" >队列功能</el-button>
-					<el-button type="success" >队列列表</el-button>
+					<el-button type="success" @click="queueAdd">队列功能</el-button>
+                    <el-button type="success" @click="queueList">队列列表</el-button>
 				</div>
 				<div class="AIlist">
 					<ul class="el-row" style="padding-left:0">
@@ -15,8 +15,8 @@
 									<div class="title" style="width:30%;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" :title="form.name">任务名称：{{ form.name }}</div>
 									<div class="title" style="margin:0 15px;">任务编码：{{ form.task_coding }}</div>
 									<div class="title" style="width:30%">
-										<el-button style="padding:5px 0" > 机器人状态：</el-button>
-										<span >正常</span>
+									<!--<el-button style="padding:5px 0" > 机器人状态：</el-button> -->
+										<span >机器人状态:正常</span>
 									</div>
 								</div>
 								<div class="ListMain">
@@ -152,14 +152,14 @@
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
 											</el-select>
 										</div>
-										<div>
+										<!--<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="AddQueueData.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
 											<span @click="agentorqueueChangeWord" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
 												<span v-show="AddQueueData.member == ''">0</span>
 												<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
-										</div>
+										</div>-->
 									</el-radio-group>
 								</el-form-item>
 								<el-form-item label="振铃时长:">
@@ -285,14 +285,14 @@
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
 											</el-select>
 										</div>
-										<div>
+										<!--<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="formEdit.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
 											<span @click="agentorqueueChangeWordEdit" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
 												<span v-show="EditQueueData.member == ''">0</span>
 												<span v-show="EditQueueData.member != ''">{{EditQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
-										</div>
+										</div>-->
 									</el-radio-group>
 									
 								</el-form-item>
@@ -445,6 +445,55 @@
 							<el-button type="primary" @click="EditQueueSure">确定保存</el-button>
 							<el-button type="primary" @click="EditQueueData.QueueShow=false" >取消</el-button>
 						</div>
+					</el-dialog>
+				</div>
+				<!-- 队列功能弹框 -->
+				<div class="dial-header Main">
+					<el-dialog title="组成队列" :visible.sync="AddQueue.show">
+						队列名称:
+						<el-input v-model="AddQueue.name" style="width:200px"  placeholder="请输入名称"></el-input>
+						<span style="color:red;font-size:12px">*必填</span>
+						<el-table ref="multipleTable" :data="AddQueue.date" border :height="AddQueue.date.length<=1?100:300" tooltip-effect="dark" style="width: 100%;margin-top:10px" @selection-change="handleSelectionChangeQueue" >
+							<el-table-column type="selection"></el-table-column>
+							<el-table-column  prop="name" label="任务名称" ></el-table-column>
+							<el-table-column  prop="task_coding" label="任务编号" ></el-table-column>
+							<el-table-column  prop="asr_number" label="外线号码" ></el-table-column>
+						</el-table>
+						<div slot="footer" class="dialog-footer"> 
+							<el-button @click="AddQueue.show = false">取消</el-button>  
+							<el-button type="primary" @click="queueSure">组成队列</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 已有队列弹框 -->
+				<div class="dial-header queue">
+					<el-dialog title="已有队列" :visible.sync="showQueue.show" >
+						<el-table :data="showQueue.tableData" style="width: 100%" border>
+							<el-table-column type="expand" label="点击查看详情" width="80"> 
+								<template slot-scope="props">
+									<el-form label-position="left" inline class="demo-table-expand" v-for="(item,index) in  props.row.config_info">
+										<el-form-item label='队列中机器人名称:' >
+											<span>{{props.row.config_info[index].name}}</span>
+										</el-form-item>
+										<el-form-item label='任务编号:' >
+											<span>{{props.row.config_info[index].task_coding}}</span>
+										</el-form-item>
+										<el-form-item label='外线号码:' >
+											<span>{{props.row.config_info[index].asr_number}}</span>
+										</el-form-item>
+									</el-form>
+								</template>
+							</el-table-column>
+							<el-table-column label="序号" type="index" width="50"></el-table-column>
+							<el-table-column label="队列名称" prop="queue_name" width="100"></el-table-column>
+							<el-table-column label="任务编号" prop="task_coding"></el-table-column>
+							<el-table-column label="创建时间" prop="create_time" width="170"> </el-table-column>
+							<el-table-column label="操作">
+								<template scope="scope">
+									<el-button type="danger" @click="delQueue(scope.$index,scope.row)">删除</el-button>
+								</template> 
+							</el-table-column>
+						</el-table>
 					</el-dialog>
 				</div>
 			</div>
@@ -617,6 +666,16 @@ import store from '@/vuex/store.js'
 					status2:""
 				},
 				isAnyoneOn:false,     //检测启动是否开启
+				AddQueue:{ // 添加为队列用到数据
+					show:false,            
+					name:"",
+					date:[],
+					multipleSelection:[]
+				} ,
+				showQueue:{      //显示已有队列
+					show:false, 
+					tableData:[]
+            	}     
 			}
 		},
 		mounted() {
@@ -1164,7 +1223,90 @@ import store from '@/vuex/store.js'
 					}
 					axiosRequest(conf)
 				})
-			}
+			},
+			// 队列
+           queueAdd(){
+                this.AddQueue.show = true
+                this.AddQueue.name = ""
+                const url = "/api/api_backend.php?r=asroperate/config-list"
+                const conf = {
+                    url,
+                    success:(data)=>{
+                        this.AddQueue.date = data.info
+                    }
+                }
+                axiosRequest(conf)
+            },
+            handleSelectionChangeQueue(val){
+                this.AddQueue.multipleSelection = val;
+            },  
+            queueSure(){
+                const queue_name = this.AddQueue.name
+                var ids = this.AddQueue.multipleSelection.map((item)=>{
+                    return item.id
+                })
+                const configId = ids.join(",")
+                const url = "/api/api_backend.php?r=asroperate/config-queue-add"
+                const conf = {
+                    url,
+                    data:{
+                        queue_name,
+                        configId
+                    },
+                    success:(data)=>{
+                        this.$alert(data.message)
+                        if(data.statusCode == 1){
+                            this.AddQueue.show = false
+                        }else{
+                            this.AddQueue.show = true
+                        }
+                    }
+                }
+                axiosRequest(conf)               
+            },
+            // 队列列表
+            queueList(){
+                this. showQueue.show = true
+                const url = "/api/api_backend.php?r=asroperate/config-queue-list"
+                const conf = {
+                    url,
+                    success:(data)=>{
+                        this.showQueue.tableData = data.info
+                    }
+                }
+                axiosRequest(conf)
+            },
+            // 删除队列
+            delQueue(index,row){
+                this.$confirm('确定删除?', '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                    }).then(() => {
+                        const url = "/api/api_backend.php?r=asroperate/config-queue-list-del"
+                        const conf = {
+                            url,
+                            data:{
+                                id:row.id
+                            },
+                            success:(data)=>{
+                                this.$alert(data.message)
+                                if(data.statusCode == 1){
+                                    this.showQueue.show = false
+                                }else{
+                                    this. showQueue.show = true
+                                }
+                            }
+                        }
+                        axiosRequest(conf)
+                    }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '已取消删除'
+                    });          
+                });
+               
+            }
 		}
 	}
 

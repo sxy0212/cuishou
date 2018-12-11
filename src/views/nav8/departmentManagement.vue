@@ -18,7 +18,7 @@
     </div>
     <div style="margin-top:60px;">
       <div style="width:30%;float:left">
-        <el-tree :data="Dates" node-key="id" default-expand-all :expand-on-click-node="false" :props="defaultProps2">
+        <el-tree :data="Dates" node-key="id"  accordion :expand-on-click-node="false" :props="defaultProps2">
             <span class="custom-tree-node" slot-scope="{ node, data }">
                 <el-input v-model="showName" v-show="data.id == showId" style="width:80%;height:20px;" @keyup.enter.native="editSave"></el-input>
                 <span v-show="data.id != showId">{{ node.label }}</span>
@@ -95,6 +95,7 @@
             <el-form-item label="上级部门:">
               <el-select v-model="formMember.depart_id" placeholder="请选择类型">
                 <el-option v-for="(item,index) in Dates" :label="item.depart_name" :value="item.id" :key="index"></el-option>
+                <el-option v-for="(item,index) in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
               </el-select> 
             </el-form-item>
           </div>
@@ -128,6 +129,7 @@
             <el-form-item label="上级部门:">
               <el-select v-model="formMemberEdit.depart_id" placeholder="请选择类型">
                 <el-option v-for="(item,index) in DatesEdit" :label="item.depart_name" :value="item.id" :key="index"></el-option>
+                 <el-option v-for="(item,index) in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
               </el-select> 
             </el-form-item>
           </div>
@@ -230,7 +232,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         }
       }
 		},
-		beforeMount() {
+		activated() {
       this.initTree()
       this.init()
     },
@@ -244,6 +246,20 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
           url,
           success:(data)=>{
             this.Dates = data.info
+            var arr = []
+            this.Dates.forEach(item=>{
+              if(item.child.length>0){
+                arr.push(item.child)
+              }else{
+                arr.push(item)
+              }
+              console.log(item)
+            })
+            console.log(arr)
+            // for(var x = 0;x<this.Dates.length;x++){
+            //   console.log()
+            // }
+            console.log(this.Dates)
           }
         }
         axiosRequest(conf)
@@ -269,7 +285,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             if(data.statusCode == 1){
               this.node_operate = false
               this.initTree()
-              this.form.parent_id = ""
+              this.form.parent_id = "0"
               this.form.depart_name = ""
               this.form.parent_str = ""
             }else{
@@ -499,5 +515,5 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 </script>
 <style lang="scss" >
 .DialogueMain2 .el-dialog{width:35%}
-.el-tree .el-tree-node{height:40px;background:#f2f2f2}
+.el-tree .el-tree-node{background:#f2f2f2}
 </style>   
