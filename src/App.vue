@@ -73,11 +73,12 @@ export default {
       // if(user&&to.path=='/login'||this.$route.path == '/'){
       //   this.$router.push({ path:'/taskManagement' })
       // }  //按F5刷新时
-      if(this.$route.path == '/' ){
-        this.$router.push("/taskManagement")
-      }else if(this.$route.path == '/login'){
-        this.$router.push("/taskManagement")
-      }
+      // if(this.$route.path == '/' ){
+      //   this.$router.push("/taskManagement")
+      // }else if(this.$route.path == '/login'){
+      //   this.$router.push("/taskManagement")
+      // }
+      this.$router.push("/taskManagement")
       // if(user == "5"){
       //   this.$router.push("/login")
       // }
