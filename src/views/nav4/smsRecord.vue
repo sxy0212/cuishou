@@ -15,8 +15,8 @@
                 </el-select>
               </el-form-item>
               <el-form-item label="发送时间：">
-                <el-date-picker v-model="formRecord.start_time" type="date" placeholder="开始时间"  :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
-                <el-date-picker v-model="formRecord.end_time" type="date" placeholder="结束时间"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
+                <el-date-picker v-model="formRecord.start_time" type="date" placeholder="开始时间" value-format="yyyy-MM-dd" :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
+                <el-date-picker v-model="formRecord.end_time" type="date" placeholder="结束时间" value-format="yyyy-MM-dd"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
               </el-form-item> 
               <el-button type="primary" @click="sendRecord(1)">立即搜索</el-button>
           </el-form>
@@ -86,7 +86,7 @@ export default {
         tableData:[],
       }
 		},
-		created(){
+		activated(){
       this.sendRecord(0)
     },
 		methods: {
@@ -96,16 +96,6 @@ export default {
       //数据列表
       sendRecord(num){
         const data = this.formRecord
-        if(this.formRecord.start_time!=""){
-          data.start_time = formatDate(this.formRecord.start_time,'yyyy-MM-dd')
-        }else{
-          data.start_time = ""
-        }
-        if(this.formRecord.end_time){
-          data.end_time = formatDate(this.formRecord.end_time,'yyyy-MM-dd') 
-        }else{
-          data.end_time = ""
-        }
         if(num == 0){
           data.page = this.formRecord.page
           data.page_size = this.formRecord.page_size

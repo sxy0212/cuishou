@@ -110,10 +110,8 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
            
 			}
 		},
-		beforeMount() {
+		activated() {
             this.templateListData() //方案名称
-			// this.initBatch()
-			// this.init(0)   //页面数据初始化 
         },
 		methods: {
             // 序号

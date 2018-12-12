@@ -530,9 +530,7 @@ import { MessageBox } from 'element-ui';
 				this.getId() 
 				this.initData()
 			},
-        beforeMount() {
-					
-				},
+       
         methods: {
             index(val){
               return (this.init.page-1)*this.init.page_size+val+1

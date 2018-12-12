@@ -63,25 +63,14 @@ export default {
   },
   methods:{
     upload(){ 
-      // console.log(getCookie('user'))
-      // let user = JSON.parse(getCookie('user'));
-      if(getCookie('user'))
-      {
-        console.log(111)
+      if(getCookie('user')){
+        if(this.$route.path == '/' ){
+          this.$router.push("/charts")
+        }else if(this.$route.path == '/login'){
+          this.$router.push("/charts")
+        }
       }
-      // console.log(user)
-      // if(user&&to.path=='/login'||this.$route.path == '/'){
-      //   this.$router.push({ path:'/taskManagement' })
-      // }  //按F5刷新时
-      if(this.$route.path == '/' ){
-        this.$router.push("/charts")
-      }else if(this.$route.path == '/login'){
-        this.$router.push("/charts")
-      }
-      // if(user == "5"){
-      //   this.$router.push("/login")
-      // }
-    },  
+    },
     reload(){            //单页面刷新
     //  location.replace("/#/form");
     // location.reload()
