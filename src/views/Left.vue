@@ -1,11 +1,11 @@
 <template>
     <el-menu
-      default-active="1" :unique-opened="open" @open="handleOpen"
+      :default-active="default_url" :unique-opened="open" @open="handleOpen"
       @close="handleClose"
       @select="handleSelect" router
       class="el-menu-vertical-demo" 
       style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b" >
-      <el-menu-item :index="item.path" v-for="(item,index) in menus" v-if="item.child.length==0" :key="index">
+      <el-menu-item :index="item.path" v-for="(item,index) in menus" v-if="item.child.length==0" :key="index" class="el-submenu__title">
         <i :class="item.icon"></i>
         <span slot="title">{{item.name}}</span>
       </el-menu-item>
@@ -14,11 +14,9 @@
           <i :class="item.icon"></i>
           <span>{{item.name}}</span>
         </template>
-        <el-menu-item-group>
-          <el-menu-item :index="item.path" v-for="(item,index) in item.child" :key="index">{{item.name}}</el-menu-item>
-        </el-menu-item-group>
+        <el-menu-item :index="item.path" v-for="(item,index) in item.child" :key="index" >{{item.name}}</el-menu-item>
       </el-submenu> 
-    </el-menu>       
+    </el-menu>  
 </template>
 <script type="text/ecmascript-6">
 import  { axiosRequest } from '@/assets/js/Yt.js'
@@ -27,8 +25,12 @@ import store from '@/vuex/store.js'
     data(){
       return {
         open:true,
-        menus:[]
+        menus:[],
+        default_url:"/charts"
       }
+    },
+     watch: {
+      '$route':'getPath'
     },
     mounted () {
       let conf = {
@@ -53,8 +55,12 @@ import store from '@/vuex/store.js'
           this.$router.push('/charts');
         }
       }
+      this.default_url = this.$route.path
     },
     methods:{
+      getPath(){
+        this.default_url = this.$route.path;
+      },
       handleOpen(key, keyPath) {
         store.commit('save_index', key); 
       },
@@ -71,3 +77,6 @@ import store from '@/vuex/store.js'
     },
   }
 </script>
+<style>
+
+</style>
