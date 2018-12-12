@@ -94,7 +94,10 @@ export default {
         },
         doubleClickFn(row,event){
             router.push({
-                path:'/caseDetails'
+                path:'/caseDetails/',
+                query:{
+                    id:row.id
+                }
             })
         }
     }

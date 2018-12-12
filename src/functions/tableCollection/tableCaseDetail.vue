@@ -2,38 +2,40 @@
     <el-table
         border
         :data="tableData"
-        style="width: 98%">
+        style="width: 98%"
+        @row-dblclick="doubleClickFn"
+        >
         <el-table-column
           label="姓名"
-          prop='name'>
+          prop='case_name'>
         </el-table-column>
         <el-table-column
-          prop="money"
+          prop="case_money"
           label="委案金额"
           >
         </el-table-column>
         <el-table-column
-          prop="type"
+          prop="case_currency"
           label="币种"
           >
         </el-table-column>
          <el-table-column
-          prop="pay_num"
+          prop="case_paid"
           label="已还款"
           >
         </el-table-column>
         <el-table-column
-          prop="pay_num"
+          prop="case_exceed_limit"
           label="逾期账龄"
           >
         </el-table-column>
         <el-table-column
-          prop="pay_num"
+          prop="last_call"
           label="上次通话"
           >
         </el-table-column>
         <el-table-column
-          prop="pay_num"
+          prop="call_times"
           label="通话次数"
           >
         </el-table-column>
@@ -44,7 +46,12 @@ export default {
     name:'tableCaseDetail',
     props:[
         'tableData'
-    ]
+    ],
+    methods:{
+      doubleClickFn(row){
+        this.$emit('doubleClickFn',row.id)
+      }
+    }
 }
 </script>
 

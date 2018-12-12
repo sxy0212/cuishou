@@ -84,9 +84,7 @@ import addDistribute from '@/functions/editDialog/addDistribute.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
-import store from '@/vuex/store.js'
-import router from '@/router.js'
-// import indexMethod  from '@/utils/indexMethod.js'
+
 export default {
     components:{
         'page-change':pageChange,
@@ -196,7 +194,6 @@ export default {
 		}
 	},
 	activated(){
-		console.log(this.$route.query.staff_id,this.$route.query.depart_id,this.$route.query.batch_id)
 		this.conditions.staff_id = this.$route.query.staff_id
 		this.conditions.depart_id = this.$route.query.depart_id
 		this.conditions.batch_id = this.$route.query.batch_id

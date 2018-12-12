@@ -20,6 +20,9 @@
         prop="case_status"
         label="通话记录"
         >
+            <template slot-scope='scope'>
+                <el-button type="primary" size='mini' @click="checkFn(scope)" >查看</el-button>
+            </template>
         </el-table-column>
         <el-table-column
         prop="staff_id"
@@ -41,7 +44,12 @@ export default {
     name:'tableCaseSecond',
     props:[
         'tableSecond'
-    ]
+    ],
+    methods:{
+        checkFn(scope){
+            this.$emit('checkFn',scope)
+        }
+    }
 }
 </script>
 

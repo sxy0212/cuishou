@@ -30,14 +30,11 @@
                 <el-input type="textarea" v-model="formTitle.id" placeholder="请输入通话备注"></el-input>
             </el-form-item>
             <el-form-item label="下次跟进">
-                <el-select v-model="formTitle.case_status" placeholder="请选择">
-                    <el-option 
-                        :label="item.label" 
-                        :value="item.value"
-                        v-for='item in nextList'
-                        :key="item.value"
-                    ></el-option>
-                </el-select>
+                <el-date-picker
+                    v-model="formTitle.value1"
+                    type="date"
+                    placeholder="选择日期">
+                </el-date-picker>
             </el-form-item>
         </el-form>
 </template>
