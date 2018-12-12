@@ -25,7 +25,7 @@
 								</el-form-item>
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
-							<el-form :model="form1" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+							<el-form :model="form1" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
 											<el-form-item label="本人号码接通:">
 												<el-select v-model="form1.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
@@ -56,7 +56,7 @@
 													<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-										<el-form :model="form2" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+										<el-form :model="form2" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
 											<el-form-item label="第一联系人号码接通:">
 												<el-select v-model="form2.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
@@ -141,7 +141,7 @@
 								</el-form-item>
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
-							<el-form :model="form1Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+							<el-form :model="form1Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
 											<el-form-item label="本人号码接通:">
 												<el-select v-model="form1Edit.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
@@ -172,7 +172,7 @@
 													<el-input v-model="form1Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-										<el-form :model="form2Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+										<el-form :model="form2Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
 											<el-form-item label="第一联系人号码接通:">
 												<el-select v-model="form2Edit.connected_send" :style="Index.width">
 													<el-option value="0" label="不发送" ></el-option>
@@ -355,7 +355,7 @@ import { MessageBox } from 'element-ui';
 						form3Edit:{},
 			}
 		},
-		beforeMount() {
+		activated() {
 			this.init()   //页面数据初始化 
     },
 		methods: {
