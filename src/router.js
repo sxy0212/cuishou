@@ -12,6 +12,8 @@ import learning from './views/nav5/learning.vue'
 import sound from './views/nav5/sound.vue'
 import templateTree from "./views/nav5/templateTree.vue"
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
+import caseDetails from './views/nav2/caseDetails.vue'
+
 
 
 import regionalConfiguration from "./views/nav7/regionalConfiguration.vue"
@@ -63,6 +65,14 @@ let routes = [
     path: '/caseManagement',
     name: '案件管理',
     component:  caseManagement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/caseDetails',
+    name: '案件详情',
+    component:  caseDetails,
     meta: {
       keepAlive: true,
     }
