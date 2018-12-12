@@ -128,12 +128,18 @@ export default {
             }
         }
     },
-    created() {
+    // created() {
+    //     this.init()
+    //     this.getAreaList()
+    //     this.getClientList()
+    //     this.getTypeList()
+    // },
+    activated(){
         this.init()
         this.getAreaList()
         this.getClientList()
         this.getTypeList()
-    },
+	},
     methods: {
         init(){
             let conf = {

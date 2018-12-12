@@ -89,9 +89,12 @@ export default {
             },
         }
     },
-    created() {
+    activated(){
         this.init()
-    },
+	},
+    // created() {
+    //     this.init()
+    // },
     methods: {
         methodIndex(val){
             return indexMethod(val,this.page,this.page_size)

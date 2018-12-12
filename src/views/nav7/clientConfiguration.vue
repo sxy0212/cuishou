@@ -65,9 +65,12 @@ export default {
             },
         }
     },
-    created() {
-        this.init()  
-    },
+    // created() {
+    //     this.init()  
+    // },
+    activated(){
+        this.init()
+	},
     methods: {
         init(){
             let conf = {

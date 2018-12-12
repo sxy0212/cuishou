@@ -74,9 +74,12 @@ export default {
             fieldsList:[]//多选选项
         }
     },
-    created() {
+    // created() {
+    //     this.init()
+    // },
+    activated(){
         this.init()
-    },
+	},
     methods: {
         
         init(){

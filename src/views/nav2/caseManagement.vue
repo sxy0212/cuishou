@@ -198,13 +198,16 @@ export default {
 		this.conditions.depart_id = this.$route.query.depart_id
 		this.conditions.batch_id = this.$route.query.batch_id
 		this.init()
-	},
-    created() {
-		this.init()
 		this.getBatchList()
 		this.getDepartmentList(1)
 		this.filterFn('')
 	},
+    // created() {
+	// 	this.init()
+	// 	this.getBatchList()
+	// 	this.getDepartmentList(1)
+	// 	this.filterFn('')
+	// },
 	methods: {
 		changeCaseClient(val){
 			t = val

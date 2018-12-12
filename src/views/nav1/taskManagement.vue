@@ -116,7 +116,7 @@
 									<el-input v-model="form.name" :style="Index.width"></el-input>
 								</el-form-item>
 								<el-form-item label="上午呼叫时间:">
-									<el-time-select placeholder="开始时间" v-model="form.start_time_am":picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="开始时间" v-model="form.start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
 									<el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>
 								</el-form-item>
@@ -249,7 +249,7 @@
 									<el-input v-model="formEdit.name" :style="Index.width"></el-input>
 								</el-form-item>
 								<el-form-item label="上午呼叫时间:">
-									<el-time-select placeholder="开始时间" v-model="start_time_am":picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="开始时间" v-model="start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
 									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}" :style="Index.width1"></el-time-select>
 								</el-form-item>

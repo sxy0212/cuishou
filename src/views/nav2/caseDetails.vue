@@ -77,9 +77,9 @@ export default {
         this.id = this.$route.query.id
 		this.init()
 	},
-    created(){
-        // this.init()
-    },
+    // created(){
+    //     // this.init()
+    // },
     data(){
         return {
             otherInfo:false,//其他信息

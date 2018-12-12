@@ -30,9 +30,12 @@ export default {
         'div-table':tableTemplate,
         'page-change':pageChange
     },
-    created() {
+    activated(){
         this.init()
     },
+    // created() {
+    //     this.init()
+    // },
     data(){
         return {
             templateUse:false,
