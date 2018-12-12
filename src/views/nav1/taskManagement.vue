@@ -678,7 +678,7 @@ import store from '@/vuex/store.js'
             	}     
 			}
 		},
-		mounted() {
+		activated() {
 			this.init()   //页面数据初始化 	
 		},
 		 watch:{

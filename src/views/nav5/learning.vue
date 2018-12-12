@@ -155,7 +155,6 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                 }
               axiosRequest(conf)
             },
-            //无应答的该表页码和条数
             handlePageChange(val) {
                 this.form.page = val
                 this.init(0)
