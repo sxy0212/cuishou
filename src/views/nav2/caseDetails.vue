@@ -20,13 +20,13 @@
         <div class='info otherI'>
             <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button><el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
             <div-other
+                :audioData='audioData'
                 :selfInfo='selfInfo'
                 v-show='otherInfo'
             >
             </div-other>
         </div>
         <div class="info">
-            
             <div class="coverMiddle">
                 <div class='middle'>
                     <div-form
@@ -82,26 +82,30 @@ export default {
     // },
     data(){
         return {
+            audioData:[
+                {
+                    "msg": "喂，您好！（两秒空音）",                                     //语音内容
+                    "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
+                    "user": "0",                                                        //对象(0:言小通,1:客户)
+                    "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bffb8",           //唯一标识id
+                    "create_time": "2018-09-11 01:21:19",                               //创建时间
+                    "path": ""                                                          //语音全路径
+                },
+                {
+                    "msg": "状态（两秒空音）",                                     //语音内容
+                    "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
+                    "user": "0",                                                        //对象(0:言小通,1:客户)
+                    "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bff98",           //唯一标识id
+                    "create_time": "2018-09-9 01:21:19",                               //创建时间
+                    "path": ""                                                          //语音全路径
+                },
+            ],
             otherInfo:false,//其他信息
             selfInfo:{//个人信息
 
             },
             id:'',//具体某个案件
             checkNow:false,//查看通话记录
-            id_num:0,//证件号码
-            tel_num:0,// 联系方式：
-            address:'闵行',// 家庭住址：
-            work:'公务员',//工作单位：
-            company_num:'789',//公司电话：
-            company_address:'浦东',//公司地址：
-            first_contact:'miin',//第一联系人：
-            second_contact:'hii',//第二联系人：
-            money_num:'50',//委案金额：
-            pay_num:'50',//还款金额：
-            client:'50',//委托方：
-            out_day:'50',//逾期账龄：
-            interest:'50',//利息：
-            out_date:'50',//退案日期：
             middleCaseRecord:[],//暂存列表
             caseRecord:[//个人信息列表
                 {
@@ -112,7 +116,8 @@ export default {
             tableSecond:[//催收记录
                 {
                     name:'hah',
-                    money:'20'
+                    money:'20',
+                    id:'334'
                 }
             ],
             formTitle:{//其他详细信息
@@ -158,8 +163,21 @@ export default {
         clearFn(){//清空
 
         },
-        checkFn(){//查看
-
+        checkFn(column){//查看
+            console.log(column)
+            this.checkNow = true
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/look-over',
+                data:{
+                    id:column.id
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        
+                    }
+                }
+            }
+            axiosRequest(conf)
         },
         totalCaseFn(){//所有共案
             this.caseRecord = this.caseRecord.concat(this.middleCaseRecord )
@@ -190,6 +208,7 @@ export default {
 .el-form--inline .el-form-item{margin-right:0;}
 .el-form-item{margin-bottom:10px;}
 .otherI{margin-bottom:15px;}
+.el-date-editor span{margin-left:0;}
 </style>
 
 

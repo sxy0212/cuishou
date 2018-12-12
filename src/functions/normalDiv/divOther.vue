@@ -1,19 +1,19 @@
 <template>
     <div>
-        <div ><span>性别(0:未知 1:男 2:女):{{selfInfo.case_gender}}  </span><span>家庭号码:{{selfInfo.case_home_phone}}</span><span>案人职位：{{selfInfo.case_position}}</span><span>案人部门:{{selfInfo.case_department}}</span></div>
-        <div ><span>单位邮编:{{selfInfo.case_work_postcode}}  </span><span>家庭地址:{{selfInfo.case_home_address}}</span><span>家庭邮编:{{selfInfo.case_home_postcode}}</span></div>
-        <div ><span>对账单地址:{{selfInfo.case_mail_address}}  </span><span>对账单邮编:{{selfInfo.case_mail_postcode}}</span><span>户籍地址:{{selfInfo.case_register_address}}</span><span>户籍地邮编:{{selfInfo.case_register_postcode}}</span></div>
-        <div ><span>qq:{{selfInfo.case_qq}}  </span><span>电子邮箱:{{selfInfo.case_email}}</span><span>生日:{{selfInfo.case_birthday}}</span><span>年龄:{{selfInfo.case_age}}</span><span>省份:{{selfInfo.case_province}}</span><span>城市:{{selfInfo.case_city}}</span><span>区县:{{selfInfo.case_district}}</span></div>
-        <div ><span>备注1:{{selfInfo.case_remark1}}  </span><span>社保电脑号:{{selfInfo.case_social_number}}</span><span>社保卡号:{{selfInfo.case_social_card}}</span><span>开户行:{{selfInfo.case_card_bank}}</span></div>
-        <div ><span>联系人1姓名:{{selfInfo.case_name1}}  </span><span>联系人1证件号:{{selfInfo.case_card1}}</span><span>联系人1关系:{{selfInfo.case_relation1}}</span><span>联系人1家庭电话:{{selfInfo.case_home_phone1}}</span></div>
-        <div ><span>联系人1单位电话:{{selfInfo.case_work_phone1}}  </span><span>联系人1手机号:{{selfInfo.case_mobile1}}</span><span>联系人1地址:{{selfInfo.case_address1}}</span><span>联系人1单位地址:{{selfInfo.case_work_address1}}</span></div>
-        <div ><span>联系人2姓名:{{selfInfo.case_name2}}  </span><span>联系人2证件号:{{selfInfo.case_card2}}</span><span>联系人2关系:{{selfInfo.case_relation2}}</span><span>联系人2家庭电话:{{selfInfo.case_home_phone2}}</span></div>
-        <div ><span>联系人2单位电话:{{selfInfo.case_work_phone2}}  </span><span>联系人2手机号:{{selfInfo.case_mobile2}}</span><span>联系人2地址:{{selfInfo.case_address2}}</span><span>联系人2单位地址:{{selfInfo.case_work_address2}}</span></div>
-        <div ><span>分配给坐席的工号 (0:未分配):{{selfInfo.staff_id}}  </span><span>案件标记 (0:未做标记，正常状态 1:暂停 2:关闭 3:退案):{{selfInfo.case_status}}</span></div>
-        <div ><span> 坐席名称:{{selfInfo.staff_name}}  </span><span>案件分配时间:{{selfInfo.allocate_time}}</span></div>
-        <div ><span> 上次通话时间:{{selfInfo.last_call}}  </span><span>呼叫次数:{{selfInfo.call_times}}</span></div>
-        <div ><span> 更新时间:{{selfInfo.update_time}}  </span><span>创建时间:{{selfInfo.create_time}}</span><span>共案记录数:{{selfInfo.case_total}}</span></div>
-        <div><span>最后跟进日期：{{selfInfo.case_last_collection_date}}  </span><span>机器人呼叫次数：{{selfInfo.case_gender}}</span><span>案件标色(0:没有颜色 1-6:其他颜色)：{{selfInfo.case_color}}</span></div>
+        <div><span>性别(0:未知 1:男 2:女):{{selfInfo.case_gender}}</span><span>家庭号码:{{selfInfo.case_home_phone}}</span><span>案人职位：{{selfInfo.case_position}}</span><span>案人部门:{{selfInfo.case_department}}</span></div>
+        <div><span>单位邮编:{{selfInfo.case_work_postcode}}  </span><span>家庭地址:{{selfInfo.case_home_address}}</span><span>家庭邮编:{{selfInfo.case_home_postcode}}</span></div>
+        <div><span>对账单地址:{{selfInfo.case_mail_address}}  </span><span>对账单邮编:{{selfInfo.case_mail_postcode}}</span><span>户籍地址:{{selfInfo.case_register_address}}</span><span>户籍地邮编:{{selfInfo.case_register_postcode}}</span></div>
+        <div><span>qq:{{selfInfo.case_qq}}  </span><span>电子邮箱:{{selfInfo.case_email}}</span><span>生日:{{selfInfo.case_birthday}}</span><span>年龄:{{selfInfo.case_age}}</span><span>省份:{{selfInfo.case_province}}</span><span>城市:{{selfInfo.case_city}}</span><span>区县:{{selfInfo.case_district}}</span></div>
+        <div><span>备注1:{{selfInfo.case_remark1}}  </span><span>社保电脑号:{{selfInfo.case_social_number}}</span><span>社保卡号:{{selfInfo.case_social_card}}</span><span>开户行:{{selfInfo.case_card_bank}}</span></div>
+        <div><span>联系人1姓名:{{selfInfo.case_name1}}  </span><span>联系人1证件号:{{selfInfo.case_card1}}</span><span>联系人1关系:{{selfInfo.case_relation1}}</span><span>联系人1家庭电话:{{selfInfo.case_home_phone1}}</span></div>
+        <div><span>联系人1单位电话:{{selfInfo.case_work_phone1}}  </span><span>联系人1手机号:{{selfInfo.case_mobile1}}</span><span>联系人1地址:{{selfInfo.case_address1}}</span><span>联系人1单位地址:{{selfInfo.case_work_address1}}</span></div>
+        <div><span>联系人2姓名:{{selfInfo.case_name2}}  </span><span>联系人2证件号:{{selfInfo.case_card2}}</span><span>联系人2关系:{{selfInfo.case_relation2}}</span><span>联系人2家庭电话:{{selfInfo.case_home_phone2}}</span></div>
+        <div><span>联系人2单位电话:{{selfInfo.case_work_phone2}}  </span><span>联系人2手机号:{{selfInfo.case_mobile2}}</span><span>联系人2地址:{{selfInfo.case_address2}}</span><span>联系人2单位地址:{{selfInfo.case_work_address2}}</span></div>
+        <div><span>分配给坐席的工号 (0:未分配):{{selfInfo.staff_id}}  </span><span>案件标记 (0:未做标记，正常状态 1:暂停 2:关闭 3:退案):{{selfInfo.case_status}}</span></div>
+        <div><span> 坐席名称:{{selfInfo.staff_name}}  </span><span>案件分配时间:{{selfInfo.allocate_time}}</span></div>
+        <div><span> 上次通话时间:{{selfInfo.last_call}}  </span><span>呼叫次数:{{selfInfo.call_times}}</span></div>
+        <div><span> 更新时间:{{selfInfo.update_time}}  </span><span>创建时间:{{selfInfo.create_time}}</span><span>共案记录数:{{selfInfo.case_total}}</span></div>
+        <div><span>最后跟进日期：{{selfInfo.case_last_collection_date}}  </span><span>机器人呼叫次数：{{selfInfo.case_called_times}}</span><span>案件标色(0:没有颜色 1-6:其他颜色)：{{selfInfo.case_color}}</span></div>
         <div><span>委案日期：{{selfInfo.case_organization_name}}  </span><span>委案期限：{{selfInfo.case_called_times}}</span><span>委托方档案号：{{selfInfo.case_client_num}}</span><span>委托方单号:{{selfInfo.case_client_code}}</span></div>
         <div><span>M值系数：{{selfInfo.case_m}}  </span><span>公司佣金比率：{{selfInfo.case_commission_rate}}</span><span>公司佣金金额：{{selfInfo.case_commission}}</span></div>
         <div><span>委案金额：{{selfInfo.case_money}}  </span><span>币种：{{selfInfo.case_currency}}</span></div>

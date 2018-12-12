@@ -21,7 +21,7 @@
         label="通话记录"
         >
             <template slot-scope='scope'>
-                <el-button type="primary" size='mini' @click="checkFn(scope)" >查看</el-button>
+                <el-button type="primary" size='mini' @click="checkFn(scope.column)" >查看</el-button>
             </template>
         </el-table-column>
         <el-table-column
@@ -46,8 +46,8 @@ export default {
         'tableSecond'
     ],
     methods:{
-        checkFn(scope){
-            this.$emit('checkFn',scope)
+        checkFn(column){
+            this.$emit('checkFn',column)
         }
     }
 }
