@@ -47,7 +47,8 @@ export default {
             form: {
               id:"",
               mobile:"",
-              content:''
+              content:'',
+              sms_id:""
             },
             rightList:[]
       }
@@ -78,6 +79,7 @@ export default {
 			},
       getContent(index){
         this.form.content = this.rightList[index].content
+        this.form.sms_id = this.rightList[index].id
       },
       sendNow(){
         const data = this.form
