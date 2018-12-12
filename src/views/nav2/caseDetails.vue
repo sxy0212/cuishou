@@ -2,17 +2,14 @@
     <div>
         <div class="info">
             <h3>个人信息</h3>
-            <div><span>案件id:{{id_num}}  </span><span>（有{{tel_num}}共案）</span><span>案件等级：{{tel_num}}</span><span><el-button type="primary" @click="callFn" size="mini">修改等级</el-button></span></div>
-            <div><span>证件号码：{{id_num}}  </span><span>联系方式：{{tel_num}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>家庭住址：{{address}}  </span><span><el-button type="primary" @click="callFn" size="mini">信函</el-button></span><span><el-button type="primary" @click="callFn" size="mini">外访</el-button></span></div>
-            <div><span>工作单位：{{work}}  </span><span>公司电话：{{company_num}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span></div>
-            <div><span>公司地址：{{company_address}}  </span><span><el-button type="primary" @click="callFn" size="mini">信函</el-button></span><span><el-button type="primary" @click="callFn" size="mini">外访</el-button></span></div>
-            <div><span>第一联系人：{{first_contact}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span></div>
-            <div><span>第二联系人：{{first_contact}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span></div>
+            <div class="redS"><span>案件id:{{id_num}}  </span><span>（有{{tel_num}}条共案）</span><span>案件等级：{{tel_num}}</span><span><el-button type="primary" @click="callFn" size="mini">修改等级</el-button></span></div>
+            <div><span>证件号码：{{id_num}}  </span><span>联系方式：{{tel_num}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>家庭住址：{{address}}  </span><span><el-button type="success" @click="callFn" size="mini">信函</el-button></span><span><el-button type="danger" @click="callFn" size="mini">外访</el-button></span></div>
+            <div><span>工作单位：{{work}}  </span><span>公司电话：{{company_num}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>公司地址：{{company_address}}  </span><span><el-button type="success" @click="callFn" size="mini">信函</el-button></span><span><el-button type="danger" @click="callFn" size="mini">外访</el-button></span></div>
+            <div><span>第一联系人：{{first_contact}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>第二联系人：{{first_contact}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span></div>
         </div>
         <div class="info">
             <h3>案件信息</h3>
-            <div><span>委案金额：{{money_num}}  </span><span>还款金额：{{pay_num}}  </span></div>
-            <div><span>委托方：{{client}}  </span><span>逾期账龄：{{out_day}}  </span><span>利息：{{interest}}}  </span><span>退案日期：{{out_date}}  </span></div>
+            <div><span>委案金额：{{money_num}}  </span><span>还款金额：{{pay_num}}  </span><span>委托方：{{client}}  </span><span>逾期账龄：{{out_day}}  </span><span>利息：{{interest}}}  </span><span>退案日期：{{out_date}}  </span></div>
         </div>
         <div class="tableCover">
             <div-table
@@ -107,6 +104,7 @@ export default {
 }
 </script>
 <style>
+.info div{line-height:30px;}
 .info h3{margin-left:10px;font-size:18px;font-weight:400;}
 .info span{margin-left:10px;}
 .el-button span{margin-left:0;}
@@ -115,6 +113,11 @@ export default {
 .coverMiddle .middle:nth-of-type(1){flex:1}
 .coverMiddle .middle:nth-of-type(2){flex:2}
 .tableCover{margin: 15px 0;}
+.redS{color:red;}
+.el-button--mini, .el-button--mini.is-round{padding:4px 15px;}
+.middle{margin:0 10px;}
+.el-form--inline .el-form-item{margin-right:0;}
+.el-form-item{margin-bottom:10px;}
 </style>
 
 

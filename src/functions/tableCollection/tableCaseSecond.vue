@@ -5,11 +5,6 @@
         style="width: 98%"
         >
         <el-table-column
-        label="时间"
-        type="selection"
-        width="55">
-        </el-table-column>
-        <el-table-column
         label="姓名"
         prop="id">
         </el-table-column>

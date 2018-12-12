@@ -1,6 +1,5 @@
 <template>
-     <div>
-        <el-form :inline="true" :model="formTitle" class="demo-form-inline">   
+    <el-form :inline="true" :model="formTitle" label-width="70px">   
             <el-form-item label="电话号码">
                 <el-input v-model="formTitle.case_name" placeholder="请输入电话号码"></el-input>
             </el-form-item>
@@ -41,7 +40,6 @@
                 </el-select>
             </el-form-item>
         </el-form>
-    </div>
 </template>
 <script>
 export default {
