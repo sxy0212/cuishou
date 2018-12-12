@@ -102,7 +102,7 @@ import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
           success:(data)=>{
             if(data.statusCode == 1){
               setCookie('user',2);
-              this.$router.push({ path: '/taskManagement' })
+              this.$router.push({ path: '/charts' })
               this.loading = false
             }else{
               this.$alert(data.message)

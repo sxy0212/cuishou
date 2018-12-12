@@ -27,13 +27,13 @@ export default {
         tabClick (tab) {
             let path = this.activeIndex;
             console.log(path)
-            if(this.activeIndex === '/taskManagement') {
+            if(this.activeIndex === '/charts') {
                // path = this.activeIndex + '/' + this.$store.state.userInfo.name; 
             }
             this.$router.push({path:path});
         },
         tabRemove (targetName) {
-            if(targetName == '/taskManagement') {
+            if(targetName == '/charts') {
                 return
             }
             store.commit('del_tabs',targetName);
@@ -42,7 +42,7 @@ export default {
                     store.commit('set_active_index', this.options[this.options.length-1].route);
                     this.$router.push({path: this.activeIndex});
                 }else {
-                    this.$router.push({path: '/taskManagement'});
+                    this.$router.push({path: '/charts'});
                 }
             }
         }

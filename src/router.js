@@ -302,7 +302,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
     let user = getCookie('user');
     if(user&&to.path=='/login'){
-      next({ path: '/taskManagement' })
+      next({ path: '/charts' })
     }else {
       next()
     }

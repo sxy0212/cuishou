@@ -74,9 +74,9 @@ export default {
       //   this.$router.push({ path:'/taskManagement' })
       // }  //按F5刷新时
       if(this.$route.path == '/' ){
-        this.$router.push("/taskManagement")
+        this.$router.push("/charts")
       }else if(this.$route.path == '/login'){
-        this.$router.push("/taskManagement")
+        this.$router.push("/charts")
       }
       // if(user == "5"){
       //   this.$router.push("/login")

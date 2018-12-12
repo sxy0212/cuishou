@@ -10,7 +10,7 @@ const store =  new Vuex.Store({
     },
     state: {
         options: [],
-        activeIndex: '/taskManagement',
+        activeIndex: '/charts',
         userInfo: {},
         menuIndex: '0',
         caseBatchId:'',//案件管理当前批次

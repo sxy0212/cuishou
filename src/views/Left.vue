@@ -41,16 +41,16 @@ import store from '@/vuex/store.js'
       }
       axiosRequest(conf)
       if(this.$route.name != ""){
-        if(this.$route.path !== '/taskManagement' && this.$route.path.indexOf('taskManagement') === -1) {
-          store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'}); 
+        if(this.$route.path !== '/charts' && this.$route.path.indexOf('charts') === -1) {
+          store.commit('add_tabs', {route: '/charts', name: '首页'}); 
           store.commit('add_tabs', {route: this.$route.path , name: this.$route.name });
           store.commit('set_active_index', this.$route.path);
           store.commit('save_index', this.$route.query.num); 
         
         } else {
-          store.commit('add_tabs', {route: '/taskManagement', name: '任务管理'});
-          store.commit('set_active_index', '/taskManagement');
-          this.$router.push('/taskManagement');
+          store.commit('add_tabs', {route: '/charts', name: '首页'});
+          store.commit('set_active_index', '/charts');
+          this.$router.push('/charts');
         }
       }
     },
