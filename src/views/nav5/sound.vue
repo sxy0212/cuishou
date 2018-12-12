@@ -237,12 +237,12 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             soundName:""
 			}
 		},
-    activated(){
-      this.getId() 
-      this.init()
-      this.initList()
-    },
-		methods: {
+        activated(){
+            this.getId() 
+            this.init()
+            this.initList()
+        },
+	methods: {
       // 获取到下拉列表数据
       initList(){
         const url = "/api/api_backend.php?r=sound/sound-list-all"

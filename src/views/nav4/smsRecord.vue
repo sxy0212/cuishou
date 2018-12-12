@@ -4,21 +4,21 @@
       <div class="TopForm">
         <div class="seachForm">
           <el-form ref="formRecord" :model="formRecord" label-width="100px" :inline="true" >
-             <el-form-item label="接受号码:">
-                <el-input v-model="formRecord.mobile" :style="width"></el-input>
-              </el-form-item>
-              <el-form-item label="发送状态：">
-                <el-select v-model="formRecord.status" placeholder="请选择状态" :style="width">
-                  <el-option label="全部" value=""></el-option>
-                  <el-option label="发送成功" value="1"></el-option>
-                  <el-option label="发送失败" value="0"></el-option>  
-                </el-select>
-              </el-form-item>
-              <el-form-item label="发送时间：">
-                <el-date-picker v-model="formRecord.start_time" type="date" placeholder="开始时间" value-format="yyyy-MM-dd" :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
-                <el-date-picker v-model="formRecord.end_time" type="date" placeholder="结束时间" value-format="yyyy-MM-dd"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
-              </el-form-item> 
-              <el-button type="primary" @click="sendRecord(1)">立即搜索</el-button>
+            <el-form-item label="接受号码:">
+              <el-input v-model="formRecord.mobile" :style="width"></el-input>
+            </el-form-item>
+            <el-form-item label="发送状态：">
+              <el-select v-model="formRecord.status" placeholder="请选择状态" :style="width">
+                <el-option label="全部" value=""></el-option>
+                <el-option label="发送成功" value="1"></el-option>
+                <el-option label="发送失败" value="0"></el-option>  
+              </el-select>
+            </el-form-item>
+            <el-form-item label="发送时间：">
+              <el-date-picker v-model="formRecord.start_time" type="date" placeholder="开始时间" value-format="yyyy-MM-dd" :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
+              <el-date-picker v-model="formRecord.end_time" type="date" placeholder="结束时间" value-format="yyyy-MM-dd"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
+            </el-form-item> 
+            <el-button type="primary" @click="sendRecord(1)">立即搜索</el-button>
           </el-form>
         </div>
         <div class="TableList">
@@ -28,10 +28,10 @@
             <el-table-column prop="content" label="发送内容"></el-table-column>
             <!-- <el-table-column prop="user_id" label="发送者"></el-table-column> -->
             <el-table-column prop="status" label="发送状态">
-                <template slot-scope="scope">
-                    <span v-if="scope.row.status == 1">成功</span>
-                    <span v-else>失败</span>
-                </template>
+              <template slot-scope="scope">
+                <span v-if="scope.row.status == 1">成功</span>
+                <span v-else>失败</span>
+              </template>
             </el-table-column>
             <el-table-column prop="create_time" label="发送时间"></el-table-column>
           </el-table>
@@ -111,8 +111,8 @@ export default {
               this.tableData = data.info.info
               this.total = parseInt(data.info.total)
             }else{
-                this.tableData = []
-                this.total = 0
+              this.tableData = []
+              this.total = 0
             }
           }
         }
@@ -131,7 +131,6 @@ export default {
       },
 		}
 	}
-
 </script>
 <style lang="scss" >
 </style>

@@ -26,109 +26,106 @@
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
 							<el-form :model="form1" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
-											<el-form-item label="本人号码接通:">
-												<el-select v-model="form1.connected_send" :style="Index.width">
-													<el-option value="0" label="不发送" ></el-option>
-													<el-option value="1" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-												<el-input v-model="form1.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-											<el-form-item label="本人号码未接通:">
-												<el-select v-model="form1.not_connected_send" :style="Index.width">
-													<el-option value="0" label="不发送" ></el-option>
-													<el-option value="1" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="呼叫次数:">
-													<p style="display:inline-block">第</p> 
-														<el-input v-model="form1.times" style="width:50px;"></el-input> 
-													<p style="display:inline-block">次</p>
-											</el-form-item>
-											<el-form-item label="未接通:">
-											 	<el-checkbox :indeterminate="isIndeterminate1"  @change="handleCheckAllChange1">全选</el-checkbox>
-												<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
-													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-													<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-										</el-form>
-										<el-form :model="form2" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
-											<el-form-item label="第一联系人号码接通:">
-												<el-select v-model="form2.connected_send" :style="Index.width">
-													<el-option value="0" label="不发送" ></el-option>
-													<el-option value="1" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-												<el-input v-model="form2.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-											<el-form-item label="第一联系人号码未接通:">
-												<el-select v-model="form2.not_connected_send" :style="Index.width">
-													<el-option value="0" label="不发送" ></el-option>
-													<el-option value="1" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="呼叫次数:">
-													<p style="display:inline-block">第</p> 
-														<el-input v-model="form2.times" style="width:50px;"></el-input> 
-													<p style="display:inline-block">次</p>
-											</el-form-item>
-											<el-form-item label="未接通:">
-													<el-checkbox :indeterminate="isIndeterminate2"  @change="handleCheckAllChange2">全选</el-checkbox>
-													<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
-													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-													<el-input v-model="form2.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-										</el-form>
-										<el-form :model="form3" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
-											<el-form-item label="第二联系人号码接通:">
-												<el-select v-model="form3.connected_send" :style="Index.width" >
-													<el-option value="0" label="不发送" ></el-option>
-													<el-option value="1" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-												<el-input v-model="form3.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-											<el-form-item label="第二联系人号码未接通:">
-												<el-select v-model="form3.not_connected_send" :style="Index.width">
-													<el-option value="0" label="不发送" ></el-option>
-													<el-option value="1" label="发送" ></el-option>
-												</el-select>
-											</el-form-item>
-											<el-form-item label="呼叫次数:">
-													<p style="display:inline-block">第</p> 
-														<el-input v-model="form3.times" style="width:50px;"></el-input> 
-													<p style="display:inline-block">次</p>
-											</el-form-item>
-											<el-form-item label="未接通:">
-													<el-checkbox :indeterminate="isIndeterminate3"  @change="handleCheckAllChange3">全选</el-checkbox>
-													<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
-													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
-											</el-form-item>
-											<el-form-item label="发送内容:">
-													<el-input v-model="form3.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
-											</el-form-item>
-										</el-form>
-						
-								<el-form :model="form" label-width="120px" ref="forms">
-									<el-form-item label="备注:">
-											<el-input v-model="form.remark" type="textarea" :rows="5"></el-input>
-									</el-form-item>
-								</el-form>
-							
-						
-                <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="onSubmit">确认保存</el-button>
-										<el-button type="primary" @click="addOrEdit.addShow = false">取消</el-button>
+								<el-form-item label="本人号码接通:">
+									<el-select v-model="form1.connected_send" :style="Index.width">
+										<el-option value="0" label="不发送" ></el-option>
+										<el-option value="1" label="发送" ></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="发送内容:">
+									<el-input v-model="form1.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+								</el-form-item>
+								<el-form-item label="本人号码未接通:">
+									<el-select v-model="form1.not_connected_send" :style="Index.width">
+										<el-option value="0" label="不发送" ></el-option>
+										<el-option value="1" label="发送" ></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="呼叫次数:">
+										<p style="display:inline-block">第</p> 
+											<el-input v-model="form1.times" style="width:50px;"></el-input> 
+										<p style="display:inline-block">次</p>
+								</el-form-item>
+								<el-form-item label="未接通:">
+									<el-checkbox :indeterminate="isIndeterminate1"  @change="handleCheckAllChange1">全选</el-checkbox>
+									<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
+										<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
+									</el-checkbox-group>
+								</el-form-item>
+								<el-form-item label="发送内容:">
+										<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+								</el-form-item>
+							</el-form>
+							<el-form :model="form2" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #606266">
+								<el-form-item label="第一联系人号码接通:">
+									<el-select v-model="form2.connected_send" :style="Index.width">
+										<el-option value="0" label="不发送" ></el-option>
+										<el-option value="1" label="发送" ></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="发送内容:">
+									<el-input v-model="form2.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+								</el-form-item>
+								<el-form-item label="第一联系人号码未接通:">
+									<el-select v-model="form2.not_connected_send" :style="Index.width">
+										<el-option value="0" label="不发送" ></el-option>
+										<el-option value="1" label="发送" ></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="呼叫次数:">
+										<p style="display:inline-block">第</p> 
+											<el-input v-model="form2.times" style="width:50px;"></el-input> 
+										<p style="display:inline-block">次</p>
+								</el-form-item>
+								<el-form-item label="未接通:">
+										<el-checkbox :indeterminate="isIndeterminate2"  @change="handleCheckAllChange2">全选</el-checkbox>
+										<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
+										<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
+									</el-checkbox-group>
+								</el-form-item>
+								<el-form-item label="发送内容:">
+										<el-input v-model="form2.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+								</el-form-item>
+							</el-form>
+							<el-form :model="form3" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+								<el-form-item label="第二联系人号码接通:">
+									<el-select v-model="form3.connected_send" :style="Index.width" >
+										<el-option value="0" label="不发送" ></el-option>
+										<el-option value="1" label="发送" ></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="发送内容:">
+									<el-input v-model="form3.connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+								</el-form-item>
+								<el-form-item label="第二联系人号码未接通:">
+									<el-select v-model="form3.not_connected_send" :style="Index.width">
+										<el-option value="0" label="不发送" ></el-option>
+										<el-option value="1" label="发送" ></el-option>
+									</el-select>
+								</el-form-item>
+								<el-form-item label="呼叫次数:">
+										<p style="display:inline-block">第</p> 
+											<el-input v-model="form3.times" style="width:50px;"></el-input> 
+										<p style="display:inline-block">次</p>
+								</el-form-item>
+								<el-form-item label="未接通:">
+										<el-checkbox :indeterminate="isIndeterminate3"  @change="handleCheckAllChange3">全选</el-checkbox>
+										<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
+										<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
+									</el-checkbox-group>
+								</el-form-item>
+								<el-form-item label="发送内容:">
+										<el-input v-model="form3.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
+								</el-form-item>
+							</el-form>
+							<el-form :model="form" label-width="120px" ref="forms">
+								<el-form-item label="备注:">
+										<el-input v-model="form.remark" type="textarea" :rows="5"></el-input>
+								</el-form-item>
+							</el-form>
+								<div slot="footer" class="dialog-footer">
+									<el-button type="primary" @click="onSubmit">确认保存</el-button>
+									<el-button type="primary" @click="addOrEdit.addShow = false">取消</el-button>
                 </div>
             </el-dialog>
         </div>
@@ -234,15 +231,12 @@
 													<el-input v-model="form3Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
-						
 								<el-form :model="formEdit" label-width="120px" ref="forms">
 									<el-form-item label="备注:">
 											<el-input v-model="formEdit.remark" type="textarea" :rows="5"></el-input>
 									</el-form-item>
 								</el-form>
-							
-						
-                <div slot="footer" class="dialog-footer">
+								<div slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="onSubmitEdit">确认保存</el-button>
 										<el-button type="primary" @click="addOrEdit.editShow = false">取消</el-button>
                 </div>
@@ -252,11 +246,10 @@
 			</div>
 		</section>
 </template>
-
 <script>
-import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
-import pageChange from '@/components/pageChange.vue'
-import { MessageBox } from 'element-ui';
+	import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
+	import pageChange from '@/components/pageChange.vue'
+	import { MessageBox } from 'element-ui';
 	export default {
 			components:{
         'page-change':pageChange

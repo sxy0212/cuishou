@@ -2,9 +2,9 @@
 	<section>
     <div class="CenterMain  MainHp">
       <div class="TopForm">
-        <div class="AIadd" >
+        <!--<div class="AIadd" >
           <el-button type="success" @click="addMessage"><i class="fa fa-plus"></i>添加语音节点</el-button> 
-        </div>
+        </div>-->
         <div class="CallCount">  
           <div v-show="show" v-loading.fullscreen.lock="show"></div>
           <div class="orgWrap" style="margin-left:0px"></div>

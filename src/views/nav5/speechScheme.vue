@@ -157,7 +157,7 @@ import pageChange from '@/components/pageChange.vue'
         }
 			}
 		},
-		mounted() {
+		activated() {
 			this.init()
 		},
 		methods: {
