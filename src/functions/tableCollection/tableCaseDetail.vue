@@ -1,0 +1,50 @@
+<template>
+    <el-table
+        border
+        :data="tableData"
+        style="width: 98%">
+        <el-table-column
+          label="姓名"
+          prop='name'>
+        </el-table-column>
+        <el-table-column
+          prop="money"
+          label="委案金额"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="type"
+          label="币种"
+          >
+        </el-table-column>
+         <el-table-column
+          prop="pay_num"
+          label="已还款"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="pay_num"
+          label="逾期账龄"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="pay_num"
+          label="上次通话"
+          >
+        </el-table-column>
+        <el-table-column
+          prop="pay_num"
+          label="通话次数"
+          >
+        </el-table-column>
+    </el-table>
+</template>
+<script>
+export default {
+    name:'tableCaseDetail',
+    props:[
+        'tableData'
+    ]
+}
+</script>
+

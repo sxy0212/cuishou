@@ -5,6 +5,7 @@
         style="width: 98%"
         @selection-change="handleSelectionChange"
         :row-class-name="tableRowClassName"
+        @row-dblclick="doubleClickFn"
         >
         <el-table-column
         label="选框"
@@ -60,6 +61,7 @@
     </el-table>
 </template>
 <script>
+import router from '@/router.js'
 export default {
     name:'tableCaseMan',
     props:[
@@ -90,6 +92,11 @@ export default {
         handleSelectionChange(val){
             this.$emit('handleSelectionChange',val)
         },
+        doubleClickFn(row,event){
+            router.push({
+                path:'/caseDetails'
+            })
+        }
     }
 }
 </script>
