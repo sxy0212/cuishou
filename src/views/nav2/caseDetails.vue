@@ -18,9 +18,10 @@
             ></div-table>
         </div>
         <div class='info otherI'>
-            <h3>其他信息<span><el-button type="primary" @click="saveFn" size="mini">展开</el-button></span></h3>
+            <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button><el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
             <div-other
                 :selfInfo='selfInfo'
+                v-show='otherInfo'
             >
             </div-other>
         </div>
@@ -81,6 +82,7 @@ export default {
     },
     data(){
         return {
+            otherInfo:false,//其他信息
             selfInfo:{//个人信息
 
             },
@@ -165,6 +167,9 @@ export default {
         doubleClickFn(id){
             this.id = id
             this.init()
+        },
+        callOtherInfo(val){//展开或关闭其他信息
+            this.otherInfo = val
         }
     }
 }
