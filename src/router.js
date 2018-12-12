@@ -1,3 +1,4 @@
+import charts from './views/charts/echarts.vue'
 import taskManagement from './views/nav1/taskManagement.vue'
 import caseManagement from './views/nav2/caseManagement.vue'
 import dataManagement from './views/nav3/dataManagement.vue'
@@ -40,6 +41,14 @@ let routes = [
     meta: {
       keep:true,
       keepAlive: false
+    }
+  },
+  {
+    path: '/charts',
+    name: '首页',
+    component: charts,
+    meta: {
+      keepAlive: true,
     }
   },
   {
