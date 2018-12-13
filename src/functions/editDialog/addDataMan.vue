@@ -4,7 +4,7 @@
             <el-form-item label="批次名称" label-width="70px">
                 <el-input v-model="formTitle.batch_name" autocomplete="off"></el-input>
             </el-form-item>
-            <el-form-item label="催收区域">
+            <el-form-item label="催收区域" label-width="70px">
                 <el-select v-model="formTitle.collection_area" placeholder="请选择催收区域">
                     <el-option 
                         v-for="item in areaList"
@@ -14,7 +14,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="委托方">
+            <el-form-item label="委托方" label-width="70px">
                 <el-select v-model="formTitle.client" placeholder="请选择委托方">
                     <el-option 
                         v-for="item in clientList"
@@ -24,7 +24,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="案件类型">
+            <el-form-item label="案件类型" label-width="70px">
                 <el-select v-model="formTitle.case_type" placeholder="请选择案件类型">
                     <el-option 
                         v-for="item in typeList"
@@ -54,7 +54,7 @@
         >
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
             <el-button v-show="formShow" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定上传</el-button>
-            <el-button v-show="!formShow" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定追加</el-button>
+            <el-button v-show="!formShow" style="margin-left: 10px;" size="small" type="primary" @click="submitUpload">确定追加</el-button>
         </el-upload>
     </div>
 </template>
