@@ -31,9 +31,8 @@
                 <div class='middle'>
                     <div-form
                         :formTitle='formTitle'
-                        :nextList='nextList'
+                        :relationList='relationList'
                         :endList='endList'
-                        :conditionList='conditionList'
                     ></div-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="saveFn" size="mini">保存</el-button>
@@ -141,17 +140,102 @@ export default {
                     id:'334'
                 }
             ],
-            formTitle:{//其他详细信息
-
+            formTitle:{//手动录入详细信息
+                type:'',
+                phone:'',
+                remark:''
             },
-            conditionList:[],//关系列表
-            endList:[],//结果列表
+            relationList:[
+                {
+                    name:'父亲',
+                    value:'1'
+                },
+                {
+                    name:'母亲',
+                    value:'2'
+                },
+                {
+                    name:'家人',
+                    value:'3'
+                },
+                {
+                    name:'配偶',
+                    value:'4'
+                },
+                {
+                    name:'朋友',
+                    value:'5'
+                },
+                {
+                    name:'亲戚',
+                    value:'6'
+                },
+                {
+                    name:'上司或老板',
+                    value:'7'
+                },
+                {
+                    name:'同事',
+                    value:'8'
+                },
+                {
+                    name:'同学',
+                    value:'9'
+                }
+            ],//关系列表
+            endList:[
+                {
+                    name:'查询还款',
+                    value:'1'
+                },
+                {
+                    name:'电话拒接',
+                    value:'2'
+                },
+                {
+                    name:'电话易主',
+                    value:'3'
+                },
+                {
+                    name:'空号',
+                    value:'4'
+                },
+                {
+                    name:'停机',
+                    value:'5'
+                },
+                {
+                    name:'网络查找',
+                    value:'6'
+                },
+                {
+                    name:'无法接通',
+                    value:'7'
+                },
+                {
+                    name:'无力偿还',
+                    value:'8'
+                },
+                {
+                    name:'无效电话',
+                    value:'9'
+                },
+                {
+                    name:'已还款',
+                    value:'10'
+                },
+                {
+                    name:'语音信箱',
+                    value:'11'
+                }
+            ],
             nextList:[],//下次跟进
         }
     },
     activated(){
         this.id = this.$route.query.id
-		this.init()
+        this.init()
+        this.getTableSecond()
 	},
     methods:{
         init(){
@@ -174,6 +258,33 @@ export default {
                             "last_call": data.info.selfInfo.last_call,                      //上次通话时间
                             "call_times": data.info.selfInfo.call_times   
                         }]
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        getTableSecond(){//获取催收记录
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/collection-record-list',
+                data:{
+                    case_id:this.id
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        this.tableSecond = data.info.map(item=>{
+                            if(item.type == 1){
+                                item.type ='呼叫'
+                            }else if(item.type == 2){
+                                item.type ='信函'
+                            }else if(item.type == 3){
+                                item.type ='外访'
+                            }else if(item.type == 4){
+                                item.type ='录入'
+                            }else if(item.type == 6){
+                                item.type ='机器人呼叫'
+                            }
+                            return item
+                        })
                     }
                 }
             }
@@ -204,17 +315,40 @@ export default {
             }
             axiosRequest(conf)
         },
-        sendLetter(num,phone){//信函
+        sendLetter(type,phone){//信函
             this.remarkShow= true
-            this.formRemark.num = num
-            this.formRemark.phone = phone
-            
+            this.formRemark = {
+                type:type,
+                phone:phone,
+                remark:''
+            }
         },
         saveFn(){//保存
-
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
+                data:this.formTitle,
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
+                    }else if( data.statusCode == 0 ){
+                        Message({
+                            message: data.message,
+                            type: 'error',
+                            duration: 2 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
         },
         clearFn(){//清空
+            this.formTitle = {
 
+            }
         },
         checkFn(column){//查看
             console.log(column)
@@ -303,6 +437,7 @@ export default {
                         this.formRemark = {
                             remark:''
                         }
+                        this.getTableSecond()
                         Message({
                             message: data.message,
                             type: 'success',

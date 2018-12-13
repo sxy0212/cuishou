@@ -6,15 +6,27 @@
         >
         <el-table-column
         label="姓名"
-        prop="id">
+        prop="name">
         </el-table-column>
         <el-table-column
         label="关系"
-        prop="case_name">
+        prop="relation">
         </el-table-column>
         <el-table-column
         label="电话"
-        prop="collection_area">
+        prop="phone">
+        </el-table-column>
+        <el-table-column
+        label="创建者"
+        prop="creater">
+        </el-table-column>
+        <el-table-column
+        label="创建时间"
+        prop="create_time">
+        </el-table-column>
+        <el-table-column
+        label="催收类型"
+        prop="type">
         </el-table-column>
         <el-table-column
         prop="case_status"
