@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-form :model="formTitle" v-if="formShow">
-            <el-form-item label="批次名称" :label-width="formLabelWidth">
+            <el-form-item label="批次名称" label-width="70px">
                 <el-input v-model="formTitle.batch_name" autocomplete="off"></el-input>
             </el-form-item>
             <el-form-item label="催收区域">
@@ -34,7 +34,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-form-item label="备注" label-width="70px">
                 <el-input v-model="formTitle.remark" 
                     type="textarea"
                     :autosize="{ minRows: 2, maxRows: 4}"
@@ -86,11 +86,6 @@ export default {
                 return obj
             }
                     
-        }
-    },
-    data() {
-        return{
-            formLabelWidth:"70px",
         }
     },
     methods:{

@@ -2,10 +2,10 @@
     <div>
         <div>
             <el-form :model="formTitle">
-                <el-form-item label="模板名称" :label-width="formLabelWidth">
+                <el-form-item label="模板名称" label-width="80px">
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="选择字段" :label-width="formLabelWidth">
+                <el-form-item label="选择字段" label-width="80px">
                     <el-checkbox v-model="item.choose"
                         v-for="item in this.fieldsList"
                         :key="item.id"
@@ -32,11 +32,6 @@ export default {
         'formTitle',//表单
         'fieldsList'//多选选项
     ],
-    data() {
-        return{
-            formLabelWidth:"120px"
-        }
-    },
     methods:{
         cancelFn(){//更改菜单标题
             this.$emit("addNowChange",false)

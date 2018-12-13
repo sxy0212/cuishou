@@ -2,7 +2,7 @@
     <div>
         <div>
             <el-form :model="formTask">
-                <el-form-item label="任务列表" :label-width="formLabelWidth">
+                <el-form-item label="任务列表" label-width="100px">
                     <el-select 
                         v-model='formTask.value' 
                         placeholder="请选择任务"
@@ -30,11 +30,6 @@ export default {
       'formTask',
       'taskList',
     ],
-    data() {
-        return{
-            formLabelWidth:"120px"
-        }
-    },
     methods:{
         sureToAddTask(){
             this.$emit('sureToAddTask')

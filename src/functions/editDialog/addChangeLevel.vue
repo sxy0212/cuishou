@@ -2,7 +2,7 @@
     <div>
         <div>
             <el-form :model="formLevel">
-                <el-form-item label="等级" :label-width="formLabelWidth">
+                <el-form-item label="等级" label-width="60px">
                     <el-select 
                         v-model='formLevel.case_level' 
                         placeholder="请选择等级"
@@ -31,11 +31,6 @@ export default {
         'levelList',
         'formLevel'
     ],
-    data(){
-        return{
-            formLabelWidth:'120px'
-        }
-    },
     methods:{
         protectFn(){
             this.$emit('protectFn')

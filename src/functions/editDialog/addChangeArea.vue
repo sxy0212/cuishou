@@ -2,7 +2,7 @@
     <div>
         <div>
             <el-form :model="formTitle">
-                <el-form-item label="区域名称" :label-width="formLabelWidth">
+                <el-form-item label="区域名称" label-width="80px">
                     <el-select 
                         v-model='formTitle.id' 
                         placeholder="请选择区域"
@@ -28,11 +28,6 @@
 
 export default {
     name:'addChangeArea',
-    data(){
-        return{
-            formLabelWidth:'120px'
-        }
-    },
     props:[
         'formTitle',
         'areaList'

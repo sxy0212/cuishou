@@ -39,7 +39,7 @@ export default {
     ],
     data() {
         return{
-            formLabelWidth:"120px"
+            formLabelWidth:"100px"
         }
     },
     methods:{

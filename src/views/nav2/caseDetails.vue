@@ -3,9 +3,9 @@
         <div class="info">
             <h3>个人信息</h3>
             <div class="redS"><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="changeLevelFn" size="mini">修改等级</el-button></span></div>
-            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile)" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button type="success" @click="sendLetter(2,selfInfo.case_mobile)" size="mini">信函</el-button></span><span><el-button type="danger" @click="sendLetter(3)" size="mini">外访</el-button></span></div>
-            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button type="primary" @click="callFn(selfInfo.case_work_phone)" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button type="success" @click="sendLetter(2)" size="mini">信函</el-button></span><span><el-button type="danger" @click="sendLetter(3)" size="mini">外访</el-button></span></div>
-            <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile1)" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile2)" size="mini">呼叫</el-button></span></div>
+            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile)" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_mobile)" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_mobile)" size="mini">外访</el-button></span></div>
+            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_work_phone)" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_work_phone)" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_work_phone)" size="mini">外访</el-button></span></div>
+            <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile1)" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile2)" size="mini">呼叫</el-button></span></div>
         </div>
         <div class="info">
             <h3>案件信息</h3>
@@ -60,6 +60,13 @@
                 v-on:cancelFn='cancelChangeLevel($event)'
             ></change-dialog>
         </el-dialog>
+        <el-dialog title="添加备注" :visible.sync="remarkShow" >
+            <remark-dialog
+                :formRemark='formRemark'
+                v-on:protectFn='sendInfoSave($event)'
+                v-on:cancelFn='cancelInfoSave($event)'
+            ></remark-dialog>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -67,6 +74,7 @@ import tableCaseDetail from '@/functions/tableCollection/tableCaseDetail.vue'
 import tableCaseSecond from '@/functions/tableCollection/tableCaseSecond.vue'
 import formCaseDetail from '@/functions/formCollection/formCaseDetail.vue'
 import addCheckDialog from '@/functions/editDialog/addCheckDialog.vue'
+import addRemark from '@/functions/editDialog/addRemark.vue'
 import addChangeLevel from '@/functions/editDialog/addChangeLevel.vue'
 import divOther from '@/functions/normalDiv/divOther.vue'
 
@@ -81,6 +89,7 @@ export default {
         'check-dialog':addCheckDialog,
         'div-other':divOther,
         'change-dialog':addChangeLevel,
+        'remark-dialog':addRemark,
         'second-table':tableCaseSecond
     },
     data(){
@@ -89,6 +98,10 @@ export default {
             levelList:[],//等级列表
             formLevel:{//等级信息
                 case_level:''
+            },
+            remarkShow:false,//
+            formRemark:{
+                remark:''
             },
             audioData:[
                 {
@@ -192,30 +205,10 @@ export default {
             axiosRequest(conf)
         },
         sendLetter(num,phone){//信函
-            let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
-                data:{
-                    case_id: this.id,
-                    type:num,
-                    phone:phone
-                },
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-                        Message({
-                            message: data.message,
-                            type: 'success',
-                            duration: 2 * 1000
-                        })
-                    }else if(data.statusCode == 0 ){
-                        Message({
-                            message: data.message,
-                            type: 'error',
-                            duration: 3 * 1000
-                        })
-                    }
-                }
-            }
-            axiosRequest(conf)
+            this.remarkShow= true
+            this.formRemark.num = num
+            this.formRemark.phone = phone
+            
         },
         saveFn(){//保存
 
@@ -298,6 +291,36 @@ export default {
                 }
             }
             axiosRequest(conf)
+        },
+        sendInfoSave(){
+            this.formRemark.case_id = this.id
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
+                data:this.formRemark,
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        this.remarkShow = false
+                        this.formRemark = {
+                            remark:''
+                        }
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
+                    }else if(data.statusCode == 0 ){
+                        Message({
+                            message: data.message,
+                            type: 'error',
+                            duration: 3 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        cancelInfoSave(){
+            this.remarkShow= false
         },
         cancelChangeLevel(){//取消
             this.changeLevel = false

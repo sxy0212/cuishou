@@ -3,7 +3,7 @@
         <div>
             <div>可分配的数量为：{{ableNum}}条</div>
              <el-form :model="formDistribute">
-                <el-form-item label="分配的数量" :label-width="formLabelWidth">
+                <el-form-item label="分配的数量" label-width="100px">
                     <el-input type='number' v-model="formDistribute.split_num" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="部门" :label-width="formLabelWidth">
@@ -16,7 +16,7 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item label="催收员" :label-width="formLabelWidth">
+                <el-form-item label="催收员" label-width="100px">
                     <el-select v-model="formDistribute.staff" placeholder="催收员">
                         <el-option
                             v-for="item in staffList"
@@ -38,11 +38,6 @@
 <script>
 export default {
     name:'addDistribute',
-    data(){
-        return{
-            formLabelWidth:'120px'
-        }
-    },
     props:[
         'formDistribute',
         'departmentList',

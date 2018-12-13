@@ -2,7 +2,7 @@
     <div>
         <div>
              <el-form :model="formTitle">
-                <el-form-item label="委托方名称" :label-width="formLabelWidth">
+                <el-form-item label="委托方名称" label-width="100px">
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
                 </el-form-item>
                  <el-form-item label="编号前缀" :label-width="formLabelWidth">
@@ -28,11 +28,6 @@ export default {
         'title',//用于判断添加还是编辑
         'formTitle'
     ],
-    data() {
-        return{
-            formLabelWidth:"120px"
-        }
-    },
     methods:{
         cancelFn(){//更改菜单标题
             this.$emit("addNowChange",false)
