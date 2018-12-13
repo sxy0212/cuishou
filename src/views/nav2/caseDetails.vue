@@ -3,9 +3,9 @@
         <div class="info">
             <h3>个人信息</h3>
             <div class="redS"><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="changeLevelFn" size="mini">修改等级</el-button></span></div>
-            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_gender}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button type="success" @click="callFn" size="mini">信函</el-button></span><span><el-button type="danger" @click="callFn" size="mini">外访</el-button></span></div>
-            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button type="success" @click="callFn" size="mini">信函</el-button></span><span><el-button type="danger" @click="callFn" size="mini">外访</el-button></span></div>
-            <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span></div>
+            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile)" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button type="success" @click="sendLetter(2,selfInfo.case_mobile)" size="mini">信函</el-button></span><span><el-button type="danger" @click="sendLetter(3)" size="mini">外访</el-button></span></div>
+            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button type="primary" @click="callFn(selfInfo.case_work_phone)" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button type="success" @click="sendLetter(2)" size="mini">信函</el-button></span><span><el-button type="danger" @click="sendLetter(3)" size="mini">外访</el-button></span></div>
+            <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile1)" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile2)" size="mini">呼叫</el-button></span></div>
         </div>
         <div class="info">
             <h3>案件信息</h3>
@@ -166,8 +166,56 @@ export default {
             }
             axiosRequest(conf)
         },
-        callFn(){//呼叫
-
+        callFn(phone){//呼叫
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/call-out',
+                data:{
+                    phone:phone,
+                    case_id:this.id
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
+                    }else if(data.statusCode == 0 ){
+                        Message({
+                            message: data.message,
+                            type: 'error',
+                            duration: 3 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        sendLetter(num,phone){//信函
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
+                data:{
+                    case_id: this.id,
+                    type:num,
+                    phone:phone
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
+                    }else if(data.statusCode == 0 ){
+                        Message({
+                            message: data.message,
+                            type: 'error',
+                            duration: 3 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
         },
         saveFn(){//保存
 
@@ -238,6 +286,12 @@ export default {
                         Message({
                             message: data.message,
                             type: 'success',
+                            duration: 2 * 1000
+                        })
+                    }else if( data.statusCode == 0 ){
+                        Message({
+                            message: data.message,
+                            type: 'error',
                             duration: 2 * 1000
                         })
                     }
