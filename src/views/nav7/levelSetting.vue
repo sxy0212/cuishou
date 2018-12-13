@@ -25,21 +25,20 @@
           >
         </el-table-column>
         <el-table-column
-          label="操作"
-          >
-          <template slot-scope="scope">
-            <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <page-change 
-        :total="total"
-        :page="page"
-        :page_size ="page_size"
-        v-on:pageSizeChange='pageSizeChangeFn($event)'
-        v-on:currentPageChange='currentPageChangeFn($event)'
-      ></page-change>
+          label="操作">
+            <template slot-scope="scope">
+                <el-button size="mini" type="success" round @click="editFn(scope.row)">编辑</el-button>
+                <el-button size="mini" type="danger" round @click="deleteFn(scope.row)">删除</el-button>
+            </template>
+            </el-table-column>
+        </el-table>
+        <page-change 
+            :total="total"
+            :page="page"
+            :page_size ="page_size"
+            v-on:pageSizeChange='pageSizeChangeFn($event)'
+            v-on:currentPageChange='currentPageChangeFn($event)'
+        ></page-change>
     </div>
     <el-dialog :title="bannerTitle" :visible.sync="addNow" >
         <edit-dialog

@@ -5,15 +5,15 @@
                 <el-form-item label="委托方名称" label-width="100px">
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
                 </el-form-item>
-                 <el-form-item label="编号前缀" :label-width="formLabelWidth">
+                 <el-form-item label="编号前缀" label-width="100px">
                     <el-input v-model="formTitle.prefix" autocomplete="off"></el-input>
                 </el-form-item>
             </el-form>
         </div>
        
         <div slot="footer" class="dialog-footer">
-            <el-button @click="protectFn">保存</el-button>
-            <el-button type="primary" @click="cancelFn">取消</el-button>
+            <el-button type="primary" @click="protectFn">保存</el-button>
+            <el-button  @click="cancelFn">取消</el-button>
         </div>
     </div>
 </template>

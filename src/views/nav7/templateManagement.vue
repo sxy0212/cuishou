@@ -14,14 +14,13 @@
             v-on:downloadFn='downloadFn($event)'
         >
         </div-table>
-      
-      <page-change 
-        :total="total"
-        :page="page"
-        :page_size ="page_size"
-        v-on:pageSizeChange='pageSizeChangeFn($event)'
-        v-on:currentPageChange='currentPageChangeFn($event)'
-      ></page-change>
+            <page-change 
+            :total="total"
+            :page="page"
+            :page_size ="page_size"
+            v-on:pageSizeChange='pageSizeChangeFn($event)'
+            v-on:currentPageChange='currentPageChangeFn($event)'
+        ></page-change>
     </div>
     <el-dialog :title="bannerTitle" :visible.sync="addNow" >
         <edit-dialog

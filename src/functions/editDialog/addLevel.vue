@@ -22,8 +22,8 @@
             </el-form>
         </div>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="protectFn">保存</el-button>
-            <el-button type="primary" @click="cancelFn">取消</el-button>
+            <el-button type="primary" @click="protectFn">保存</el-button>
+            <el-button  @click="cancelFn">取消</el-button>
         </div>
     </div>
 </template>

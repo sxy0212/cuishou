@@ -30,8 +30,8 @@
         </div>
        
         <div slot="footer" class="dialog-footer">
-            <el-button @click="sureToDistribute">确定分配</el-button>
-            <el-button type="primary" @click="cancelDistribute">取消</el-button>
+            <el-button type="primary" @click="sureToDistribute">确定分配</el-button>
+            <el-button  @click="cancelDistribute">取消</el-button>
         </div>
     </div>
 </template>

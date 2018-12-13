@@ -128,12 +128,6 @@ export default {
             }
         }
     },
-    // created() {
-    //     this.init()
-    //     this.getAreaList()
-    //     this.getClientList()
-    //     this.getTypeList()
-    // },
     activated(){
         this.init()
         this.getAreaList()

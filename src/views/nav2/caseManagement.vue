@@ -202,13 +202,7 @@ export default {
 		this.getDepartmentList(1)
 		this.filterFn('')
 	},
-    // created() {
-	// 	this.init()
-	// 	this.getBatchList()
-	// 	this.getDepartmentList(1)
-	// 	this.filterFn('')
-	// },
-	methods: {
+    methods: {
 		changeCaseClient(val){
 			t = val
 		},

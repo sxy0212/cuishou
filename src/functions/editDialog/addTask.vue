@@ -19,7 +19,7 @@
         </div>
        
         <div slot="footer" class="dialog-footer">
-            <el-button @click="sureToAddTask">确认添加</el-button>
+            <el-button type="primary" @click="sureToAddTask">确认添加</el-button>
         </div>
     </div>
 </template>
