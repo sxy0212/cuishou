@@ -2,7 +2,7 @@
     <div>
         <div class="info">
             <h3>个人信息</h3>
-            <div class="redS"><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="callFn" size="mini">修改等级</el-button></span></div>
+            <div class="redS"><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="changeLevelFn" size="mini">修改等级</el-button></span></div>
             <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_gender}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button type="success" @click="callFn" size="mini">信函</el-button></span><span><el-button type="danger" @click="callFn" size="mini">外访</el-button></span></div>
             <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button type="success" @click="callFn" size="mini">信函</el-button></span><span><el-button type="danger" @click="callFn" size="mini">外访</el-button></span></div>
             <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn" size="mini">呼叫</el-button></span></div>
@@ -52,6 +52,14 @@
             <check-dialog
             ></check-dialog>
         </el-dialog>
+        <el-dialog title="修改等级" :visible.sync="changeLevel" >
+            <change-dialog
+                :levelList='levelList'
+                :formLevel='formLevel'
+                v-on:protectFn='saveLevelFn($event)'
+                v-on:cancelFn='cancelChangeLevel($event)'
+            ></change-dialog>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -59,6 +67,7 @@ import tableCaseDetail from '@/functions/tableCollection/tableCaseDetail.vue'
 import tableCaseSecond from '@/functions/tableCollection/tableCaseSecond.vue'
 import formCaseDetail from '@/functions/formCollection/formCaseDetail.vue'
 import addCheckDialog from '@/functions/editDialog/addCheckDialog.vue'
+import addChangeLevel from '@/functions/editDialog/addChangeLevel.vue'
 import divOther from '@/functions/normalDiv/divOther.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
@@ -71,17 +80,16 @@ export default {
         'div-form':formCaseDetail,
         'check-dialog':addCheckDialog,
         'div-other':divOther,
+        'change-dialog':addChangeLevel,
         'second-table':tableCaseSecond
     },
-    activated(){
-        this.id = this.$route.query.id
-		this.init()
-	},
-    // created(){
-    //     // this.init()
-    // },
     data(){
         return {
+            changeLevel:false,//修改 等级
+            levelList:[],//等级列表
+            formLevel:{//等级信息
+                case_level:''
+            },
             audioData:[
                 {
                     "msg": "喂，您好！（两秒空音）",                                     //语音内容
@@ -128,6 +136,10 @@ export default {
             nextList:[],//下次跟进
         }
     },
+    activated(){
+        this.id = this.$route.query.id
+		this.init()
+	},
     methods:{
         init(){
             let conf = {
@@ -188,6 +200,53 @@ export default {
         },
         callOtherInfo(val){//展开或关闭其他信息
             this.otherInfo = val
+        },
+        changeLevelFn(){//修改等级
+            this.changeLevel = true
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/level-list',
+                data:{
+                    id:this.id
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        this.levelList = data.info
+                        data.info.forEach(item=>{
+                            if( item.is_selected == 1 ){
+                                this.formLevel.case_level = item.id
+                            }
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        saveLevelFn(){//提交更改
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/edit-level',
+                data:{
+                    case_level:this.formLevel.case_level,
+                    id:this.id
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+                        this.changeLevel = false
+                        this.formLevel = {
+                            case_level:''
+                        }
+                        this.init()
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        cancelChangeLevel(){//取消
+            this.changeLevel = false
         }
     }
 }
