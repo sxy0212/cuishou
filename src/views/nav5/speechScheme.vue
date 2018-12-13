@@ -20,6 +20,7 @@
 									<el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
 									<el-table-column prop="name" label="方案名称"> </el-table-column>
 									<el-table-column prop="sound_type" label="语言模式"></el-table-column>
+									<el-table-column prop="forcehangup" label="最长通话时长(秒)"></el-table-column>
 									<el-table-column prop="create_time" label="创建时间" ></el-table-column>
 									<el-table-column prop="sound_type" label="操作"  width="350">
 											<template slot-scope="scope">
@@ -50,7 +51,7 @@
                   </el-form-item>
                   <el-form-item label="语音模式:">
                     <el-select v-model="AddTplData.sound_type"  placeholder="请选择语音模式" >
-                      <el-option :label="item.sound_type" :value="item.sound_type" v-for="(item,index) in AddData.sound_type" :key="index"></el-option>
+                      <el-option :label="item.sound_type" :value="item.sound_type" v-for="(item,index) in AddData.sound_type" :key="index" :disabled="item.sound_type == '人工合成'"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="选择模板:">
@@ -90,7 +91,7 @@
         <!-- 修改弹框 -->
         <div class="dial-header tag-dial">
           <el-dialog title="修改模板" :visible.sync="EditTpl" v-move>
-              <el-form label-width="100px">
+              <el-form label-width="130px">
                   <el-form-item label="方案名称：">
                       <el-input v-model="EditTplData.name" style="width: 450px"  ></el-input>
                   </el-form-item>
@@ -99,6 +100,9 @@
                   </el-form-item>
                   <el-form-item label="语音库:">
                     <el-input v-model="EditTplData.sound_name" style="width: 450px"  :disabled="true"></el-input>
+                  </el-form-item>
+                  <el-form-item label="最长通话时长(秒):">
+                    <el-input v-model="EditTplData.forcehangup" style="width: 450px"></el-input>
                   </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
@@ -153,7 +157,8 @@ import pageChange from '@/components/pageChange.vue'
           name:"",
           sound_type:"",
           sound_name:"",
-          template_id:""
+          template_id:"",
+          forcehangup:""
         }
 			}
 		},
@@ -286,10 +291,11 @@ import pageChange from '@/components/pageChange.vue'
             EditSave(){
               var template_id = this.EditTplData.template_id
               const name = this.EditTplData.name
+              const forcehangup = this.EditTplData.forcehangup
               const url = "/api/api_backend.php?r=template/template-edit"
               const conf = {
                 url,
-                data:{template_id,name},
+                data:{template_id,name,forcehangup},
                 success:(data)=>{
                   if(data.statusCode == 1){
                     this.EditTpl = false
