@@ -141,10 +141,7 @@ export default {
                 }
             ],
             formTitle:{//手动录入详细信息
-                type:'',
-                phone:'',
-                remark:''
-            },
+                },
             relationList:[
                 {
                     name:'父亲',
@@ -324,6 +321,7 @@ export default {
             }
         },
         saveFn(){//保存
+            this.formTitle.case_id = this.id
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
                 data:this.formTitle,
