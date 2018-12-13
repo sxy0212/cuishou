@@ -13,8 +13,6 @@
 			v-on:changeFn='changeFn($event)'
 			v-on:getDepartmentList='getDepartmentList($event)'
 			v-on:filterFn='filterFn($event)'
-			
-			
 		>
 		</div-form>
 		<div slot="footer" class="dialog-footer">

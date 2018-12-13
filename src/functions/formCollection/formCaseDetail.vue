@@ -8,7 +8,7 @@
                     <el-option 
                         v-for='item in relationList'
                         :label="item.name" 
-                        :value="item.value"
+                        :value="item.name"
                         :key="item.value"
                     ></el-option>
                 </el-select>

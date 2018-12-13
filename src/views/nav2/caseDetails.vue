@@ -122,23 +122,13 @@ export default {
             ],
             otherInfo:false,//其他信息
             selfInfo:{//个人信息
-
             },
             id:'',//具体某个案件
             checkNow:false,//查看通话记录
             middleCaseRecord:[],//暂存列表
             caseRecord:[//个人信息列表
-                {
-                    name:'hah',
-                    money:'20'
-                }
             ],
             tableSecond:[//催收记录
-                {
-                    name:'hah',
-                    money:'20',
-                    id:'334'
-                }
             ],
             formTitle:{//手动录入详细信息
                 },
@@ -327,6 +317,8 @@ export default {
                 data:this.formTitle,
                 success:(data)=>{
 					if( data.statusCode == 1 ){
+                        this.formTitle = {}
+                        this.getTableSecond()
                         Message({
                             message: data.message,
                             type: 'success',

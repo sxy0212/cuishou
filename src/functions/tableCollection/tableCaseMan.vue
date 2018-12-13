@@ -14,7 +14,7 @@
         </el-table-column>
         <el-table-column
         label="案件id"
-        prop="id">
+        prop="case_code">
         </el-table-column>
         <el-table-column
         label="姓名"

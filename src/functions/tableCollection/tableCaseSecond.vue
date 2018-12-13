@@ -33,7 +33,7 @@
         label="通话记录"
         >
             <template slot-scope='scope'>
-                <el-button type="primary" size='mini' @click="checkFn(scope.column)" >查看</el-button>
+                <el-button v-if='scope.column.type == 1||scope.column.type == 6' type="primary" size='mini' @click="checkFn(scope.column)" >查看</el-button>
             </template>
         </el-table-column>
         <el-table-column
