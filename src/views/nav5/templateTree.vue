@@ -1,6 +1,6 @@
 <template> 
 	<section>
-    <div class="CenterMain  MainHp">
+    <div class="CenterMain  MainHp"> 
       <div class="TopForm">
         <!--<div class="AIadd" >
           <el-button type="success" @click="addMessage"><i class="fa fa-plus"></i>添加语音节点</el-button> 
@@ -350,6 +350,7 @@
 <script>
 import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 import { MessageBox } from 'element-ui';
+import '../../../static/css/bootstrap.min.css'
 	export default {
 		data() {
 			return {
@@ -1127,7 +1128,6 @@ import { MessageBox } from 'element-ui';
                               _this.req_id = data.id
                               _this.baseMessage.Edit = true
                               _this.target = e.target
-                              console.log(e.target)
                               _this.getSoundContent()
                               const url = "/api/api_backend.php?r=template/template-base-info"
                               const conf = {

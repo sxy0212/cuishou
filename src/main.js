@@ -7,7 +7,8 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import '@/assets/css/common.css' // css
 import '@/utils/request.js'
-import $ from 'jquery'
+
+
 // import router from './router'
 // import VueRouter from 'vue-router'
 import router from './router'
@@ -19,7 +20,10 @@ import 'font-awesome/css/font-awesome.min.css'
 import '../static/css/animate.css'
 // import '../static/css/bootstrap.min.css'
 import '../static/css/orgtree.css'
+import $ from 'jquery'
 import '../static/js/jquery.lenchart'
+
+import 'bootstrap/dist/js/bootstrap.min.js';
 Vue.config.productionTip = false
 Vue.config.axios = axios
 Vue.use(Element)
