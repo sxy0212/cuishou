@@ -138,16 +138,16 @@ export default {
 					""
 				],
 				case_date: [        
-					"",
-					""
+					'',
+					''
 				],
 				case_back_date: [
 					"",
 					""
 				],
 				case_last_collection_date: [        
-					"",
-					""
+					'',
+					''
 				],
 				talk_time: [        
 					"",
@@ -345,7 +345,7 @@ export default {
 					""
 				],
 				case_date: [        
-					"",
+					'',
 					""
 				],
 				case_back_date: [
