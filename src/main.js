@@ -23,7 +23,7 @@ import '../static/css/orgtree.css'
 import $ from 'jquery'
 import '../static/js/jquery.lenchart'
 
-import 'bootstrap/dist/js/bootstrap.min.js';
+// import 'bootstrap/dist/js/bootstrap.min.js';
 Vue.config.productionTip = false
 Vue.config.axios = axios
 Vue.use(Element)
