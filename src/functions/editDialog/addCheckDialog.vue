@@ -1,5 +1,31 @@
 <template>
     <div>
+         <div class="dial-header  DialogueMain2">
+        
+                <div style="padding-bottom:10px;padding-left:5%">被叫号码:{{detail.phone}}</div>   
+                <div style="width:30%;height:561px;background:#fff;float:left;padding-left:5%">
+                   <div style="max-height:50px;">
+                        <span style="color:#409EFF">客户姓名:</span>{{detail.user_name}}
+                   </div>
+                   <div style="max-height:100px;">
+                       <span style="color:#409EFF">客户地址:</span> {{detail.address}}
+                   </div>
+                   <div style="max-height:50px;">
+                       <span style="color:#409EFF">通话时长:</span> {{detail.billsec}}
+                   </div>
+                   <div data="detail.scores" style="max-height:50px;">
+                        <span style="color:#409EFF"> 客户分类: </span>
+                        <span v-if='detail.scores <= 49 && detail.scores >=0'>E类客户</span>
+                        <span v-else-if='detail.scores <= 69 && detail.scores >=60'>C类客户</span>
+                        <span v-else-if='detail.scores <= 59 && detail.scores >=50'>D类客户</span>
+                        <span v-else-if='detail.scores <= 79 && detail.scores >=70'>B类客户</span>
+                        <span v-else-if='detail.scores >=80'>A类客户</span>
+                   </div>
+                   <div style="max-height:50px;">
+                       <span style="color:#409EFF">号码归属地:</span> {{detail.numberAssigned}}
+                   </div>
+                </div>
+                   <div class="dialogue" style="width:60%;float:left;background:#fff;padding-right:5%"> 
         <div style="display:flex;justify-content:space-between;margin-bottom:10px">
             <span> 完整录音 </span> 
             <el-button type="primary" @click="download" >下载录音</el-button> 
@@ -37,6 +63,9 @@
                 </li>
             </ul>
         </div>
+        </div>
+       
+        </div>
     </div>
 </template>
 <script>
@@ -49,6 +78,8 @@ export default {
         return{
             spath:'',
             textAudio:'',
+            
+            detail:{},
         }
     },
     methods:{
@@ -59,6 +90,9 @@ export default {
 
         },
         playOne(){
+
+        },
+        handleClose(){
 
         }
     }

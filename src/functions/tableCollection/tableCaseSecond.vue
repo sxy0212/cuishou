@@ -27,13 +27,20 @@
         <el-table-column
         label="催收类型"
         prop="type">
+            <template slot-scope='scope'>
+                <span v-show='scope.row.type==1'>呼叫 </span>
+                <span v-show='scope.row.type==2'>信函 </span>
+                <span v-show='scope.row.type==3'>外访 </span>
+                <span v-show='scope.row.type==4'>录入 </span>
+                <span v-show='scope.row.type==6'>机器人呼叫 </span>
+            </template>
         </el-table-column>
         <el-table-column
-        prop="case_status"
         label="通话记录"
+        prop="type"
         >
-            <template slot-scope='scope'>
-                <el-button v-if='scope.column.type == 1||scope.column.type == 6' type="primary" size='mini' @click="checkFn(scope.column)" >查看</el-button>
+            <template slot-scope='scope' >
+                <el-button  :disabled ='scope.row.type != 6 && scope.row.type != 1' type="primary" size='mini' @click="checkFn(scope.row)" >查看</el-button>
             </template>
         </el-table-column>
         <el-table-column

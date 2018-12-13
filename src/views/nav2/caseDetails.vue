@@ -3,9 +3,9 @@
         <div class="info">
             <h3>个人信息</h3>
             <div class="redS"><span>案件序列号：{{selfInfo.case_code}}</span><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="changeLevelFn" size="mini">修改等级</el-button></span></div>
-            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile)" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_mobile,'本人')" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_mobile,'本人')" size="mini">外访</el-button></span></div>
-            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_work_phone)" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_work_phone,'公司')" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size="mini">外访</el-button></span></div>
-            <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile1)" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile2)" size="mini">呼叫</el-button></span></div>
+            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile,'本人')" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_mobile,'本人')" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_mobile,'本人')" size="mini">外访</el-button></span></div>
+            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_work_phone,'公司')" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_work_phone,'公司')" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size="mini">外访</el-button></span></div>
+            <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile1,'第一联系人')" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile2,'第二联系人')" size="mini">呼叫</el-button></span></div>
         </div>
         <div class="info">
             <h3>案件信息</h3>
@@ -50,6 +50,7 @@
         </div>
         <el-dialog title="" :visible.sync="checkNow" >
             <check-dialog
+                :audioData='audioData'
             ></check-dialog>
         </el-dialog>
         <el-dialog title="修改等级" :visible.sync="changeLevel" >
@@ -117,7 +118,7 @@ export default {
                 {
                     "msg": "状态（两秒空音）",                                     //语音内容
                     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                    "user": "0",                                                        //对象(0:言小通,1:客户)
+                    "user": "1",                                                        //对象(0:言小通,1:客户)
                     "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bff98",           //唯一标识id
                     "create_time": "2018-09-9 01:21:19",                               //创建时间
                     "path": ""                                                          //语音全路径
@@ -261,31 +262,19 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-                        this.tableSecond = data.info.map(item=>{
-                            if(item.type == 1){
-                                item.type ='呼叫'
-                            }else if(item.type == 2){
-                                item.type ='信函'
-                            }else if(item.type == 3){
-                                item.type ='外访'
-                            }else if(item.type == 4){
-                                item.type ='录入'
-                            }else if(item.type == 6){
-                                item.type ='机器人呼叫'
-                            }
-                            return item
-                        })
+                        this.tableSecond = data.info
                     }
                 }
             }
             axiosRequest(conf)
         },
-        callFn(phone){//呼叫
+        callFn(phone,relation){//呼叫
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/call-out',
                 data:{
                     phone:phone,
-                    case_id:this.id
+                    case_id:this.id,
+                    relation:relation
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -515,6 +504,31 @@ export default {
 .el-form-item{margin-bottom:10px;}
 .otherI{margin-bottom:15px;}
 .el-date-editor span{margin-left:0;}
+.dialogueList ul li{position: relative;font-size: 0;margin-bottom: 10px;padding-left: 60px;min-height: 68px; height: auto; overflow: hidden;}
+.dialogueList ul li .el-button{ padding: 5px 10px;font-size: 12px}
+.layim-chat-text, .layim-chat-user {display: inline-block;vertical-align: top;font-size: 14px;}
+.layim-chat-user {position: absolute;left: 3px;}
+.layim-chat-user img {width: 40px;height: 40px;border-radius: 100%;}
+.layim-chat-user cite {position: absolute;left: 60px;top: -2px;width: 500px;line-height: 24px;font-size: 12px;white-space: nowrap;color: #999;text-align: left;font-style: normal;}
+.layim-chat-user cite i {padding-left: 15px;font-style: normal;}
+.layim-chat-text {position: relative;line-height: 22px;margin-top: 25px;padding: 8px 15px;background-color: #e2e2e2; border-radius: 3px;color: #333;word-break: break-all;max-width: 462px\9;}
+.layim-chat-text:after {content: '';position: absolute;
+    left: -10px;top: 13px;width: 0;height: 0;border-style: solid dashed dashed;border-color: #e2e2e2 transparent transparent;overflow: hidden;border-width: 10px;
+}
+.dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px;
+    overflow-y: auto;  padding: 15px; background-size:cover;  }
+.DialogueMain .dialogue {height:500px; background: #FFF}
+.DialogueInput{ padding-top: 10px}
+.dialogueList ul .layim-chat-mine {text-align: right;padding-left: 0;padding-right: 60px;min-height:100px}
+.dialogueList ul .layim-chat-mine1 {min-height:120px}
+.dialogueList ul .layim-chat-mine .layim-chat-user {left: auto;right: 3px;}
+.dialogueList ul .layim-chat-mine .layim-chat-user cite {left: auto;right: 60px;text-align: right;}
+.dialogueList ul .layim-chat-mine .layim-chat-user cite i {padding-left: 0;padding-right: 15px;}
+.dialogueList ul .layim-chat-mine .layim-chat-text {margin-left: 0;text-align: left;background-color: #5FB878;color: #fff;}
+.dialogueList ul .layim-chat-mine .layim-chat-text:after {left: auto;right: -10px;border-top-color: #5FB878;}
+
+.DialogueMain .el-dialog__body{ padding: 10px 20px;}
+.DialogueMain2 .el-dialog__body{ padding: 10px 0px;}
 </style>
 
 
