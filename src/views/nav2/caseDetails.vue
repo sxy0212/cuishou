@@ -2,9 +2,9 @@
     <div>
         <div class="info">
             <h3>个人信息</h3>
-            <div class="redS"><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="changeLevelFn" size="mini">修改等级</el-button></span></div>
-            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile)" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_mobile)" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_mobile)" size="mini">外访</el-button></span></div>
-            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_work_phone)" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_work_phone)" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_work_phone)" size="mini">外访</el-button></span></div>
+            <div class="redS"><span>案件序列号：{{selfInfo.case_code}}</span><span><el-button type="primary" @click="totalCaseFn" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" @click="changeLevelFn" size="mini">修改等级</el-button></span></div>
+            <div><span>证件号码：{{selfInfo.case_id_num}}  </span><span>联系方式：{{selfInfo.case_mobile}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile)" size="mini">呼叫</el-button></span><span>家庭住址：{{selfInfo.case_home_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_mobile,'本人')" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_mobile,'本人')" size="mini">外访</el-button></span></div>
+            <div><span>工作单位：{{selfInfo.case_organization_name}}  </span><span>公司电话：{{selfInfo.case_work_phone}}</span><span><el-button  type="primary" @click="callFn(selfInfo.case_work_phone)" size="mini">呼叫</el-button></span><span>公司地址：{{selfInfo.case_work_address}}  </span><span><el-button  type="success" @click="sendLetter(2,selfInfo.case_work_phone,'公司')" size="mini">信函</el-button></span><span><el-button  type="danger" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size="mini">外访</el-button></span></div>
             <div><span>第一联系人：{{selfInfo.case_mobile1}}  </span><span><el-button  type="primary" @click="callFn(selfInfo.case_mobile1)" size="mini">呼叫</el-button></span><span>第二联系人：{{selfInfo.case_mobile2}}  </span><span><el-button type="primary" @click="callFn(selfInfo.case_mobile2)" size="mini">呼叫</el-button></span></div>
         </div>
         <div class="info">
@@ -43,6 +43,7 @@
                     <second-table
                         :tableSecond='tableSecond'
                         v-on:checkFn='checkFn($event)'
+                        v-on:addRemarkFn='addRemarkFn($event)'
                     ></second-table>
                 </div>
             </div>
@@ -59,9 +60,10 @@
                 v-on:cancelFn='cancelChangeLevel($event)'
             ></change-dialog>
         </el-dialog>
-        <el-dialog title="添加备注" :visible.sync="remarkShow" >
+        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" >
             <remark-dialog
                 :formRemark='formRemark'
+                :remarkLabel='remarkLabel'
                 v-on:protectFn='sendInfoSave($event)'
                 v-on:cancelFn='cancelInfoSave($event)'
             ></remark-dialog>
@@ -93,6 +95,7 @@ export default {
     },
     data(){
         return {
+            remarkTitle:'',
             changeLevel:false,//修改 等级
             levelList:[],//等级列表
             formLevel:{//等级信息
@@ -216,7 +219,7 @@ export default {
                     value:'11'
                 }
             ],
-            nextList:[],//下次跟进
+            remarkLabel:'',//备注名称
         }
     },
     activated(){
@@ -286,6 +289,7 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
+                        this.getTableSecond()
                         Message({
                             message: data.message,
                             type: 'success',
@@ -302,12 +306,15 @@ export default {
             }
             axiosRequest(conf)
         },
-        sendLetter(type,phone){//信函
+        sendLetter(type,phone,whichOne){//信函
+            this.remarkTitle = '新增记录'
             this.remarkShow= true
+            this.remarkLabel = '备注'
             this.formRemark = {
                 type:type,
                 phone:phone,
-                remark:''
+                remark:'',
+                relation:whichOne
             }
         },
         saveFn(){//保存
@@ -341,7 +348,6 @@ export default {
             }
         },
         checkFn(column){//查看
-            console.log(column)
             this.checkNow = true
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/look-over',
@@ -416,39 +422,78 @@ export default {
             }
             axiosRequest(conf)
         },
-        sendInfoSave(){
-            this.formRemark.case_id = this.id
-            let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
-                data:this.formRemark,
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-                        this.remarkShow = false
-                        this.formRemark = {
-                            remark:''
+        sendInfoSave(){//备注修改或是新增记录
+            if( this.remarkTitle == '新增记录'){
+                this.formRemark.case_id = this.id
+                let conf = {
+                    url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
+                    data:this.formRemark,
+                    success:(data)=>{
+                        if( data.statusCode == 1 ){
+                            this.remarkShow = false
+                            this.formRemark = {
+                                remark:''
+                            }
+                            this.getTableSecond()
+                            Message({
+                                message: data.message,
+                                type: 'success',
+                                duration: 2 * 1000
+                            })
+                        }else if(data.statusCode == 0 ){
+                            Message({
+                                message: data.message,
+                                type: 'error',
+                                duration: 3 * 1000
+                            })
                         }
-                        this.getTableSecond()
-                        Message({
-                            message: data.message,
-                            type: 'success',
-                            duration: 2 * 1000
-                        })
-                    }else if(data.statusCode == 0 ){
-                        Message({
-                            message: data.message,
-                            type: 'error',
-                            duration: 3 * 1000
-                        })
                     }
                 }
+                axiosRequest(conf)
+            }else if( this.remarkTitle == '修改备注' ){
+                let conf = {
+                    url : '/api/api_backend.php?r=asrcall-case-batch-data/edit-remark',
+                    data:this.formRemark,
+                    success:(data)=>{
+                        if( data.statusCode == 1 ){
+                            this.formRemark = {}
+                            this.remarkTitle = ''
+                            this.remarkLabel =''
+                            this.remarkShow = false 
+                            this.getTableSecond()
+                            Message({
+                                message: data.message,
+                                type: 'success',
+                                duration: 2 * 1000
+                            })
+                        }else if(data.statusCode == 0 ){
+                            Message({
+                                message: data.message,
+                                type: 'error',
+                                duration: 3 * 1000
+                            })
+                        }
+                    }
+                }
+                axiosRequest(conf)
             }
-            axiosRequest(conf)
+            
         },
         cancelInfoSave(){
-            this.remarkShow= false
+            this.remarkShow = false
         },
         cancelChangeLevel(){//取消
             this.changeLevel = false
+        },
+        addRemarkFn(row){
+            this.remarkTitle = '修改备注'
+            this.remarkShow = true
+            this.remarkLabel ='修改备注'
+            this.formRemark = {
+                remark:row.remark,
+                id:row.id
+            }
+            
         }
     }
 }

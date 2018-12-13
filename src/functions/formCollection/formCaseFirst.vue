@@ -14,7 +14,7 @@
                 <el-input v-model="conditions.talk_recode" placeholder="请输入关键词"></el-input>
             </el-form-item>
             
-             <el-form-item label="案件id">
+             <el-form-item label="案件序列号">
                 <el-input v-model="conditions.id" placeholder="请输入案件id"></el-input>
             </el-form-item>
             <el-form-item label="案件状态">

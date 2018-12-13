@@ -43,11 +43,14 @@
         </el-table-column>
         <el-table-column
         label="通话备注"
-        prop="batch_id">
+        prop="remark">
         </el-table-column>
         <el-table-column
         label="操作"
         prop="case_id_num">
+            <template slot-scope='scope'>
+                <el-button type="success" size='mini' @click="addRemarkFn(scope.row)" >修改备注</el-button>
+            </template>
         </el-table-column>
     </el-table>
 </template>
@@ -60,6 +63,9 @@ export default {
     methods:{
         checkFn(column){
             this.$emit('checkFn',column)
+        },
+        addRemarkFn(column){//添加备注
+            this.$emit('addRemarkFn',column)
         }
     }
 }

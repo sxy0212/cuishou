@@ -2,7 +2,7 @@
     <div>
         <div>
             <el-form :model="formRemark">
-                <el-form-item label="备注" label-width="60px">
+                <el-form-item :label="remarkLabel" label-width="100px">
                     <el-input  type="textarea" v-model="formRemark.remark" autocomplete="off" placeholder='请输入备注'></el-input>
                 </el-form-item>
             </el-form>
@@ -19,6 +19,7 @@ export default {
     name:'addRemark',
     props:[
         'formRemark',
+        'remarkLabel',
 
     ],
     methods:{
