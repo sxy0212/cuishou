@@ -2,8 +2,8 @@
     <div class="NaveTab">
         <el-tabs v-model="activeIndex" type="card" closable  @tab-click="tabClick" v-if="options.length"   @tab-remove="tabRemove">
             <el-tab-pane
-              :key="item.name"
-              v-for="item in options"
+              :key="index"
+              v-for="(item,index) in options"
               :label="item.name"
               :name="item.route">
             </el-tab-pane>
