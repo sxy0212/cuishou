@@ -146,6 +146,9 @@ export default {
                     if( data.statusCode == 1 ){
                         this.tableData = data.info.info
                         this.total = Number( data.info.total )
+                    }else if( data.statusCode == 0 ){
+                        this.tableData = []
+                        this.total = this.tableData.length
                     }
                 }
             }

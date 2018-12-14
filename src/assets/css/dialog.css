@@ -30,7 +30,7 @@
 .layim-chat-text:after {content: '';position: absolute;
     left: -10px;top: 13px;width: 0;height: 0;border-style: solid dashed dashed;border-color: #e2e2e2 transparent transparent;overflow: hidden;border-width: 10px;
 }
-.dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px;
+.dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px; border-bottom:none;
     overflow-y: auto;  padding: 15px; background-size:cover;  }
 .DialogueMain .dialogue {height:500px; background: #FFF}
 .DialogueInput{ padding-top: 10px}
@@ -45,3 +45,14 @@
 .DialogueMain .el-dialog__body{ padding: 10px 20px;}
 .coverDialog .el-dialog__wrapper .el-dialog{width:90%;}
 .coverDialog .el-dialog__body{overflow:hidden;}
+
+.infoCover{max-height:50px;}
+.info_span{color:#409EFF;}
+.info_title{color:red;font-size:18px;margin-bottom:10px;}
+.info_details{width:30%;height:561px;background:#fff;float:left;}
+.call_details{width:60%;float:left;background:#fff;}
+.everyone{max-width:84%;}
+.floatL{float:left;}
+.floatR{float:right;}
+.marginT{margin-top:20px;}
+.totalRe{display:flex;justify-content:space-between;margin-bottom:10px;}

@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="coverDialog">
-            <el-dialog title="" :visible.sync="checkNow" >
+            <el-dialog title="通话详情" :visible.sync="checkNow" >
                 <check-dialog
                     :audioData='audioData'
                     :detail='detail'
