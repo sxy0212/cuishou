@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-            <div class="ableDis">可分配的数量为：{{ableNum}}条</div>
+            <div class="ableDis">可分配的数量为：{{formDistribute.case_all_num}}条</div>
              <el-form :model="formDistribute">
                 <el-form-item label="分配的数量" label-width="100px">
                     <el-input type='number' v-model="formDistribute.split_num" autocomplete="off"></el-input>
@@ -17,14 +17,13 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="催收员" label-width="100px">
-                    <el-select v-model="formDistribute.staff" placeholder="催收员">
-                        <el-option
-                            v-for="item in staffList"
+                    <el-checkbox-group v-model="formDistribute.staff" @change="changeStaff">
+                        <el-checkbox 
+                            v-for="item in this.staffList" 
+                            :label="item.true_name" 
                             :key="item.id"
-                            :label="item.true_name"
-                            :value="item.id">
-                        </el-option>
-                    </el-select>
+                        >{{item.true_name}}</el-checkbox>
+                    </el-checkbox-group>
                 </el-form-item>
             </el-form>
         </div>
@@ -41,7 +40,6 @@ export default {
     props:[
         'formDistribute',
         'departmentList',
-        'ableNum',
         'staffList'
     ],
     methods:{
@@ -54,6 +52,9 @@ export default {
         },
         cancelDistribute(){
             this.$emit('cancelDistribute')
+        },
+        changeStaff(value){
+            console.log(value,this.formDistribute)
         }
     }
     

@@ -9,8 +9,9 @@
                     <el-checkbox v-model="item.choose"
                         v-for="item in this.fieldsList"
                         :key="item.id"
-                        :class="item.is_required =='1'?'red':''"
-                     >{{item.field_name}}</el-checkbox>
+                        :class="item.is_required =='1'?'red':''">
+                        {{item.field_name}}
+                    </el-checkbox>
                 </el-form-item>
             </el-form>
         </div>
