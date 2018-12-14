@@ -48,10 +48,11 @@
 
 .infoCover{max-height:50px;}
 .info_span{color:#409EFF;}
+.infoCover{font-size:17px;line-height:35px;}
 .info_title{color:red;font-size:18px;margin-bottom:10px;}
 .info_details{width:30%;height:561px;background:#fff;float:left;}
 .call_details{width:60%;float:left;background:#fff;}
-.everyone{max-width:84%;}
+.everyone{max-width:80%;}
 .floatL{float:left;}
 .floatR{float:right;}
 .marginT{margin-top:20px;}

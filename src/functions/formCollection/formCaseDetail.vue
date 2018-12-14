@@ -32,7 +32,7 @@
             <el-form-item label="下次跟进">
                 <el-date-picker
                     v-model="formTitle.next_time"
-                    type="date"
+                    type="datetime"
                     value-format='yyyy-MM-dd HH:mm:ss'
                     placeholder="选择日期">
                 </el-date-picker>

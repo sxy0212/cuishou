@@ -19,9 +19,9 @@
             <div class="dialogue call_details"> 
                 <div class="totalRe">
                     <span> 完整录音 </span> 
-                    <el-button type="primary" @click="download" >下载录音</el-button> 
+                    <el-button type="primary" @click="download" :disabled="!detail.path">下载录音</el-button> 
                 </div>
-                <audio style="width:100%" :src="spath" controls="controls" id="play1" @click="playOne"></audio>  
+                <audio style="width:100%" ref="audio" :src="detail.path" controls="controls" id="play1" @click="playOne"></audio>  
                 <div class="dialogueList" >
                     <ul id="messageBox">
                         <li 
@@ -50,7 +50,7 @@
                             </div>
                         </li> 
                         <li>
-                            <audio style="width:100%" :src="textAudio" id="audioPlay" autoplay></audio> 
+                            <audio style="width:100%" ref="audioPlay"  id="audioPlay" autoplay></audio> 
                         </li>
                     </ul>
                 </div>
@@ -69,21 +69,27 @@ export default {
     data(){
         return{
             spath:'',
-            textAudio:'',
         }
     },
     methods:{
-        textListen(path){
-
-        },
         download(){
-
+            this.$emit('download')
         },
         playOne(){
 
         },
-        handleClose(){
-
+        textListen(path){//单句录音播放
+            this.$refs.audioPlay.src = path
+            if( this.$refs.audioPlay.paused ){
+                this.$refs.audioPlay.src = path
+                this.$refs.audioPlay.play()
+            }else{
+                this.$refs.audioPlay.pause()
+            }
+            if( !this.$refs.audio.paused ){
+                this.$refs.audio.pause()
+            }
+            
         }
     }
 }

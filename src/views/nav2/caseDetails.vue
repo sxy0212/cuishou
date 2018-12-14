@@ -52,6 +52,7 @@
                 <check-dialog
                     :audioData='audioData'
                     :detail='detail'
+                    v-on:download='downloadFn($event)'
                 ></check-dialog>
             </el-dialog>
         </div>
@@ -99,6 +100,7 @@ export default {
     },
     data(){
         return {
+            whichOne:'',//具体查看对象
             remarkTitle:'',
             changeLevel:false,//修改 等级
             levelList:[],//等级列表
@@ -343,6 +345,7 @@ export default {
         },
         checkFn(column){//查看
             this.checkNow = true
+            this.whichOne = column.id
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/look-over',
                 data:{
@@ -363,6 +366,7 @@ export default {
         doubleClickFn(id){
             this.id = id
             this.init()
+            this.getTableSecond()
         },
         callOtherInfo(val){//展开或关闭其他信息
             this.otherInfo = val
@@ -488,7 +492,9 @@ export default {
                 remark:row.remark,
                 id:row.id
             }
-            
+        },
+        downloadFn(){//下载录音
+            window.open('/api/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
         }
     }
 }
