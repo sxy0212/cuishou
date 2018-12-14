@@ -13,7 +13,7 @@
         width="55">
         </el-table-column>
         <el-table-column
-        label="案件id"
+        label="案件序列号"
         prop="case_code">
         </el-table-column>
         <el-table-column
