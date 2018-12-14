@@ -33,7 +33,6 @@
       <el-table-column type="index" label="序号" width="60"  :index="index"></el-table-column>
       <el-table-column prop="staff_name" label="姓名"></el-table-column>  
       <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
-      <el-table-column prop="allocate_time" label="最后分配时间"></el-table-column>  
       <el-table-column prop="task_count" label="任务数量"></el-table-column>  
       <el-table-column prop="case_count" label="跟进数"></el-table-column>  
       <el-table-column prop="case_money" label="委案金额"></el-table-column>  

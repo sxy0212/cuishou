@@ -703,7 +703,6 @@ import store from '@/vuex/store.js'
 			// 页面机器人列表
 			init(){
 				if(getCookie("user")&&this.$route.path == '/taskManagement'){
-					console.log(store)
 					const url = '/api/api_backend.php?r=asroperate/list'
 					const conf = {
 						url,
