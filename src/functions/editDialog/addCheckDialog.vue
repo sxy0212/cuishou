@@ -1,7 +1,6 @@
 <template>
     <div>
-         <div class="dial-header  DialogueMain2">
-        
+         <div class="dial-header  speci DialogueMain2">
                 <div style="padding-bottom:10px;padding-left:5%">被叫号码:{{detail.phone}}</div>   
                 <div style="width:30%;height:561px;background:#fff;float:left;padding-left:5%">
                    <div style="max-height:50px;">
@@ -35,13 +34,13 @@
             <ul id="messageBox">
                 <li 
                     style="font-size:14px;"
-                    v-for="item in audioData"
+                    v-for="(item,index) in audioData"
                     :class="[{ 'layim-chat-mine':item.user==1 }, {'layim-chat-mine1':item.user==0}]" 
-                    :key="item.uniqueid" 
+                    :key="index" 
                     >
                     <div class="layim-chat-user">
-                        <img src="<?=STATIC_BACKEND?>/images/yantong.png" v-if="item.user==1">
-                        <img src="<?=STATIC_BACKEND?>/images/user.png" v-if="item.user==0">                                    
+                        <img src="@/assets/images/yantong.png" v-if="item.user==1">
+                        <img src="@/assets/images/user.png" v-if="item.user==0">                                    
                     </div>
                     <div v-if="item.user==0" style="max-width:420px;float:left">
                         <p  style="margin:0">言小通 <i>{{item.create_time}}</i></p>
@@ -51,11 +50,11 @@
                         <p style="margin:0"><i>{{item.create_time}} </i>用户</p>
                         <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
                     </div> 
-                        <div v-if="item.user==0" style="float:left;margin-top:20px" v-show="item.path">
-                        <img src="<?=STATIC_BACKEND?>/images/textListen.png"  @click="textListen(item.path)" style="width:23px">
+                        <div v-if="item.user==0" style="float:left;margin-top:20px" v-show="item.record">
+                        <img src="@/assets/images/textListen.png"  @click="textListen(item.record)" style="width:23px">
                     </div>
-                    <div v-if="item.user==1" style="float:right;margin-top:20px" v-show="item.path">
-                        <img src="<?=STATIC_BACKEND?>/images/textListen.png"  @click="textListen(item.path)" style="width:23px">
+                    <div v-if="item.user==1" style="float:right;margin-top:20px" v-show="item.record">
+                        <img src="@/assets/images/textListen.png"  @click="textListen(item.record)" style="width:23px">
                     </div>
                 </li> 
                 <li>
@@ -69,17 +68,17 @@
     </div>
 </template>
 <script>
+import '@/assets/css/dialog.css'
 export default {
     name:'addCheckDialog',
     props:[
-        'audioData'
+        'audioData',
+        'detail'
     ],
     data(){
         return{
             spath:'',
             textAudio:'',
-            
-            detail:{},
         }
     },
     methods:{
@@ -98,4 +97,12 @@ export default {
     }
 }
 </script>
+<style >
+
+
+</style>
+
+
+
+
 

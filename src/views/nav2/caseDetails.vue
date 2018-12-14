@@ -20,7 +20,6 @@
         <div class='info otherI'>
             <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button><el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
             <div-other
-                :audioData='audioData'
                 :selfInfo='selfInfo'
                 v-show='otherInfo'
             >
@@ -48,11 +47,14 @@
                 </div>
             </div>
         </div>
-        <el-dialog title="" :visible.sync="checkNow" >
-            <check-dialog
-                :audioData='audioData'
-            ></check-dialog>
-        </el-dialog>
+        <div class="coverDialog">
+            <el-dialog title="" :visible.sync="checkNow" >
+                <check-dialog
+                    :audioData='audioData'
+                    :detail='detail'
+                ></check-dialog>
+            </el-dialog>
+        </div>
         <el-dialog title="修改等级" :visible.sync="changeLevel" >
             <change-dialog
                 :levelList='levelList'
@@ -82,6 +84,7 @@ import divOther from '@/functions/normalDiv/divOther.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
+import '@/assets/css/dialog.css'
 
 export default {
     name:'caseDetails',
@@ -106,7 +109,7 @@ export default {
             formRemark:{
                 remark:''
             },
-            audioData:[
+            audioData:[//录音内容
                 {
                     "msg": "喂，您好！（两秒空音）",                                     //语音内容
                     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
@@ -124,6 +127,8 @@ export default {
                     "path": ""                                                          //语音全路径
                 },
             ],
+            detail:{//录音详情
+            },
             otherInfo:false,//其他信息
             selfInfo:{//个人信息
             },
@@ -135,7 +140,7 @@ export default {
             tableSecond:[//催收记录
             ],
             formTitle:{//手动录入详细信息
-                },
+            },
             relationList:[
                 {
                     name:'父亲',
@@ -345,7 +350,8 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-                        
+                        this.audioData = data.info.info
+                        this.detail = data.info.call_record
                     }
                 }
             }
@@ -487,48 +493,6 @@ export default {
     }
 }
 </script>
-<style>
-.info div{line-height:30px;}
-.info h3{margin-left:10px;font-size:18px;font-weight:400;}
-.info span{margin-left:10px;}
-.el-button span{margin-left:0;}
-.info{ padding:10px 0; font-size:14px;background-color:rgba(0, 204, 255, 0.0980392156862745);}
-.coverMiddle{display:flex;}
-.coverMiddle .middle:nth-of-type(1){flex:1}
-.coverMiddle .middle:nth-of-type(2){flex:2}
-.tableCover{margin: 15px 0;}
-.redS{color:red;}
-.el-button--mini, .el-button--mini.is-round{padding:4px 15px;}
-.middle{margin:0 10px;}
-.el-form--inline .el-form-item{margin-right:0;}
-.el-form-item{margin-bottom:10px;}
-.otherI{margin-bottom:15px;}
-.el-date-editor span{margin-left:0;}
-.dialogueList ul li{position: relative;font-size: 0;margin-bottom: 10px;padding-left: 60px;min-height: 68px; height: auto; overflow: hidden;}
-.dialogueList ul li .el-button{ padding: 5px 10px;font-size: 12px}
-.layim-chat-text, .layim-chat-user {display: inline-block;vertical-align: top;font-size: 14px;}
-.layim-chat-user {position: absolute;left: 3px;}
-.layim-chat-user img {width: 40px;height: 40px;border-radius: 100%;}
-.layim-chat-user cite {position: absolute;left: 60px;top: -2px;width: 500px;line-height: 24px;font-size: 12px;white-space: nowrap;color: #999;text-align: left;font-style: normal;}
-.layim-chat-user cite i {padding-left: 15px;font-style: normal;}
-.layim-chat-text {position: relative;line-height: 22px;margin-top: 25px;padding: 8px 15px;background-color: #e2e2e2; border-radius: 3px;color: #333;word-break: break-all;max-width: 462px\9;}
-.layim-chat-text:after {content: '';position: absolute;
-    left: -10px;top: 13px;width: 0;height: 0;border-style: solid dashed dashed;border-color: #e2e2e2 transparent transparent;overflow: hidden;border-width: 10px;
-}
-.dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px;
-    overflow-y: auto;  padding: 15px; background-size:cover;  }
-.DialogueMain .dialogue {height:500px; background: #FFF}
-.DialogueInput{ padding-top: 10px}
-.dialogueList ul .layim-chat-mine {text-align: right;padding-left: 0;padding-right: 60px;min-height:100px}
-.dialogueList ul .layim-chat-mine1 {min-height:120px}
-.dialogueList ul .layim-chat-mine .layim-chat-user {left: auto;right: 3px;}
-.dialogueList ul .layim-chat-mine .layim-chat-user cite {left: auto;right: 60px;text-align: right;}
-.dialogueList ul .layim-chat-mine .layim-chat-user cite i {padding-left: 0;padding-right: 15px;}
-.dialogueList ul .layim-chat-mine .layim-chat-text {margin-left: 0;text-align: left;background-color: #5FB878;color: #fff;}
-.dialogueList ul .layim-chat-mine .layim-chat-text:after {left: auto;right: -10px;border-top-color: #5FB878;}
 
-.DialogueMain .el-dialog__body{ padding: 10px 20px;}
-.DialogueMain2 .el-dialog__body{ padding: 10px 0px;}
-</style>
 
 
