@@ -23,6 +23,7 @@ import caseConfiguration from './views/nav7/caseConfiguration.vue'
 import accountManagement from './views/nav7/accountManagement.vue'
 import templateManagement from './views/nav7/templateManagement.vue'
 import levelSetting from './views/nav7/levelSetting.vue'
+import extensionState from './views/nav7/extensionState.vue'
 
 import collectorManagement from './views/nav8/collectorManagement.vue'
 import departmentManagement from './views/nav8/departmentManagement.vue'
@@ -225,6 +226,14 @@ let routes = [
     path: '/levelSetting',
     name: '案件等级设置',
     component: levelSetting,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/extensionState',
+    name: '分机状态',
+    component: extensionState,
     meta: {
       keepAlive: true,
     }

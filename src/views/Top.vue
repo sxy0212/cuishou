@@ -6,7 +6,7 @@
 			<span @click="shuxian" style="margin-right:20px;cursor:pointer;">刷新</span>
 			<span> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
 			<el-dropdown trigger="hover" >
-				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{info.true_name}}</span>
+				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{info.company_name}}</span>
 				<el-dropdown-menu slot="dropdown" style="cursor: pointer;">
 					<el-dropdown-item>公司代号:{{info.company_id}}</el-dropdown-item>
 					<el-dropdown-item>设置</el-dropdown-item>
@@ -28,7 +28,8 @@ import store from '@/vuex/store.js'
 				collapsed:false,
 				info:{
 					true_name:"",
-					company_id:""
+					company_id:"",
+					company_name:""
 				},
 				sysUserName: '',
 				sysUserAvatar: '',

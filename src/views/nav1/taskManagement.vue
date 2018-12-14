@@ -16,7 +16,8 @@
 									<div class="title" style="margin:0 15px;">任务编码：{{ form.task_coding }}</div>
 									<div class="title" style="width:30%">
 									<!--<el-button style="padding:5px 0" > 机器人状态：</el-button> -->
-										<span >机器人状态:正常</span>
+										<span >机器人状态: <span v-if="form.warning_asrnumber&&form.warning_callerid">正常</span>
+                                        <span v-else style="color:red">异常</span></span>
 									</div>
 								</div>
 								<div class="ListMain">
@@ -98,9 +99,9 @@
 										<div class="AiButton">
 											<el-button type="danger" style="margin-left:16px" >
 													<i class="fa fa-headphones"></i>测试</el-button>
-											<el-button type="primary"  v-if="parseInt(form.status) == 0"   @click="close(form.id,form.status)"> <i class="fa fa-power-off"></i>启动</el-button>
-											<el-button type="primary"  v-else-if="parseInt(form.status) == 1"  @click="close(form.id,form.status)"> <i class="fa fa-power-off"></i>关闭</el-button>
-											<el-button type="success" @click="edit(form.id)"><i class="fa fa-pencil"></i>编辑</el-button>
+											<el-button type="primary"  v-if="parseInt(form.status) == 0"   @click="close(form.id,form.status)" :disabled="!form.warning_asrnumber&&!form.warning_callerid"> <i class="fa fa-power-off"></i>启动</el-button>
+											<el-button type="primary"  v-else-if="parseInt(form.status) == 1"  @click="close(form.id,form.status)" :disabled="!form.warning_asrnumber&&!form.warning_callerid"> <i class="fa fa-power-off"></i>关闭</el-button>
+											<el-button type="success" @click="edit(form.id)" :disabled="!form.warning_asrnumber&&!form.warning_callerid"><i class="fa fa-pencil"></i>编辑</el-button>
 											<el-button type="danger" @click="del(form.id)"><i class="el-icon-delete"></i>删除</el-button>
 										</div>
 									</div>
