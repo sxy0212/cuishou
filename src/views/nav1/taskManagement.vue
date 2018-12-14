@@ -60,13 +60,16 @@
 												<em>人机交互：<span style="color:red">{{form.exten_num}}</span></em>
 											</div> 
 										</div>  
-										<div class="Countp">
+										<div class="Countp" style="height:30px;">
 											<div class="According" style="display:block" v-show="form.status == 0">
-												<em>剩余资料：<span style="color:red">名称:{{form.remain_name}},数量:{{form.remain_count}} 机器人未启动</span></em>
+												<em>剩余资料：<span style="color:red">名称:{{form.remain_name}}
+												<p style="margin-left:56px;">数量:{{form.remain_count}} 机器人未启动</p>
+												</span></em>
 											</div> 
 											<div class="According" style="display:block" v-show="form.status == 1">
-												<em>剩余资料：<span style="color:red">名称:{{form.remain_name}},数量:{{form.remain_count}} <em>呼叫中：{{ form.callin }}</em>
-                                                <em>通话中：{{ form.dropin }}</em></span></em>
+												<em>剩余资料：<span style="color:red">名称:{{form.remain_name}}
+												<p style="margin-left:56px;">数量:{{form.remain_count}} 呼叫中：{{ form.callin }}通话中：{{ form.dropin }}</p>
+												</span></em>
 											</div> 
 										</div>  
 										<div class="Countp">
