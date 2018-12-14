@@ -1,12 +1,12 @@
 <template>
     <div>
         <div>
-            <div>可分配的数量为：{{ableNum}}条</div>
+            <div class="ableDis">可分配的数量为：{{ableNum}}条</div>
              <el-form :model="formDistribute">
                 <el-form-item label="分配的数量" label-width="100px">
                     <el-input type='number' v-model="formDistribute.split_num" autocomplete="off"></el-input>
                 </el-form-item>
-                <el-form-item label="部门" :label-width="formLabelWidth">
+                <el-form-item label="部门" label-width="100px">
                     <el-select v-model="formDistribute.depart_id" @change="changeFn" placeholder="请选择部门">
                         <el-option
                             v-for="item in departmentList"
@@ -59,4 +59,8 @@ export default {
     
 }
 </script>
+<style scoped>
+.ableDis{font-size:18px;line-height:40px;}
+</style>
+
 

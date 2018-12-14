@@ -102,7 +102,8 @@ export default {
 			case_all_money:'',//总额
 			formDistribute:{
 				depart:'',
-				staff:''
+				staff:'',
+				case_all_num:''
 			},
 			formKey:{
 				key:''
@@ -531,11 +532,6 @@ export default {
 				success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.ableNum = data.info.case_all_num
-						Message({
-							message: data.message,
-							type: 'success',
-							duration: 3 * 1000
-						})
 					}else{
 						Message({
 							message: data.message,

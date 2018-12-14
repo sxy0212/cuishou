@@ -48,10 +48,13 @@
             </div>
         </div>
         <div class="coverDialog">
-            <el-dialog title="通话详情" :visible.sync="checkNow" >
+            <el-dialog title="通话详情" :visible.sync="checkNow" 
+            :before-close="beforeCloseFn"
+            >
                 <check-dialog
                     :audioData='audioData'
                     :detail='detail'
+                    ref='middleRef'
                     v-on:download='downloadFn($event)'
                 ></check-dialog>
             </el-dialog>
@@ -100,6 +103,10 @@ export default {
     },
     data(){
         return {
+            middleRef:{
+                audioPlay:'',
+                audio:''
+            },
             whichOne:'',//具体查看对象
             remarkTitle:'',
             changeLevel:false,//修改 等级
@@ -236,6 +243,16 @@ export default {
         this.getTableSecond()
 	},
     methods:{
+        beforeCloseFn(done){
+            if( !this.$refs.middleRef.$refs.audioPlay.paused ){
+                this.$refs.middleRef.$refs.audioPlay.pause()
+            }
+            if( !this.$refs.middleRef.$refs.audio.paused ){
+                this.$refs.middleRef.$refs.audio.pause()
+            }
+            console.log('guanbiqian')
+            done()
+        },
         init(){
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/case-info',

@@ -21,7 +21,7 @@
                     <span> 完整录音 </span> 
                     <el-button type="primary" @click="download" :disabled="!detail.path">下载录音</el-button> 
                 </div>
-                <audio style="width:100%" ref="audio" :src="detail.path" controls="controls" id="play1" @click="playOne"></audio>  
+                <audio style="width:100%" ref="audio" controls="controls"  @click="playOne(detail.path)"></audio>  
                 <div class="dialogueList" >
                     <ul id="messageBox">
                         <li 
@@ -42,15 +42,15 @@
                                 <p style="margin:0"><i>{{item.create_time}} </i>用户</p>
                                 <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
                             </div> 
-                                <div v-if="item.user==0" class='floatL marginT'  v-show="item.record">
-                                <img src="@/assets/images/textListen.png"  @click="textListen(item.record)" style="width:23px">
+                                <div v-if="item.user==0" class='floatL marginT'  v-show="item.path">
+                                <img src="@/assets/images/textListen.png"  @click="textListen(item.path)" style="width:23px">
                             </div>
-                            <div v-if="item.user==1" class="floatR marginT" v-show="item.record">
-                                <img src="@/assets/images/textListen.png"  @click="textListen(item.record)" style="width:23px">
+                            <div v-if="item.user==1" class="floatR marginT" v-show="item.path">
+                                <img src="@/assets/images/textListen.png"  @click="textListen(item.path)" style="width:23px">
                             </div>
                         </li> 
                         <li>
-                            <audio style="width:100%" ref="audioPlay"  id="audioPlay" autoplay></audio> 
+                            <audio style="width:100%" ref="audioPlay"  autoplay></audio> 
                         </li>
                     </ul>
                 </div>
@@ -75,18 +75,27 @@ export default {
         download(){
             this.$emit('download')
         },
-        playOne(){
-
+        playOne(path){
+            this.$refs.audio.src = path
+            // if( this.$refs.audio.paused ){//自己暂停,自己播放
+            //     this.$refs.audio.src = path
+            //     this.$refs.audio.play()
+            // }else{//自己播放，后自己暂停
+            //     this.$refs.audio.pause()
+            // }
+            // if( !this.$refs.audioPlay.paused ){//其他播放，其他暂停
+            //     this.$refs.audioPlay.pause()
+            // }
         },
         textListen(path){//单句录音播放
             this.$refs.audioPlay.src = path
-            if( this.$refs.audioPlay.paused ){
+            if( this.$refs.audioPlay.paused ){//自己暂停
                 this.$refs.audioPlay.src = path
                 this.$refs.audioPlay.play()
-            }else{
+            }else{//自己播放，后自己暂停
                 this.$refs.audioPlay.pause()
             }
-            if( !this.$refs.audio.paused ){
+            if( !this.$refs.audio.paused ){//其他播放，其他暂停
                 this.$refs.audio.pause()
             }
             
