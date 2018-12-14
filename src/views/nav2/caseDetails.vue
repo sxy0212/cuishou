@@ -255,7 +255,7 @@ export default {
         },
         init(){
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/case-info',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/case-info',
                 data:{
                     id:this.id
                 },
@@ -280,7 +280,7 @@ export default {
         },
         getTableSecond(){//获取催收记录
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/collection-record-list',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/collection-record-list',
                 data:{
                     case_id:this.id
                 },
@@ -294,7 +294,7 @@ export default {
         },
         callFn(phone,relation){//呼叫
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/call-out',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/call-out',
                 data:{
                     phone:phone,
                     case_id:this.id,
@@ -333,7 +333,7 @@ export default {
         saveFn(){//保存
             this.formTitle.case_id = this.id
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
                 data:this.formTitle,
                 success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -364,7 +364,7 @@ export default {
             this.checkNow = true
             this.whichOne = column.id
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/look-over',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/look-over',
                 data:{
                     id:column.id
                 },
@@ -391,7 +391,7 @@ export default {
         changeLevelFn(){//修改等级
             this.changeLevel = true
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/level-list',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/level-list',
                 data:{
                     id:this.id
                 },
@@ -410,7 +410,7 @@ export default {
         },
         saveLevelFn(){//提交更改
             let conf = {
-                url : '/api/api/api_backend.php?r=asrcall-case-batch-data/edit-level',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/edit-level',
                 data:{
                     case_level:this.formLevel.case_level,
                     id:this.id
@@ -442,7 +442,7 @@ export default {
             if( this.remarkTitle == '新增记录'){
                 this.formRemark.case_id = this.id
                 let conf = {
-                    url : '/api/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
+                    url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
                     data:this.formRemark,
                     success:(data)=>{
                         if( data.statusCode == 1 ){
@@ -468,7 +468,7 @@ export default {
                 axiosRequest(conf)
             }else if( this.remarkTitle == '修改备注' ){
                 let conf = {
-                    url : '/api/api/api_backend.php?r=asrcall-case-batch-data/edit-remark',
+                    url : '/api/api_backend.php?r=asrcall-case-batch-data/edit-remark',
                     data:this.formRemark,
                     success:(data)=>{
                         if( data.statusCode == 1 ){
@@ -511,7 +511,7 @@ export default {
             }
         },
         downloadFn(){//下载录音
-            window.open('/api/api/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
+            window.open('/api/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
         }
     }
 }
