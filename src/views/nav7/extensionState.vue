@@ -1,11 +1,11 @@
 <template>
   <section>
     <div class="TopForm">
-      <el-table :data="tableData" stripe style="width: 100%" border stripe >
+      <el-table :data="tableData" stripe style="width: 100%" border stripe :height="total>0?500:100">
         <el-table-column type="index" :index="index" label="序号" width="60"></el-table-column>                   
         <el-table-column prop="exten" label="分机号" ></el-table-column>
         <el-table-column prop="status" label="分机状态">
-            <template scope="scope">
+            <template slot-scope="scope">
                 <span v-if="scope.row.status == -1" style="color:#e38028">分机找不到</span>
                 <span v-else-if="scope.row.status == 0"style="color:#60b549">空闲</span>
                 <span v-else-if="scope.row.status == 2" style="color:#0093fa">分机忙</span>
@@ -18,10 +18,10 @@
                 <span v-else-if="scope.row.status == 19" style="color:#0093fa">正忙</span> 
             </template>
         </el-table-column>
-        <el-table-column prop="ip地址" label="IP地址"></el-table-column>
+        <el-table-column prop="ip" label="IP地址"></el-table-column>
         <el-table-column prop="port" label="端口号"></el-table-column>
         <el-table-column  label="操作">
-            <template scope="scope">
+            <template slot-scope="scope">
                 <el-button type="success" plain @click="changePass(scope.$index,scope.row)">修改密码</el-button>
             </template>
         </el-table-column>

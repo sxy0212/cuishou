@@ -210,7 +210,7 @@ export default {
 		},
 		getBatchList(){//获取批次列表
 			let conf = {
-                url : '/api/api_backend.php?r=collection/init-search',
+                url : '/api/api/api_backend.php?r=collection/init-search',
                 success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.levelList = data.info.case_level
@@ -228,7 +228,7 @@ export default {
 				id:this.id
 			}
 			let conf = {
-				url : '/api/api_backend.php?r=collection/depart-search',
+				url : '/api/api/api_backend.php?r=collection/depart-search',
 				data,
                 success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -245,7 +245,7 @@ export default {
 		},
 		filterFn(val){//获取委托方
             let conf = {
-                url : '/api/api_backend.php?r=collection/client-search',
+                url : '/api/api/api_backend.php?r=collection/client-search',
                 data:{
                     case_client:val
                 },
@@ -289,7 +289,7 @@ export default {
 				
 			}
             let conf = {
-				url : '/api/api_backend.php?r=collection/search',
+				url : '/api/api/api_backend.php?r=collection/search',
 				data:{
 					data:JSON.stringify(data),
 					page:this.page,
@@ -371,7 +371,7 @@ export default {
 							id:''
 						}
 				let conf = {
-					url : '/api/api_backend.php?r=collection/area-query',
+					url : '/api/api/api_backend.php?r=collection/area-query',
 					success:(data)=>{
 						if( data.statusCode == 1 ){
 							this.areaList = data.info
@@ -398,7 +398,7 @@ export default {
 						} )
 						
 			let conf = {
-				url : '/api/api_backend.php?r=collection/update',
+				url : '/api/api/api_backend.php?r=collection/update',
 				data:{
 					id: ids,
 					data:data
@@ -441,7 +441,7 @@ export default {
 					"collection_area":''                   //催收区域，三者选填其一
 				} )
 				let conf = {
-					url : '/api/api_backend.php?r=collection/update',
+					url : '/api/api/api_backend.php?r=collection/update',
 					data:{
 						id: ids,
 						data:data
@@ -485,7 +485,7 @@ export default {
 					"collection_area":''                   //催收区域，三者选填其一
 				} )
 				let conf = {
-					url : '/api/api_backend.php?r=collection/update',
+					url : '/api/api/api_backend.php?r=collection/update',
 					data:{
 						id: ids,
 						data:data
@@ -525,7 +525,7 @@ export default {
 			data.split_status = num
 			data.case_id = this.case_id
 			let conf = {
-				url : '/api/api_backend.php?r=collection/case-split',
+				url : '/api/api/api_backend.php?r=collection/case-split',
 				data:{
 					data:JSON.stringify( data )
 				},
@@ -554,7 +554,7 @@ export default {
 			data.case_id = this.case_id
 			// this.getDepartmentList(2)
 			let conf = {
-					url : '/api/api_backend.php?r=collection/case-split',
+					url : '/api/api/api_backend.php?r=collection/case-split',
 					data:{
 						data:JSON.stringify( data )
 					},

@@ -130,8 +130,8 @@
 									<el-time-select placeholder="结束时间" v-model="form.end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: form.start_time_pm}" :style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="机器人数量:">
-									<ul>
-										<li class="Slider"><el-slider show-stops :max="10" :min="1" v-model="form.ai_count"></el-slider></li>
+									<ul style="margin-top:15px;">
+										<li class="Slider"><el-slider show-stops :max="AddData.usable_ai_count" :min="1" v-model="form.ai_count"></el-slider></li>
 									</ul>
 								</el-form-item>
 								<el-form-item label="外线号码:">
@@ -263,8 +263,8 @@
 									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: start_time_pm}" :style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="机器人数量:">
-									<ul>
-										<li class="Slider"><el-slider show-stops :max="10" :min="1" v-model="formEdit.ai_count"></el-slider></li>
+									<ul style="margin-top:15px;">
+										<li class="Slider"><el-slider show-stops :max="formEdit.usable_ai_count" :min="1" v-model="formEdit.ai_count"></el-slider></li>
 									</ul>
 								</el-form-item>
 								<el-form-item label="外线号码:">
@@ -523,7 +523,8 @@ import store from '@/vuex/store.js'
 					call_result:[],   //未接通状态
 					templates:[],   //呼叫使用话术
 					ext_list:[],     //转分机数据
-					smsList:[]                //短信
+					smsList:[],               //短信
+					usable_ai_count:""
         		},
 				AddQueueData:{            //添加任务的时候转队列需要用到的数据
 					QueueShow:false,      //转队列的时候出现的弹框
@@ -653,6 +654,7 @@ import store from '@/vuex/store.js'
 				formEdit: {
 					extNum: "", //分机号（转分机） 
 					asrtomobile: "",//手机号（转手机）
+					usable_ai_count:0
 				},
 				start_time_am:"", //上午开始呼叫时间
 				end_time_am:"",    //上午结束呼叫时间
@@ -724,6 +726,7 @@ import store from '@/vuex/store.js'
 						this.AddData.outLine = data.info.out_side_lines
 						this.AddData.recognition_lies = data.info.recognition_lies
 						this.AddData.call_result = data.info.call_result_status
+						this.AddData.usable_ai_count = data.info.usable_ai_count
 					}
 				}
 				axiosRequest(conf)
@@ -929,6 +932,7 @@ import store from '@/vuex/store.js'
 						})
 						// this.editData.templates = data.info.templates
 						this.formEdit = data.info.info
+						this.formEdit.usable_ai_count = data.info.usable_ai_count
 						this.formEdit.ai_count = parseInt(data.info.info.ai_count)
 						this.start_time_am = data.info.info.call_time.am.s
 						this.end_time_am = data.info.info.call_time.am.e
