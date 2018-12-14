@@ -36,10 +36,10 @@ function formatDate(date, fmt) {
     function setCookie(name, value, day) {
          var oDate = new Date();
          oDate.setDate(oDate.getDate() + day);
-       document.cookie = name + '=' + value + ';expires=' + oDate;
+       document.cookie = name + '=' + value ;
     }
     function  delCookie(name){
-        setCookie(name, '', '1s')
+        setCookie(name, '')
     }
    function  axiosParams(data) {
         const params = new URLSearchParams();

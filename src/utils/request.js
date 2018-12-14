@@ -52,7 +52,24 @@ axios.interceptors.response.use(
         location.reload()
       })
       return false
-   }else {
+   }else if (response.data.statusCode == 0 &&response.data.message =="账号在其他地点登陆") {
+    MessageBox.confirm(
+      '账号在其他地点登陆',
+      {
+        confirmButtonText: '重新登录',
+        type: 'warning',
+        showClose:false,
+        showCancelButton:false,
+        closeOnClickModal:false,
+        closeOnPressEscape:false
+      }
+    ).then(() => {
+      router.push("/login")
+      delCookie("user")
+      location.reload()
+    })
+    return false
+ }else {
       return response
     }
     
