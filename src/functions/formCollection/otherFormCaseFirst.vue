@@ -187,9 +187,11 @@ export default {
     ],
     methods:{
         filterFn(val){
-            console.log(val)
             this.$emit('filterFn',val)
         },
+        changeFn(){
+
+        }
     }
 }
 </script>

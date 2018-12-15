@@ -181,6 +181,9 @@ export default {
 		this.init()
 	},
     methods: {
+		changeFn(){
+
+		},
 		changeCaseClient(val){
 			t = val
 		},
