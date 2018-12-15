@@ -44,7 +44,7 @@
             </template>
         </el-table-column>
         <el-table-column
-        prop="staff_id"
+        prop="call_billsec"
         label="通话时长"
         >
         </el-table-column>

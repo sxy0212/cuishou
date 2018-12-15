@@ -74,11 +74,11 @@
 <script>
 import '@/assets/css/system.css'
 import pageChange from '@/components/pageChange.vue'
-import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
-import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
-import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
-import addChangeArea from '@/functions/editDialog/addChangeArea.vue'
-import addDistribute from '@/functions/editDialog/addDistribute.vue'
+import formCaseFirst from '@/functions/formCollection/otherFormCaseFirst.vue'
+import formCaseSecond from '@/functions/formCollection/otherFormCaseSecond.vue'
+import tableCaseMan from '@/functions/tableCollection/otherTableCaseMan.vue'
+import addChangeArea from '@/functions/editDialog/otherAddChangeArea.vue'
+import addDistribute from '@/functions/editDialog/otherAddDistribute.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -196,9 +196,9 @@ export default {
 		this.conditions.depart_id = this.$route.query.depart_id
 		this.conditions.batch_id = this.$route.query.batch_id
 		this.init()
-		this.getBatchList()
-		this.getDepartmentList(1)
-		this.filterFn('')
+		// this.getBatchList()
+		// this.getDepartmentList(1)
+		// this.filterFn('')
 	},
     methods: {
 		changeCaseClient(val){
@@ -258,62 +258,73 @@ export default {
                 }
             }
             axiosRequest(conf)
-        },
-		init(){
-			//端口需要的数据键值对必须是正好的，多余的没用的键值对会报错，所以这样单独来取
-			let data = {
-				case_name: this.conditions.case_name,
-				case_mobile: this.conditions.case_mobile,
-				case_id_num:  this.conditions.case_id_num,
-				case_status:  this.conditions.case_status,
-				talk_recode:  this.conditions.talk_recode,
-				case_level:  this.conditions.case_level,
-				batch_id:  this.conditions.batch_id,
-				depart_id: this.conditions.depart_id,
-				staff_id: this.conditions.staff_id,
-				case_color:  this.conditions.case_color,
-				id:  this.conditions.id,
-				case_client: this.conditions.case_client,//委托方
-				case_money: [
-					this.conditions.case_money1,
-					this.conditions.case_money2
-				],
-				case_date: this.conditions.case_date,
-				case_back_date: this.conditions.case_back_date,
-				case_last_collection_date: this.conditions.case_last_collection_date,
-				talk_time: [
-					this.conditions.talk_time1,
-					this.conditions.talk_time2
-				],
-				
-			}
-            let conf = {
-				url : '/api/api_backend.php?r=collection/search',
-				data:{
-					data:JSON.stringify(data),
-					page:this.page,
-                	page_size:this.page_size
-				},
-                success:(data)=>{
-                    if( data.statusCode == 1 ){
-						this.tableData = data.info.info.map(item=>{
-							this.caseStatusList.forEach(one=>{
-								if(one.value == item.case_status){
-									item.case_status = one.label
-									
-								}
-							})
-							return item
-						})
-						this.total = Number( data.info.total )
-						this.case_all_money = data.info.case_all_money
-						this.case_num = data.info.case_num
-						this.case_id = data.info.case_id
+		},
+		init(){//数据初始化
+			let conf = {
+				url : '/api/api_backend.php?r=case/init-data',
+				success:(data)=>{
+					if( data.statusCode == 1 ){
+						
                     }
                 }
             }
             axiosRequest(conf)
-        },
+		},
+		// init(){
+		// 	//端口需要的数据键值对必须是正好的，多余的没用的键值对会报错，所以这样单独来取
+		// 	let data = {
+		// 		case_name: this.conditions.case_name,
+		// 		case_mobile: this.conditions.case_mobile,
+		// 		case_id_num:  this.conditions.case_id_num,
+		// 		case_status:  this.conditions.case_status,
+		// 		talk_recode:  this.conditions.talk_recode,
+		// 		case_level:  this.conditions.case_level,
+		// 		batch_id:  this.conditions.batch_id,
+		// 		depart_id: this.conditions.depart_id,
+		// 		staff_id: this.conditions.staff_id,
+		// 		case_color:  this.conditions.case_color,
+		// 		id:  this.conditions.id,
+		// 		case_client: this.conditions.case_client,//委托方
+		// 		case_money: [
+		// 			this.conditions.case_money1,
+		// 			this.conditions.case_money2
+		// 		],
+		// 		case_date: this.conditions.case_date,
+		// 		case_back_date: this.conditions.case_back_date,
+		// 		case_last_collection_date: this.conditions.case_last_collection_date,
+		// 		talk_time: [
+		// 			this.conditions.talk_time1,
+		// 			this.conditions.talk_time2
+		// 		],
+				
+		// 	}
+        //     let conf = {
+		// 		url : '/api/api_backend.php?r=collection/search',
+		// 		data:{
+		// 			data:JSON.stringify(data),
+		// 			page:this.page,
+        //         	page_size:this.page_size
+		// 		},
+        //         success:(data)=>{
+        //             if( data.statusCode == 1 ){
+		// 				this.tableData = data.info.info.map(item=>{
+		// 					this.caseStatusList.forEach(one=>{
+		// 						if(one.value == item.case_status){
+		// 							item.case_status = one.label
+									
+		// 						}
+		// 					})
+		// 					return item
+		// 				})
+		// 				this.total = Number( data.info.total )
+		// 				this.case_all_money = data.info.case_all_money
+		// 				this.case_num = data.info.case_num
+		// 				this.case_id = data.info.case_id
+        //             }
+        //         }
+        //     }
+        //     axiosRequest(conf)
+        // },
 		pageSizeChangeFn(val){
             this.page_size = val
             this.init()

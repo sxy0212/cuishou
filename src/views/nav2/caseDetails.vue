@@ -287,6 +287,8 @@ export default {
                 success:(data)=>{
 					if( data.statusCode == 1 ){
                         this.tableSecond = data.info
+                    }else if(data.statusCode == 0 ){
+                        this.tableSecond = []
                     }
                 }
             }

@@ -360,7 +360,6 @@ export default {
 					""
 				]
 			}
-			
 		},
 		changeArea(){//修改区域
 			if( !!this.multipList.length ){//去获取区域列表
@@ -529,7 +528,12 @@ export default {
 				},
 				success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.formDistribute.case_all_num = data.info.case_all_num
+						if( typeof(data.info.case_all_num) =='number' ){
+							this.formDistribute.case_all_num = data.info.case_all_num
+						}else{
+							
+						}
+						
 					}else{
 						Message({
 							message: data.message,
