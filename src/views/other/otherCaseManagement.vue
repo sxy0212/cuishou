@@ -3,7 +3,7 @@
 	<div class="cover">
 		<div-form
 			:conditions='conditions'
-			:levelList='levelList'
+			:caseLevelList='caseLevelList'
 			:filterList='filterList'
 			:batchList='batchList'
 			:departmentList='departmentList'
@@ -11,7 +11,6 @@
 			:clientList='clientList'
 			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
-			v-on:getDepartmentList='getDepartmentList($event)'
 			v-on:filterFn='filterFn($event)'
 		>
 		</div-form>
@@ -33,7 +32,7 @@
 	</div>
     <div class="tableCover">
 		<div class="totalT">
-			查询统计：	案件总数：{{case_num}}件，总金额：￥{{case_all_money}}
+			查询统计：	案件总数：{{total}}件，当前页的总金额：￥{{total_money}}
 		</div>
 		<div-table
 			:tableData='tableData'
@@ -64,7 +63,6 @@
 			v-on:cancelDistribute='cancelDistribute($event)'
 			v-on:sureToDistribute='sureToDistribute($event)'
 			v-on:changeFn='changeFn($event)'
-			v-on:getDepartmentList='getDepartmentList($event)'
 		></second-dialog>
     </el-dialog>
    </div>
@@ -98,8 +96,7 @@ export default {
 			distributeNow:false,//分配
 			bannerTitle:'修改区域',
 			addChangeAreaNow:false,//修改区域
-			case_num:'',//案件总数
-			case_all_money:'',//总额
+			total_money:'',//总额
 			formDistribute:{
 				depart:'',
 				staff:''
@@ -111,48 +108,34 @@ export default {
           		name: '',
 				region: ''
 			},
-			levelList:[],//案件等级
+			caseLevelList:[],//案件等级
 			batchList:[],//批次列表
 			departmentList:[],//部门列表
 			clientList:[],//委托方列表
 			staffList:[],//催收员列表
 			conditions:{//搜索条件
-				case_name: "",
-				case_mobile: "",
-				case_id_num: "",
-				case_status: "",
-				talk_recode: "",
-				case_level: "",
-				batch_id: "",
-				depart_id:'',
-				staff_id:'',
-				case_color: "",
-				id: "",
-				case_client:'',//委托方
-				talk_time1:'',
-				talk_time2:'',
-				case_money1:'',
-				case_money2:'',
-				case_money: [        
-					"",
-					""
-				],
-				case_date: [        
-					'',
-					''
-				],
-				case_back_date: [
-					"",
-					""
-				],
-				case_last_collection_date: [        
-					'',
-					''
-				],
-				talk_time: [        
-					"",
-					""
-				]
+				case_name: "",	//姓名
+				case_mobile: "",	//联系方式
+				case_id_num: "", //证件号
+				keywords: "", //关键词
+				case_code:'',	//案件序列号
+				case_status: "",	//案件状态
+				case_level:'', //案件等级
+				client_id:'', //委托方
+				min_case_money:'',     //最小金额
+				max_case_money:'',	//最高金额
+				min_talk_time:'',	//最小通话时长
+				max_talk_time:'',	// 最大通话时长
+				min_case_date:'',	//最小委案日期
+				max_case_date:'',	//最大委案日期
+				min_case_back_date:'',	//最小退案日期
+				max_case_back_date:'',	//最大退案日期
+				depart_id:'',	//部门id
+				staff_id:'',	//催收员id
+				batch_id:'',	//所属批次id
+				case_color:'',	//标色搜索
+				min_case_last_collection_date:'',	//最小最后跟进
+				max_case_last_collection_date:'',	//最大最后跟进
 			},
 			formInline: {
 				user: '',
@@ -190,15 +173,15 @@ export default {
 			filterList:[],//委托方
 			case_id:null,//搜索结果
 		}
+
 	},
 	activated(){
-		this.conditions.staff_id = this.$route.query.staff_id
-		this.conditions.depart_id = this.$route.query.depart_id
-		this.conditions.batch_id = this.$route.query.batch_id
+		this.getInfoFn()
+		this.conditions.staff_id = typeof( this.$route.query.staff_id ) == 'undefined'?'':this.$route.query.staff_id
+		this.conditions.depart_id = typeof(  this.$route.query.depart_id ) == 'undefined'?'': this.$route.query.depart_id
+		this.conditions.batch_id = typeof(  this.$route.query.batch_id ) == 'undefined'?'': this.$route.query.batch_id
 		this.init()
-		// this.getBatchList()
-		// this.getDepartmentList(1)
-		// this.filterFn('')
+		
 	},
     methods: {
 		changeCaseClient(val){
@@ -207,36 +190,15 @@ export default {
 		handleSelectionChange(val){
 			this.multipList = val
 		},
-		getBatchList(){//获取批次列表
+		changeFn(val){//搜部门
 			let conf = {
-                url : '/api/api_backend.php?r=collection/init-search',
+				url : '/api/api_backend.php?r=case/depart-staff-list',
+				data:{
+					depart_id:val
+				},
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.levelList = data.info.case_level
-                        this.batchList = data.info.batch_id
-                    }
-                }
-            }
-            axiosRequest(conf)
-		},
-		changeFn(val){
-			this.id = val
-		},
-		getDepartmentList(num){//获取部门或是催收员列表
-			let data = {
-				id:this.id
-			}
-			let conf = {
-				url : '/api/api_backend.php?r=collection/depart-search',
-				data,
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-						if(num == 1){
-							this.departmentList = data.info.depart
-						}else if(num ==2){
-							this.staffList = data.info.staff
-						}
-						this.id = ''
+						this.staffList = data.info.staffList
                     }
                 }
             }
@@ -259,72 +221,66 @@ export default {
             }
             axiosRequest(conf)
 		},
-		init(){//数据初始化
+		getInfoFn(){//数据初始化
 			let conf = {
 				url : '/api/api_backend.php?r=case/init-data',
 				success:(data)=>{
 					if( data.statusCode == 1 ){
-						
-                    }
+						let arr = []
+						data.info.departmentList.forEach(item=>{
+							arr.push(item)
+							if( item.children.length ){
+								item.children.forEach(every=>{
+									arr.push({
+										class_name:'textIn',
+										company_id: every.company_id,
+										create_time:every.create_time,
+										depart_name:every.depart_name,
+										id:every.id,
+										parent_id:every.parent_id,
+										update_time:every.update_time,
+										parent_str:every.parent_str
+									})
+								})
+								
+							}
+						})
+						this.departmentList = arr
+						this.batchList = data.info.batchList
+						this.caseLevelList = data.info.caseLevelList
+                    }else if(data.statusCode == 0){
+						Message({
+							message: data.message,
+							type: 'error',
+							duration: 3 * 1000
+						})
+					}
                 }
             }
             axiosRequest(conf)
 		},
-		// init(){
-		// 	//端口需要的数据键值对必须是正好的，多余的没用的键值对会报错，所以这样单独来取
-		// 	let data = {
-		// 		case_name: this.conditions.case_name,
-		// 		case_mobile: this.conditions.case_mobile,
-		// 		case_id_num:  this.conditions.case_id_num,
-		// 		case_status:  this.conditions.case_status,
-		// 		talk_recode:  this.conditions.talk_recode,
-		// 		case_level:  this.conditions.case_level,
-		// 		batch_id:  this.conditions.batch_id,
-		// 		depart_id: this.conditions.depart_id,
-		// 		staff_id: this.conditions.staff_id,
-		// 		case_color:  this.conditions.case_color,
-		// 		id:  this.conditions.id,
-		// 		case_client: this.conditions.case_client,//委托方
-		// 		case_money: [
-		// 			this.conditions.case_money1,
-		// 			this.conditions.case_money2
-		// 		],
-		// 		case_date: this.conditions.case_date,
-		// 		case_back_date: this.conditions.case_back_date,
-		// 		case_last_collection_date: this.conditions.case_last_collection_date,
-		// 		talk_time: [
-		// 			this.conditions.talk_time1,
-		// 			this.conditions.talk_time2
-		// 		],
-				
-		// 	}
-        //     let conf = {
-		// 		url : '/api/api_backend.php?r=collection/search',
-		// 		data:{
-		// 			data:JSON.stringify(data),
-		// 			page:this.page,
-        //         	page_size:this.page_size
-		// 		},
-        //         success:(data)=>{
-        //             if( data.statusCode == 1 ){
-		// 				this.tableData = data.info.info.map(item=>{
-		// 					this.caseStatusList.forEach(one=>{
-		// 						if(one.value == item.case_status){
-		// 							item.case_status = one.label
-									
-		// 						}
-		// 					})
-		// 					return item
-		// 				})
-		// 				this.total = Number( data.info.total )
-		// 				this.case_all_money = data.info.case_all_money
-		// 				this.case_num = data.info.case_num
-		// 				this.case_id = data.info.case_id
-        //             }
-        //         }
-        //     }
-        //     axiosRequest(conf)
-        // },
+		init(){//页面初始化
+			this.conditions.page = this.page
+			this.conditions.page_size = this.page_size
+			let conf = {
+				url : '/api/api_backend.php?r=case/case-list',
+				data: this.conditions,
+				success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.tableData = data.info
+						this.total = Number(data.total_count)
+						this.total_money = Number(data.total_money)
+                    }else if(data.statusCode == 0){
+						Message({
+							message: data.message,
+							type: 'error',
+							duration: 3 * 1000
+						})
+					}
+                } 
+            }
+            axiosRequest(conf)
+		},
 		pageSizeChangeFn(val){
             this.page_size = val
             this.init()
@@ -557,8 +513,6 @@ export default {
 				}
 			}
 			axiosRequest(conf)
-			
-
 		},
 		cancelDistribute(){
 			this.distributeNow  = false
@@ -567,7 +521,6 @@ export default {
 			let data = this.formDistribute
 			data.split_status = num
 			data.case_id = this.case_id
-			// this.getDepartmentList(2)
 			let conf = {
 					url : '/api/api_backend.php?r=collection/case-split',
 					data:{
