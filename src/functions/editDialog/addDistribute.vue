@@ -45,7 +45,6 @@ export default {
     methods:{
         changeFn(val){
             this.$emit('changeFn',val)
-            this.$emit('getDepartmentList',2)
         },
         sureToDistribute(){
             this.$emit('sureToDistribute',1)

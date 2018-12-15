@@ -4,11 +4,10 @@
 		<div-form
 			:conditions='conditions'
 			:caseLevelList='caseLevelList'
-			:filterList='filterList'
+			:clientList='clientList'
 			:batchList='batchList'
 			:departmentList='departmentList'
 			:staffList='staffList'
-			:clientList='clientList'
 			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
 			v-on:filterFn='filterFn($event)'
@@ -62,7 +61,6 @@
 			:staffList='staffList'
 			v-on:cancelDistribute='cancelDistribute($event)'
 			v-on:sureToDistribute='sureToDistribute($event)'
-			v-on:changeFn='changeFn($event)'
 		></second-dialog>
     </el-dialog>
    </div>
@@ -110,8 +108,8 @@ export default {
 			},
 			caseLevelList:[],//案件等级
 			batchList:[],//批次列表
+			clientList:[],//委托方
 			departmentList:[],//部门列表
-			clientList:[],//委托方列表
 			staffList:[],//催收员列表
 			conditions:{//搜索条件
 				case_name: "",	//姓名
@@ -170,7 +168,7 @@ export default {
 			],
 			multipList:[],//多样的选择,
 			areaList:[],//区域列表
-			filterList:[],//委托方
+			
 			case_id:null,//搜索结果
 		}
 
@@ -181,7 +179,6 @@ export default {
 		this.conditions.depart_id = typeof(  this.$route.query.depart_id ) == 'undefined'?'': this.$route.query.depart_id
 		this.conditions.batch_id = typeof(  this.$route.query.batch_id ) == 'undefined'?'': this.$route.query.batch_id
 		this.init()
-		
 	},
     methods: {
 		changeCaseClient(val){
@@ -190,33 +187,16 @@ export default {
 		handleSelectionChange(val){
 			this.multipList = val
 		},
-		changeFn(val){//搜部门
-			let conf = {
-				url : '/api/api_backend.php?r=case/depart-staff-list',
-				data:{
-					depart_id:val
-				},
-                success:(data)=>{
-					if( data.statusCode == 1 ){
-						this.staffList = data.info.staffList
-                    }
-                }
-            }
-            axiosRequest(conf)
-		},
 		filterFn(val){//获取委托方
             let conf = {
-                url : '/api/api_backend.php?r=collection/client-search',
+                url : '/api/api_backend.php?r=case/client-list',
                 data:{
-                    case_client:val
+                    client_name:val
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-                        this.filterList = data.info.client
-						this.conditions.case_client = data.info.client_batch_id
-                    }else if(data.statusCode == 0){
-                        this.filterList = []
-                    }
+                        this.clientList = data.info
+					}
                 }
             }
             axiosRequest(conf)
@@ -248,6 +228,7 @@ export default {
 						this.departmentList = arr
 						this.batchList = data.info.batchList
 						this.caseLevelList = data.info.caseLevelList
+						this.clientList = data.info.clientList
                     }else if(data.statusCode == 0){
 						Message({
 							message: data.message,
@@ -270,7 +251,10 @@ export default {
 						this.tableData = data.info
 						this.total = Number(data.total_count)
 						this.total_money = Number(data.total_money)
-                    }else if(data.statusCode == 0){
+                    }else if( data.statusCode == 0 ){	//没有数据
+						this.tableData = []
+						this.total = 0
+						this.total_money = 0
 						Message({
 							message: data.message,
 							type: 'error',

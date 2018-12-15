@@ -46,11 +46,11 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="委托方">
-                <el-select v-model="conditions.client_id" filterable :filter-method = 'filterFn' @change="filterFn" placeholder="请选择委托方">
+                <el-select v-model="conditions.client_id" filterable :filter-method='filterFn'  placeholder="请选择委托方">
                     <el-option
-                        v-for="item in filterList"
+                        v-for="item in clientList"
                         :label="item.name" 
-                        :value="item.name"
+                        :value="item.id"
                         :key='item.id'>
                     </el-option>
                 </el-select>
@@ -182,17 +182,14 @@ export default {
         'batchList',
         'departmentList',
         'staffList',
-        'filterList',
+        'clientList',
         'caseStatusList',
     ],
     methods:{
-        changeFn(val){
-            this.$emit('changeFn',val)
-        },
         filterFn(val){
+            console.log(val)
             this.$emit('filterFn',val)
         },
-        
     }
 }
 </script>
