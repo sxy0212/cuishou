@@ -324,7 +324,7 @@ export default {
 							id:''
 						}
 				let conf = {
-					url : '/api/api_backend.php?r=collection/area-query',
+					url : '/api/api_backend.php?r=case/area-list',
 					success:(data)=>{
 						if( data.statusCode == 1 ){
 							this.areaList = data.info
@@ -341,20 +341,12 @@ export default {
 			}
 		},
 		protectFn(){//保存区域
-			let ids = this.multipList.map(item=>{
-				return item.id
-			})
-			let data = JSON.stringify( {
-							"case_status":"",                       //案件状态，三者选填其一
-							"case_color":"",                       //案件标色，三者选填其一
-							"collection_area":this.formTitle.id                   //催收区域，三者选填其一
-						} )
-						
+			let ids = this.multipList.map(item=> item.id).join(',')
 			let conf = {
-				url : '/api/api_backend.php?r=collection/update',
+				url : '/api/api_backend.php?r=case/case-operate',
 				data:{
-					id: ids,
-					data:data
+					case_id: ids,
+					case_area:this.formTitle.id
 				},
 				success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -394,8 +386,8 @@ export default {
 					},
 					success:(data)=>{
 						if( data.statusCode == 1 ){
-							// this.init()
-							// this.multipList = []
+							this.init()
+							this.multipList = []
 							Message({
 								message: data.message,
 								type: 'success',
@@ -422,19 +414,12 @@ export default {
 		},
 		colorChange(str){
 			if( !!this.multipList.length ){
-				let ids = this.multipList.map(item=>{
-						return item.id
-				})
-				let data = JSON.stringify( {
-					"case_status":'',                       //案件状态，三者选填其一
-					"case_color":str,                       //案件标色，三者选填其一
-					"collection_area":''                   //催收区域，三者选填其一
-				} )
+				let ids = this.multipList.map(item=>item.id).join(',')
 				let conf = {
-					url : '/api/api_backend.php?r=collection/update',
+					url : '/api/api_backend.php?r=case/case-color',
 					data:{
-						id: ids,
-						data:data
+						case_id : ids,
+						case_color : str
 					},
 					success:(data)=>{
 						if( data.statusCode == 1 ){
