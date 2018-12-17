@@ -65,14 +65,14 @@ import store from '@/vuex/store.js'
         store.commit('save_index', key); 
       },
       handleClose(key, keyPath) {
-        console.log(key,keyPath)
+        // console.log(key,keyPath)
       },
       handleSelect(key,path){
-        console.log(key,path)
+        // console.log(key,path)
         store.commit('save_index', path[1])
       },
       handleIconClick(ev) {
-        console.log(ev)
+        // console.log(ev)
       },
     },
   }
