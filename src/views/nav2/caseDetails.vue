@@ -4,8 +4,8 @@
             :selfInfo='selfInfo'
             v-on:totalCaseFn='totalCaseFn($event)'
             v-on:changeLevelFn='changeLevelFn($event)'
-            v-on:callFn='callFn($event)'
-            v-on:sendLetter='sendLetter($event)'
+            v-on:callFn='callFn($event,arguments)'
+            v-on:sendLetter='sendLetter($event,arguments)'
         ></div-info>
         
         <div class="tableCover">
@@ -300,9 +300,9 @@ export default {
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/call-out',
                 data:{
-                    phone:phone,
+                    phone:relation[0],
                     case_id:this.id,
-                    relation:relation
+                    relation:relation[1]
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -323,15 +323,15 @@ export default {
             }
             axiosRequest(conf)
         },
-        sendLetter(type,phone,whichOne){//信函
+        sendLetter(type,group){//信函
             this.remarkTitle = '新增记录'
             this.remarkShow= true
             this.remarkLabel = '备注'
             this.formRemark = {
-                type:type,
-                phone:phone,
+                type:group[0],
+                phone:group[1],
                 remark:'',
-                relation:whichOne
+                relation:group[2]
             }
         },
         saveFn(){//保存
