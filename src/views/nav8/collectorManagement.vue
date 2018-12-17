@@ -83,10 +83,10 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
           page_size:10,
           depart_id:"", 
           name:"",
-          case_paid_start:"",
+          case_paid_start:0,
           case_paid_end:"",
           case_paid:"",
-          case_money_start:"",
+          case_money_start:0,
           case_money_end:"",
           case_money:"",
           alloc_time_start:"",
@@ -135,41 +135,62 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
         if(num==0){
           data.page = this.form.page
           data.page_size = this.form.page_size
+          const conf = {
+            url,
+            data:data,
+            success:(data)=>{
+              this.infos = data.info.info
+              this.tip.total_task_count = data.info.total_task_count
+              this.tip.total_case_count = data.info.total_case_count
+              this.tip.task_case_count_percent = data.info.task_case_count_percent
+              this.tip.total_case_paid = data.info.total_case_paid
+              this.tip.total_case_money = data.info.total_case_money
+              this.tip.paid_money_percent = data.info.paid_money_percent
+              this.total = parseInt(data.info.total)
+            }
+          }
+          axiosRequest(conf)
         }else if(num == 1){
           data.page = 1
-          data.page_size = 10
-        }
-        if(this.form.case_paid_start!=""&&this.form.case_paid_end!=""){
-          data.case_paid = this.form.case_paid_start+","+this.form.case_paid_end
-        }else{
-          data.case_paid = ""
-        }
-        if(this.form.case_money_start!=""&&this.form.case_money_end!=""){
-           data.case_money = this.form.case_money_start +"," +this.form.case_money_end
-        }else{
-          data.case_money = ""
-        }
-        if( this.form.alloc_time_start!=""&&this.form.alloc_time_end!=""){
-          data.alloc_time = formatDate(this.form.alloc_time_start,'yyyy-MM-dd hh:mm:ss')+","+formatDate(this.form.alloc_time_end,"yyyy-MM-dd hh:mm:ss")
-        }else{
-          data.alloc_time = ""
-        }
-        
-        const conf = {
-          url,
-          data:data,
-          success:(data)=>{
-            this.infos = data.info.info
-            this.tip.total_task_count = data.info.total_task_count
-            this.tip.total_case_count = data.info.total_case_count
-            this.tip.task_case_count_percent = data.info.task_case_count_percent
-            this.tip.total_case_paid = data.info.total_case_paid
-            this.tip.total_case_money = data.info.total_case_money
-            this.tip.paid_money_percent = data.info.paid_money_percent
-            this.total = parseInt(data.info.total)
+          data.page_size = 10 
+          if(this.form.case_paid_start!=""&&this.form.case_paid_end!=""){
+            data.case_paid = this.form.case_paid_start+","+this.form.case_paid_end
+          }else{
+            data.case_paid = ""
+          }
+          if(this.form.case_money_start!=""&&this.form.case_money_end!=""){
+            data.case_money = this.form.case_money_start +"," +this.form.case_money_end
+          }else{
+            data.case_money = ""
+          }
+          if( this.form.alloc_time_start!=""&&this.form.alloc_time_end!=""){
+            data.alloc_time = formatDate(this.form.alloc_time_start,'yyyy-MM-dd hh:mm:ss')+","+formatDate(this.form.alloc_time_end,"yyyy-MM-dd hh:mm:ss")
+          }else{
+            data.alloc_time = ""
+          }
+          if(!this.form.alloc_time_start&&this.form.alloc_time_end){
+            this.$alert("请选择开始时间")
+          }else{
+            const conf = {
+                url,
+                data:data,
+                success:(data)=>{
+                  this.infos = data.info.info
+                  this.tip.total_task_count = data.info.total_task_count
+                  this.tip.total_case_count = data.info.total_case_count
+                  this.tip.task_case_count_percent = data.info.task_case_count_percent
+                  this.tip.total_case_paid = data.info.total_case_paid
+                  this.tip.total_case_money = data.info.total_case_money
+                  this.tip.paid_money_percent = data.info.paid_money_percent
+                  this.total = parseInt(data.info.total)
+                }
+              }
+              axiosRequest(conf)
           }
         }
-        axiosRequest(conf)
+       
+        
+       
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;

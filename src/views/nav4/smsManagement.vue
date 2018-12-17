@@ -25,7 +25,7 @@
 								</el-form-item>
 								<el-form-item label="发送方式"></el-form-item>
 							</el-form>
-							<el-form :model="form1" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #dcdfe6">
+							<el-form :model="form1" label-width="160px" ref="forms" style="display:inline-block;background:#fff;border-right:1px solid #dcdfe6">
 								<el-form-item label="本人号码接通:">
 									<el-select v-model="form1.connected_send" :style="Index.width">
 										<el-option value="0" label="不发送" ></el-option>
@@ -47,16 +47,22 @@
 										<p style="display:inline-block">次</p>
 								</el-form-item>
 								<el-form-item label="未接通:">
-									<el-checkbox :indeterminate="isIndeterminate1"  @change="handleCheckAllChange1">全选</el-checkbox>
-									<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
+								
+									<el-select v-model="not_connected_status1" multiple placeholder="请选择" @change="changeStatus1" :style="Index.width">
+										<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+										:value="item.id">
+										</el-option>
+									</el-select>
+									<!--	<el-checkbox :indeterminate="isIndeterminate1"  @change="handleCheckAllChange1">全选</el-checkbox>
+										<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
 										<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-									</el-checkbox-group>
+									</el-checkbox-group>-->
 								</el-form-item>
 								<el-form-item label="发送内容:">
 										<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 								</el-form-item>
 							</el-form>
-							<el-form :model="form2" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #dcdfe6">
+							<el-form :model="form2" label-width="160px" ref="forms" style="display:inline-block;background:#fff;border-right:1px solid #dcdfe6">
 								<el-form-item label="第一联系人号码接通:">
 									<el-select v-model="form2.connected_send" :style="Index.width">
 										<el-option value="0" label="不发送" ></el-option>
@@ -78,16 +84,22 @@
 										<p style="display:inline-block">次</p>
 								</el-form-item>
 								<el-form-item label="未接通:">
-										<el-checkbox :indeterminate="isIndeterminate2"  @change="handleCheckAllChange2">全选</el-checkbox>
+										
+										<el-select v-model="not_connected_status2" multiple placeholder="请选择" @change="changeStatus2" :style="Index.width">
+										<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+										:value="item.id">
+										</el-option>
+									</el-select>
+									<!--<el-checkbox :indeterminate="isIndeterminate2"  @change="handleCheckAllChange2">全选</el-checkbox>
 										<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
 										<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-									</el-checkbox-group>
+									</el-checkbox-group>-->
 								</el-form-item>
 								<el-form-item label="发送内容:">
 										<el-input v-model="form2.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 								</el-form-item>
 							</el-form>
-							<el-form :model="form3" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff">
+							<el-form :model="form3" label-width="160px" ref="forms" style="display:inline-block;background:#fff">
 								<el-form-item label="第二联系人号码接通:">
 									<el-select v-model="form3.connected_send" :style="Index.width" >
 										<el-option value="0" label="不发送" ></el-option>
@@ -109,10 +121,16 @@
 										<p style="display:inline-block">次</p>
 								</el-form-item>
 								<el-form-item label="未接通:">
-										<el-checkbox :indeterminate="isIndeterminate3"  @change="handleCheckAllChange3">全选</el-checkbox>
-										<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
+									
+									<!--	<el-checkbox :indeterminate="isIndeterminate3"  @change="handleCheckAllChange3">全选</el-checkbox>	
+									<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
 										<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-									</el-checkbox-group>
+									</el-checkbox-group>-->
+										<el-select v-model="not_connected_status3" multiple placeholder="请选择" @change="changeStatus3" :style="Index.width">
+										<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+										:value="item.id">
+										</el-option>
+									</el-select>
 								</el-form-item>
 								<el-form-item label="发送内容:">
 										<el-input v-model="form3.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -160,15 +178,21 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
-													<el-checkbox :indeterminate="isIndeterminate1Edit"  @change="handleCheckAllChange1Edit">全选</el-checkbox>
+													<!--<el-checkbox :indeterminate="isIndeterminate1Edit"  @change="handleCheckAllChange1Edit">全选</el-checkbox>
 													<el-checkbox-group v-model="not_connected_status1Edit" @change="changeStatus1Edit">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
+												</el-checkbox-group>-->
+													<el-select v-model="not_connected_status1Edit" multiple placeholder="请选择" @change="changeStatus1Edit" :style="Index.width">
+										<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+										:value="item.id">
+										</el-option>
+									</el-select>
 											</el-form-item>
 											<el-form-item label="发送内容:">
 													<el-input v-model="form1Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
 											</el-form-item>
 										</el-form>
+										<!--<div style="width:10px;background:#f2f2f2"></div>-->
 										<el-form :model="form2Edit" label-width="160px" ref="forms" style="width:32%;display:inline-block;background:#fff;border-right:1px solid #dcdfe6">
 											<el-form-item label="第一联系人号码接通:">
 												<el-select v-model="form2Edit.connected_send" :style="Index.width">
@@ -191,10 +215,15 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
-											<el-checkbox :indeterminate="isIndeterminate2Edit"  @change="handleCheckAllChange2Edit">全选</el-checkbox>
+											<!--<el-checkbox :indeterminate="isIndeterminate2Edit"  @change="handleCheckAllChange2Edit">全选</el-checkbox>
 												<el-checkbox-group v-model="not_connected_status2Edit" @change="changeStatus2Edit">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
+												</el-checkbox-group>-->
+												<el-select v-model="not_connected_status2Edit" multiple placeholder="请选择" @change="changeStatus2Edit" :style="Index.width">
+												<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+												:value="item.id">
+												</el-option>
+												</el-select>
 											</el-form-item>
 											<el-form-item label="发送内容:">
 													<el-input v-model="form2Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -222,10 +251,15 @@
 													<p style="display:inline-block">次</p>
 											</el-form-item>
 											<el-form-item label="未接通:">
-											<el-checkbox :indeterminate="isIndeterminate3Edit"  @change="handleCheckAllChange3Edit">全选</el-checkbox>
+											<!--<el-checkbox :indeterminate="isIndeterminate3Edit"  @change="handleCheckAllChange3Edit">全选</el-checkbox>
 													<el-checkbox-group v-model="not_connected_status3Edit" @change="changeStatus3Edit">
 													<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-												</el-checkbox-group>
+												</el-checkbox-group>-->
+													<el-select v-model="not_connected_status3Edit" multiple placeholder="请选择" @change="changeStatus3Edit" :style="Index.width">
+												<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+												:value="item.id">
+												</el-option>
+												</el-select>
 											</el-form-item>
 											<el-form-item label="发送内容:">
 													<el-input v-model="form3Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -596,4 +630,5 @@
 <style lang="scss" >
 .addTask1 .el-checkbox+.el-checkbox{margin-left:5px;}
 .addTask1 .el-dialog{width:75%;max-width:75%}
+.el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
 </style>

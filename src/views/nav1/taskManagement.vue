@@ -113,7 +113,7 @@
 				<!-- 添加任务弹框  -->
 				<div class="dial-header addTask">
             		<el-dialog title="任务添加" :visible.sync="Index.addTask" v-move>
-						<div style="float:left;width:50%;height:900px;display:block;background:#fff">
+						<div style="float:left;width:50%;height:750px;max-height:900px;display:block;background:#fff">
 							<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
 							<el-form :model="form" label-width="120px" ref="forms">
 								<el-form-item label="任务名称:">
@@ -150,7 +150,7 @@
 											<el-radio label="mobile">转手机</el-radio>
 											<el-input v-model="form.asrtomobile" style="width:120px; margin-left:10px"></el-input>
 										</div>
-										<div>
+										<div style="margin-top:10px;">
 											<el-radio label="ext">转分机</el-radio>
 											<el-select v-model="form.exten" placeholder="请选择" style="width:100px;margin-left:10px;">
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
@@ -169,6 +169,7 @@
 								<el-form-item label="振铃时长:">
 									<el-input v-model="form.call_duration" style="width:240px;margin-right:10px;"></el-input>秒
 								</el-form-item>
+								<div style="height:15px;background:#f2f2f2"></div>
 								<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">呼叫规则</p>
 								<!--本人联系人-->
 								<el-form :model="form1" label-width="120px" ref="forms">
@@ -181,10 +182,17 @@
 											</el-select>
 									</el-form-item>
 									<el-form-item label="未接通状态:">
+										<el-select v-model="not_connected_status1" multiple  placeholder="请选择" @change="changeStatus1" :style="Index.width">
+											<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+											:value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+									<!--<el-form-item label="未接通状态:">
 											<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
 												<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index">{{item.status}}</el-checkbox>
 											</el-checkbox-group>
-									</el-form-item>
+									</el-form-item>-->
 									<el-form-item label="直接拨打:">
 										<el-select v-model="form1.next_round" :style="Index.width" placeholder="请选择联系人">
 											<el-option label="第一联系人" value="1"></el-option>
@@ -194,7 +202,8 @@
 								</el-form>
                 			</el-form>
 							</div>
-							<div style="float:left;width:50%;height:900px;display:block;background:#fff">
+							<div style="float:left;width:15px;height:750px;max-height:900px;background:#f2f2f2"></div>
+							<div style="float:left;width:45%;height:750px;max-height:900px;display:block;background:#fff">
 							<!--第一联系人-->
 								<el-form :model="form2" label-width="145px" ref="forms">
 									<el-form-item label="第一联系人呼叫次数:">
@@ -206,10 +215,17 @@
 										</el-select>
 									</el-form-item>
 									<el-form-item label="未接通状态:">
+										<el-select v-model="not_connected_status2" multiple  placeholder="请选择" @change="changeStatus2" :style="Index.width">
+											<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index"
+											:value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+									<!--<el-form-item label="未接通状态:">
 										<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
 											<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index">{{item.status}}</el-checkbox>
 										</el-checkbox-group>
-									</el-form-item>
+									</el-form-item>-->
 									<el-form-item label="直接拨打:">
 										<el-select v-model="form2.next_round" :style="Index.width">
 											<el-option label="第二联系人" value="2"></el-option>
@@ -246,7 +262,7 @@
 				<!-- 编辑任务弹框  -->
 				<div class="dial-header addTask">
             		<el-dialog title="任务编辑" :visible.sync="Index.editTask" v-move>
-						<div style="float:left;width:50%;height:900px;display:block;background:#fff">
+						<div style="float:left;width:50%;height:750px;max-height:900px;display:block;background:#fff">
 							<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">基础配置</p>
 							<el-form :model="formEdit" label-width="120px" ref="forms">
 								<el-form-item label="任务名称:">
@@ -283,7 +299,7 @@
 											<el-radio label="mobile" >转手机</el-radio>
 											<el-input v-model="formEdit.asrtomobile" style="width:120px;  margin-left:10px"></el-input>
 										</div>
-										<div style="margin-bottom:5px;">
+										<div style="margin-bottom:5px;margin-top:10px;">
 											<el-radio label="ext" >转分机</el-radio>
 											<el-select v-model="formEdit.extNum" placeholder="请选择" style="width:100px;margin-left:10px;">
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
@@ -303,6 +319,7 @@
 								<el-form-item label="振铃时长:">
 									<el-input v-model="formEdit.call_duration" style="width:240px;margin-right:10px;"></el-input>秒
 								</el-form-item>
+								<div style="height:15px;background:#f2f2f2"></div>
 								<p style="text-align:center;font-size:16px;margin-bottom:10px;font-weight:bold">呼叫规则</p>
 								<!--本人联系人-->
 								<el-form :model="form1Edit" label-width="120px" ref="forms">
@@ -315,20 +332,28 @@
 										</el-select>
 								</el-form-item>
 								<el-form-item label="未接通状态:">
+									<el-select v-model="not_connected_status1Edit" multiple placeholder="请选择" @change="changeStatus1Edit" :style="Index.width">
+										<el-option :label="item.status" v-for="(item,index) in editData.call_result" :key="index"
+										:value="item.id">
+										</el-option>
+									</el-select>
+								</el-form-item>
+								<!--<el-form-item label="未接通状态:">
 										<el-checkbox-group v-model="not_connected_status1Edit" @change="changeStatus1Edit">
 											<el-checkbox :label="item.id" v-for="(item,index) in editData.call_result" :key="index">{{item.status}}</el-checkbox>
 										</el-checkbox-group>
-								</el-form-item>
+								</el-form-item>-->
 								<el-form-item label="直接拨打:">
-										<el-select v-model="form1Edit.next_round" :style="Index.width" placeholder="请选择联系人">
-												<el-option label="第一联系人" value="1"></el-option>
-												<el-option label="第二联系人" value="2"></el-option>
-										</el-select>
+									<el-select v-model="form1Edit.next_round" :style="Index.width" placeholder="请选择联系人">
+											<el-option label="第一联系人" value="1"></el-option>
+											<el-option label="第二联系人" value="2"></el-option>
+									</el-select>
 								</el-form-item>                   
 							</el-form>
                 		</el-form>
 					</div>
-					<div style="float:left;width:50%;height:900px;display:block;background:#fff">
+					<div style="float:left;width:15px;height:750px;max-height:900px;background:#f2f2f2"></div>
+					<div style="float:left;width:45%;height:750px;max-height:900px;display:block;background:#fff">
 					<!--第一联系人-->
 						<el-form :model="form2Edit" label-width="145px" ref="forms">
 							<el-form-item label="第一联系人呼叫次数:">
@@ -340,10 +365,17 @@
 								</el-select>
 							</el-form-item>
 							<el-form-item label="未接通状态:">
+										<el-select v-model="not_connected_status2Edit" multiple placeholder="请选择" @change="changeStatus2Edit" :style="Index.width">
+											<el-option :label="item.status" v-for="(item,index) in editData.call_result" :key="index"
+											:value="item.id">
+											</el-option>
+										</el-select>
+									</el-form-item>
+							<!--<el-form-item label="未接通状态:">
 								<el-checkbox-group v-model="not_connected_status2Edit" @change="changeStatus2Edit">
 									<el-checkbox :label="item.id" v-for="(item,index) in editData.call_result" :key="index">{{item.status}}</el-checkbox>
 								</el-checkbox-group>
-                    		</el-form-item>
+                    		</el-form-item>-->
 							<el-form-item label="直接拨打:">
 								<el-select v-model="form2Edit.next_round" :style="Index.width">
 									<el-option label="第二联系人" value="2"></el-option>
@@ -792,10 +824,10 @@ import store from '@/vuex/store.js'
 				axiosRequest(conf)
 			},
 			changeStatus1(){
-				this.form1.not_connected_status = this.not_connected_status1.join()
+				this.form1.not_connected_status = this.not_connected_status1.join(",")
 			},
 			changeStatus2(){
-				this.form2.not_connected_status = this.not_connected_status2.join()
+				this.form2.not_connected_status = this.not_connected_status2.join(",")
 			},
 		  	addTask(){
 				this.Index.addTask = true
@@ -1298,7 +1330,7 @@ import store from '@/vuex/store.js'
             },
             // 队列列表
             queueList(){
-                this. showQueue.show = true
+                this.showQueue.show = true
                 const url = "/api/api_backend.php?r=asroperate/config-queue-list"
                 const conf = {
                     url,
@@ -1378,4 +1410,7 @@ import store from '@/vuex/store.js'
 </script>
 <style lang="scss" scoped>
  @import '../../../static/css/taskManagement.scss'
+</style>
+<style>
+ .TopForm .el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
 </style>
