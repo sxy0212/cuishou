@@ -24,6 +24,7 @@
 			:colorList='colorList'
 			v-on:changeArea='changeArea($event)'
 			v-on:exportFn='exportFn($event)'
+			v-on:exportTel='exportTel($event)'
 			v-on:exportChoosen='exportChoosen($event)'
 			v-on:pauseFn='pauseFn($event)'
 			v-on:colorChange='colorChange($event)'
@@ -614,8 +615,25 @@ export default {
 			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
 		},
 		exportChoosen(){	// 导出选中
-			let ids =  this.multipList.map(item=>item.id).join(',')
-			window.open('/api/api_backend.php?r=case/case-export&export_type=selected+case_id_str=' + ids)
+			if( this.multipList.length ){
+				let ids =  this.multipList.map(item=>item.id).join(',')
+				window.open('/api/api_backend.php?r=case/case-export&export_type=selected&case_id_str=' + ids)
+			}else{
+				Message({
+					message: '请先选择要导出的案件',
+					type: 'warning',
+					duration: 3 * 1000
+				})
+			}
+			
+		},
+		exportTel(){	// 导出电话
+			window.open('/api/api_backend.php?r=case/case-export&export_type=selectedphone&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
+			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
+			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
+			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
+			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
 		}
 	}
 }

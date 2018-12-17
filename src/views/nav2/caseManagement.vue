@@ -586,7 +586,7 @@ export default {
     }
 }
 </script>
-<style>
+<style scoped>
 .blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;margin:10px 0;}
 .marginU{margin-top:10px;}
 .el-form-item{margin-bottom:12px;}
