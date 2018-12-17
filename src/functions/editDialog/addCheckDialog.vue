@@ -76,7 +76,7 @@ export default {
             this.$emit('download')
         },
         playOne(path){
-            this.$refs.audio.src = '@/recordings/2018-12-14/20181214122815_6900011_13466910508.wav'
+            this.$refs.audio.src = '../../recordings/2018-12-14/20181214122815_6900011_13466910508.wav'
             // if( this.$refs.audio.paused ){//自己暂停,自己播放
             //     this.$refs.audio.src = '@/recordings/2018-12-14/20181214122815_6900011_13466910508.wav'
             //     this.$refs.audio.play()

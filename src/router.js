@@ -73,7 +73,7 @@ let routes = [
   },
   {
     path: '/caseDetails',
-    name: '案件详情',
+    name: '',
     component:  caseDetails,
     meta: {
       keepAlive: true,
