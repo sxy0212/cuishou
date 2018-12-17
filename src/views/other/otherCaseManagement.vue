@@ -21,7 +21,10 @@
     <div class="blueB">
 		<second-form
 			:form='form'
+			:colorList='colorList'
 			v-on:changeArea='changeArea($event)'
+			v-on:exportFn='exportFn($event)'
+			v-on:exportChoosen='exportChoosen($event)'
 			v-on:pauseFn='pauseFn($event)'
 			v-on:colorChange='colorChange($event)'
 			v-on:distributeFn='distributeFn($event)'
@@ -70,6 +73,7 @@
 </template>
 <script>
 import '@/assets/css/system.css'
+import '@/styles/css/otherCase.css'
 import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/otherFormCaseFirst.vue'
 import formCaseSecond from '@/functions/formCollection/otherFormCaseSecond.vue'
@@ -96,17 +100,42 @@ export default {
 			bannerTitle:'修改区域',
 			addChangeAreaNow:false,//修改区域
 			total_money:'',//总额
+			colorList:[//颜色设置列表
+               	{
+                    class:'one',
+                    code:'1',
+                },
+                {
+                    class:'two',
+                    code:'2',
+                },
+                {
+                    class:'three',
+                    code:'3',  
+                },
+                {
+                    class:'four',
+                    code:'4',  
+                },
+                {
+                    class:'five',
+                    code:'5',  
+                },
+                {
+                    class:'six',
+                    code:'6',  
+                },
+                {
+                    class:'seven',
+                    code:'7',
+                },
+                
+            ],
 			formDistribute:{
 				depart:'',
 				staff:[]
 			},
-			formKey:{
-				key:''
-			},
-			form: {
-          		name: '',
-				region: ''
-			},
+			form: {},
 			caseLevelList:[],//案件等级
 			batchList:[],//批次列表
 			clientList:[],//委托方
@@ -138,15 +167,10 @@ export default {
 				min_case_last_collection_date:'',	//最小最后跟进
 				max_case_last_collection_date:'',	//最大最后跟进
 			},
-			formInline: {
-				user: '',
-				region: ''
-			},
-            id:'',//查询部门还是催收员
+			formInline: {},
             page:1,
             page_size:10,
             total:0,
-            addNow:false,
             tableData: [],
             formTitle:{//添加或是修改模块
                 id:''
@@ -171,8 +195,6 @@ export default {
 			],
 			multipList:[],//多样的选择,
 			areaList:[],//区域列表
-			
-			case_id:null,//搜索结果
 		}
 
 	},
@@ -508,10 +530,8 @@ export default {
             }
             axiosRequest(conf)
 		},
-		distributeFn(num){	//准备分配
-			if( num == 1 ){
-				this.distributeNow  = true
-			}
+		distributeFn(){	//快速分配
+			this.distributeNow  = true
 			this.getDistributeDepartmentList()
 			let conf = {
 				url : '/api/api_backend.php?r=case/case-list',
@@ -537,7 +557,13 @@ export default {
 			this.distributeNow  = false
 		},
 		sureToDistribute(num){//确定分配
-			let ids = this.formDistribute.staff.map(item=>{
+			let data 
+			if( num == 2 ){//快速分配
+				data = {
+					quick_distributor:'1',
+				}
+			}else if( num == 1 ){//手动分配
+				let ids = this.formDistribute.staff.map(item=>{
 					this.distributeStaffList.forEach(every=>{
 						if(every.true_name == item){
 							item = every.id
@@ -545,13 +571,17 @@ export default {
 					})
 					return item
 				}).join(',')
-			let conf = {
-					url : '/api/api_backend.php?r=case/distributor',
-					data:{
+				data = {
 						distributor_num: this.formDistribute.split_num,
 						distributor_staff_ids: ids,
 						data:JSON.stringify( this.conditions )
-					},
+				}
+				
+			}
+			
+			let conf = {
+					url : '/api/api_backend.php?r=case/distributor',
+					data,
 					success:(data)=>{
 						if( data.statusCode == 1 ){
 							this.distributeNow  = false
@@ -575,25 +605,22 @@ export default {
 				}
 				axiosRequest(conf)
 		},
+		exportFn(){	//导出查询
+			window.open('/api/api_backend.php?r=case/case-export&export_type=searched&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
+			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
+			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
+			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
+			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+		},
+		exportChoosen(){	// 导出选中
+			let ids =  this.multipList.map(item=>item.id).join(',')
+			window.open('/api/api_backend.php?r=case/case-export&export_type=selected+case_id_str=' + ids)
+		}
 	}
 }
 </script>
-<style>
-.blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;margin:10px 0;}
-.marginU{margin-top:10px;}
-.el-form-item{margin-bottom:12px;}
-.el-form-item__content,.el-form-item__label{line-height:30px;}
-.el-input__inner{height:30px;line-height:30px;}
-.dialog-footer{text-align:right;}
-.totalT{width:98%;font-size:14px;line-height:23px;color: #909399;border:1px solid grey;}
-.el-table__body .two{color:rgba(255, 51, 255, 1); }
-.el-table__body .three{color: rgba(0, 204, 255, 1);}
-.el-table__body .four{color:rgba(128, 0, 128, 1);}
-.el-table__body .five{color:rgba(0, 204, 0, 1);}
-.el-table__body .six{color:rgba(102, 51, 0, 1);}
-.el-table__body .seven{color:rgba(255, 204, 0, 1);}
 
-</style>
 
 
 

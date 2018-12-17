@@ -31,7 +31,7 @@
         </div>
        
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="sureToDistribute">确定分配</el-button>
+            <el-button type="primary" @click="sureToDistribute(1)">确定分配</el-button>
             <el-button  @click="cancelDistribute">取消</el-button>
         </div>
     </div>
@@ -49,8 +49,8 @@ export default {
         getStaffFn(val){
             this.$emit('getStaffFn',val)
         },
-        sureToDistribute(){
-            this.$emit('sureToDistribute')
+        sureToDistribute(val){
+            this.$emit('sureToDistribute',val)
         },
         cancelDistribute(){
             this.$emit('cancelDistribute')
