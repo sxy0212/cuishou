@@ -72,6 +72,7 @@ export default {
             this.$emit('checkFn',column)
         },
         addRemarkFn(column){//添加备注
+            console.log(column)
             this.$emit('addRemarkFn',column)
         }
     }

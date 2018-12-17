@@ -21,6 +21,7 @@
         v-on:exportFn='exportFn($event)'
         v-on:addToFn='addToFn($event)'
         v-on:addToTask='addToTask($event)'
+        v-on:untyingFn='untyingFn($event)'
     >
     </div-table>
     <page-change 
@@ -301,6 +302,31 @@ export default {
                     if( data.statusCode == 1 ){
                         this.taskList = data.info
                     }else if(data.statusCode == 0){
+                        Message({
+                            message: data.message,
+                            type: 'erro',
+                            duration: 3 * 1000
+                        })
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        untyingFn(row){//解绑
+            let conf = {
+                url : '/api/api_backend.php?r=asrcall-case-batch/unbind-task',
+                data:{
+                    id:row.id
+                },
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.init()
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 3 * 1000
+                        })
+                    }else if( data.statusCode == 0 ){
                         Message({
                             message: data.message,
                             type: 'erro',

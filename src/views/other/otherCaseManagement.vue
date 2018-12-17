@@ -29,6 +29,7 @@
 			v-on:pauseFn='pauseFn($event)'
 			v-on:colorChange='colorChange($event)'
 			v-on:distributeFn='distributeFn($event)'
+			v-on:sureToDistribute='sureToDistribute($event)'
 		>
 		</second-form>
 	</div>
@@ -303,44 +304,31 @@ export default {
             this.init()
 		},
 		clearFn(){//清空，将数组的数据全部手写清空
-			this.conditions = {
-				case_name: "",
-				case_mobile: "",
-				case_id_num: "",
-				case_status: "",
-				talk_recode: "",
-				case_level: "",
-				batch_id: "",
-				depart_id:'',
-				staff_id:'',
-				case_color: "",
-				id: "",
-				case_client:"",
-				talk_time1:'',
-				talk_time2:'',
-				case_money1:'',
-				case_money2:'',
-				case_money: [        
-					"",
-					""
-				],
-				case_date: [        
-					'',
-					""
-				],
-				case_back_date: [
-					"",
-					""
-				],
-				case_last_collection_date: [        
-					"",
-					""
-				],
-				talk_time: [        
-					"",
-					""
-				]
+		this.conditions={//搜索条件
+				case_name: "",	//姓名
+				case_mobile: "",	//联系方式
+				case_id_num: "", //证件号
+				keywords: "", //关键词
+				case_code:'',	//案件序列号
+				case_status: "",	//案件状态
+				case_level:'', //案件等级
+				client_id:'', //委托方
+				min_case_money:'',     //最小金额
+				max_case_money:'',	//最高金额
+				min_talk_time:'',	//最小通话时长
+				max_talk_time:'',	// 最大通话时长
+				min_case_date:'',	//最小委案日期
+				max_case_date:'',	//最大委案日期
+				min_case_back_date:'',	//最小退案日期
+				max_case_back_date:'',	//最大退案日期
+				depart_id:'',	//部门id
+				staff_id:'',	//催收员id
+				batch_id:'',	//所属批次id
+				case_color:'',	//标色搜索
+				min_case_last_collection_date:'',	//最小最后跟进
+				max_case_last_collection_date:'',	//最大最后跟进
 			}
+			
 			
 		},
 		changeArea(){//修改区域
@@ -531,7 +519,7 @@ export default {
             }
             axiosRequest(conf)
 		},
-		distributeFn(){	//快速分配
+		distributeFn(){	//手工分配
 			this.distributeNow  = true
 			this.getDistributeDepartmentList()
 			let conf = {
@@ -562,6 +550,7 @@ export default {
 			if( num == 2 ){//快速分配
 				data = {
 					quick_distributor:'1',
+					data:JSON.stringify( this.conditions )
 				}
 			}else if( num == 1 ){//手动分配
 				let ids = this.formDistribute.staff.map(item=>{
@@ -573,23 +562,23 @@ export default {
 					return item
 				}).join(',')
 				data = {
-						distributor_num: this.formDistribute.split_num,
-						distributor_staff_ids: ids,
-						data:JSON.stringify( this.conditions )
+					distributor_num: this.formDistribute.split_num,
+					distributor_staff_ids: ids,
+					data:JSON.stringify( this.conditions )
 				}
-				
 			}
-			
 			let conf = {
 					url : '/api/api_backend.php?r=case/distributor',
 					data,
 					success:(data)=>{
 						if( data.statusCode == 1 ){
-							this.distributeNow  = false
-							this.formDistribute = {}
-							this.ableNum = 0
+							if( num == 1 ){
+								this.distributeNow  = false
+								this.formDistribute = {}
+								this.ableNum = 0
+								this.multipList = []
+							}
 							this.init()
-							this.multipList = []
 							Message({
 								message: data.message,
 								type: 'success',

@@ -61,6 +61,7 @@
           <el-button size="mini" type="danger" plain round @click="deleteFn(scope.row)">删除</el-button>
           <el-button size="mini" type="info" plain round @click="exportFn(scope.row)">导出</el-button>
           <el-button size="mini" type="primary" plain round @click="addToTask(scope.row)">添加到任务</el-button>
+          <el-button size="mini" type="primary" plain round @click="untyingFn(scope.row)" v-show='scope.row.task_id!="0"'>解绑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -104,6 +105,9 @@ export default {
       methodIndex(val){
           return indexMethod(val,this.page,this.page_size)
       },
+      untyingFn(val){
+        this.$emit('untyingFn',val)
+      }
     }
 }
 </script>
