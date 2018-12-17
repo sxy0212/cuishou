@@ -1318,15 +1318,13 @@ import store from '@/vuex/store.js'
                         const url = "/api/api_backend.php?r=asroperate/config-queue-list-del"
                         const conf = {
                             url,
-                            data:{
-                                id:row.id
-                            },
+                            data:{id:row.id},
                             success:(data)=>{
                                 this.$alert(data.message)
                                 if(data.statusCode == 1){
                                     this.showQueue.show = false
                                 }else{
-                                    this. showQueue.show = true
+                                    this.showQueue.show = true
                                 }
                             }
                         }
@@ -1341,6 +1339,8 @@ import store from '@/vuex/store.js'
 			 // 测试
             text(id){
                 this.Call = true 
+				this.callTest.telephone = ""
+				this.callTest.template_id = ""
                 this.callTest.id = id
 				const url = "/api/api_backend.php?r=asroperate/test-template-list"
 				const conf = {
@@ -1362,14 +1362,8 @@ import store from '@/vuex/store.js'
                     data:data,
                     success:(data)=>{
 						if(data.statusCode == 1){
-                           this.$alert('呼叫已发起', '', {
-							confirmButtonText: '确定',
-							callback: action => {
-								this.$message({
-								type: 'info',
-								message: `action: ${ action }`
-								});
-							}
+                           	this.$alert(data.message, '', {
+								confirmButtonText: '确定'
 							});
                         }else{
 							this.$alert(data.message)
