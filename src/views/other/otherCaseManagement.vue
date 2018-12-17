@@ -56,10 +56,11 @@
 	<el-dialog title="手动分配" :visible.sync="distributeNow" >
         <second-dialog
 			:formDistribute='formDistribute'
-			:departmentList='departmentList'
+			:departmentList='distributeDepartmentList'
 			:ableNum='ableNum'
-			:staffList='staffList'
+			:distributeStaffList='distributeStaffList'
 			v-on:cancelDistribute='cancelDistribute($event)'
+			v-on:getStaffFn='getStaffFn($event)'
 			v-on:sureToDistribute='sureToDistribute($event)'
 		></second-dialog>
     </el-dialog>
@@ -97,7 +98,7 @@ export default {
 			total_money:'',//总额
 			formDistribute:{
 				depart:'',
-				staff:''
+				staff:[]
 			},
 			formKey:{
 				key:''
@@ -110,7 +111,9 @@ export default {
 			batchList:[],//批次列表
 			clientList:[],//委托方
 			departmentList:[],//部门列表
+			distributeDepartmentList:[],//部门列表
 			staffList:[],//催收员列表
+			distributeStaffList:[],//催收员列表
 			conditions:{//搜索条件
 				case_name: "",	//姓名
 				case_mobile: "",	//联系方式
@@ -448,59 +451,119 @@ export default {
 				})
 			}
 		},
-		distributeFn(num){//准备分配
-			if(num == 1){
-				this.distributeNow  = true
-			}
-			let data = this.formDistribute
-			data.split_status = num
-			data.case_id = this.case_id
+		getDistributeDepartmentList(){	//获取部门
 			let conf = {
-				url : '/api/api_backend.php?r=collection/case-split',
-				data:{
-					data:JSON.stringify( data )
-				},
+				url : '/api/api_backend.php?r=case/department-list',
 				success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.ableNum = data.info.case_all_num
-						Message({
-							message: data.message,
-							type: 'success',
-							duration: 3 * 1000
+						let arr = []
+						data.info.forEach(item=>{
+							arr.push(item)
+							if( item.children.length ){
+								item.children.forEach(every=>{
+									arr.push({
+										class_name:'textIn',
+										company_id: every.company_id,
+										create_time:every.create_time,
+										depart_name:every.depart_name,
+										id:every.id,
+										parent_id:every.parent_id,
+										update_time:every.update_time,
+										parent_str:every.parent_str
+									})
+								})
+								
+							}
 						})
-					}else{
+						this.distributeDepartmentList = arr
+                    }else if( data.statusCode == 0 ){	//没有数据
 						Message({
 							message: data.message,
-							type: 'info',
+							type: 'error',
 							duration: 3 * 1000
 						})
 					}
-				}
+                } 
+            }
+            axiosRequest(conf)
+		},
+		getStaffFn(val){	//获取催收员
+			let conf = {
+				url : '/api/api_backend.php?r=case/depart-staff-list',
+				data: {
+					depart_id:val
+				},
+				success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.distributeStaffList = data.info.staffList
+						this.formDistribute.staff = []
+                    }else if( data.statusCode == 0 ){	//没有数据
+						Message({
+							message: data.message,
+							type: 'error',
+							duration: 3 * 1000
+						})
+					}
+                } 
+            }
+            axiosRequest(conf)
+		},
+		distributeFn(num){	//准备分配
+			if( num == 1 ){
+				this.distributeNow  = true
 			}
-			axiosRequest(conf)
+			this.getDistributeDepartmentList()
+			let conf = {
+				url : '/api/api_backend.php?r=case/case-list',
+				data:{
+					distributable:'1',
+					data:JSON.stringify( this.conditions )
+				},
+				success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.ableNum = data.info.distributableCount
+                    }else if( data.statusCode == 0 ){	//没有数据
+						Message({
+							message: data.message,
+							type: 'error',
+							duration: 3 * 1000
+						})
+					}
+                } 
+            }
+            axiosRequest(conf)
 		},
 		cancelDistribute(){
 			this.distributeNow  = false
 		},
 		sureToDistribute(num){//确定分配
-			let data = this.formDistribute
-			data.split_status = num
-			data.case_id = this.case_id
+			let ids = this.formDistribute.staff.map(item=>{
+					this.distributeStaffList.forEach(every=>{
+						if(every.true_name == item){
+							item = every.id
+						}
+					})
+					return item
+				}).join(',')
 			let conf = {
-					url : '/api/api_backend.php?r=collection/case-split',
+					url : '/api/api_backend.php?r=case/distributor',
 					data:{
-						data:JSON.stringify( data )
+						distributor_num: this.formDistribute.split_num,
+						distributor_staff_ids: ids,
+						data:JSON.stringify( this.conditions )
 					},
 					success:(data)=>{
 						if( data.statusCode == 1 ){
-							// this.distributeNow  = false
-							// this.init()
-							// this.multipList = []
-							// Message({
-							// 	message: data.message,
-							// 	type: 'success',
-							// 	duration: 3 * 1000
-							// })
+							this.distributeNow  = false
+							this.formDistribute = {}
+							this.ableNum = 0
+							this.init()
+							this.multipList = []
+							Message({
+								message: data.message,
+								type: 'success',
+								duration: 3 * 1000
+							})
 						}else{
 							Message({
 								message: data.message,
@@ -512,9 +575,7 @@ export default {
 				}
 				axiosRequest(conf)
 		},
-		
-		
-    }
+	}
 }
 </script>
 <style>
