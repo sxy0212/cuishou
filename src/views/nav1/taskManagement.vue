@@ -97,7 +97,7 @@
 											</div> 
 										</div>  
 										<div class="AiButton">
-											<el-button type="danger" style="margin-left:16px" >
+											<el-button type="danger" style="margin-left:16px" @click="text(form.id)">
 													<i class="fa fa-headphones"></i>测试</el-button>
 											<el-button type="primary"  v-if="parseInt(form.status) == 0"   @click="close(form.id,form.status)" :disabled="!form.warning_asrnumber&&!form.warning_callerid"> <i class="fa fa-power-off"></i>启动</el-button>
 											<el-button type="primary"  v-else-if="parseInt(form.status) == 1"  @click="close(form.id,form.status)" :disabled="!form.warning_asrnumber&&!form.warning_callerid"> <i class="fa fa-power-off"></i>关闭</el-button>
@@ -500,6 +500,24 @@
 						</el-table>
 					</el-dialog>
 				</div>
+				<!--呼叫测试-->
+				<div class="dial-header  bind">
+					<el-dialog title="呼叫测试" :visible.sync="Call">
+						<el-form :model="callTest" label-width="120px" ref="forms" @submit.native.prevent>
+							<el-form-item label="测试号码:">
+								<el-input v-model="callTest.telephone" :style="Index.width"></el-input>
+							</el-form-item>
+							<el-form-item label="测试使用话术:">
+								<el-select v-model="callTest.template_id" :style="Index.width" placeholder="请选择话术">
+									<el-option v-for="(item,index) in test_tempalte_list" :label="item.name" :value="item.id"  :key="index"></el-option>
+								</el-select>
+							</el-form-item>                  
+						</el-form>
+						<div class="button" style="text-align:center;padding:20px 0px 15px">
+							<el-button type="primary" @click="startText">开始测试</el-button>
+						</div>
+					</el-dialog>
+				</div>
 			</div>
 		</div>
 		
@@ -681,7 +699,14 @@ import store from '@/vuex/store.js'
 				showQueue:{      //显示已有队列
 					show:false, 
 					tableData:[]
-            	}     
+            	},
+				Call:false ,      //呼叫测试弹框  
+				test_tempalte_list:[],    //测试种话术列表
+				callTest:{
+					telephone:"",
+					id:"",
+					template_id:""
+				}
 			}
 		},
 		activated() {
@@ -1312,8 +1337,47 @@ import store from '@/vuex/store.js'
                         message: '已取消删除'
                     });          
                 });
-               
-            }
+            },
+			 // 测试
+            text(id){
+                this.Call = true 
+                this.callTest.id = id
+				const url = "/api/api_backend.php?r=asroperate/test-template-list"
+				const conf = {
+					url,
+					data:{
+						id:this.callTest.id
+					},
+					success:(data)=>{
+						this.test_tempalte_list = data.info
+					}
+				}
+				axiosRequest(conf)
+            },
+            startText(){
+				const data = this.callTest
+                const url = "/api/api_backend.php?r=asroperate/test"
+                const conf = {
+                    url,
+                    data:data,
+                    success:(data)=>{
+						if(data.statusCode == 1){
+                           this.$alert('呼叫已发起', '', {
+							confirmButtonText: '确定',
+							callback: action => {
+								this.$message({
+								type: 'info',
+								message: `action: ${ action }`
+								});
+							}
+							});
+                        }else{
+							this.$alert(data.message)
+						}
+                    }
+                }
+                axiosRequest(conf)
+            },
 		}
 	}
 
