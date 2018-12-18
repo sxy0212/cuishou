@@ -4,7 +4,7 @@
         <div class="seachForm">
             <el-form ref="form" :model="form" label-width="80px" :inline="true">
                 <el-form-item label="方案名称:">
-                    <el-select v-model="form.template_id" placeholder="">
+                    <el-select v-model="form.template_id" @change="changeId">
                     <el-option v-for="(item,index) in templateList" :label="item.name" :value="item.id" :key="index"></el-option>
                     </el-select>
                 </el-form-item>
@@ -132,6 +132,10 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                     }
                 }
                 axiosRequest(conf)
+            },
+            changeId(val){
+                this.form.template_id = val
+                this.init(0)
             },
             //页面数据初始化
             init(num){
