@@ -2,7 +2,7 @@
     <div>
         <div-info
             :selfInfo='selfInfo'
-            v-on:totalCaseFn='totalCaseFn($event)'
+            v-on:totalCaseFn='init($event)'
             v-on:changeLevelFn='changeLevelFn($event)'
             v-on:callFn='callFn($event,arguments)'
             v-on:sendLetter='sendLetter($event,arguments)'
@@ -275,7 +275,7 @@ export default {
                             "last_call": data.info.selfInfo.last_call,                      //上次通话时间
                             "call_times": data.info.selfInfo.call_times   
                         }]
-                        if( str == 'total' ){
+                        if( str == 'total' ){//查询共案
                             this.caseRecord = this.caseRecord.concat( this.middleCaseRecord )
                         }
                     }
@@ -383,10 +383,6 @@ export default {
                 }
             }
             axiosRequest(conf)
-        },
-        totalCaseFn(val){//所有共案
-            this.init(val)
-            // this.caseRecord = this.caseRecord.concat( this.middleCaseRecord )
         },
         doubleClickFn(id){
             this.id = id
