@@ -342,15 +342,13 @@ export default {
 				min_case_last_collection_date:'',	//最小最后跟进
 				max_case_last_collection_date:'',	//最大最后跟进
 			}
-			
-			
 		},
 		changeArea(){//修改区域
 			if( !!this.multipList.length ){//去获取区域列表
 				this.addChangeAreaNow = true
 				this.formTitle = {
-							id:''
-						}
+					id:''
+				}
 				let conf = {
 					url : '/api/api_backend.php?r=case/area-list',
 					success:(data)=>{
@@ -564,9 +562,9 @@ export default {
 		sureToDistribute(num){//确定分配
 			if( num == 2 ){//快速分配
 				this.$confirm('您确定要分配这些案件吗？','提示信息',{
-						confirmButtonText: "确定分配",
-						cancelButtonText: '取消分配',
-						type: 'warning'
+					confirmButtonText: "确定分配",
+					cancelButtonText: '取消分配',
+					type: 'warning'
 				}).then(() =>{
 					let conf = {
 						url : '/api/api_backend.php?r=case/distributor',
@@ -601,9 +599,9 @@ export default {
 					return
 				})
 			}else if( num == 1 ){//手动分配
-				let ids = this.formDistribute.staff.map(item=>{
-					this.staffList.forEach(every=>{
-						if(every.true_name == item){
+				let ids = this.formDistribute.staff.map(item => {
+					this.staffList.forEach(every => {
+						if( every.true_name == ite ){
 							item = every.id
 						}
 					})
@@ -644,7 +642,6 @@ export default {
 				}
 				axiosRequest(conf)
 			}
-			
 		},
 		exportFn(){	//导出查询
 			window.open('/api/api_backend.php?r=case/case-export&export_type=searched&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
@@ -665,7 +662,6 @@ export default {
 					duration: 3 * 1000
 				})
 			}
-			
 		},
 		exportTel(){	// 导出电话
 			window.open('/api/api_backend.php?r=case/case-export&export_type=selectedphone&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
