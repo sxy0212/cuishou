@@ -7,7 +7,7 @@
                     <span class="info_span">姓名:</span>{{detail.name}}
                 </div>
                 <div class="infoCover">
-                    <span class="info_span">通话时长:</span> {{detail.billsec}}
+                    <span class="info_span">通话时长:</span> {{detail.billsec}}s
                 </div>
                 <div class="infoCover">
                     <span class="info_span">使用话术:</span> {{detail.template_name}}
