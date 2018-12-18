@@ -26,6 +26,7 @@
 			v-on:exportFn='exportFn($event)'
 			v-on:exportTel='exportTel($event)'
 			v-on:exportChoosen='exportChoosen($event)'
+			v-on:exportHistory='exportHistory($event)'
 			v-on:pauseFn='pauseFn($event)'
 			v-on:colorChange='colorChange($event)'
 			v-on:distributeFn='distributeFn($event)'
@@ -63,7 +64,7 @@
 			:formDistribute='formDistribute'
 			:departmentList='distributeDepartmentList'
 			:ableNum='ableNum'
-			:distributeStaffList='distributeStaffList'
+			:staffList='staffList'
 			v-on:cancelDistribute='cancelDistribute($event)'
 			v-on:getStaffFn='getStaffFn($event)'
 			v-on:sureToDistribute='sureToDistribute($event)'
@@ -144,7 +145,6 @@ export default {
 			departmentList:[],//部门列表
 			distributeDepartmentList:[],//部门列表
 			staffList:[],//催收员列表
-			distributeStaffList:[],//催收员列表
 			conditions:{//搜索条件
 				case_name: "",	//姓名
 				case_mobile: "",	//联系方式
@@ -208,7 +208,7 @@ export default {
 		this.init()
 	},
     methods: {
-		changeFn(val){
+		changeFn(val){//获取催收员
 			let conf = {
 				url : '/api/api_backend.php?r=case/depart-staff-list',
 				data: {
@@ -217,6 +217,7 @@ export default {
 				success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.staffList = data.info.staffList
+						this.conditions.staff_id = ''
 					}else if( data.statusCode == 0 ){	//没有数据
 						Message({
 							message: data.message,
@@ -523,7 +524,7 @@ export default {
 				},
 				success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.distributeStaffList = data.info.staffList
+						this.staffList = data.info.staffList
 						this.formDistribute.staff = []
                     }else if( data.statusCode == 0 ){	//没有数据
 						Message({
@@ -571,7 +572,7 @@ export default {
 				}
 			}else if( num == 1 ){//手动分配
 				let ids = this.formDistribute.staff.map(item=>{
-					this.distributeStaffList.forEach(every=>{
+					this.staffList.forEach(every=>{
 						if(every.true_name == item){
 							item = every.id
 						}
@@ -635,6 +636,14 @@ export default {
 		},
 		exportTel(){	// 导出电话
 			window.open('/api/api_backend.php?r=case/case-export&export_type=selectedphone&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
+			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
+			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
+			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
+			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+		},
+		exportHistory(){ //导出催收记录
+			window.open('/api/api_backend.php?r=case/case-export&export_type=searchedrecord&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +

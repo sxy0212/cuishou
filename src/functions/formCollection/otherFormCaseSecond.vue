@@ -15,7 +15,7 @@
             <el-button type="primary" @click="exportFn" size="mini">导出查询结果</el-button>
             <el-button type="info" @click="exportChoosen" size="mini">导出所选案件</el-button>
             <el-button type="primary" @click="exportTel" size="mini">导出所选电话</el-button>
-            <el-button type="info" @click="searchFn" size="mini">导出催收记录</el-button>
+            <el-button type="info" @click="exportHistory" size="mini">导出催收记录</el-button>
         </el-form-item>
         <el-form-item label="案件标色：" class="colorCover">
             <el-button type="info" 
@@ -66,6 +66,9 @@ export default {
         },
         exportTel(){
             this.$emit('exportTel')
+        },
+        exportHistory(){
+            this.$emit('exportHistory')
         }
     }
 }

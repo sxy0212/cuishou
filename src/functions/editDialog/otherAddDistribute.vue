@@ -18,9 +18,9 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="催收员" label-width="100px">
-                    <el-checkbox-group v-model="formDistribute.staff" @change="changeStaff">
+                    <el-checkbox-group v-model="formDistribute.staff">
                         <el-checkbox 
-                            v-for="item in distributeStaffList" 
+                            v-for="item in staffList" 
                             :label="item.true_name" 
                             :key="item.id"
                             :value='item.id'
@@ -43,7 +43,7 @@ export default {
         'formDistribute',
         'departmentList',
         'ableNum',
-        'distributeStaffList'
+        'staffList'
     ],
     methods:{
         getStaffFn(val){
@@ -55,9 +55,6 @@ export default {
         cancelDistribute(){
             this.$emit('cancelDistribute')
         },
-        changeStaff(value){
-            console.log(value,this.formDistribute)
-        }
     }
     
 }
