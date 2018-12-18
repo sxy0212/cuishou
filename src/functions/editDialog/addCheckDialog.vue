@@ -21,7 +21,7 @@
                     <span> 完整录音 </span> 
                     <el-button type="primary" @click="download" :disabled="!detail.path">下载录音</el-button> 
                 </div>
-                <audio style="width:100%" ref="audio" controls="controls"  @click="playOne(detail.path)"></audio>  
+                <audio style="width:100%" ref="audio" :src="detail.path" controls="controls"  @click="playOne(detail.path)"></audio>  
                 <div class="dialogueList" >
                     <ul id="messageBox">
                         <li 
@@ -59,6 +59,7 @@
     </div>
 </template>
 <script>
+// 
 import '@/assets/css/dialog.css'
 export default {
     name:'addCheckDialog',
@@ -75,12 +76,9 @@ export default {
         download(){
             this.$emit('download')
         },
-        playOne(path){
+        playOne(){
             if( !this.$refs.audioPlay.paused ){//其他播放,其他暂停
                 this.$refs.audioPlay.pause()
-            }
-            if( this.$refs.audio.paused ){//自己暂停，自己播放
-               this.$refs.audio.src = path
             }
         },
         textListen(path){//单句录音播放
