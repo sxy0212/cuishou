@@ -171,6 +171,12 @@ function clone(obj) {//深度复制对象
     }
     throw new Error("Unable to clone obj! Its type isn't supported.");
 }
+
+function deepClone(obj){//深度拷贝对象
+    var proto=Object.getPrototypeOf(obj);
+    return Object.assign({},Object.create(proto),obj);
+}
+
 export{
     formatDate,
     getCookie,
@@ -180,5 +186,6 @@ export{
     axiosRequest ,
     goHome,
     clone,
+    deepClone,
     message
 }

@@ -84,7 +84,7 @@ import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 import addChangeArea from '@/functions/editDialog/addChangeArea.vue'
 import addDistribute from '@/functions/editDialog/addDistribute.vue'
 
-import  { axiosRequest } from '@/assets/js/Yt.js'
+import  { axiosRequest,deepClone } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 
 export default {
@@ -319,7 +319,7 @@ export default {
             this.init()
 		},
 		clearFn(){//清空，将数组的数据全部手写清空
-		this.conditions={//搜索条件
+			this.conditions={//搜索条件
 				case_name: "",	//姓名
 				case_mobile: "",	//联系方式
 				case_id_num: "", //证件号
@@ -437,7 +437,6 @@ export default {
 					duration: 3 * 1000
 				})
 			}
-			
 		},
 		colorChange(str){
 			if( !!this.multipList.length ){
@@ -531,12 +530,11 @@ export default {
 		distributeFn(){	//手工分配
 			this.distributeNow  = true
 			this.getDistributeDepartmentList()
+			let data = deepClone(this.conditions)
+			data.distributable = '1'
 			let conf = {
 				url : '/api/api_backend.php?r=case/case-list',
-				data:{
-					distributable:'1',
-					data:JSON.stringify( this.conditions )
-				},
+				data,
 				success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.ableNum = data.info.distributableCount
@@ -567,12 +565,11 @@ export default {
 					cancelButtonText: '取消分配',
 					type: 'warning'
 				}).then(() =>{
+					let data = deepClone(this.conditions)
+					data.quick_distributor = '1'
 					let conf = {
 						url : '/api/api_backend.php?r=case/distributor',
-						data:{
-							quick_distributor:'1',
-							data:JSON.stringify( this.conditions )
-						},
+						data,
 						success:(data)=>{
 							if( data.statusCode == 1 ){
 								this.init()
@@ -608,13 +605,12 @@ export default {
 					})
 					return item
 				}).join(',')
+				let data = deepClone(this.conditions)
+				data.distributor_num = this.formDistribute.split_num
+				data.distributor_staff_ids = ids
 				let conf = {
 					url : '/api/api_backend.php?r=case/distributor',
-					data:{
-						distributor_num: this.formDistribute.split_num,
-						distributor_staff_ids: ids,
-						data:JSON.stringify( this.conditions )
-					},
+					data,
 					success:(data)=>{
 						if( data.statusCode == 1 ){
 							this.distributeNow  = false
