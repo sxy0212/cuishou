@@ -56,7 +56,7 @@
         label="操作"
         prop="case_id_num">
             <template slot-scope='scope'>
-                <el-button type="success" size='mini' @click="addRemarkFn(scope.row)" >修改备注</el-button>
+                <el-button type="success" :disabled='selfInfo.case_status==3' size='mini' @click="addRemarkFn(scope.row)" >修改备注</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -65,7 +65,8 @@
 export default {
     name:'tableCaseSecond',
     props:[
-        'tableSecond'
+        'tableSecond',
+        'selfInfo'
     ],
     methods:{
         checkFn(column){

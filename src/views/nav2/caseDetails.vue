@@ -38,6 +38,7 @@
                 <div class='middle'>
                     <second-table
                         :tableSecond='tableSecond'
+                        :selfInfo='selfInfo'
                         v-on:checkFn='checkFn($event)'
                         v-on:addRemarkFn='addRemarkFn($event)'
                     ></second-table>
