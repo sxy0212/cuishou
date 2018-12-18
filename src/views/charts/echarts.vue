@@ -1,202 +1,216 @@
 <template>
     <section class="chart-container">
         <el-row>
-            <el-col :span="12">
-                <div id="chartColumn" style="width:100%; height:400px;"></div>
+            <el-col :span="8" style="background:#fff;margin-left:20px;">
+               <div>
+                    <p class="title-charts">账号状态</p>
+                    <div class="content-charts" >
+                        <div class="content-charts-con" >
+                            <p>已使用天数</p>
+                            <p>{{used_days}}</p>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                         <div class="content-charts-con">
+                            <p>剩余天数</p>
+                            <p>{{left_days}}</p>
+                        </div> 
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con">
+                            <p>授权日期</p>
+                            <p>{{start_time}}~{{auth_time}}</p>
+                        </div>
+                    </div>
+                </div>
             </el-col>
-            <el-col :span="12">
-                <div id="chartBar" style="width:100%; height:400px;"></div>
-            </el-col>
-            <el-col :span="12">
-                <div id="chartLine" style="width:100%; height:400px;"></div>
-            </el-col>
-            <el-col :span="12">
-                <div id="chartPie" style="width:100%; height:400px;"></div>
+            <el-col :span="15" style="background:#fff;margin-left:10px;">
+                <div>
+                    <p class="title-charts">账号配置</p>
+                    <div class="content-charts" >
+                        <div class="content-charts-con" >
+                            <p>机器人数量</p>
+                            <p>{{ai_count}}</p>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                         <div class="content-charts-con">
+                            <p>已使用</p>
+                            <p>{{used_ai_count}}</p>
+                        </div> 
+                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con">
+                            <p>催收员数量</p>
+                            <p>{{collection_count}}</p>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con">
+                            <p>已使用</p>
+                            <p>{{used_collection_count}}</p>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con">
+                            <p>话术方案</p>
+                            <p>{{template_count}}</p>
+                        </div>
+                    </div>
+                </div>
             </el-col>
             <el-col :span="24">
-                <a href="http://echarts.baidu.com/examples.html" target="_blank" style="float: right;">more>></a>
+                <div style="font-size:16px;">数据概况</div>
+                <div style="font-size:14px;color:gray;margin-bottom:10px;">
+                    案件总量:<span style="color:red">{{tip.all}}</span>; 
+                    接通总量:<span style="color:red">{{tip.conn}}</span>;
+                    接通率:<span style="color:red">{{tip.per_conn}}</span>
+                </div>
+               <div id="container" ></div>
+            </el-col>
+            <el-col :span="24" style="background:#fff">
+                  <div>
+                    <p class="title-charts">快捷入口</p>
+                    <div class="content-charts" >
+                        <div class="content-charts-con" style="border:1px solid #d2d2d2">
+                            <router-link to='/levelSetting' style="color:#333;font-size:16px;">案件等级设置</router-link>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con" style="border:1px solid #d2d2d2;width:120px;">
+                            <router-link to='/templateManagement' style="color:#333;font-size:16px;">模板管理</router-link>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                         <div class="content-charts-con" style="border:1px solid #d2d2d2">
+                            <router-link to='/caseConfiguration' style="color:#333;font-size:16px;">案件类型配置</router-link>
+                        </div> 
+                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con" style="border:1px solid #d2d2d2;width:120px;">
+                             <router-link to='/clientConfiguration' style="color:#333;font-size:16px;">委托方配置</router-link>
+                        </div>
+                        <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
+                        <div class="content-charts-con" style="border:1px solid #d2d2d2">
+                           <router-link to='/regionalConfiguration' style="color:#333;font-size:16px;">催收区域配置</router-link>
+                        </div>
+                    </div>
+                </div>
+
             </el-col>
         </el-row>
     </section>
 </template>
 
 <script>
-    import echarts from 'echarts'
-
-    export default {
-        data() {
-            return {
-                chartColumn: null,
-                chartBar: null,
-                chartLine: null,
-                chartPie: null
+import echarts from 'echarts'
+import Highcharts from 'highcharts';
+import {axiosRequest} from '@/assets/js/Yt.js'
+export default {
+    data() {
+        return {
+            ai_count:"",
+            auth_time:"",
+            collection_count:"",
+            left_days: "",
+            start_time: "",
+            template_count:"",
+            used_collection_count: "",
+            used_days: "",
+            used_ai_count:"",
+            dates:[{
+                name: "",
+                data: []
+              }, {
+                name: '',
+                data: []
+              }],
+            x: [],  //x轴数据
+            tip:{
+                all:"",
+                conn:"",
+                per_conn:""
+            }
+        }
+    },
+    activated() {
+        this.init()
+        this.initData()
+    },
+    methods: {
+        initData(){
+            const url = "/api/api_backend.php?r=index/index"
+            const conf = {
+            url,
+            success:(data)=>{
+                this.ai_count = data.info.ai_count
+                this.auth_time = data.info.auth_time
+                this.collection_count = data.info.collection_count
+                this.left_days = data.info.left_days
+                this.start_time = data.info.start_time
+                this.template_count = data.info.template_count
+                this.used_collection_count = data.info.used_collection_count
+                this.used_days = data.info.used_days
+                this.used_ai_count = data.info.used_ai_count
+            }
+        }
+        axiosRequest(conf)
+        },
+        init(){
+            const url = "/api/api_backend.php?r=index/data-show"
+            const batch_id = this.batch_id
+            const conf = {
+            url,
+            data:{batch_id},
+            success:(data)=>{
+                this.tip.all = data.info.data.all;
+                this.tip.conn = data.info.data.conn;
+                this.tip.per_conn = data.info.data.per_conn
+                this.x = data.info.chart.map( item=>item.time)
+                this.dates[0].name = "拨打电话量"
+                this.dates[0].data =  data.info.chart.map( item=>Number(item.num))
+                this.dates[1].name = "接通电话量"
+                this.dates[1].data =  data.info.chart.map( item=>Number(item.connect))
+                this.loading = false
+                this.loadchart(this.x,this.dates)
+            }
+            }
+            axiosRequest(conf)
+        },
+        // 生成图表
+        loadchart(num1,num2){
+            var chart = Highcharts.chart('container', {
+                title: {
+                    text: '通话量统计'
+                },
+                subtitle: {
+                },
+                yAxis: {
+                title: {
+                    text: '通话量'
+                }
+                },
+                legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+                },
+                xAxis: {
+                categories:num1,
+                labels: {
+                    autoRotationLimit: 80,
+                    autoRotation: [-30]
+                }
+                },
+                series:num2,
+                responsive: {
+                rules: [{
+                    condition: {
+                    maxWidth: 500
+                    },
+                    chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                    }
+                }]
+                }
+            });
             }
         },
-
-        methods: {
-            drawColumnChart() {
-                this.chartColumn = echarts.init(document.getElementById('chartColumn'));
-                this.chartColumn.setOption({
-                  title: { text: 'Column Chart' },
-                  tooltip: {},
-                  xAxis: {
-                      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-                  },
-                  yAxis: {},
-                  series: [{
-                      name: '销量',
-                      type: 'bar',
-                      data: [5, 20, 36, 10, 10, 20]
-                    }]
-                });
-            },
-            drawBarChart() {
-                this.chartBar = echarts.init(document.getElementById('chartBar'));
-                this.chartBar.setOption({
-                    title: {
-                        text: 'Bar Chart',
-                        subtext: '数据来自网络'
-                    },
-                    tooltip: {
-                        trigger: 'axis',
-                        axisPointer: {
-                            type: 'shadow'
-                        }
-                    },
-                    legend: {
-                        data: ['2011年', '2012年']
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'value',
-                        boundaryGap: [0, 0.01]
-                    },
-                    yAxis: {
-                        type: 'category',
-                        data: ['巴西', '印尼', '美国', '印度', '中国', '世界人口(万)']
-                    },
-                    series: [
-                        {
-                            name: '2011年',
-                            type: 'bar',
-                            data: [18203, 23489, 29034, 104970, 131744, 630230]
-                        },
-                        {
-                            name: '2012年',
-                            type: 'bar',
-                            data: [19325, 23438, 31000, 121594, 134141, 681807]
-                        }
-                    ]
-                });
-            },
-            drawLineChart() {
-                this.chartLine = echarts.init(document.getElementById('chartLine'));
-                this.chartLine.setOption({
-                    title: {
-                        text: 'Line Chart'
-                    },
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    legend: {
-                        data: ['邮件营销', '联盟广告', '搜索引擎']
-                    },
-                    grid: {
-                        left: '3%',
-                        right: '4%',
-                        bottom: '3%',
-                        containLabel: true
-                    },
-                    xAxis: {
-                        type: 'category',
-                        boundaryGap: false,
-                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [
-                        {
-                            name: '邮件营销',
-                            type: 'line',
-                            stack: '总量',
-                            data: [120, 132, 101, 134, 90, 230, 210]
-                        },
-                        {
-                            name: '联盟广告',
-                            type: 'line',
-                            stack: '总量',
-                            data: [220, 182, 191, 234, 290, 330, 310]
-                        },
-                        {
-                            name: '搜索引擎',
-                            type: 'line',
-                            stack: '总量',
-                            data: [820, 932, 901, 934, 1290, 1330, 1320]
-                        }
-                    ]
-                });
-            },
-            drawPieChart() {
-                this.chartPie = echarts.init(document.getElementById('chartPie'));
-                this.chartPie.setOption({
-                    title: {
-                        text: 'Pie Chart',
-                        subtext: '纯属虚构',
-                        x: 'center'
-                    },
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: "{a} <br/>{b} : {c} ({d}%)"
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        left: 'left',
-                        data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
-                    },
-                    series: [
-                        {
-                            name: '访问来源',
-                            type: 'pie',
-                            radius: '55%',
-                            center: ['50%', '60%'],
-                            data: [
-                                { value: 335, name: '直接访问' },
-                                { value: 310, name: '邮件营销' },
-                                { value: 234, name: '联盟广告' },
-                                { value: 135, name: '视频广告' },
-                                { value: 1548, name: '搜索引擎' }
-                            ],
-                            itemStyle: {
-                                emphasis: {
-                                    shadowBlur: 10,
-                                    shadowOffsetX: 0,
-                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                                }
-                            }
-                        }
-                    ]
-                });
-            },
-            drawCharts() {
-                this.drawColumnChart()
-                this.drawBarChart()
-                this.drawLineChart()
-                this.drawPieChart()
-            },
-        },
-
-        mounted: function () {
-            this.drawCharts()
-        },
-        updated: function () {
-            this.drawCharts()
-        }
     }
 </script>
 
@@ -205,12 +219,11 @@
         width: 100%;
         float: left;
     }
-    /*.chart div {
-        height: 400px;
-        float: left;
-    }*/
-
     .el-col {
-        padding: 30px 20px;
+        padding: 20px 20px;
     }
+    .content-charts{display:flex;justify-content: space-around;}
+    .content-charts-con{display:flex;flex-direction: column;align-items: center;padding:10px;color:gray;}
+    .content-charts-con p:nth-of-type(1){margin-bottom:10px;}
+    .title-charts{border-bottom:1px solid #f2f2f2;font-size:16px;margin-bottom:20px;padding-bottom:10px;}
 </style>

@@ -188,9 +188,6 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
               axiosRequest(conf)
           }
         }
-       
-        
-       
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
@@ -200,25 +197,41 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
       },
       handleSizeChange(val){
         this.form.page_size = val
-        this.init()
+        this.init(0)
       },
       handleCurrentChange(val){
         this.page = val
-        this.init()
+        this.init(0)
       },
       // 撤回
       recall(){
-        const url = "/api/api_backend.php?r=collect-depart/batch-cancel"
-        const staff_id = this.staff_id_arr.join(",")
-        const conf = {
-          url,
-          data:{staff_id},
-          success:(data)=>{
-            this.$alert(data.message)
-            this.init()
-          }
+        if(this.staff_id_arr.length==0){
+          this.$alert('撤回对象不能为空')
+        }else{
+          this.$confirm('确定撤回?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            const url = "/api/api_backend.php?r=collect-depart/batch-cancel"
+            const staff_id = this.staff_id_arr.join(",")
+            const conf = {
+              url,
+              data:{staff_id},
+              success:(data)=>{
+                this.$alert(data.message)
+                this.init(0)
+              }
+            }
+            axiosRequest(conf)
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消'
+            });          
+        });
         }
-        axiosRequest(conf)
+        
       },
       // 导出
       exportDate(){
