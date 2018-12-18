@@ -58,7 +58,7 @@
         </el-table-column>
         <el-table-column
         label="上次通话"
-        prop="case_last_collection_date">
+        prop="last_call">
         </el-table-column>
         <el-table-column
         label="委案日期"

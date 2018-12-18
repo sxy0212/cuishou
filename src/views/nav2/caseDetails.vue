@@ -255,7 +255,7 @@ export default {
             console.log('guanbiqian')
             done()
         },
-        init(){
+        init(str){
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/case-info',
                 data:{
@@ -275,6 +275,9 @@ export default {
                             "last_call": data.info.selfInfo.last_call,                      //上次通话时间
                             "call_times": data.info.selfInfo.call_times   
                         }]
+                        if( str == 'total' ){
+                            this.caseRecord = this.caseRecord.concat( this.middleCaseRecord )
+                        }
                     }
                 }
             }
@@ -381,8 +384,9 @@ export default {
             }
             axiosRequest(conf)
         },
-        totalCaseFn(){//所有共案
-            this.caseRecord = this.caseRecord.concat(this.middleCaseRecord )
+        totalCaseFn(val){//所有共案
+            this.init(val)
+            // this.caseRecord = this.caseRecord.concat( this.middleCaseRecord )
         },
         doubleClickFn(id){
             this.id = id
