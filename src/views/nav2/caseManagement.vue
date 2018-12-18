@@ -602,7 +602,7 @@ export default {
 			}else if( num == 1 ){//手动分配
 				let ids = this.formDistribute.staff.map(item => {
 					this.staffList.forEach(every => {
-						if( every.true_name == ite ){
+						if( every.true_name == item ){
 							item = every.id
 						}
 					})
