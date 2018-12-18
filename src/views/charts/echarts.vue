@@ -79,15 +79,14 @@
                         </div> 
                          <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con" style="border:1px solid #d2d2d2;width:120px;">
-                             <router-link to='/clientConfiguration' style="color:#333;font-size:16px;">委托方配置</router-link>
+                            <router-link to='/clientConfiguration' style="color:#333;font-size:16px;">委托方配置</router-link>
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con" style="border:1px solid #d2d2d2">
-                           <router-link to='/regionalConfiguration' style="color:#333;font-size:16px;">催收区域配置</router-link>
+                            <router-link to='/regionalConfiguration' style="color:#333;font-size:16px;">催收区域配置</router-link>
                         </div>
                     </div>
                 </div>
-
             </el-col>
         </el-row>
     </section>
@@ -132,39 +131,39 @@ export default {
         initData(){
             const url = "/api/api_backend.php?r=index/index"
             const conf = {
-            url,
-            success:(data)=>{
-                this.ai_count = data.info.ai_count
-                this.auth_time = data.info.auth_time
-                this.collection_count = data.info.collection_count
-                this.left_days = data.info.left_days
-                this.start_time = data.info.start_time
-                this.template_count = data.info.template_count
-                this.used_collection_count = data.info.used_collection_count
-                this.used_days = data.info.used_days
-                this.used_ai_count = data.info.used_ai_count
+                url,
+                success:(data)=>{
+                    this.ai_count = data.info.ai_count
+                    this.auth_time = data.info.auth_time
+                    this.collection_count = data.info.collection_count
+                    this.left_days = data.info.left_days
+                    this.start_time = data.info.start_time
+                    this.template_count = data.info.template_count
+                    this.used_collection_count = data.info.used_collection_count
+                    this.used_days = data.info.used_days
+                    this.used_ai_count = data.info.used_ai_count
+                }
             }
-        }
-        axiosRequest(conf)
+            axiosRequest(conf)
         },
         init(){
             const url = "/api/api_backend.php?r=index/data-show"
             const batch_id = this.batch_id
             const conf = {
-            url,
-            data:{batch_id},
-            success:(data)=>{
-                this.tip.all = data.info.data.all;
-                this.tip.conn = data.info.data.conn;
-                this.tip.per_conn = data.info.data.per_conn
-                this.x = data.info.chart.map( item=>item.time)
-                this.dates[0].name = "拨打电话量"
-                this.dates[0].data =  data.info.chart.map( item=>Number(item.num))
-                this.dates[1].name = "接通电话量"
-                this.dates[1].data =  data.info.chart.map( item=>Number(item.connect))
-                this.loading = false
-                this.loadchart(this.x,this.dates)
-            }
+                url,
+                data:{batch_id},
+                success:(data)=>{
+                    this.tip.all = data.info.data.all;
+                    this.tip.conn = data.info.data.conn;
+                    this.tip.per_conn = data.info.data.per_conn
+                    this.x = data.info.chart.map( item=>item.time)
+                    this.dates[0].name = "拨打电话量"
+                    this.dates[0].data =  data.info.chart.map( item=>Number(item.num))
+                    this.dates[1].name = "接通电话量"
+                    this.dates[1].data =  data.info.chart.map( item=>Number(item.connect))
+                    this.loading = false
+                    this.loadchart(this.x,this.dates)
+                }
             }
             axiosRequest(conf)
         },
@@ -172,7 +171,7 @@ export default {
         loadchart(num1,num2){
             var chart = Highcharts.chart('container', {
                 title: {
-                    text: '通话量统计'
+                    text: ''
                 },
                 subtitle: {
                 },
@@ -215,13 +214,8 @@ export default {
 </script>
 
 <style scoped>
-    .chart-container {
-        width: 100%;
-        float: left;
-    }
-    .el-col {
-        padding: 20px 20px;
-    }
+    .chart-container {width: 100%;float: left;}
+    .el-col {padding: 20px 20px;}
     .content-charts{display:flex;justify-content: space-around;}
     .content-charts-con{display:flex;flex-direction: column;align-items: center;padding:10px;color:gray;}
     .content-charts-con p:nth-of-type(1){margin-bottom:10px;}

@@ -56,7 +56,7 @@
               </el-form-item>
               <el-form-item label="应答语音：">
                   <el-select v-model="addForm.answerid" placeholder="请选择应答语音" :style="Knowledge.width" >
-                      <el-option :value="item.id" v-for="(item,index) in addNode.list" :key="index" :label="item.spath"  style="width:500px"> {{item.spath}} {{item.word}} </el-option>
+                      <el-option :value="item.id" v-for="(item,index) in addNode.list" :key="index" :label="item.show"  style="width:500px"> {{item.spath}} {{item.show}} </el-option>
                   </el-select>
               </el-form-item>
               <el-form-item label="下个节点：">
@@ -169,12 +169,13 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                 this.addForm.name = row.msg
                 this.addForm.condition = row.msg
                 this.addForm.noAnsId = row.id
-                const id = row.id
-                const url = "/api/api_backend.php?r=asrcall-record-noanswer/answer-sound"
+                const template_id = this.form.template_id
+                // const id = row.id
+                const url = "/api/api_backend.php?r=asrcall-record-noanswer/content-next-list"
                 const conf = {
                     url,
                     data:{
-                        id
+                        template_id
                     },
                     success:(data)=>{
                         this.addNode.list = data.info
