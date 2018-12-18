@@ -31,8 +31,8 @@
                         :endList='endList'
                     ></div-form>
                     <div slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveFn" size="mini">保存</el-button>
-                        <el-button type="info" @click="clearFn" size="mini">清空</el-button>
+                        <el-button type="primary" @click="saveFn" :disabled='selfInfo.case_status == 3' size="mini">保存</el-button>
+                        <el-button type="info" @click="clearFn"  size="mini">清空</el-button>
                     </div>
                 </div>
                 <div class='middle'>
@@ -118,22 +118,22 @@ export default {
                 remark:''
             },
             audioData:[//录音内容
-                {
-                    "msg": "喂，您好！（两秒空音）",                                     //语音内容
-                    "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                    "user": "0",                                                        //对象(0:言小通,1:客户)
-                    "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bffb8",           //唯一标识id
-                    "create_time": "2018-09-11 01:21:19",                               //创建时间
-                    "path": ""                                                          //语音全路径
-                },
-                {
-                    "msg": "状态（两秒空音）",                                     //语音内容
-                    "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                    "user": "1",                                                        //对象(0:言小通,1:客户)
-                    "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bff98",           //唯一标识id
-                    "create_time": "2018-09-9 01:21:19",                               //创建时间
-                    "path": ""                                                          //语音全路径
-                },
+                // {
+                //     "msg": "喂，您好！（两秒空音）",                                     //语音内容
+                //     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
+                //     "user": "0",                                                        //对象(0:言小通,1:客户)
+                //     "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bffb8",           //唯一标识id
+                //     "create_time": "2018-09-11 01:21:19",                               //创建时间
+                //     "path": ""                                                          //语音全路径
+                // },
+                // {
+                //     "msg": "状态（两秒空音）",                                     //语音内容
+                //     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
+                //     "user": "1",                                                        //对象(0:言小通,1:客户)
+                //     "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bff98",           //唯一标识id
+                //     "create_time": "2018-09-9 01:21:19",                               //创建时间
+                //     "path": ""                                                          //语音全路径
+                // },
             ],
             detail:{//录音详情
             },
@@ -240,10 +240,8 @@ export default {
         this.id = this.$route.query.id
         this.init()
         this.getTableSecond()
+        this.formTitle = {}
     },
-    // created(){
-
-    // },
     methods:{
         beforeCloseFn(done){
             if( !this.$refs.middleRef.$refs.audioPlay.paused ){
@@ -252,7 +250,6 @@ export default {
             if( !this.$refs.middleRef.$refs.audio.paused ){
                 this.$refs.middleRef.$refs.audio.pause()
             }
-            console.log('guanbiqian')
             done()
         },
         init(str){
@@ -363,9 +360,7 @@ export default {
             axiosRequest(conf)
         },
         clearFn(){//清空
-            this.formTitle = {
-
-            }
+            this.formTitle = {}
         },
         checkFn(column){//查看
             this.checkNow = true
