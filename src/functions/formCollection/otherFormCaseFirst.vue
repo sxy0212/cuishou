@@ -189,8 +189,8 @@ export default {
         filterFn(val){
             this.$emit('filterFn',val)
         },
-        changeFn(){
-
+        changeFn(val){
+            this.$emit('changeFn',val)
         }
     }
 }

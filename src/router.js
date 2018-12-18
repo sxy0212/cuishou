@@ -13,7 +13,7 @@ import sound from './views/nav5/sound.vue'
 import templateTree from "./views/nav5/templateTree.vue"
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
 import caseDetails from './views/nav2/caseDetails.vue'
-import otherCaseManagement from './views/other/otherCaseManagement.vue'
+
 
 
 
@@ -238,14 +238,7 @@ let routes = [
       keepAlive: true,
     }
   },
-  {
-    path: '/otherCaseManagement',
-    name: '另外的案件管理',
-    component:  otherCaseManagement,
-    meta: {
-      keepAlive: true,
-    }
-  },
+  
   
  
   
