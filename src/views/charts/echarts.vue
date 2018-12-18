@@ -7,17 +7,17 @@
                     <div class="content-charts" >
                         <div class="content-charts-con" >
                             <p>已使用天数</p>
-                            <p>{{used_days}}</p>
+                            <p class="color">{{used_days}}</p>
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                          <div class="content-charts-con">
                             <p>剩余天数</p>
-                            <p>{{left_days}}</p>
+                            <p class="color">{{left_days}}</p>
                         </div> 
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con">
                             <p>授权日期</p>
-                            <p>{{start_time}}~{{auth_time}}</p>
+                            <p class="color">{{start_time}}~{{auth_time}}</p>
                         </div>
                     </div>
                 </div>
@@ -28,27 +28,27 @@
                     <div class="content-charts" >
                         <div class="content-charts-con" >
                             <p>机器人数量</p>
-                            <p>{{ai_count}}</p>
+                            <p class="color">{{ai_count}}</p>
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                          <div class="content-charts-con">
                             <p>已使用</p>
-                            <p>{{used_ai_count}}</p>
+                            <p class="color">{{used_ai_count}}</p>
                         </div> 
                          <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con">
                             <p>催收员数量</p>
-                            <p>{{collection_count}}</p>
+                            <p class="color">{{collection_count}}</p>
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con">
                             <p>已使用</p>
-                            <p>{{used_collection_count}}</p>
+                            <p class="color">{{used_collection_count}}</p>
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con">
                             <p>话术方案</p>
-                            <p>{{template_count}}</p>
+                            <p class="color">{{template_count}}</p>
                         </div>
                     </div>
                 </div>
@@ -220,4 +220,5 @@ export default {
     .content-charts-con{display:flex;flex-direction: column;align-items: center;padding:10px;color:gray;}
     .content-charts-con p:nth-of-type(1){margin-bottom:10px;}
     .title-charts{border-bottom:1px solid #f2f2f2;font-size:16px;margin-bottom:20px;padding-bottom:10px;}
+    .color{color:#99D9EA}
 </style>
