@@ -14,7 +14,7 @@
 		>
 		</div-form>
 		<div slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="init" size="mini">查询</el-button>
+			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
 			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
 		</div>
     <div> 
@@ -208,6 +208,10 @@ export default {
 		this.init()
 	},
     methods: {
+		searchFn(){
+			this.page = 1
+			this.init()
+		},
 		changeFn(val){//获取催收员
 			let conf = {
 				url : '/api/api_backend.php?r=case/depart-staff-list',
@@ -224,9 +228,6 @@ export default {
                 } 
             }
             axiosRequest(conf)
-		},
-		changeCaseClient(val){
-			t = val
 		},
 		handleSelectionChange(val){
 			this.multipList = val
