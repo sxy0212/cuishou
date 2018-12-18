@@ -28,6 +28,12 @@
         prop="case_status"
         label="催收状态"
         >
+            <template slot-scope="scope">
+                <span v-show="scope.row.case_status == 0">正常状态</span>
+                <span v-show="scope.row.case_status == 1">暂停</span>
+                <span v-show="scope.row.case_status == 2">关闭</span>
+                <span v-show="scope.row.case_status == 3">退案</span>
+            </template>
         </el-table-column>
         <el-table-column
         prop="staff_id"
