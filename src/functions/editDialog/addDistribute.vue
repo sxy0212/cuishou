@@ -18,7 +18,7 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="催收员" label-width="100px">
-                    <el-checkbox-group v-model="formDistribute.staff">
+                    <el-checkbox-group v-model="formDistribute.staff" v-if="staffList.length">
                         <el-checkbox 
                             v-for="item in staffList" 
                             :label="item.true_name" 
@@ -26,6 +26,7 @@
                             :value='item.id'
                         >{{item.true_name}}</el-checkbox>
                     </el-checkbox-group>
+                    <span v-else >暂无催收员！请先选择部门</span>
                 </el-form-item>
             </el-form>
         </div>

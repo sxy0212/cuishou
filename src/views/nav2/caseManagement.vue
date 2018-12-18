@@ -215,15 +215,11 @@ export default {
 					depart_id:val
 				},
 				success:(data)=>{
+					this.conditions.staff_id = ''
 					if( data.statusCode == 1 ){
 						this.staffList = data.info.staffList
-						this.conditions.staff_id = ''
 					}else if( data.statusCode == 0 ){	//没有数据
-						Message({
-							message: data.message,
-							type: 'error',
-							duration: 3 * 1000
-						})
+						this.staffList = []
 					}
                 } 
             }
@@ -523,15 +519,11 @@ export default {
 					depart_id:val
 				},
 				success:(data)=>{
+					this.formDistribute.staff = []
 					if( data.statusCode == 1 ){
 						this.staffList = data.info.staffList
-						this.formDistribute.staff = []
-                    }else if( data.statusCode == 0 ){	//没有数据
-						Message({
-							message: data.message,
-							type: 'error',
-							duration: 3 * 1000
-						})
+					}else if( data.statusCode == 0 ){	//没有数据
+						this.staffList = []
 					}
                 } 
             }
@@ -562,14 +554,52 @@ export default {
 		},
 		cancelDistribute(){
 			this.distributeNow  = false
+			this.formDistribute = {
+				staff:[],
+				split_num:'',
+				depart_id:''
+			}
+			this.staffList = []
 		},
 		sureToDistribute(num){//确定分配
-			let data 
 			if( num == 2 ){//快速分配
-				data = {
-					quick_distributor:'1',
-					data:JSON.stringify( this.conditions )
-				}
+				this.$confirm('您确定要分配这些案件吗？','提示信息',{
+						confirmButtonText: "确定分配",
+						cancelButtonText: '取消分配',
+						type: 'warning'
+				}).then(() =>{
+					let conf = {
+						url : '/api/api_backend.php?r=case/distributor',
+						data:{
+							quick_distributor:'1',
+							data:JSON.stringify( this.conditions )
+						},
+						success:(data)=>{
+							if( data.statusCode == 1 ){
+								this.init()
+								Message({
+									message: data.message,
+									type: 'success',
+									duration: 3 * 1000
+								})
+							}else{
+								Message({
+									message: data.message,
+									type: 'info',
+									duration: 3 * 1000
+								})
+							}
+						}
+					}
+					axiosRequest(conf)
+				}).catch(()=>{
+					Message({
+						message: '取消分配',
+						type: 'info',
+						duration: 3 * 1000
+					})
+					return
+				})
 			}else if( num == 1 ){//手动分配
 				let ids = this.formDistribute.staff.map(item=>{
 					this.staffList.forEach(every=>{
@@ -579,23 +609,24 @@ export default {
 					})
 					return item
 				}).join(',')
-				data = {
-					distributor_num: this.formDistribute.split_num,
-					distributor_staff_ids: ids,
-					data:JSON.stringify( this.conditions )
-				}
-			}
-			let conf = {
+				let conf = {
 					url : '/api/api_backend.php?r=case/distributor',
-					data,
+					data:{
+						distributor_num: this.formDistribute.split_num,
+						distributor_staff_ids: ids,
+						data:JSON.stringify( this.conditions )
+					},
 					success:(data)=>{
 						if( data.statusCode == 1 ){
-							if( num == 1 ){
-								this.distributeNow  = false
-								this.formDistribute = {}
-								this.ableNum = 0
-								this.multipList = []
+							this.distributeNow  = false
+							this.formDistribute = {
+								staff:[],
+								split_num:'',
+								depart_id:''
 							}
+							this.ableNum = 0
+							this.multipList = []
+							this.staffList = []
 							this.init()
 							Message({
 								message: data.message,
@@ -612,6 +643,8 @@ export default {
 					}
 				}
 				axiosRequest(conf)
+			}
+			
 		},
 		exportFn(){	//导出查询
 			window.open('/api/api_backend.php?r=case/case-export&export_type=searched&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
