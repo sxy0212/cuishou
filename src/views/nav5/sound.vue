@@ -403,6 +403,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             },
             addFile(){
                 this.$refs.upload.submit(); 
+                this.init()
             },
 
             beforeUploadFile(file) {
@@ -432,6 +433,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             },
             addZip(){  
                this.$refs.uploads.submit(); 
+               this.init()
             },
             beforeUploadZip(file) {
                 this.zip.zip_file = file
