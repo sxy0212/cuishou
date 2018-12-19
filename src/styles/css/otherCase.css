@@ -13,3 +13,4 @@
 .el-table__body .seven{color:rgba(255, 204, 0, 1);}
 
 .el-checkbox__input{left:-55%;}
+.el-table__body{ border-collapse: collapse}
