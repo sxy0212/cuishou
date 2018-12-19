@@ -21,7 +21,7 @@
             <el-button type="primary" @click="sendRecord(1)">立即搜索</el-button>
           </el-form>
         </div>
-        <div>短信条数:{{sms_count}}</div>
+        <div style="margin-bottom:10px;"><span style="font-size:16px;">短信条数:</span><span style="font-size:16px;color:#0099ff">{{sms_count}}条</span></div>
         <div class="TableList">
           <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" :height="total>0?500:100">
             <el-table-column type="index" :index="index" label="序号" width="50"></el-table-column>

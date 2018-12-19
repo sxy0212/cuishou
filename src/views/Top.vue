@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<div class="header">
-			<div class="title"> <router-link to="/charts" style="color:#fff">言通催收系统</router-link></div>
+			<div class="title"> <router-link to="/charts" style="color:#fff">言小信贷后管理系统</router-link></div>
 			<div class="drop">
 			<span @click="shuxian" style="margin-right:20px;cursor:pointer;">刷新</span>
 			<span> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
