@@ -9,7 +9,6 @@
             v-on:caseLog="caseLog($event)"
             v-on:caseMemorandum = 'caseMemorandum($event)'
         ></div-info>
-        
         <div class="tableCover">
             <div-table
                 :tableData='caseRecord'
@@ -60,7 +59,7 @@
                 ></check-dialog>
             </el-dialog>
         </div>
-        <el-dialog title="修改等级" :visible.sync="changeLevel" >
+        <el-dialog title="修改等级" :visible.sync="changeLevel" v-move>
             <change-dialog
                 :levelList='levelList'
                 :formLevel='formLevel'
@@ -68,7 +67,7 @@
                 v-on:cancelFn='cancelChangeLevel($event)'
             ></change-dialog>
         </el-dialog>
-        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" >
+        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" v-move>
             <remark-dialog
                 :formRemark='formRemark'
                 :remarkLabel='remarkLabel'
@@ -80,7 +79,7 @@
         <div class="dial-header  bind" >
             <el-dialog title="案件日志" :visible.sync="logDio" v-move>
                 <ul style="height:200px;overflow-y: scroll;mergin-bottom:20px;">
-                    <li v-for="(item,index) in caseDioData" style="position:relative;border-bottom:1px solid #f2f2f2;height:40px;line-height:40px;">
+                    <li v-for="(item,index) in caseDioData" :key="index" style="position:relative;border-bottom:1px solid #f2f2f2;height:40px;line-height:40px;">
                         {{item.create_time}} {{item.name}}
                         <img :src="item.img" style="width:40px;height:40px;" v-show="item.img"  @mouseenter="enter(index)" @mouseleave="leave()">
                         <img :src="item.img" style="width:200px;height:200px;position:fixed;z-index:10000;top:30%;left:60%;margin-left:-100px;" v-show="img&&item.id== showId">
@@ -99,19 +98,19 @@
                     list-type="picture"
                     :data="addCaseFile" :file-list="fileList">
                     <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
-            </el-upload>
-            <div slot="footer" class="dialog-footer">     
-                <el-button type="primary" @click="addDioSave">有图片保存</el-button>
-                <el-button type="primary" @click="addDioSaveNo">无图片保存</el-button>
-                <el-button type="primary" @click="logDio = false">取消</el-button>
-            </div>  
-        </el-dialog>
-    </div>
+                </el-upload>
+                <div slot="footer" class="dialog-footer">     
+                    <el-button type="primary" @click="addDioSave">有图片保存</el-button>
+                    <el-button type="primary" @click="addDioSaveNo">无图片保存</el-button>
+                    <el-button type="primary" @click="logDio = false">取消</el-button>
+                </div>  
+            </el-dialog>
+        </div>
      <!--案件备忘录弹框-->
         <div class="dial-header  bind" >
             <el-dialog title="案件备忘录" :visible.sync="logDioMemorandum" v-move>
                 <ul style="height:200px;overflow-y: scroll;mergin-bottom:20px;">
-                    <li v-for="(item,index) in caseDioDataMemorandum" style="position:relative;border-bottom:1px solid #f2f2f2;height:40px;line-height:40px;">
+                    <li v-for="(item,index) in caseDioDataMemorandum" :key="index" style="position:relative;border-bottom:1px solid #f2f2f2;height:40px;line-height:40px;">
                         {{item.create_time}} {{item.content}}
                         <img :src="item.img" style="width:40px;height:40px;" v-show="item.img"  @mouseenter="enterMemorandum(index)" @mouseleave="leaveMemorandum()">
                         <img :src="item.img" style="width:200px;height:200px;position:fixed;z-index:10000;top:30%;left:60%;margin-left:-100px;" v-show="imgMemorandum&&item.id== showIdMemorandum">
@@ -130,16 +129,15 @@
                     list-type="picture"
                     :data="addCaseFileMemorandum" :file-list="fileListMemorandum">
                     <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
-            </el-upload>
-            <div slot="footer" class="dialog-footer">     
-                <el-button type="primary" @click="addDioSaveMemorandum">有图片保存</el-button>
-                <el-button type="primary" @click="addDioSaveMemorandumNo">无图片保存</el-button>
-                <el-button type="primary" @click="logDioMemorandum= false">取消</el-button>
-            </div>  
-        </el-dialog>
+                </el-upload>
+                <div slot="footer" class="dialog-footer">     
+                    <el-button type="primary" @click="addDioSaveMemorandum">有图片保存</el-button>
+                    <el-button type="primary" @click="addDioSaveMemorandumNo">无图片保存</el-button>
+                    <el-button type="primary" @click="logDioMemorandum= false">取消</el-button>
+                </div>  
+            </el-dialog>
+        </div>
     </div>
-    </div>
-  
 </template>
 <script>
 import tableCaseDetail from '@/functions/tableCollection/tableCaseDetail.vue'
@@ -333,18 +331,19 @@ export default {
                         this.selfInfo = data.info.selfInfo
                         this.middleCaseRecord = data.info.caseRecord
                         this.caseRecord = [{
-                            "id": data.info.selfInfo.id,//案件编号id       
-                            "case_name": data.info.selfInfo.case_name,                 //姓名
-                            "case_money": data.info.selfInfo.case_money,                  //委案金额
-                            "case_currency":data.info.selfInfo.case_currency,             //币种
-                            "case_paid": data.info.selfInfo.case_paid,                     //已还金额
-                            "case_exceed_limit":data.info.selfInfo.case_exceed_limit,              //逾期账龄
-                            "last_call": data.info.selfInfo.last_call,
-                     //上次通话时间
-                            "call_times":data.info.selfInfo.call_times   
+                            "id": data.info.selfInfo.id,    //案件编号id       
+                            "case_name": data.info.selfInfo.case_name,  //姓名
+                            "case_money": data.info.selfInfo.case_money,    //委案金额
+                            "case_currency": data.info.selfInfo.case_currency,   //币种
+                            "case_paid": data.info.selfInfo.case_paid,  //已还金额
+                            "case_exceed_limit": data.info.selfInfo.case_exceed_limit,   //逾期账龄
+                            "last_call": data.info.selfInfo.last_call,  //上次通话时间
+                            "call_times": data.info.selfInfo.call_times   
                         }]
-                        if( str == 'total' ){//查询共案
-                            this.caseRecord = this.caseRecord.concat(this.middleCaseRecord )
+                        if( str == 'total' ){   //查询共案
+                            if( !!this.middleCaseRecord ){
+                                this.caseRecord = this.caseRecord.concat( this.middleCaseRecord )
+                            }
                         }
                     }
                 }
@@ -613,7 +612,7 @@ export default {
         },
         // 保存日志
         addDioSave(){
-            this.$refs.upload.submit();   
+            this.$refs.upload.submit()   
         },  
         addDioSaveNo(){
             const url = "/api/api_backend.php?r=asrcall-case-batch-data/add-case-log"
@@ -636,11 +635,11 @@ export default {
                 axiosRequest(conf)
         },
         beforeUploadFile(response) {
-            var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
-            const isJPG = response.type === 'image/jpeg';
-            const isPNG = response.type === 'image/png';
+            var testmsg = response.name.substring(response.name.lastIndexOf('.')+1)                 
+            const isJPG = response.type === 'image/jpeg'
+            const isPNG = response.type === 'image/png'
             if (!isJPG&&!isPNG) {
-            this.$message.error('上传文件格式需要是.jpeg/.png!');
+            this.$message.error('上传文件格式需要是.jpeg/.png!')
             this.fileList = []
             }else{
                 this.addCaseFile.file = response
@@ -657,7 +656,7 @@ export default {
             this.initDio()
         },
         beforeRemoveFile(file, fileList) {
-            return this.$confirm(`确定移除 ${ file.name }？`);
+            return this.$confirm(`确定移除 ${ file.name }？`)
         },
         // 案件备忘录
         caseMemorandum(){
@@ -689,7 +688,7 @@ export default {
         },
         // 保存日志
         addDioSaveMemorandum(){
-            this.$refs.uploads.submit(); 
+            this.$refs.uploads.submit() 
         },
         addDioSaveMemorandumNo(){
             const url = "/api/api_backend.php?r=asrcall-case-batch-data/add-case-memorandum"
@@ -713,10 +712,10 @@ export default {
         },
         beforeUploadFileMemorandum(response) {
             var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
-            const isJPG = response.type === 'image/jpeg';
-            const isPNG = response.type === 'image/png';
+            const isJPG = response.type === 'image/jpeg'
+            const isPNG = response.type === 'image/png'
             if (!isJPG&&!isPNG) {
-            this.$message.error('上传文件格式需要是.jpeg/.png!');
+            this.$message.error('上传文件格式需要是.jpeg/.png!')
             this.fileListMemorandum = []
             }else{
                 this.addCaseFileMemorandum.file = response
@@ -733,7 +732,7 @@ export default {
             this.initDioMemorandum()
         },
         beforeRemoveFileMemorandum(file, fileList) {
-            return this.$confirm(`确定移除 ${ file.name }？`);
+            return this.$confirm(`确定移除 ${ file.name }？`)
         },
     }
 }

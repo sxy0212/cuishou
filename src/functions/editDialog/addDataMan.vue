@@ -53,7 +53,7 @@
             :limit="1"
         >
             <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-            <el-button v-show="formShow" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定上传</el-button>
+            <el-button v-show="formShow" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">确定上传</el-button><span class="red" v-show='formShow'>（姓名、证件号、卡号、委案金额和委案日期这五个字段为必填字段）</span>
             <el-button v-show="!formShow" style="margin-left: 10px;" size="small" type="primary" @click="submitUpload">确定追加</el-button>
         </el-upload>
     </div>
@@ -61,6 +61,7 @@
 <script>
 import { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
+import '@/styles/css/addDataMan.css'
 export default {
     name:"addDataMan",
     props:[
