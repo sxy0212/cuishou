@@ -28,10 +28,10 @@
                <el-button  v-show="selfInfo.case_status!='3'"  type="danger" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size="mini">外访</el-button>-->
             </div>
             <div class="coverLevel">
-               <span style="display: inline-block;width: 270px;">第一联系人:{{selfInfo.case_mobile1}} </span>
+               <span style="display: inline-block;width: 255px;">第一联系人:{{selfInfo.case_mobile1}} </span>
                 <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')"></i>
                <!--<span><el-button  type="primary" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')" size="mini">呼叫</el-button></span>-->
-                <span>第二联系人：{{selfInfo.case_mobile2}} </span>
+                <span style="display: inline-block;width: 220px;">第二联系人：{{selfInfo.case_mobile2}} </span>
                  <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile2,'第二联系人')"></i>
                 <!--<span><el-button  v-show="selfInfo.case_status!='3'" type="primary" @click="callFn(selfInfo.case_mobile2,'第二联系人')" size="mini">呼叫</el-button></span>-->
             </div>

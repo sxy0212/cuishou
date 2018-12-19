@@ -54,17 +54,21 @@
                 </div>
             </el-col>
             <el-col :span="24">
-                <div style="font-size:16px;">数据概况</div>
+            </el-col>
+             <el-col :span="8" > 
+                <div style="font-size:14px;color:gray;margin-bottom:10px;">
+                    总金额:<span style="color:red">{{tipCir.case_count}}</span>; 
+                    已还金额:<span style="color:red">{{tipCir.case_paid_count}}</span>;
+                    未还金额:<span style="color:red">{{tipCir.case_left_count}}</span>
+                </div>
+                <div id="chartPie" style="width:100%; height:400px;background:#fff"></div>
+            </el-col>
+            <el-col :span="16">
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     案件总量:<span style="color:red">{{tip.all}}</span>; 
                     接通总量:<span style="color:red">{{tip.conn}}</span>;
                     接通率:<span style="color:red">{{tip.per_conn}}</span>
                 </div>
-            </el-col>
-             <el-col :span="8" style="background:#fff;margin-top:20px;">
-                <div id="chartPie" style="width:100%; height:360px;"></div>
-            </el-col>
-            <el-col :span="16">
                <div id="container" ></div>
             </el-col>
            
@@ -127,12 +131,26 @@ export default {
                 conn:"",
                 per_conn:""
             },
-             chartPie:null,
+            chartPie:null,
+            tipCir:{
+                case_count: "",
+                case_paid_count: "",
+                case_left_count:""
+            },
+            xCir:['已还款案件','未还款案件'],
+             dateCir:[{
+                name: "",
+                value:0
+              }, {
+                name: '',
+                value:0
+              }],
         }
     },
     activated() {
         this.init()
         this.initData()
+        this.initCir()
         this.drawPieChart()
     },
     methods: {
@@ -175,23 +193,41 @@ export default {
             }
             axiosRequest(conf)
         },
+        initCir(){
+            const url = "./api/api_backend.php?r=index/case-count"
+            const conf = {
+                url,
+                success:(data)=>{
+                    this.tipCir.case_count = data.info.case_count
+                    this.tipCir.case_paid_count = data.info.case_paid_count 
+                    this.tipCir.case_left_count = data.info.case_left_count
+                    this.dateCir[0].name = "已还款案件"
+                    this.dateCir[0].value =  data.info.case_paid_nums
+                    this.dateCir[1].name = "未还款案件"
+                    this.dateCir[1].value =  data.info.case_left_nums
+                    this.drawPieChart(this.xAxis,this.dateCir)
+                    console.log(data)
+                }
+            }
+            axiosRequest(conf)
+        },
         // 左侧饼状图
-         drawPieChart() {
+         drawPieChart(num1,num2) {
                 this.chartPie = echarts.init(document.getElementById('chartPie'));
                 this.chartPie.setOption({
                     title: {
-                        text: 'Pie Chart',
+                        text: '数据概况',
                         subtext: '',
                         x: 'center'
                     },
                     tooltip: {
-                        trigger: '',
+                        trigger: 'item',
                         formatter: "{a} <br/>{b} : {c} ({d}%)"
                     },
                     legend: {
                         orient: 'vertical',
                         left: 'left',
-                        data: []
+                        data:num1
                     },
                     series: [
                         {
@@ -199,13 +235,7 @@ export default {
                             type: 'pie',
                             radius: '55%',
                             center: ['50%', '60%'],
-                            data: [
-                                { value: 335, name: '直接访问2222' },
-                                { value: 310, name: '邮件营销' },
-                                { value: 234, name: '联盟广告' },
-                                { value: 135, name: '视频广告' },
-                                { value: 1548, name: '搜索引擎' }
-                            ],
+                            data: num2,
                             itemStyle: {
                                 emphasis: {
                                     shadowBlur: 10,

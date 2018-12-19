@@ -21,6 +21,7 @@
             <el-button type="primary" @click="sendRecord(1)">立即搜索</el-button>
           </el-form>
         </div>
+        <div>短信条数:{{sms_count}}</div>
         <div class="TableList">
           <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" :height="total>0?500:100">
             <el-table-column type="index" :index="index" label="序号" width="50"></el-table-column>
@@ -84,6 +85,7 @@ export default {
           end_time:""
         },
         tableData:[],
+        sms_count:0
       }
 		},
 		activated(){
@@ -110,9 +112,11 @@ export default {
             if( data.statusCode == 1 ){
               this.tableData = data.info.info
               this.total = parseInt(data.info.total)
+              this.sms_count = parseInt(data.info.sms_count)
             }else{
               this.tableData = []
               this.total = 0
+              this.sms_count = 0
             }
           }
         }
