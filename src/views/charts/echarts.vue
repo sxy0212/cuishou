@@ -53,8 +53,6 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="24">
-            </el-col>
              <el-col :span="8" > 
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     总金额:<span style="color:red">{{tipCir.case_count}}</span>; 
@@ -206,7 +204,6 @@ export default {
                     this.dateCir[1].name = "未还款案件"
                     this.dateCir[1].value =  data.info.case_left_nums
                     this.drawPieChart(this.xAxis,this.dateCir)
-                    console.log(data)
                 }
             }
             axiosRequest(conf)
