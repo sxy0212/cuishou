@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="TopForm">
-      <el-table :data="tableData" stripe style="width: 100%" border stripe :height="total>0?500:100">
+      <el-table :data="tableData" stripe style="width: 100%" border :height="total>0?500:100">
         <el-table-column type="index" :index="index" label="序号" width="60"></el-table-column>                   
         <el-table-column prop="exten" label="分机号" ></el-table-column>
         <el-table-column prop="status" label="分机状态">
