@@ -75,7 +75,7 @@
  
 </template>
 <script>
-import '@/assets/css/system.css'
+
 import '@/styles/css/otherCase.css'
 import pageChange from '@/components/pageChange.vue'
 import formCaseFirst from '@/functions/formCollection/formCaseFirst.vue'
