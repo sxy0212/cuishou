@@ -32,7 +32,7 @@
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                          <div class="content-charts-con">
-                            <p>已使用</p>
+                            <p>已使用机器人</p>
                             <p class="color">{{used_ai_count}}</p>
                         </div> 
                          <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
@@ -42,7 +42,7 @@
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
                         <div class="content-charts-con">
-                            <p>已使用</p>
+                            <p>已使用催收员</p>
                             <p class="color">{{used_collection_count}}</p>
                         </div>
                         <div style="width:2px;background:#f2f2f2;margin-top:5px;"></div>
@@ -60,8 +60,14 @@
                     接通总量:<span style="color:red">{{tip.conn}}</span>;
                     接通率:<span style="color:red">{{tip.per_conn}}</span>
                 </div>
+            </el-col>
+             <el-col :span="8" style="background:#fff;margin-top:20px;">
+                <div id="chartPie" style="width:100%; height:360px;"></div>
+            </el-col>
+            <el-col :span="16">
                <div id="container" ></div>
             </el-col>
+           
             <el-col :span="24" style="background:#fff">
                   <div>
                     <p class="title-charts">快捷入口</p>
@@ -120,12 +126,14 @@ export default {
                 all:"",
                 conn:"",
                 per_conn:""
-            }
+            },
+             chartPie:null,
         }
     },
     activated() {
         this.init()
         this.initData()
+        this.drawPieChart()
     },
     methods: {
         initData(){
@@ -167,11 +175,53 @@ export default {
             }
             axiosRequest(conf)
         },
-        // 生成图表
+        // 左侧饼状图
+         drawPieChart() {
+                this.chartPie = echarts.init(document.getElementById('chartPie'));
+                this.chartPie.setOption({
+                    title: {
+                        text: 'Pie Chart',
+                        subtext: '',
+                        x: 'center'
+                    },
+                    tooltip: {
+                        trigger: '',
+                        formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                        data: []
+                    },
+                    series: [
+                        {
+                            name: '',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['50%', '60%'],
+                            data: [
+                                { value: 335, name: '直接访问2222' },
+                                { value: 310, name: '邮件营销' },
+                                { value: 234, name: '联盟广告' },
+                                { value: 135, name: '视频广告' },
+                                { value: 1548, name: '搜索引擎' }
+                            ],
+                            itemStyle: {
+                                emphasis: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                });
+            },
+        // 生成图表右侧
         loadchart(num1,num2){
             var chart = Highcharts.chart('container', {
                 title: {
-                    text: ''
+                    text: '通话量统计'
                 },
                 subtitle: {
                 },
@@ -220,5 +270,5 @@ export default {
     .content-charts-con{display:flex;flex-direction: column;align-items: center;padding:10px;color:gray;}
     .content-charts-con p:nth-of-type(1){margin-bottom:10px;}
     .title-charts{border-bottom:1px solid #f2f2f2;font-size:16px;margin-bottom:20px;padding-bottom:10px;}
-    .color{color:#99D9EA}
+    .color{color:#0099ff}
 </style>
