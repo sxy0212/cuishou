@@ -1,3 +1,4 @@
+.tableCover{margin-top:30px;}
 .blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;margin:10px 0;}
 .marginU{margin-top:10px;}
 .el-form-item{margin-bottom:12px;}
@@ -12,5 +13,5 @@
 .el-table__body .six{color:rgba(102, 51, 0, 1);}
 .el-table__body .seven{color:rgba(255, 204, 0, 1);}
 
-.el-checkbox__input{left:-55%;}
+.el-checkbox__input{left:-56%;}
 .el-table__body{ border-collapse: collapse}
