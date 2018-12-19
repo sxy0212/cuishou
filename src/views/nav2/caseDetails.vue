@@ -16,7 +16,8 @@
             ></div-table>
         </div>
         <div class='info otherI'>
-            <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button><el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
+            <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button>
+            <el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
             <div-other
                 :selfInfo='selfInfo'
                 v-show='otherInfo'
@@ -33,7 +34,7 @@
                     ></div-form>
                     <div slot="footer" class="dialog-footer">
                         <el-button type="primary" @click="saveFn" :disabled='selfInfo.case_status == 3' size="mini">保存</el-button>
-                        <el-button type="info" @click="clearFn"  size="mini">清空</el-button>
+                        <el-button type="info" @click="clearFn" size="mini">清空</el-button>
                     </div>
                 </div>
                 <div class='middle'>
@@ -49,7 +50,6 @@
         <div class="coverDialog">
             <el-dialog title="通话详情" :visible.sync="checkNow" 
                 :before-close="beforeCloseFn"
-                v-move
                 >
                 <check-dialog
                     :audioData='audioData'
@@ -59,16 +59,15 @@
                 ></check-dialog>
             </el-dialog>
         </div>
-        <el-dialog title="修改等级" :visible.sync="changeLevel" v-move >
+        <el-dialog title="修改等级" :visible.sync="changeLevel" >
             <change-dialog
                 :levelList='levelList'
                 :formLevel='formLevel'
                 v-on:protectFn='saveLevelFn($event)'
                 v-on:cancelFn='cancelChangeLevel($event)'
-                
             ></change-dialog>
         </el-dialog>
-        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" v-move >
+        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" >
             <remark-dialog
                 :formRemark='formRemark'
                 :remarkLabel='remarkLabel'
@@ -78,21 +77,32 @@
         </el-dialog>
         <!--案件日志弹框-->
         <div class="dial-header  bind" >
-        <el-dialog title="操作日志" :visible.sync="logDio" v-move>
-            <el-upload
-                class="upload-demo"
-                ref="upload"
-                action="/api/api_backend.php?r=sound/word-to-sound-add"
-                :before-remove="beforeRemoveFile"
-                :on-success="successFile"
-                :before-upload="beforeUploadFile"
-                :limit="1"
-                :auto-upload="false"
-                list-type="picture"
-                :on-exceed="handleExceed"  :file-list="fileList">
-                <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
-        </el-upload>
-            <el-button>2222</el-button>
+            <el-dialog title="操作日志" :visible.sync="logDio">
+                <ul style="height:200px;overflow-y: scroll;mergin-bottom:20px;">
+                    <li v-for="(item,index) in caseDioData" style="position:relative">
+                        {{item.create_time}} {{item.name}}
+                        <img :src="item.img" style="width:40px;height:40px;" v-show="item.img"  @mouseenter="enter(index)" @mouseleave="leave()">
+                        <img :src="item.img" style="width:200px;height:200px;position:fixed;z-index:10000;top:30%;left:60%;margin-left:-100px;" v-show="img&&item.id== showId">
+                    </li>
+                </ul>
+                <div style="float:left;margin-right:10px;"> 案件名称:<el-input v-model="addCaseFile.name" style="width:200px;"></el-input></div>
+               
+                <el-upload style="float:left"
+                    class="upload-demo"
+                    ref="upload"
+                    action="/api/api_backend.php?r=asrcall-case-batch-data/add-case-log"
+                    :before-remove="beforeRemoveFile"
+                    :before-upload="beforeUploadFile"
+                    :limit="1"
+                    :auto-upload="false"
+                    list-type="picture"
+                    :data="addCaseFile" :file-list="fileList">
+                    <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
+            </el-upload>
+            <div slot="footer" class="dialog-footer">     
+                <el-button type="primary" @click="addDioSave">保存</el-button>
+                <el-button type="primary" @click="logDio = false">取消</el-button>
+            </div>  
         </el-dialog>
     </div>
     </div>
@@ -143,20 +153,36 @@ export default {
             },
             audioData:[//录音内容
                 // {
-                //     "msg": "喂，您好！（两秒空音）",                                     //语音内容
+                //     "msg": "喂，您好！（两秒空音）",                
+
+                     //语音内容
                 //     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                //     "user": "0",                                                        //对象(0:言小通,1:客户)
-                //     "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bffb8",           //唯一标识id
-                //     "create_time": "2018-09-11 01:21:19",                               //创建时间
-                //     "path": ""                                                          //语音全路径
+                //     "user": "0",                                    
+
+                    //对象(0:言小通,1:客户)
+                //     "uniqueid":"6_7600109_331a9fc78f474ac9e9254567295bffb8",           //唯一标识id
+                //     "create_time": "2018-09-11 01:21:19",           
+
+                    //创建时间
+                //     "path": ""                                      
+
+                    //语音全路径
                 // },
                 // {
-                //     "msg": "状态（两秒空音）",                                     //语音内容
-                //     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                //     "user": "1",                                                        //对象(0:言小通,1:客户)
+                //     "msg": "状态（两秒空音）",                      
+
+               //语音内容
+                //     "record":"/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
+                //     "user": "1",                                    
+
+                    //对象(0:言小通,1:客户)
                 //     "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bff98",           //唯一标识id
-                //     "create_time": "2018-09-9 01:21:19",                               //创建时间
-                //     "path": ""                                                          //语音全路径
+                //     "create_time": "2018-09-9 01:21:19",            
+
+                   //创建时间
+                //     "path": ""                                      
+
+                    //语音全路径
                 // },
             ],
             detail:{//录音详情
@@ -259,7 +285,15 @@ export default {
             ],
             remarkLabel:'',//备注名称
             logDio:false,
-            fileList:[]
+            img:false,
+            showId:"",
+            caseDioData:[],
+            fileList:[],
+            addCaseFile:{
+                file:"" ,
+                name:"",
+                case_id:""
+            }
         }
     },
     activated(){
@@ -289,17 +323,18 @@ export default {
                         this.selfInfo = data.info.selfInfo
                         this.middleCaseRecord = data.info.caseRecord
                         this.caseRecord = [{
-                            "id": data.info.selfInfo.id,                           //案件编号id       
-                            "case_name": data.info.selfInfo.case_name,                  //姓名
+                            "id": data.info.selfInfo.id,//案件编号id       
+                            "case_name": data.info.selfInfo.case_name,                 //姓名
                             "case_money": data.info.selfInfo.case_money,                  //委案金额
-                            "case_currency": data.info.selfInfo.case_currency,             //币种
+                            "case_currency":data.info.selfInfo.case_currency,             //币种
                             "case_paid": data.info.selfInfo.case_paid,                     //已还金额
-                            "case_exceed_limit": data.info.selfInfo.case_exceed_limit,              //逾期账龄
-                            "last_call": data.info.selfInfo.last_call,                      //上次通话时间
-                            "call_times": data.info.selfInfo.call_times   
+                            "case_exceed_limit":data.info.selfInfo.case_exceed_limit,              //逾期账龄
+                            "last_call": data.info.selfInfo.last_call,
+                     //上次通话时间
+                            "call_times":data.info.selfInfo.call_times   
                         }]
                         if( str == 'total' ){//查询共案
-                            this.caseRecord = this.caseRecord.concat( this.middleCaseRecord )
+                            this.caseRecord = this.caseRecord.concat(this.middleCaseRecord )
                         }
                     }
                 }
@@ -538,43 +573,61 @@ export default {
         downloadFn(){//下载录音
             window.open('/api/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
         },
-        // 案件日志
+        // 案件日志列表
+        initDio(){
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/case-log-list"
+                const conf = {
+                    url,
+                    data:{
+                        case_id:this.id
+                    },
+                    success:(data)=>{
+                        this.caseDioData = data.info
+                        console.log(data)
+                    }
+                }
+                axiosRequest(conf)
+        },
+        // 点击出现弹框
         caseLog(){
             this.logDio = true
+            this.initDio()
         },
-         addFile(){
-                this.$refs.upload.submit(); 
-               
-            },
-            handleExceed(){
-
-            },
-
-            beforeUploadFile(response) {
-                var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
-                console.log(testmsg)
-                const isJPG = response.type === 'image/jpeg';
-                const isPNG = response.type === 'image/png';
-                if (!isJPG&&!isPNG) {
-                this.$message.error('上传文件格式需要是.jpeg/.png!');
-                return false;
-                }
-            },
-            successFile(response,file,files){ 
-                this.$alert(response.message)
-                if(response.statusCode == 1){
-                    this.Voice.UploadFile = false
-                    this.init()
-                }else{
-                    this.Voice.UploadFile = true
-                }
-            },
-            handleExceedFile(files, fileList) {
-                this.$message.warning(`当前限制选择 1 个文件`);
-            },
-            beforeRemoveFile(file, fileList) {
-                return this.$confirm(`确定移除 ${ file.name }？`);
-            },
+        // 移入移出效果
+        enter(index){
+            this.showId = this.caseDioData[index].id
+            this.img = true
+        },
+        leave(){
+            this.img = false
+        },
+        // 保存日志
+        addDioSave(){
+            this.$refs.upload.submit(); 
+        },
+        beforeUploadFile(response) {
+            var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
+            const isJPG = response.type === 'image/jpeg';
+            const isPNG = response.type === 'image/png';
+            if (!isJPG&&!isPNG) {
+            this.$message.error('上传文件格式需要是.jpeg/.png!');
+            this.fileList = []
+            }else{
+                this.addCaseFile.file = response
+                this.addCaseFile.case_id = this.id
+            }
+        },
+        successFile(response,file,files){ 
+            this.$alert(response.message)
+            if(response.statusCode == 1){
+                this.logDio = false
+            }else{
+                this.logDio = true
+            }
+        },
+        beforeRemoveFile(file, fileList) {
+            return this.$confirm(`确定移除 ${ file.name }？`);
+        },
     }
 }
 </script>
