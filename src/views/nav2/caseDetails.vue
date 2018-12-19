@@ -630,6 +630,7 @@ export default {
                         }else{
                             this.logDio = true
                         }
+                        this.initDio()
                     }
                 }
                 axiosRequest(conf)
@@ -653,6 +654,7 @@ export default {
             }else{
                 this.logDio = true
             }
+            this.initDio()
         },
         beforeRemoveFile(file, fileList) {
             return this.$confirm(`确定移除 ${ file.name }？`);
@@ -704,6 +706,7 @@ export default {
                     }else{
                         this.logDioMemorandum = true
                     }
+                    this.initDioMemorandum()
                 }
             }
             axiosRequest(conf)
@@ -727,6 +730,7 @@ export default {
             }else{
                 this.logDioMemorandum = true
             }
+            this.initDioMemorandum()
         },
         beforeRemoveFileMemorandum(file, fileList) {
             return this.$confirm(`确定移除 ${ file.name }？`);
