@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="info">
-            <h3 style="margin-bottom:10px;">个人信息 <div class="redS" style="display:inline-block;"><span>案件序列号：{{selfInfo.case_code}}</span><span><el-button type="primary" @click="totalCaseFn('total')" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" v-show="selfInfo.case_status!='3'" @click="changeLevelFn" size="mini">修改等级</el-button></span></div></h3>
-            
+            <h3 style="margin-bottom:10px;display:inline-block;">个人信息 <div class="redS" style="display:inline-block;"><span>案件序列号：{{selfInfo.case_code}}</span><span><el-button type="primary" @click="totalCaseFn('total')" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" v-show="selfInfo.case_status!='3'" @click="changeLevelFn" size="mini">修改等级</el-button></span></div></h3>
+            <el-button type="primary" size="mini" @click="caseLog">案件日志</el-button>
             <div class="coverLevel">
                 <div class="average">
                     <span style="display: inline-block;width: 270px;">证件号码：{{selfInfo.case_id_num}}</span>
@@ -62,6 +62,9 @@ export default {
         },
         sendLetter(val1,val2,val3){
             this.$emit('sendLetter',val1,val2,val3)
+        },
+        caseLog(){
+            this.$emit('caseLog')
         }
     }
 }

@@ -6,6 +6,7 @@
             v-on:changeLevelFn='changeLevelFn($event)'
             v-on:callFn='callFn($event,arguments)'
             v-on:sendLetter='sendLetter($event,arguments)'
+            v-on:caseLog="caseLog($event)"
         ></div-info>
         
         <div class="tableCover">
@@ -73,7 +74,27 @@
                 v-on:cancelFn='cancelInfoSave($event)'
             ></remark-dialog>
         </el-dialog>
+        <!--案件日志弹框-->
+        <div class="dial-header  bind" >
+        <el-dialog title="操作日志" :visible.sync="logDio">
+            <el-upload
+                class="upload-demo"
+                ref="upload"
+                action="/api/api_backend.php?r=sound/word-to-sound-add"
+                :before-remove="beforeRemoveFile"
+                :on-success="successFile"
+                :before-upload="beforeUploadFile"
+                :limit="1"
+                :auto-upload="false"
+                list-type="picture"
+                :on-exceed="handleExceed"  :file-list="fileList">
+                <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
+        </el-upload>
+            <el-button>2222</el-button>
+        </el-dialog>
     </div>
+    </div>
+  
 </template>
 <script>
 import tableCaseDetail from '@/functions/tableCollection/tableCaseDetail.vue'
@@ -235,6 +256,8 @@ export default {
                 }
             ],
             remarkLabel:'',//备注名称
+            logDio:false,
+            fileList:[]
         }
     },
     activated(){
@@ -512,7 +535,44 @@ export default {
         },
         downloadFn(){//下载录音
             window.open('/api/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
-        }
+        },
+        // 案件日志
+        caseLog(){
+            this.logDio = true
+        },
+         addFile(){
+                this.$refs.upload.submit(); 
+               
+            },
+            handleExceed(){
+
+            },
+
+            beforeUploadFile(response) {
+                var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
+                console.log(testmsg)
+                const isJPG = response.type === 'image/jpeg';
+                const isPNG = response.type === 'image/png';
+                if (!isJPG&&!isPNG) {
+                this.$message.error('上传文件格式需要是.jpeg/.png!');
+                return false;
+                }
+            },
+            successFile(response,file,files){ 
+                this.$alert(response.message)
+                if(response.statusCode == 1){
+                    this.Voice.UploadFile = false
+                    this.init()
+                }else{
+                    this.Voice.UploadFile = true
+                }
+            },
+            handleExceedFile(files, fileList) {
+                this.$message.warning(`当前限制选择 1 个文件`);
+            },
+            beforeRemoveFile(file, fileList) {
+                return this.$confirm(`确定移除 ${ file.name }？`);
+            },
     }
 }
 </script>

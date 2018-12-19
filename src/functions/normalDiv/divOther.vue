@@ -2,56 +2,56 @@
     <div>
        <table style="width:100%" class="messageTable">
         <tr>
-            <td >性别:</td><td >{{selfInfo.case_gender}}</td>
-            <td >家庭号码:</td><td >{{selfInfo.case_home_phone}}</td>
-            <td >案人职位:</td><td >{{selfInfo.case_position}}</td>
-            <td >案人部门:</td><td >{{selfInfo.case_department}}</td>
+            <td>性别:</td><td>{{selfInfo.case_gender}}</td>
+            <td>家庭号码:</td><td>{{selfInfo.case_home_phone}}</td>
+            <td>案人职位:</td><td>{{selfInfo.case_position}}</td>
+            <td>案人部门:</td><td>{{selfInfo.case_department}}</td>
         </tr>
         <tr>
-            <td >单位邮编:</td><td >{{selfInfo.case_work_postcode}}</td>
-            <td >家庭地址:</td><td >{{selfInfo.case_home_address}}</td>
-            <td >家庭邮编:</td><td >{{selfInfo.case_home_postcode}}</td>
-            <td >对账单地址:</td><td >{{selfInfo.case_mail_address}}</td>
+            <td>单位邮编:</td><td>{{selfInfo.case_work_postcode}}</td>
+            <td>家庭地址:</td><td>{{selfInfo.case_home_address}}</td>
+            <td>家庭邮编:</td><td>{{selfInfo.case_home_postcode}}</td>
+            <td>对账单地址:</td><td>{{selfInfo.case_mail_address}}</td>
         </tr>
         <tr>
-            <td >对账单邮编:</td><td >{{selfInfo.case_mail_postcode}}</td>
-            <td >户籍地址:</td><td >{{selfInfo.case_register_address}}</td>
-            <td >户籍地邮编:</td><td >{{selfInfo.case_register_postcode}}</td>
-            <td >qq:</td><td >{{selfInfo.case_qq}}</td>
+            <td>对账单邮编:</td><td>{{selfInfo.case_mail_postcode}}</td>
+            <td>户籍地址:</td><td>{{selfInfo.case_register_address}}</td>
+            <td>户籍地邮编:</td><td>{{selfInfo.case_register_postcode}}</td>
+            <td>qq:</td><td>{{selfInfo.case_qq}}</td>
         </tr>
         <tr>
-            <td >电子邮箱:</td><td >{{selfInfo.case_email}}</td>
-            <td >生日:</td><td >{{selfInfo.case_birthday}}</td>
-            <td >年龄:</td><td >{{selfInfo.case_age}}</td>
-            <td >省份:</td><td >{{selfInfo.case_province}}</td>
+            <td>电子邮箱:</td><td>{{selfInfo.case_email}}</td>
+            <td>生日:</td><td>{{selfInfo.case_birthday}}</td>
+            <td>年龄:</td><td>{{selfInfo.case_age}}</td>
+            <td>省份:</td><td>{{selfInfo.case_province}}</td>
         </tr>
         <tr>
-            <td >城市:</td><td >{{selfInfo.case_city}}</td>
-            <td >区县:</td><td >{{selfInfo.case_district}}</td>
-            <td >备注1:</td><td >{{selfInfo.case_remark1}}</td>
-            <td >社保电脑号:</td><td >{{selfInfo.case_social_number}}</td>
+            <td>城市:</td><td>{{selfInfo.case_city}}</td>
+            <td>区县:</td><td>{{selfInfo.case_district}}</td>
+            <td>备注1:</td><td>{{selfInfo.case_remark1}}</td>
+            <td>社保电脑号:</td><td>{{selfInfo.case_social_number}}</td>
         </tr>
         <tr>
-            <td >社保卡号:</td><td >{{selfInfo.case_social_card}}</td>
-            <td >开户行:</td><td >{{selfInfo.case_card_bank}}</td>
-            <td >联系人1姓名:</td><td >{{selfInfo.case_name1}}</td>
-            <td >联系人1证件号:</td><td >{{selfInfo.case_card1}}</td>
+            <td >社保卡号:</td><td>{{selfInfo.case_social_card}}</td>
+            <td >开户行:</td><td>{{selfInfo.case_card_bank}}</td>
+            <td >联系人1姓名:</td><td>{{selfInfo.case_name1}}</td>
+            <td >联系人1证件号:</td><td>{{selfInfo.case_card1}}</td>
         </tr>
         <tr>
-            <td >联系人1关系:</td><td>{{selfInfo.case_relation1}}</td>
-            <td >联系人1家庭电话:</td><td>{{selfInfo.case_home_phone1}}</td>
-            <td >联系人1单位电话:</td><td>{{selfInfo.case_work_phone1}}</td>
-            <td >联系人1手机号:</td><td>{{selfInfo.case_mobile1}}</td>
+            <td>联系人1关系:</td><td>{{selfInfo.case_relation1}}</td>
+            <td>联系人1家庭电话:</td><td>{{selfInfo.case_home_phone1}}</td>
+            <td>联系人1单位电话:</td><td>{{selfInfo.case_work_phone1}}</td>
+            <td>联系人1手机号:</td><td>{{selfInfo.case_mobile1}}</td>
         </tr>
         <tr>
-            <td >联系人1地址:</td><td>{{selfInfo.case_address1}}</td>
-            <td >联系人1单位地址:</td><td>{{selfInfo.case_work_address1}}</td>
-            <td >联系人2姓名:</td><td>{{selfInfo.case_name2}}</td>
-            <td >联系人2证件号:</td><td>{{selfInfo.case_card2}}</td>
+            <td>联系人1地址:</td><td>{{selfInfo.case_address1}}</td>
+            <td>联系人1单位地址:</td><td>{{selfInfo.case_work_address1}}</td>
+            <td>联系人2姓名:</td><td>{{selfInfo.case_name2}}</td>
+            <td>联系人2证件号:</td><td>{{selfInfo.case_card2}}</td>
         </tr>
         <tr>
-            <td >联系人2关系:</td><td>{{selfInfo.case_relation2}}</td>
-            <td >联系人2家庭电话:</td><td>{{selfInfo.case_home_phone2}}</td>
+            <td>联系人2关系:</td><td>{{selfInfo.case_relation2}}</td>
+            <td>联系人2家庭电话:</td><td>{{selfInfo.case_home_phone2}}</td>
             <td>联系人2单位电话:</td><td>{{selfInfo.case_work_phone2}}</td>
             <td>联系人2手机号:</td><td>{{selfInfo.case_mobile2}}</td>
         </tr>
@@ -70,8 +70,8 @@
         <tr>
             <td> 更新时间:</td><td>{{selfInfo.update_time}}</td>
             <td>创建时间:</td><td>{{selfInfo.create_time}}</td>
-            <td>共案记录数:</td><td>{{selfInfo.case_total}}</td><td>最后跟进日期:</td>
-            <td>{{selfInfo.case_last_collection_date}}</td>
+            <td>共案记录数:</td><td>{{selfInfo.case_total}}</td>
+            <td>最后跟进日期:</td><td>{{selfInfo.case_last_collection_date}}</td>
         </tr>
         <tr>
             <td>机器人呼叫次数:</td><td>{{selfInfo.case_called_times}}</td>
@@ -169,7 +169,7 @@ export default {
 }
 </script>
 <style>
-.messageTable tr td:nth-child(odd){width:9%}
+.messageTable tr td:nth-child(odd){width:9%;background:#f2f2f2}
 .messageTable tr td:nth-child(even){width:16%}
  .messageTable {
     font-family: verdana,arial,sans-serif;
