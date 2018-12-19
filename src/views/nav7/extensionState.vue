@@ -7,7 +7,7 @@
         <el-table-column prop="status" label="分机状态">
             <template slot-scope="scope">
                 <span v-if="scope.row.status == -1" style="color:#e38028">分机找不到</span>
-                <span v-else-if="scope.row.status == 0"style="color:#60b549">空闲</span>
+                <span v-else-if="scope.row.status == 0" style="color:#60b549">空闲</span>
                 <span v-else-if="scope.row.status == 2" style="color:#0093fa">分机忙</span>
                 <span v-else-if="scope.row.status == 4" style="color:#0093fa">不可用</span>
                 <span v-else-if="scope.row.status == 8" style="color:#0093fa">振铃</span>

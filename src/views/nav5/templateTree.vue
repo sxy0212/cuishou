@@ -343,9 +343,7 @@
             </div>
           </el-dialog>
         </div>
-      </div>
-      </div>
-		</section>
+    </section>
 </template>    
 <script>
 import {axiosRequest,clone,message} from '@/assets/js/Yt.js'

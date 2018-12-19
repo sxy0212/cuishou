@@ -97,7 +97,7 @@
             <el-form-item label="上级部门:">
               <el-select v-model="formMember.depart_id" placeholder="请选择类型">
                 <el-option v-for="(item,index) in Dates" :label="item.depart_name" :value="item.id" :key="index"></el-option>
-                <el-option v-for="(item,index) in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
+                <el-option v-for="item in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
               </el-select> 
             </el-form-item>
           </div>
@@ -131,7 +131,7 @@
             <el-form-item label="上级部门:">
               <el-select v-model="formMemberEdit.depart_id" placeholder="请选择类型">
                 <el-option v-for="(item,index) in DatesEdit" :label="item.depart_name" :value="item.id" :key="index"></el-option>
-                 <el-option v-for="(item,index) in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
+                 <el-option v-for="item in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
               </el-select> 
             </el-form-item>
           </div>
