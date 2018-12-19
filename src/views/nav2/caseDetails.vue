@@ -7,6 +7,7 @@
             v-on:callFn='callFn($event,arguments)'
             v-on:sendLetter='sendLetter($event,arguments)'
             v-on:caseLog="caseLog($event)"
+            v-on:caseMemorandum = 'caseMemorandum($event)'
         ></div-info>
         
         <div class="tableCover">
@@ -77,22 +78,22 @@
         </el-dialog>
         <!--案件日志弹框-->
         <div class="dial-header  bind" >
-            <el-dialog title="操作日志" :visible.sync="logDio">
+            <el-dialog title="案件日志" :visible.sync="logDio" v-move>
                 <ul style="height:200px;overflow-y: scroll;mergin-bottom:20px;">
-                    <li v-for="(item,index) in caseDioData" style="position:relative">
+                    <li v-for="(item,index) in caseDioData" style="position:relative;border-bottom:1px solid #f2f2f2;height:40px;line-height:40px;">
                         {{item.create_time}} {{item.name}}
                         <img :src="item.img" style="width:40px;height:40px;" v-show="item.img"  @mouseenter="enter(index)" @mouseleave="leave()">
                         <img :src="item.img" style="width:200px;height:200px;position:fixed;z-index:10000;top:30%;left:60%;margin-left:-100px;" v-show="img&&item.id== showId">
                     </li>
                 </ul>
-                <div style="float:left;margin-right:10px;"> 案件名称:<el-input v-model="addCaseFile.name" style="width:200px;"></el-input></div>
-               
-                <el-upload style="float:left"
+                <div style="margin-bottom:10px;"> 案件日志内容:<el-input v-model="addCaseFile.name" style="width:200px;"></el-input></div>
+                <el-upload style="margin-left:90px;"
                     class="upload-demo"
                     ref="upload"
                     action="/api/api_backend.php?r=asrcall-case-batch-data/add-case-log"
                     :before-remove="beforeRemoveFile"
                     :before-upload="beforeUploadFile"
+                    :on-success="successFile"
                     :limit="1"
                     :auto-upload="false"
                     list-type="picture"
@@ -100,8 +101,40 @@
                     <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
             </el-upload>
             <div slot="footer" class="dialog-footer">     
-                <el-button type="primary" @click="addDioSave">保存</el-button>
+                <el-button type="primary" @click="addDioSave">有图片保存</el-button>
+                <el-button type="primary" @click="addDioSaveNo">无图片保存</el-button>
                 <el-button type="primary" @click="logDio = false">取消</el-button>
+            </div>  
+        </el-dialog>
+    </div>
+     <!--案件备忘录弹框-->
+        <div class="dial-header  bind" >
+            <el-dialog title="案件备忘录" :visible.sync="logDioMemorandum" v-move>
+                <ul style="height:200px;overflow-y: scroll;mergin-bottom:20px;">
+                    <li v-for="(item,index) in caseDioDataMemorandum" style="position:relative;border-bottom:1px solid #f2f2f2;height:40px;line-height:40px;">
+                        {{item.create_time}} {{item.content}}
+                        <img :src="item.img" style="width:40px;height:40px;" v-show="item.img"  @mouseenter="enterMemorandum(index)" @mouseleave="leaveMemorandum()">
+                        <img :src="item.img" style="width:200px;height:200px;position:fixed;z-index:10000;top:30%;left:60%;margin-left:-100px;" v-show="imgMemorandum&&item.id== showIdMemorandum">
+                    </li>
+                </ul>
+                <div style="margin-bottom:10px;">案件备忘录内容:<el-input v-model="addCaseFileMemorandum.content" style="width:200px;"></el-input></div>
+                <el-upload style="margin-left:100px;"
+                    class="upload-demo"
+                    ref="uploads"
+                    action="/api/api_backend.php?r=asrcall-case-batch-data/add-case-memorandum"
+                    :before-remove="beforeRemoveFileMemorandum"
+                    :before-upload="beforeUploadFileMemorandum"
+                    :on-success="successFileMemorandum"
+                    :limit="1"
+                    :auto-upload="false"
+                    list-type="picture"
+                    :data="addCaseFileMemorandum" :file-list="fileListMemorandum">
+                    <el-button type="primary" plain ><i class="fa fa-upload" style="width:40px">选择</i></el-button>
+            </el-upload>
+            <div slot="footer" class="dialog-footer">     
+                <el-button type="primary" @click="addDioSaveMemorandum">有图片保存</el-button>
+                <el-button type="primary" @click="addDioSaveMemorandumNo">无图片保存</el-button>
+                <el-button type="primary" @click="logDioMemorandum= false">取消</el-button>
             </div>  
         </el-dialog>
     </div>
@@ -151,40 +184,7 @@ export default {
             formRemark:{
                 remark:''
             },
-            audioData:[//录音内容
-                // {
-                //     "msg": "喂，您好！（两秒空音）",                
-
-                     //语音内容
-                //     "record": "/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                //     "user": "0",                                    
-
-                    //对象(0:言小通,1:客户)
-                //     "uniqueid":"6_7600109_331a9fc78f474ac9e9254567295bffb8",           //唯一标识id
-                //     "create_time": "2018-09-11 01:21:19",           
-
-                    //创建时间
-                //     "path": ""                                      
-
-                    //语音全路径
-                // },
-                // {
-                //     "msg": "状态（两秒空音）",                      
-
-               //语音内容
-                //     "record":"/home/robot_sound_ai23/root23199_lisuijiahui/A1.wav",    //语音路径
-                //     "user": "1",                                    
-
-                    //对象(0:言小通,1:客户)
-                //     "uniqueid": "6_7600109_331a9fc78f474ac9e9254567295bff98",           //唯一标识id
-                //     "create_time": "2018-09-9 01:21:19",            
-
-                   //创建时间
-                //     "path": ""                                      
-
-                    //语音全路径
-                // },
-            ],
+            audioData:[],
             detail:{//录音详情
             },
             otherInfo:false,//其他信息
@@ -284,7 +284,7 @@ export default {
                 }
             ],
             remarkLabel:'',//备注名称
-            logDio:false,
+            logDio:false,   //日志
             img:false,
             showId:"",
             caseDioData:[],
@@ -293,7 +293,17 @@ export default {
                 file:"" ,
                 name:"",
                 case_id:""
-            }
+            },
+            logDioMemorandum:false,   //备忘录
+            imgMemorandum:false,
+            showIdMemorandum:"",
+            caseDioDataMemorandum:[],
+            fileListMemorandum:[],
+            addCaseFileMemorandum:{
+                file:"" ,
+                content:"",
+                case_id:""
+            },
         }
     },
     activated(){
@@ -576,21 +586,21 @@ export default {
         // 案件日志列表
         initDio(){
             const url = "/api/api_backend.php?r=asrcall-case-batch-data/case-log-list"
-                const conf = {
-                    url,
-                    data:{
-                        case_id:this.id
-                    },
-                    success:(data)=>{
-                        this.caseDioData = data.info
-                        console.log(data)
-                    }
+            const conf = {
+                url,
+                data:{
+                    case_id:this.id
+                },
+                success:(data)=>{
+                    this.caseDioData = data.info
                 }
-                axiosRequest(conf)
+            }
+            axiosRequest(conf)
         },
         // 点击出现弹框
         caseLog(){
             this.logDio = true
+            this.addCaseFile.name = ""
             this.initDio()
         },
         // 移入移出效果
@@ -603,7 +613,26 @@ export default {
         },
         // 保存日志
         addDioSave(){
-            this.$refs.upload.submit(); 
+            this.$refs.upload.submit();   
+        },  
+        addDioSaveNo(){
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/add-case-log"
+                const conf = {
+                    url,
+                    data:{
+                        case_id:this.id,
+                        name:this.addCaseFile.name
+                    },
+                    success:(data)=>{
+                        this.$alert(data.message)
+                        if(data.statusCode == 1){
+                            this.logDio = false
+                        }else{
+                            this.logDio = true
+                        }
+                    }
+                }
+                axiosRequest(conf)
         },
         beforeUploadFile(response) {
             var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
@@ -626,6 +655,80 @@ export default {
             }
         },
         beforeRemoveFile(file, fileList) {
+            return this.$confirm(`确定移除 ${ file.name }？`);
+        },
+        // 案件备忘录
+        caseMemorandum(){
+            this.logDioMemorandum = true
+            this.addCaseFileMemorandum.content = ""
+            this.initDioMemorandum()
+        },
+        // 案件备忘录列表
+        initDioMemorandum(){
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/case-memorandum-list"
+            const conf = {
+                url,
+                data:{
+                    case_id:this.id
+                },
+                success:(data)=>{
+                    this.caseDioDataMemorandum = data.info
+                }
+            }
+            axiosRequest(conf)
+        },
+        // 移入移出效果
+        enterMemorandum(index){
+            this.showIdMemorandum = this.caseDioDataMemorandum[index].id
+            this.imgMemorandum = true
+        },
+        leaveMemorandum(){
+            this.imgMemorandum = false
+        },
+        // 保存日志
+        addDioSaveMemorandum(){
+            this.$refs.uploads.submit(); 
+        },
+        addDioSaveMemorandumNo(){
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/add-case-memorandum"
+            const conf = {
+                url,
+                data:{
+                    case_id:this.id,
+                    content:this.addCaseFileMemorandum.content
+                },
+                success:(data)=>{
+                    this.$alert(data.message)
+                    if(data.statusCode == 1){
+                        this.logDioMemorandum = false
+                    }else{
+                        this.logDioMemorandum = true
+                    }
+                }
+            }
+            axiosRequest(conf)
+        },
+        beforeUploadFileMemorandum(response) {
+            var testmsg=response.name.substring(response.name.lastIndexOf('.')+1)                 
+            const isJPG = response.type === 'image/jpeg';
+            const isPNG = response.type === 'image/png';
+            if (!isJPG&&!isPNG) {
+            this.$message.error('上传文件格式需要是.jpeg/.png!');
+            this.fileListMemorandum = []
+            }else{
+                this.addCaseFileMemorandum.file = response
+                this.addCaseFileMemorandum.case_id = this.id
+            }
+        },
+        successFileMemorandum(response,file,files){ 
+            this.$alert(response.message)
+            if(response.statusCode == 1){
+                this.logDioMemorandum = false
+            }else{
+                this.logDioMemorandum = true
+            }
+        },
+        beforeRemoveFileMemorandum(file, fileList) {
             return this.$confirm(`确定移除 ${ file.name }？`);
         },
     }
