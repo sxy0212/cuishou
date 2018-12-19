@@ -85,7 +85,6 @@ export default {
                 obj['batch_id'] = this.id
                 return obj
             }
-                    
         }
     },
     methods:{
@@ -117,8 +116,6 @@ export default {
     }
 }
 </script>
-<style>
 
-</style>
 
 

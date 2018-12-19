@@ -57,6 +57,10 @@
         prop="case_paid">
         </el-table-column>
         <el-table-column
+        label="通话时长"
+        prop="last_call_billsec_int">
+        </el-table-column>
+        <el-table-column
         label="上次通话"
         prop="last_call">
         </el-table-column>

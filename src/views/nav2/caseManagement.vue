@@ -198,7 +198,6 @@ export default {
 			multipList:[],//多样的选择,
 			areaList:[],//区域列表
 		}
-
 	},
 	activated(){
 		this.getInfoFn()
@@ -206,6 +205,7 @@ export default {
 		this.conditions.depart_id = typeof(  this.$route.query.depart_id ) == 'undefined'?'': this.$route.query.depart_id
 		this.conditions.batch_id = typeof(  this.$route.query.batch_id ) == 'undefined'?'': this.$route.query.batch_id
 		this.init()
+		this.getStaffFn('-1')
 		// this.changeFn('')
 		this.filterFn('')
 	},

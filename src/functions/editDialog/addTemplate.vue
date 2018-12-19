@@ -25,6 +25,7 @@
 <script>
 import { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
+import '@/styles/css/addTemplate.css'
 export default {
     name:"addArea",
     props:[
@@ -80,9 +81,4 @@ export default {
     }
 }
 </script>
-<style>
-.red .el-checkbox__label{color:red;}
-.el-checkbox {    margin-left: 30px;}
-</style>
-
 
