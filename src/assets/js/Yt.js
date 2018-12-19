@@ -105,7 +105,7 @@ function formatDate(date, fmt) {
 //实现元素跟随鼠标点击拖动
 // 引用，写在元素上v-move
 Vue.directive("move",{
-    bind(el, binding, vnode, oldVnode) {
+    bind(el, binding) {
     const dialogHeaderEl = el.querySelector('.el-dialog__header')
     const dragDom = el.querySelector('.el-dialog')
     dialogHeaderEl.style.cursor = 'move'

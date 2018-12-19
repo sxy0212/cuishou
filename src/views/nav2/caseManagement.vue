@@ -51,7 +51,7 @@
 			v-on:currentPageChange='currentPageChangeFn($event)'
 		></page-change>
     </div>
-	<el-dialog :title="bannerTitle" :visible.sync="addChangeAreaNow" >
+	<el-dialog :title="bannerTitle" :visible.sync="addChangeAreaNow" v-move>
         <edit-dialog
 			:areaList='areaList'
 			:formTitle='formTitle'
@@ -59,7 +59,7 @@
 			v-on:cancelFn='cancelFn($event)'
         ></edit-dialog>
     </el-dialog>
-	<el-dialog title="手动分配" :visible.sync="distributeNow" >
+	<el-dialog title="手动分配" :visible.sync="distributeNow" v-move>
         <second-dialog
 			:formDistribute='formDistribute'
 			:departmentList='distributeDepartmentList'
@@ -206,6 +206,8 @@ export default {
 		this.conditions.depart_id = typeof(  this.$route.query.depart_id ) == 'undefined'?'': this.$route.query.depart_id
 		this.conditions.batch_id = typeof(  this.$route.query.batch_id ) == 'undefined'?'': this.$route.query.batch_id
 		this.init()
+		// this.changeFn('')
+		this.filterFn('')
 	},
     methods: {
 		searchFn(){
@@ -240,7 +242,12 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-                        this.clientList = data.info
+						this.clientList = data.info
+						this.clientList.unshift({
+							name:'请选择委托方',
+							id:''
+						})
+						console.log(this.clientList)
 					}
                 }
             }

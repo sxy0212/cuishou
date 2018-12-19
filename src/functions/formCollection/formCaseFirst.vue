@@ -47,6 +47,11 @@
             </el-form-item>
             <el-form-item label="委托方">
                 <el-select v-model="conditions.client_id" filterable :filter-method='filterFn'  placeholder="请选择委托方">
+                    <!-- <el-option
+                        label="请选择委托方" 
+                        value=''
+                        >
+                    </el-option> -->
                     <el-option
                         v-for="item in clientList"
                         :label="item.name" 

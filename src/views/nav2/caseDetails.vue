@@ -49,6 +49,7 @@
         <div class="coverDialog">
             <el-dialog title="通话详情" :visible.sync="checkNow" 
                 :before-close="beforeCloseFn"
+                v-move
                 >
                 <check-dialog
                     :audioData='audioData'
@@ -58,15 +59,16 @@
                 ></check-dialog>
             </el-dialog>
         </div>
-        <el-dialog title="修改等级" :visible.sync="changeLevel" >
+        <el-dialog title="修改等级" :visible.sync="changeLevel" v-move >
             <change-dialog
                 :levelList='levelList'
                 :formLevel='formLevel'
                 v-on:protectFn='saveLevelFn($event)'
                 v-on:cancelFn='cancelChangeLevel($event)'
+                
             ></change-dialog>
         </el-dialog>
-        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" >
+        <el-dialog :title="remarkTitle" :visible.sync="remarkShow" v-move >
             <remark-dialog
                 :formRemark='formRemark'
                 :remarkLabel='remarkLabel'
@@ -76,7 +78,7 @@
         </el-dialog>
         <!--案件日志弹框-->
         <div class="dial-header  bind" >
-        <el-dialog title="操作日志" :visible.sync="logDio">
+        <el-dialog title="操作日志" :visible.sync="logDio" v-move>
             <el-upload
                 class="upload-demo"
                 ref="upload"

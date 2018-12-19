@@ -21,7 +21,7 @@
             v-on:currentPageChange='currentPageChangeFn($event)'
         ></page-change>
     </div>
-    <el-dialog :title="bannerTitle" :visible.sync="addNow" >
+    <el-dialog :title="bannerTitle" :visible.sync="addNow" v-move>
         <edit-dialog
             v-on:addNowChange = "addFn($event)"
             v-on:saveFn = "init($event)"
@@ -57,11 +57,7 @@ export default {
             total:0,
             bannerTitle:"案件类型添加",
             addNow:false,
-            tableData: [{
-                miniImage: '上海市普陀区'
-            }, {
-                miniImage: '闵行区'
-            }],
+            tableData: [],
             formTitle:{
                 name:''
             },
@@ -70,9 +66,6 @@ export default {
     activated(){
         this.init()
 	},
-    // created() {
-    //     this.init()
-    // },
     methods: {
         init(){
             let conf = {

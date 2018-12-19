@@ -40,7 +40,7 @@
             v-on:currentPageChange='currentPageChangeFn($event)'
         ></page-change>
     </div>
-    <el-dialog :title="bannerTitle" :visible.sync="addNow" >
+    <el-dialog :title="bannerTitle" :visible.sync="addNow" v-move>
         <edit-dialog
             v-on:addNowChange = "addFn($event)"
             v-on:saveFn = "init($event)"
@@ -75,11 +75,7 @@ export default {
             total:0,
             bannerTitle:"等级添加",
             addNow:false,
-            tableData: [{
-                miniImage: '上海市普陀区'
-            }, {
-                miniImage: '闵行区'
-            }],
+            tableData: [],
             formTitle:{//子模块表单数据
                 name:'',
                 self_phone_status :'',

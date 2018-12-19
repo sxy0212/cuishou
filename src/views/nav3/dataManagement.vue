@@ -32,7 +32,7 @@
         v-on:currentPageChange='currentPageChangeFn($event)'
     ></page-change>
     
-    <el-dialog :title="bannerTitle" :visible.sync="addNow" >
+    <el-dialog :title="bannerTitle" :visible.sync="addNow" v-move>
         <edit-dialog
             v-on:init='init($event)'
             v-on:changeAddNow="changeAddNow($event)"
@@ -50,10 +50,10 @@
             :clientList='clientList'
         ></edit-dialog>
     </el-dialog>
-    <el-dialog title="下载模板" :visible.sync="addDown" >
+    <el-dialog title="下载模板" :visible.sync="addDown" v-move>
         <div-dialog></div-dialog>
     </el-dialog>
-    <el-dialog title="添加到外呼任务" :visible.sync="addTask" >
+    <el-dialog title="添加到外呼任务" :visible.sync="addTask" v-move>
         <task-dialog
             :formTask='formTask'
             :taskList='taskList'
