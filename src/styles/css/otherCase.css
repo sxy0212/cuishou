@@ -11,3 +11,5 @@
 .el-table__body .five{color:rgba(0, 204, 0, 1);}
 .el-table__body .six{color:rgba(102, 51, 0, 1);}
 .el-table__body .seven{color:rgba(255, 204, 0, 1);}
+
+.el-checkbox__input{left:-55%;}
