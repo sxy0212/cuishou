@@ -38,7 +38,7 @@
       <el-table-column prop="case_money" label="委案金额"></el-table-column>  
       <el-table-column prop="case_paid" label="已还款额"></el-table-column>  
       <el-table-column prop="allocate_time" label="最后分配时间"></el-table-column>  
-      <el-table-column  label="操作" width="300">
+      <el-table-column  label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" plain  @click="check(scope.$index,scope.row)">查看任务</el-button>
         </template>

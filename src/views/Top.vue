@@ -8,7 +8,7 @@
 			<el-dropdown trigger="hover" >
 				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{info.company_name}}</span>
 				<el-dropdown-menu slot="dropdown" style="cursor: pointer;">
-					<el-dropdown-item>公司代号:{{info.company_id}}</el-dropdown-item>
+					<el-dropdown-item>公司代号:{{info.prefix}}</el-dropdown-item>
 					<el-dropdown-item>设置</el-dropdown-item>
 					<el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
 				</el-dropdown-menu>

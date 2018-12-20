@@ -1107,7 +1107,11 @@ import '../../../static/css/bootstrap.min.css'
               template_id:this.template_id
             },
             success:(data)=>{
-                $(".orgWrap").empty()
+              if(data.statusCode == 0){
+                 this.show = false
+                _this.$alert(data.message)
+              }else{
+                   $(".orgWrap").empty()
                 this.show = false
                 this.obj.push(data.info)
                 // this.obj = data.info
@@ -1184,6 +1188,8 @@ import '../../../static/css/bootstrap.min.css'
                     callback:function(){
                     }
                 })
+              }
+             
             }
             
           }
