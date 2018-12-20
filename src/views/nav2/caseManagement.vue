@@ -33,7 +33,7 @@
 		</second-form>
 	</div>
 	</div>
-    <div class="tableCover">
+    <div class="tableCover specialTable">
 		<div class="totalT">
 			查询统计：	案件总数：{{total}}件，当前页的总金额：￥{{total_money}}
 		</div>
