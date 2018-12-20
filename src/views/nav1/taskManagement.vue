@@ -131,7 +131,7 @@
 								</el-form-item>
 								<el-form-item label="机器人数量:">
 									<ul style="margin-top:15px;">
-										<li class="Slider"><el-slider show-stops :max="AddData.usable_ai_count" :min="1" v-model="form.ai_count" :disabled="AddData.usable_ai_count == 0"></el-slider></li>
+										<li class="Slider"><el-slider show-stops :max="AddData.usable_ai_count" :min="1" v-model="form.ai_count"></el-slider></li>
 									</ul>
 								</el-form-item>
 								<el-form-item label="外线号码:">
@@ -830,8 +830,12 @@ import store from '@/vuex/store.js'
 				this.form2.not_connected_status = this.not_connected_status2.join(",")
 			},
 		  	addTask(){
-				this.Index.addTask = true
 				this.addInit()
+				if(this.AddData.usable_ai_count == 0){
+					this.$alert("无可用机器人,无法进行添加!")
+				}else{
+					this.Index.addTask = true
+				}
 				this.AddInitSound()
 				this.addExtension()
 				this.AddInitSms()
