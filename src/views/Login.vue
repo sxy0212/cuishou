@@ -92,7 +92,7 @@ import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
         this.logining = true
         const username = this.ruleForm2.username
         const password = this.ruleForm2.password
-        const url = "/api/api_backend.php?r=login/login "
+        const url = "/api/api_backend.php?r=login/login"
         const conf = {
           url,
           data:{

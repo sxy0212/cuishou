@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="15" style="background:#fff;margin-left:10px;">
+            <el-col :span="15" style="background:#fff;margin-left:20px;">
                 <div>
                     <p class="title-charts">账号配置</p>
                     <div class="content-charts" >
@@ -59,18 +59,18 @@
                     已还金额:<span style="color:red">{{tipCir.case_paid_count}}</span>;
                     未还金额:<span style="color:red">{{tipCir.case_left_count}}</span>
                 </div>
-                <div id="chartPie" style="width:100%; height:400px;background:#fff"></div>
+                <div id="chartPie" style="width:430px;height:400px;background:#fff"></div>
             </el-col>
-            <el-col :span="16">
+            <el-col :span="15" style="margin-left:20px;">
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     案件总量:<span style="color:red">{{tip.all}}</span>; 
                     接通总量:<span style="color:red">{{tip.conn}}</span>;
                     接通率:<span style="color:red">{{tip.per_conn}}</span>
                 </div>
-               <div id="container" ></div>
+               <div id="container" style="width:810px;"></div>
             </el-col>
            
-            <el-col :span="24" style="background:#fff">
+            <el-col :span="24" style="background:#fff;margin-left:20px;width:1263px;">
                   <div>
                     <p class="title-charts">快捷入口</p>
                     <div class="content-charts" >
@@ -103,7 +103,7 @@
 <script>
 import echarts from 'echarts'
 import Highcharts from 'highcharts';
-import {axiosRequest} from '@/assets/js/Yt.js'
+import {axiosRequest,getCookie} from '@/assets/js/Yt.js'
 export default {
     data() {
         return {
@@ -149,64 +149,69 @@ export default {
         this.init()
         this.initData()
         this.initCir()
-        this.drawPieChart()
     },
     methods: {
-        initData(){
-            const url = "/api/api_backend.php?r=index/index"
-            const conf = {
-                url,
-                success:(data)=>{
-                    this.ai_count = data.info.ai_count
-                    this.auth_time = data.info.auth_time
-                    this.collection_count = data.info.collection_count
-                    this.left_days = data.info.left_days
-                    this.start_time = data.info.start_time
-                    this.template_count = data.info.template_count
-                    this.used_collection_count = data.info.used_collection_count
-                    this.used_days = data.info.used_days
-                    this.used_ai_count = data.info.used_ai_count
+        initData(){ 
+            if(getCookie("user")){
+                const url = "/api/api_backend.php?r=index/index"
+                const conf = {
+                    url,
+                    success:(data)=>{
+                        this.ai_count = data.info.ai_count
+                        this.auth_time = data.info.auth_time
+                        this.collection_count = data.info.collection_count
+                        this.left_days = data.info.left_days
+                        this.start_time = data.info.start_time
+                        this.template_count = data.info.template_count
+                        this.used_collection_count = data.info.used_collection_count
+                        this.used_days = data.info.used_days
+                        this.used_ai_count = data.info.used_ai_count
+                    }
                 }
+                axiosRequest(conf)  
             }
-            axiosRequest(conf)
         },
         init(){
-            const url = "/api/api_backend.php?r=index/data-show"
-            const batch_id = this.batch_id
-            const conf = {
-                url,
-                data:{batch_id},
-                success:(data)=>{
-                    this.tip.all = data.info.data.all;
-                    this.tip.conn = data.info.data.conn;
-                    this.tip.per_conn = data.info.data.per_conn
-                    this.x = data.info.chart.map( item=>item.time)
-                    this.dates[0].name = "拨打电话量"
-                    this.dates[0].data =  data.info.chart.map( item=>Number(item.num))
-                    this.dates[1].name = "接通电话量"
-                    this.dates[1].data =  data.info.chart.map( item=>Number(item.connect))
-                    this.loading = false
-                    this.loadchart(this.x,this.dates)
+            if(getCookie("user")){
+                const url = "/api/api_backend.php?r=index/data-show"
+                const batch_id = this.batch_id
+                const conf = {
+                    url,
+                    data:{batch_id},
+                    success:(data)=>{
+                        this.tip.all = data.info.data.all;
+                        this.tip.conn = data.info.data.conn;
+                        this.tip.per_conn = data.info.data.per_conn
+                        this.x = data.info.chart.map( item=>item.time)
+                        this.dates[0].name = "拨打电话量"
+                        this.dates[0].data =  data.info.chart.map( item=>Number(item.num))
+                        this.dates[1].name = "接通电话量"
+                        this.dates[1].data =  data.info.chart.map( item=>Number(item.connect))
+                        this.loading = false
+                        this.loadchart(this.x,this.dates)
+                    }
                 }
+                axiosRequest(conf)
             }
-            axiosRequest(conf)
         },
         initCir(){
-            const url = "/api/api_backend.php?r=index/case-count"
-            const conf = {
-                url,
-                success:(data)=>{
-                    this.tipCir.case_count = data.info.case_count
-                    this.tipCir.case_paid_count = data.info.case_paid_count 
-                    this.tipCir.case_left_count = data.info.case_left_count
-                    this.dateCir[0].name = "已还款案件"
-                    this.dateCir[0].value =  data.info.case_paid_nums
-                    this.dateCir[1].name = "未还款案件"
-                    this.dateCir[1].value =  data.info.case_left_nums
-                    this.drawPieChart(this.xAxis,this.dateCir)
+            if(getCookie("user")){
+                const url = "/api/api_backend.php?r=index/case-count"
+                const conf = {
+                    url,
+                    success:(data)=>{
+                        this.tipCir.case_count = data.info.case_count
+                        this.tipCir.case_paid_count = data.info.case_paid_count 
+                        this.tipCir.case_left_count = data.info.case_left_count
+                        this.dateCir[0].name = "已还款案件"
+                        this.dateCir[0].value =  data.info.case_paid_nums
+                        this.dateCir[1].name = "未还款案件"
+                        this.dateCir[1].value =  data.info.case_left_nums
+                        this.drawPieChart(this.xAxis,this.dateCir)
+                    }
                 }
+                axiosRequest(conf)
             }
-            axiosRequest(conf)
         },
         // 左侧饼状图
          drawPieChart(num1,num2) {

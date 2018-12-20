@@ -4,7 +4,7 @@
 			<div class="title"> <router-link to="/charts" style="color:#fff">言小信贷后管理系统</router-link></div>
 			<div class="drop">
 			<span @click="shuxian" style="margin-right:20px;cursor:pointer;">刷新</span>
-			<span> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
+			<span v-show="info.sys_login == 1"> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
 			<el-dropdown trigger="hover" >
 				<span class="el-dropdown-link userinfo-inner"><img :src="this.sysUserAvatar" />{{info.company_name}}</span>
 				<el-dropdown-menu slot="dropdown" style="cursor: pointer;">
