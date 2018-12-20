@@ -14,3 +14,4 @@
 .colorCover .five:hover,.colorCover .five:active,.colorCover .five:focus{background-color:rgba(0, 204, 0, 1);border-color:rgba(0, 204, 0, 1);}
 .colorCover .six:hover,.colorCover .six:active,.colorCover .six:focus{background-color:rgba(102, 51, 0, 1);border-color:rgba(102, 51, 0, 1);}
 .colorCover .seven:hover,.colorCover .seven:active,.colorCover .seven:focus{background-color:rgba(255, 204, 0, 1);border-color:rgba(255, 204, 0, 1);}
+.blueB .el-form-item{margin-bottom:0;}

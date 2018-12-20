@@ -1,5 +1,5 @@
 <template>
-    <el-form ref="form" :model="form" label-width="120px">
+    <el-form ref="form" :model="form" label-width="90px">
         <el-form-item label="分配案件：">
             <el-button type="primary" @click="sureToDistribute(2)" size="mini">快速分配</el-button>
             <el-button type="primary" @click="distributeFn()" size="mini">手动分配</el-button>

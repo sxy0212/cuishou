@@ -11,13 +11,11 @@
 			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
 			v-on:filterFn='filterFn($event)'
+			v-on:searchFn='searchFn($event)'
+			v-on:clearFn='clearFn($event)'
 		>
 		</div-form>
-		<div slot="footer" class="dialog-footer">
-			<el-button type="primary" @click="searchFn" size="mini">查询</el-button>
-			<el-button type="info" @click="clearFn" size="mini">清空</el-button>
-		</div>
-    <div> 
+	<div> 
     <div class="blueB">
 		<second-form
 			:form='form'

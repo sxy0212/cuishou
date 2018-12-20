@@ -178,6 +178,10 @@
                     placeholder="请选择最大跟进时间">
                 </el-date-picker>
             </el-form-item>
+            <el-form-item label="">
+                <el-button type="primary" @click="searchFn" size='mini'>查询</el-button>
+                <el-button type="info" @click="clearFn" size='mini'>清空</el-button>
+            </el-form-item>
         </el-form>
     </div>
 </template>
@@ -200,6 +204,12 @@ export default {
         },
         changeFn(val){
             this.$emit('changeFn',val)
+        },
+        searchFn(){
+            this.$emit('searchFn')
+        },
+        clearFn(){
+            this.$emit('clearFn')
         }
     }
 }
