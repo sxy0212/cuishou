@@ -176,7 +176,7 @@ export default {
     font-size:11px;
     color:#333333;
     border-width: 1px;
-    border-color: #666666;
+    border-color: #d2d2d2;
     border-collapse: collapse;
     margin-top:10px;
  }
@@ -184,14 +184,14 @@ export default {
     border-width: 1px;
     padding: 8px;
     border-style: solid;
-    border-color: #666666;
+    border-color: #d2d2d2;
     background-color: #dedede;
  }
  .messageTable td {
     border-width: 1px;
     padding: 8px;
     border-style: solid;
-    border-color: #666666;
+    border-color: #d2d2d2;
     background-color: #ffffff;
  }
 </style>
