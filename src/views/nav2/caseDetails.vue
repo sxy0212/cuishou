@@ -623,11 +623,11 @@ export default {
                     success:(data)=>{
                         this.$alert(data.message)
                         if(data.statusCode == 1){
-                            this.logDio = false
-                        }else{
-                            this.logDio = true
-                        }
-                        this.initDio()
+                            this.addCaseFile.name = ""
+                            this.fileList = []
+                            this.addCaseFile.img = ""
+                        } 
+                        this.initDio()                       
                     }
                 }
                 axiosRequest(conf)
@@ -695,9 +695,9 @@ export default {
                 success:(data)=>{
                     this.$alert(data.message)
                     if(data.statusCode == 1){
-                        this.logDioMemorandum = false
-                    }else{
-                        this.logDioMemorandum = true
+                       this.addCaseFileMemorandum.content = ""
+                       this.addCaseFileMemorandum.img = ""
+                       this.fileListMemorandum = []
                     }
                     this.initDioMemorandum()
                 }
