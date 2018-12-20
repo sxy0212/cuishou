@@ -1,6 +1,6 @@
 <template>
     <div class="formCase">
-        <el-form :inline="true" :model="conditions" class="demo-form-inline">   
+        <el-form :inline="true" :model="conditions" class="demo-form-inline" label-width="85px">   
             <el-form-item label="姓名">
                 <el-input v-model="conditions.case_name" placeholder="请输入姓名"></el-input>
             </el-form-item>
@@ -16,8 +16,6 @@
             <el-form-item label="案件序列号">
                 <el-input v-model="conditions.case_code" placeholder="请输入案件序列号"></el-input>
             </el-form-item>
-        </el-form>
-        <el-form :inline="true" :model="conditions" class="demo-form-inline">     
             <el-form-item label="部门">
                  <el-select v-model="conditions.depart_id" @change="changeFn" placeholder="请选择部门">
                     <el-option 
@@ -82,9 +80,7 @@
                     <el-option label="黄色" value="7"></el-option>
                 </el-select>
             </el-form-item>
-        </el-form>
-        <el-form :inline="true" :model="conditions" class="demo-form-inline"> 
-            <el-form-item label="案件状态">
+        <el-form-item label="案件状态">
                 <el-select v-model="conditions.case_status" placeholder="请选择案件状态">
                     <el-option 
                         label="请选择案件状态" 
@@ -112,22 +108,14 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-        </el-form>
-        <el-form :inline="true" :model="conditions" class="demo-form-inline">
             <el-form-item label="通话时长">
                 <el-input v-model="conditions.min_talk_time" type='number' placeholder="最小时长"></el-input>
-            </el-form-item>
-            <el-form-item label="-">
-                <el-input  v-model="conditions.max_talk_time" type='number' placeholder="最大时长"></el-input>
+            -<el-input  v-model="conditions.max_talk_time" type='number' placeholder="最大时长"></el-input>
             </el-form-item>
             <el-form-item label="委案金额">
                 <el-input v-model="conditions.min_case_money" type='number' placeholder="最低金额"></el-input>
+            - <el-input  v-model="conditions.max_case_money" type='number'  placeholder="最高金额"></el-input>
             </el-form-item>
-            <el-form-item label="-">
-                <el-input  v-model="conditions.max_case_money" type='number'  placeholder="最高金额"></el-input>
-            </el-form-item>
-        </el-form>
-        <el-form :inline="true" :model="conditions" class="demo-form-inline">     
             <el-form-item label="委案时间">
                 <el-date-picker
                     v-model="conditions.min_case_date"
@@ -135,9 +123,7 @@
                     value-format="yyyy-MM-dd HH:mm:ss"
                     placeholder="请选择委案开始日期">
                 </el-date-picker>
-            </el-form-item>
-            <el-form-item label="-">
-                <el-date-picker
+            - <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.max_case_date"
                     type="date"
@@ -150,9 +136,7 @@
                     v-model="conditions.min_case_back_date"
                     type="date"
                     placeholder="请选择最小退案时间">
-                </el-date-picker>
-            </el-form-item>
-            <el-form-item label="-">
+                </el-date-picker>-
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.max_case_back_date"
@@ -160,8 +144,6 @@
                     placeholder="请选择最大退案时间">
                 </el-date-picker>
             </el-form-item>
-        </el-form>
-        <el-form :inline="true" :model="conditions" class="demo-form-inline">     
             <el-form-item label="最后跟进">
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
@@ -169,9 +151,7 @@
                     type="date"
                     placeholder="请选择最小跟进时间">
                 </el-date-picker>
-            </el-form-item>
-            <el-form-item label="-">
-                <el-date-picker
+            -<el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.max_case_last_collection_date"
                     type="date"
