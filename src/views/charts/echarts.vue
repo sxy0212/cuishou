@@ -192,7 +192,7 @@ export default {
             axiosRequest(conf)
         },
         initCir(){
-            const url = "./api/api_backend.php?r=index/case-count"
+            const url = "/api/api_backend.php?r=index/case-count"
             const conf = {
                 url,
                 success:(data)=>{
