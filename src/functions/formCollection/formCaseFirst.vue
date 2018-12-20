@@ -1,14 +1,14 @@
 <template>
-    <div>
+    <div class="formCase">
         <el-form :inline="true" :model="conditions" class="demo-form-inline">   
             <el-form-item label="姓名">
                 <el-input v-model="conditions.case_name" placeholder="请输入姓名"></el-input>
             </el-form-item>
-            <el-form-item label="联系方式">
-                <el-input v-model="conditions.case_mobile" placeholder="请输入联系方式"></el-input>
-            </el-form-item>
             <el-form-item label="证件号">
                 <el-input v-model="conditions.case_id_num" placeholder="请输入证件号"></el-input>
+            </el-form-item>
+            <el-form-item label="联系方式">
+                <el-input v-model="conditions.case_mobile" placeholder="请输入联系方式"></el-input>
             </el-form-item>
             <el-form-item label="关键词">
                 <el-input v-model="conditions.keywords" placeholder="请输入关键词"></el-input>
@@ -16,6 +16,8 @@
             <el-form-item label="案件序列号">
                 <el-input v-model="conditions.case_code" placeholder="请输入案件序列号"></el-input>
             </el-form-item>
+        </el-form>
+        <el-form :inline="true" :model="conditions" class="demo-form-inline">     
             <el-form-item label="部门">
                  <el-select v-model="conditions.depart_id" @change="changeFn" placeholder="请选择部门">
                     <el-option 
@@ -110,6 +112,8 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+        </el-form>
+        <el-form :inline="true" :model="conditions" class="demo-form-inline">
             <el-form-item label="通话时长">
                 <el-input v-model="conditions.min_talk_time" type='number' placeholder="最小时长"></el-input>
             </el-form-item>
@@ -156,6 +160,8 @@
                     placeholder="请选择最大退案时间">
                 </el-date-picker>
             </el-form-item>
+        </el-form>
+        <el-form :inline="true" :model="conditions" class="demo-form-inline">     
             <el-form-item label="最后跟进">
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
@@ -198,6 +204,7 @@ export default {
     }
 }
 </script>
+
 
 
 
