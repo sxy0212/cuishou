@@ -8,32 +8,32 @@
                 <div class="average">
                     <span style="display: inline-block;width: 270px;">证件号码：{{selfInfo.case_id_num}}</span>
                     <span style="display: inline-block;width: 220px;">联系方式：{{selfInfo.case_mobile}}</span>
-                    <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'" @click="callFn(selfInfo.case_mobile,'本人')"></i>
+                    <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'" @click="callFn(selfInfo.case_mobile,'本人')"  title="呼叫"></i>
                     <!--<el-button  type="primary" v-show="selfInfo.case_status!='3'" @click="callFn(selfInfo.case_mobile,'本人')" size="mini">呼叫</el-button>-->
                     <span>家庭住址：{{selfInfo.case_home_address}}</span>
-                    <i class="fa fa-envelope" style="color:#F5952D;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_mobile,'本人')"></i>
+                    <i class="fa fa-envelope" style="color:#F5952D;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_mobile,'本人')" title="信函"></i>
                    <!-- <el-button   v-show="selfInfo.case_status!='3'" type="success" @click="sendLetter(2,selfInfo.case_mobile,'本人')" size="mini">信函</el-button> -->
-                   <i class="fa fa-eye" style="color:#62A1EF;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(3,selfInfo.case_mobile,'本人')"></i>
+                   <i class="fa fa-eye" style="color:#62A1EF;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(3,selfInfo.case_mobile,'本人')"  title="外访"></i>
                   <!-- <el-button  v-show="selfInfo.case_status!='3'"  type="danger" @click="sendLetter(3,selfInfo.case_mobile,'本人')" size="mini">外访</el-button>-->
                 </div>
             </div>
             <div class="coverLevel">
                <span style="display: inline-block;width: 270px;">工作单位：{{selfInfo.case_organization_name}}</span>
                <span style="display: inline-block;width: 220px;">公司电话：{{selfInfo.case_work_phone}}</span>
-                <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_work_phone,'公司')"></i>
+                <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_work_phone,'公司')"  title="呼叫"></i>
                <!--<el-button  type="primary" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_work_phone,'公司')" size="mini">呼叫</el-button>-->
                <span>公司地址：{{selfInfo.case_work_address}} </span>
-               <i class="fa fa-envelope" style="color:#F5952D;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_work_phone,'公司')"></i>
-               <i class="fa fa-eye" style="color:#62A1EF;cursor:pointer;" v-show="selfInfo.case_status!='3'" @click="sendLetter(3,selfInfo.case_work_phone,'公司')"></i>
+               <i class="fa fa-envelope" style="color:#F5952D;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_work_phone,'公司')"  title="信函"></i>
+               <i class="fa fa-eye" style="color:#62A1EF;cursor:pointer;" v-show="selfInfo.case_status!='3'" @click="sendLetter(3,selfInfo.case_work_phone,'公司')"  title="外访"></i>
                <!--<el-button  type="success" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_work_phone,'公司')" size="mini">信函</el-button>
                <el-button  v-show="selfInfo.case_status!='3'"  type="danger" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size="mini">外访</el-button>-->
             </div>
             <div class="coverLevel">
                <span style="display: inline-block;width: 255px;">第一联系人:{{selfInfo.case_mobile1}} </span>
-                <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')"></i>
+                <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')"  title="呼叫"></i>
                <!--<span><el-button  type="primary" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')" size="mini">呼叫</el-button></span>-->
                 <span style="display: inline-block;width: 220px;">第二联系人：{{selfInfo.case_mobile2}} </span>
-                 <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile2,'第二联系人')"></i>
+                 <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile2,'第二联系人')"  title="呼叫"></i>
                 <!--<span><el-button  v-show="selfInfo.case_status!='3'" type="primary" @click="callFn(selfInfo.case_mobile2,'第二联系人')" size="mini">呼叫</el-button></span>-->
             </div>
             <div class="info">
