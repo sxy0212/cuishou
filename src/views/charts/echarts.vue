@@ -1,7 +1,7 @@
 <template>
     <section class="chart-container">
         <el-row>
-            <el-col :span="8" style="background:#fff;margin-left:20px;">
+            <el-col :span="8" style="background:#fff;margin-left:15px;">
                <div>
                     <p class="title-charts">账号状态</p>
                     <div class="content-charts" >
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="15" style="background:#fff;margin-left:20px;">
+            <el-col :span="15" style="background:#fff;margin-left:15px;">
                 <div>
                     <p class="title-charts">账号配置</p>
                     <div class="content-charts" >
@@ -53,24 +53,24 @@
                     </div>
                 </div>
             </el-col>
-             <el-col :span="8" > 
+             <el-col :span="8" style="background:#fff;margin-left:15px;margin-top:20px"> 
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     总金额:<span style="color:red">{{tipCir.case_count}}</span>; 
                     已还金额:<span style="color:red">{{tipCir.case_paid_count}}</span>;
                     未还金额:<span style="color:red">{{tipCir.case_left_count}}</span>
                 </div>
-                <div id="chartPie" style="width:430px;height:400px;background:#fff"></div>
+                <div id="chartPie" style="width:100%;height:400px;background:#fff"></div>
             </el-col>
-            <el-col :span="15" style="margin-left:20px;">
+            <el-col :span="15" style="margin-left:15px;background:#fff;margin-top:20px;">
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     案件总量:<span style="color:red">{{tip.all}}</span>; 
                     接通总量:<span style="color:red">{{tip.conn}}</span>;
                     接通率:<span style="color:red">{{tip.per_conn}}</span>
                 </div>
-               <div id="container" style="width:810px;"></div>
+               <div id="container" ></div>
             </el-col>
            
-            <el-col :span="24" style="background:#fff;margin-left:20px;width:1263px;">
+            <el-col :span="24" style="background:#fff;margin-top:20px;">
                   <div>
                     <p class="title-charts">快捷入口</p>
                     <div class="content-charts" >
