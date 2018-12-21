@@ -6,7 +6,7 @@
 /* .coverMiddle{display:flex;} */
 .coverMiddle .middle{display:inline-block;vertical-align:top;}
 .coverMiddle .middle:nth-of-type(1){width:23%;}
-.coverMiddle .middle:nth-of-type(2){width:76%;}
+.coverMiddle .middle:nth-of-type(2){width:75%;}
 .tableCover{margin: 15px 0;}
 .redS{color:red;}
 .el-button--mini, .el-button--mini.is-round{padding:4px 15px;}
