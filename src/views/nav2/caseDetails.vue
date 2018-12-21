@@ -31,11 +31,10 @@
                         :formTitle='formTitle'
                         :relationList='relationList'
                         :endList='endList'
+                        :selfInfo='selfInfo'
+                        v-on:clearFn='clearFn'
+                        v-on:saveFn='saveFn'
                     ></div-form>
-                    <div slot="footer" class="dialog-footer">
-                        <el-button type="primary" @click="saveFn" :disabled='selfInfo.case_status == 3' size="mini">保存</el-button>
-                        <el-button type="info" @click="clearFn" size="mini">清空</el-button>
-                    </div>
                 </div>
                 <div class='middle'>
                     <second-table
