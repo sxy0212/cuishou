@@ -1,8 +1,8 @@
 <template>
     <section class="chart-container">
-        <el-row>
-            <el-col :span="8" style="background:#fff;margin-left:15px;">
-               <div>
+        <el-row  type="flex" class="row-bg" justify="end">
+            <el-col :span="8" style="background:#fff;" >
+               <div >
                     <p class="title-charts">账号状态</p>
                     <div class="content-charts" >
                         <div class="content-charts-con" >
@@ -22,8 +22,8 @@
                     </div>
                 </div>
             </el-col>
-            <el-col :span="15" style="background:#fff;margin-left:15px;">
-                <div>
+            <el-col :span="16" style="background:#fff;margin-left:15px;">
+                <div >
                     <p class="title-charts">账号配置</p>
                     <div class="content-charts" >
                         <div class="content-charts-con" >
@@ -53,15 +53,17 @@
                     </div>
                 </div>
             </el-col>
-             <el-col :span="8" style="background:#fff;margin-left:15px;margin-top:20px"> 
+            </el-row>
+            <el-row  type="flex" class="row-bg" justify="end">
+             <el-col :span="8" style="background:#fff;margin-top:20px"> 
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     总金额:<span style="color:red">{{tipCir.case_count}}</span>; 
                     已还金额:<span style="color:red">{{tipCir.case_paid_count}}</span>;
                     未还金额:<span style="color:red">{{tipCir.case_left_count}}</span>
                 </div>
-                <div id="chartPie" style="width:100%;height:400px;background:#fff"></div>
+                <div id="chartPie" style="height:400px;background:#fff"></div>
             </el-col>
-            <el-col :span="15" style="margin-left:15px;background:#fff;margin-top:20px;">
+            <el-col :span="16" style="margin-left:15px;background:#fff;margin-top:20px;">
                 <div style="font-size:14px;color:gray;margin-bottom:10px;">
                     案件总量:<span style="color:red">{{tip.all}}</span>; 
                     接通总量:<span style="color:red">{{tip.conn}}</span>;
@@ -69,7 +71,8 @@
                 </div>
                <div id="container" ></div>
             </el-col>
-           
+            </el-row>
+           <el-row  type="flex" class="row-bg" justify="end">
             <el-col :span="24" style="background:#fff;margin-top:20px;">
                   <div>
                     <p class="title-charts">快捷入口</p>
@@ -303,4 +306,7 @@ export default {
     .content-charts-con p:nth-of-type(1){margin-bottom:10px;}
     .title-charts{border-bottom:1px solid #f2f2f2;font-size:16px;margin-bottom:20px;padding-bottom:10px;}
     .color{color:#0099ff}
+    .bg-purple {
+    background: #d3dce6;
+  }
 </style>
