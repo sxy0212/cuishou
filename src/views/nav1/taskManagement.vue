@@ -97,11 +97,11 @@
 											</div> 
 										</div>  
 										<div class="AiButton">
-											<el-button type="danger" style="margin-left:16px" @click="text(form.id)" :disabled="!form.warning_asrnumber||!form.warning_callerid">
+											<el-button type="danger" style="margin-left:16px" @click="text(form.id)" :disabled="form.warning_asrnumber == 0||form.warning_callerid == 0">
 													<i class="fa fa-headphones"></i>测试</el-button>
-											<el-button type="primary"  v-if="parseInt(form.status) == 0"   @click="close(form.id,form.status)" :disabled="!form.warning_asrnumber||!form.warning_callerid"> <i class="fa fa-power-off"></i>启动</el-button>
+											<el-button type="primary"  v-if="parseInt(form.status) == 0"   @click="close(form.id,form.status)" :disabled="form.warning_asrnumber==0||form.warning_callerid==0"> <i class="fa fa-power-off"></i>启动</el-button>
 											<el-button type="primary"  v-else-if="parseInt(form.status) == 1"  @click="close(form.id,form.status)" > <i class="fa fa-power-off"></i>关闭</el-button>
-											<el-button type="success" @click="edit(form.id)" :disabled="!form.warning_asrnumber||!form.warning_callerid"><i class="fa fa-pencil"></i>编辑</el-button>
+											<el-button type="success" @click="edit(form.id)" :disabled="form.warning_asrnumber == 0||form.warning_callerid == 0"><i class="fa fa-pencil"></i>编辑</el-button>
 											<el-button type="danger" @click="del(form.id)"><i class="el-icon-delete"></i>删除</el-button>
 										</div>
 									</div>
