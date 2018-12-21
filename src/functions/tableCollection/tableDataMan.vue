@@ -48,6 +48,15 @@
         >
       </el-table-column>
       <el-table-column
+        prop="batch_over"
+        label="任务状态"
+        >
+        <template slot-scope="scope">
+          <span v-if="scope.row.batch_over==0">未完成</span>
+          <span v-if="scope.row.batch_over==1">已完成</span>
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="remark"
         label="批次备注"
         >
