@@ -560,5 +560,5 @@
 .addTask1 .el-checkbox+.el-checkbox{margin-left:5px;}
 .addTask1 .el-dialog{width:75%;max-width:75%;background:#f2f2f2}
 .el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
-.addTaskForm{display:inline-block;background:#fff;padding-right:10px;padding-top:10px;min-height:600px;max-height:900px;}
+.addTaskForm{display:inline-block;background:#fff;padding-right:10px;padding-top:10px;min-height:600px;max-height:1000px;}
 </style>
