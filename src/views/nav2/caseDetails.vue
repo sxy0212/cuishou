@@ -306,6 +306,7 @@ export default {
         this.init()
         this.getTableSecond()
         this.formTitle = {}
+        this.otherInfo = false
     },
     methods:{
         beforeCloseFn(done){
