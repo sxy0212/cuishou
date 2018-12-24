@@ -24,7 +24,7 @@
         <el-tabs tab-position="left" style="height: 200px;"  @tab-click="handleClick" v-model="active">
           <el-tab-pane :label="item.name" v-for = "(item,index) in messageList" :name="item.id" :key="index"></el-tab-pane> 
             <ul style="display:block;">
-              <li v-for="(item,index) in rightList" :key="item" style="border:1px solid #eee;background:#fff;cursor: pointer;height:30px;line-height:30px;text-align:center" @click="getContent(index)">{{item.content}}</li>
+              <li v-for="(item,index) in rightList" :key="index" style="border:1px solid #eee;background:#fff;cursor: pointer;height:30px;line-height:30px;text-align:center" @click="getContent(index)">{{item.content}}</li>
             </ul>
         </el-tabs>
       </div>
