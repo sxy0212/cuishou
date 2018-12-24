@@ -14,7 +14,8 @@
         </el-table-column>
         <el-table-column
         label="案件序列号"
-        prop="case_code">
+        prop="case_code"
+        width="140">
         </el-table-column>
         <el-table-column
         label="姓名"
@@ -46,7 +47,8 @@
         </el-table-column>
         <el-table-column
         label="证件号码"
-        prop="case_id_num">
+        prop="case_id_num"
+        width="220">
         </el-table-column>
         <el-table-column
         label="委案金额"
