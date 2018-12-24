@@ -127,7 +127,6 @@ import store from '@/vuex/store.js'
 		height:60px;
 	}
 	.drop{
-		display:inline-block;
 		float:right;
 		cursor:pointer;
 		color:#fff;
