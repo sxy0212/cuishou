@@ -9,3 +9,24 @@
 
 
 
+.el-select-dropdown__list .one{background-color:white;}
+.el-select-dropdown__list .one:hover{background-color:white;}
+.el-select-dropdown__list .two{background-color:#00CC99;}
+.el-select-dropdown__list .two:hover{background-color:#00CC99;}
+.el-select-dropdown__list .three{background-color:#0099FF;}
+.el-select-dropdown__list .three:hover{background-color:#0099FF;}
+.el-select-dropdown__list .four{background-color:#6633FF;}
+.el-select-dropdown__list .four:hover{background-color:#6633FF;}
+.el-select-dropdown__list .five{background-color:#CC0033;}
+.el-select-dropdown__list .five:hover{background-color:#CC0033;}
+.el-select-dropdown__list .six{background-color:#FF9966;}
+.el-select-dropdown__list .six:hover{background-color:#FF9966;}
+.el-select-dropdown__list .seven{background-color:#990000;}
+.el-select-dropdown__list .seven:hover{background-color:#990000;}
+.el-scrollbar__view .one.hover, .el-select-dropdown__list .one:hover{background-color:white;}
+.el-scrollbar__view .two.hover, .el-select-dropdown__list .two:hover{background-color:#00CC99;}
+.el-scrollbar__view .three.hover, .el-select-dropdown__list .three:hover{background-color:#0099FF;}
+.el-scrollbar__view .four.hover, .el-select-dropdown__list .four:hover{background-color:#6633FF;}
+.el-scrollbar__view .five.hover, .el-select-dropdown__list .five:hover{background-color:#CC0033;}
+.el-scrollbar__view .six.hover, .el-select-dropdown__list .six:hover{background-color:#FF9966;}
+.el-scrollbar__view .seven.hover, .el-select-dropdown__list .seven:hover{background-color:#990000;}

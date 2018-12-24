@@ -6,13 +6,13 @@
 .el-input__inner{height:30px;line-height:30px;}
 .dialog-footer{text-align:right;}
 .totalT{width:100%;font-size:14px;line-height:23px;color: #909399;border:1px solid #d2d2d2;}
-.el-table__body .two{color:rgba(255, 51, 255, 1); }
-.el-table__body .three{color: rgba(0, 204, 255, 1);}
-.el-table__body .four{color:rgba(128, 0, 128, 1);}
-.el-table__body .five{color:rgba(0, 204, 0, 1);}
-.el-table__body .six{color:rgba(102, 51, 0, 1);}
-.el-table__body .seven{color:rgba(255, 204, 0, 1);}
+.el-table__body .two{color:#00CC99; }
+.el-table__body .three{color: #0099FF;}
+.el-table__body .four{color:#6633FF;}
+.el-table__body .five{color:#CC0033;}
+.el-table__body .six{color:#FF9966;}
+.el-table__body .seven{color:#990000;}
 
 .specialTable .el-checkbox__input{left:-56%;}
-specialTable .el-table__body{ border-collapse: collapse}
+specialTable .el-table__body{ border-collapse: collapse;}
 

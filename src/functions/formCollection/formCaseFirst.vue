@@ -71,13 +71,13 @@
             </el-form-item>
             <el-form-item label="标色搜索">
                 <el-select v-model="conditions.case_color" placeholder="标色搜索">
-                    <el-option label="正常色" value="1"></el-option>
-                    <el-option label="玫红色" value="2"></el-option>
-                    <el-option label="天蓝色" value="3"></el-option>
-                    <el-option label="紫色" value="4"></el-option>
-                    <el-option label="翠绿色" value="5"></el-option>
-                    <el-option label="棕色" value="6"></el-option>
-                    <el-option label="黄色" value="7"></el-option>
+                    <el-option label="正常色" class='one' value="1"></el-option>
+                    <el-option label="翠绿色" class="two" value="2"></el-option>
+                    <el-option label="天蓝色" class='three' value="3"></el-option>
+                    <el-option label="紫色" class="four" value="4"></el-option>
+                    <el-option label="红色" class="five" value="5"></el-option>
+                    <el-option label="黄色" class="six" value="6"></el-option>
+                    <el-option label="枣红色" class="seven" value="7"></el-option>
                 </el-select>
             </el-form-item>
         <el-form-item label="案件状态">
