@@ -70,7 +70,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="标色搜索">
-                <el-select v-model="conditions.case_color" placeholder="标色搜索">
+                <el-select v-model="conditions.case_color" placeholder="标色搜索" class="colorCover">
                     <el-option label="正常色" class='one' value="1"></el-option>
                     <el-option label="翠绿色" class="two" value="2"></el-option>
                     <el-option label="天蓝色" class='three' value="3"></el-option>

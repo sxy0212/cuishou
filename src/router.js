@@ -13,6 +13,13 @@ import sound from './views/nav5/sound.vue'
 import templateTree from "./views/nav5/templateTree.vue"
 import privilegeManagement from './views/nav6/privilegeManagement.vue'
 import caseDetails from './views/nav2/caseDetails.vue'
+import monthlyStatement from './views/nav9/monthlyStatement.vue'
+import repaymentRateStatement from './views/nav9/repaymentRateStatement.vue'
+import dayRepaymentStatement from './views/nav9/dayRepaymentStatement.vue'
+import clientRepaymentStatement from './views/nav9/clientRepaymentStatement.vue'
+import caseRepaymentStatement from './views/nav9/caseRepaymentStatement.vue'
+import caseProgressStatement from './views/nav9/caseProgressStatement.vue'
+import batchKindsStatement from './views/nav9/batchKindsStatement.vue'
 
 
 
@@ -234,6 +241,62 @@ let routes = [
     path: '/extensionState',
     name: '分机状态',
     component: extensionState,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/monthlyStatement',
+    name: '电催员电催月度统计',
+    component:  monthlyStatement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/repaymentRateStatement',
+    name: '电催还款率单月统计',
+    component:  repaymentRateStatement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/dayRepaymentStatement',
+    name: '电催还款日度统计',
+    component:  dayRepaymentStatement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/clientRepaymentStatement',
+    name: '委托方还款日度统计',
+    component:  clientRepaymentStatement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/caseRepaymentStatement',
+    name: '案件还款明细表',
+    component:  caseRepaymentStatement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/caseProgressStatement',
+    name: '案件跟进度统计',
+    component:  caseProgressStatement,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/batchKindsStatement',
+    name: '批次状态分类统计',
+    component:  batchKindsStatement,
     meta: {
       keepAlive: true,
     }
