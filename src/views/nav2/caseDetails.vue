@@ -403,6 +403,9 @@ export default {
             }
         },
         saveFn(){//保存
+            if( !this.formTitle.next_time ){
+                this.formTitle.next_time = ''
+            }
             this.formTitle.case_id = this.id
             let conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
