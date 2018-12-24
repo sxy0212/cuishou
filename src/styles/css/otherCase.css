@@ -1,11 +1,10 @@
-.tableCover{margin-top:30px;}
 .blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;}
 .marginU{margin-top:10px;}
 .el-form-item{margin-bottom:12px;}
 .el-form-item__content,.el-form-item__label{line-height:30px;}
 .el-input__inner{height:30px;line-height:30px;}
 .dialog-footer{text-align:right;}
-.totalT{width:98%;font-size:14px;line-height:23px;color: #909399;border:1px solid grey;}
+.totalT{width:100%;font-size:14px;line-height:23px;color: #909399;border:1px solid grey;}
 .el-table__body .two{color:rgba(255, 51, 255, 1); }
 .el-table__body .three{color: rgba(0, 204, 255, 1);}
 .el-table__body .four{color:rgba(128, 0, 128, 1);}
