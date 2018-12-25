@@ -17,13 +17,13 @@
         下载模板
       </a>
     </div>
-    <div style="margin-top:25px;">
-      <div style="width:18%;float:left;" class="deparTree">
+    <div style="margin-top:25px;display: flex;justify-content: space-between;">
+      <div style="width:18%;" class="deparTree">
         <el-tree :data="Dates" node-key="id"  accordion :expand-on-click-node="false" :props="defaultProps2">
-            <span class="custom-tree-node" slot-scope="{ node, data }">
+            <span class="custom-tree-node" slot-scope="{ node, data }" style="display:block;width:100%">
                 <el-input v-model="showName" v-show="data.id == showId" style="width:80%;height:20px;" @keyup.enter.native="editSave"></el-input>
                 <span v-show="data.id != showId" class="node-word" :title="node.label">{{ node.label }}</span>
-                <span style="display:inline-block">
+                <span style="float:right;margin-right:10px">
                     <el-button type="text" size="mini" @click="edit(node, data)" style="padding:0">
                       <i class="fa fa-pencil"></i>编辑
                     </el-button>
@@ -34,8 +34,9 @@
             </span>
         </el-tree>
       </div>
-      <div style="float:left;width:81%;padding-left:3px;background:#fff;margin-left:10px;padding-left:10px;padding-right:10px;">
-        <p style="padding:20px 0 10px 5px">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
+      <div style="width:82%;background:#fff;margin-left:12px;">
+        <p style="padding:20px 0 10px 10px;margin:0">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
+        <div style="padding-left:10px;padding-right:10px;">
         <el-table ref="multipleTable" :data="infos" style="width:100%" border height="600">
           <el-table-column type="index" label="序号" width="60"  fixed="left" :index="index"></el-table-column>
           <el-table-column prop="true_name" label="姓名" width="100"></el-table-column>  
@@ -51,7 +52,10 @@
             </template>
           </el-table-column>
 				</el-table>
-			 <div class="block"> 
+        
+        </div>
+        
+         <div class="block" style="background:#f2f2f2;padding-left:0px;padding-right:0px;"> 
           <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
@@ -63,6 +67,7 @@
           </el-pagination>
       </div>
       </div>
+      
     </div>
     
     <!-- 添加部门弹框 -->
