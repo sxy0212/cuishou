@@ -1,8 +1,13 @@
 <template>
     <div>
         <div-form
-            :options = 'options'
-            :formInline = 'formInline'
+            :options='options'
+            :formInline='formInline'
+            :area_list='area_list'
+            :client_list='client_list'
+            :staff_list='staff_list'
+            :batch_list='batch_list'
+            v-on:countFn='countFn'
         ></div-form>
         <div-table
             :tableData='tableData'
@@ -21,6 +26,8 @@ import formDayRepayment from '@/functions/formCollection/formDayRepayment.vue'
 import tableDayRepayment from '@/functions/tableCollection/tableDayRepayment.vue'
 
 import pageChange from '@/components/pageChange.vue'
+import  { axiosRequest } from '@/assets/js/Yt.js'
+import { Message } from 'element-ui'
 export default {
     components:{
         'div-form':formDayRepayment,
@@ -33,85 +40,61 @@ export default {
             page_size:10,
             total:0,
             formInline:{
-                monthValue:[]
+                monthValue:[],
+                is_cancel:'0',
+                area:'',
+                entrust:'',
+                batch_id:''
             },
-            options:[
-                {
-                value: '选项1',
-                label: '黄金糕'
-                },
-                 {
-                value: '选项2',
-                label: '双皮奶'
-                }, 
-                {
-                value: '选项3',
-                label: '蚵仔煎'
-                }, 
-                {
-                value: '选项4',
-                label: '龙须面'
-                }, 
-                {
-                value: '选项5',
-                label: '北京烤鸭'
-                }
-            ],
+            batch_list:[],
+            area_list:[],
+            client_list:[],
+            staff_list:[],
             tableData: [
-                {
-                date: '2016-05-03',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-08',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-06',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-07',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }
             ]
         }
     },
+    activated(){
+        this.init()
+        this.getLists()
+        // this.getBatchList()
+    },
     methods:{
+        countFn(){
+            this.page = 1
+            this.init()
+        },
+        init(){//初始化
+            this.formInline.staff = this.formInline.monthValue.join(',')
+            this.formInline.page = this.page
+            this.formInline.page_size = this.page_size
+            let conf = {
+                url:'/api/api_backend.php?r=call-stat/day-stat',
+                data:this.formInline,
+				success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.tableData = data.info.info
+                        this.total = Number(data.info.total_count)
+                    }
+				} 
+            }
+            axiosRequest(conf)
+        },
+        getLists(){//获取列表
+            let conf = {
+				url:'/api/api_backend.php?r=call-stat/select-data',
+				success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.area_list = data.info.area
+                        this.client_list = data.info.entrust
+                        this.batch_list = data.info.batch
+                        this.case_list = data.info.case_type
+                        this.staff_list = data.info.staff
+                    }
+				} 
+            }
+            axiosRequest(conf)
+        },
         saveFn(){
             
         },

@@ -1,8 +1,11 @@
 <template>
     <div>
         <div-form
-            :options = 'options'
-            :formInline = 'formInline'
+            :options ='options'
+            :formInline='formInline'
+            :area_list='area_list'
+            :client_list='client_list'
+            :staff_list='staff_list'
         ></div-form>
         <div-table
             :tableData='tableData'
@@ -21,6 +24,8 @@ import formMonthly from '@/functions/formCollection/formMonthly.vue'
 import tableMonthly from '@/functions/tableCollection/tableMonthly.vue'
 
 import pageChange from '@/components/pageChange.vue'
+import  { axiosRequest } from '@/assets/js/Yt.js'
+import { Message } from 'element-ui'
 export default {
     components:{
         'div-form':formMonthly,
@@ -35,28 +40,9 @@ export default {
             formInline:{
                 monthValue:[]
             },
-            options:[
-                {
-                value: '选项1',
-                label: '黄金糕'
-                },
-                 {
-                value: '选项2',
-                label: '双皮奶'
-                }, 
-                {
-                value: '选项3',
-                label: '蚵仔煎'
-                }, 
-                {
-                value: '选项4',
-                label: '龙须面'
-                }, 
-                {
-                value: '选项5',
-                label: '北京烤鸭'
-                }
-            ],
+            area_list:[],
+            client_list:[],
+            staff_list:[],
             tableData: [
                 {
                 date: '2016-05-03',
@@ -111,7 +97,36 @@ export default {
             ]
         }
     },
+    activated(){
+        this.getLists()
+        this.init()
+    },
     methods:{
+        
+        getLists(){//获取列表
+            let conf = {
+				url:'/api/api_backend.php?r=statistics/init-data',
+				success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.area_list = data.info.area_list
+                        this.client_list = data.info.client_list
+                        this.staff_list = data.info.staff_list
+                    }
+				} 
+            }
+            axiosRequest(conf)
+        },
+        init(){//初始化
+            let conf = {
+				url:'/api/api_backend.php?r=statistics/daily',
+				success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        // this.tableData = 
+                    }
+				} 
+            }
+            axiosRequest(conf)
+        },
         saveFn(){
             
         },

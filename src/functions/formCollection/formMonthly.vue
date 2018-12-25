@@ -1,25 +1,45 @@
 <template>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="催收员">
-            <el-select v-model="formInline.monthValue" multiple placeholder="请选择">
+            <el-select v-model="formInline.monthValue" multiple placeholder="请选择催收员">
+                <el-option 
+                    label="请选择催收员"
+                    value=""
+                ></el-option>
                 <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value">
-                </el-option>
+                    v-for="item in staff_list"
+                    :key="item.staff_id"
+                    :label="item.true_name"
+                    :value="item.staff_id"
+                ></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="催收区域">
-            <el-select v-model="formInline.region" placeholder="活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="formInline.region" placeholder="请选择催收区域">
+                <el-option 
+                    label="请选择催收区域"
+                    value=""
+                ></el-option>
+                <el-option  
+                    v-for="item in area_list"
+                    :key="item.area_id"
+                    :label="item.name" 
+                    :value="item.area_id"
+                ></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="委托方">
-            <el-select v-model="formInline.region" placeholder="活动区域">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
+            <el-select v-model="formInline.region" placeholder="请选择委托方">
+                <el-option 
+                    label="请选择委托方"
+                    value=""
+                ></el-option>
+                <el-option 
+                    v-for="item in client_list"
+                    :key="item.client_id"
+                    :label="item.name"
+                    :value="item.client_id"
+                ></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="日期">
@@ -30,8 +50,8 @@
             </el-date-picker>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="onSubmit">开始统计</el-button>
-            <el-button type="primary" @click="onSubmit">导出报表</el-button>
+            <el-button type="primary" @click="countFn">开始统计</el-button>
+            <el-button type="primary" @click="exportStatement">导出报表</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -40,7 +60,19 @@ export default {
     name:'formMonthly',
     props:[
         'options',
+        'area_list',
+        'client_list',
+        'staff_list',
         'formInline'
-    ]
+    ],
+    methods:{
+        
+        countFn(){
+
+        },
+        exportStatement(){
+
+        },
+    }
 }
 </script>
