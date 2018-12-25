@@ -15,7 +15,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="催收区域">
-            <el-select v-model="formInline.region" placeholder="请选择催收区域">
+            <el-select v-model="formInline.area_id" placeholder="请选择催收区域">
                 <el-option 
                     label="请选择催收区域"
                     value=""
@@ -29,7 +29,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="委托方">
-            <el-select v-model="formInline.region" placeholder="请选择委托方">
+            <el-select v-model="formInline.client_id" placeholder="请选择委托方">
                 <el-option 
                     label="请选择委托方"
                     value=""
@@ -44,7 +44,7 @@
         </el-form-item>
         <el-form-item label="日期">
             <el-date-picker
-                v-model="formInline.value1"
+                v-model="formInline.collection_date"
                 type="date"
                 placeholder="选择日期">
             </el-date-picker>
@@ -59,16 +59,14 @@
 export default {
     name:'formMonthly',
     props:[
-        'options',
         'area_list',
         'client_list',
         'staff_list',
         'formInline'
     ],
     methods:{
-        
         countFn(){
-
+            this.$emit('countFn')
         },
         exportStatement(){
 

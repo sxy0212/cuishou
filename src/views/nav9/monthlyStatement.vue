@@ -1,11 +1,11 @@
 <template>
     <div>
         <div-form
-            :options ='options'
             :formInline='formInline'
             :area_list='area_list'
             :client_list='client_list'
             :staff_list='staff_list'
+            v-on:countFn='countFn'
         ></div-form>
         <div-table
             :tableData='tableData'
@@ -38,63 +38,16 @@ export default {
             page_size:10,
             total:0,
             formInline:{
-                monthValue:[]
+                monthValue:[],
+                staff_ids:'',
+                collection_date:'',
+                area_id:'',
+                client_id:'',
             },
             area_list:[],
             client_list:[],
             staff_list:[],
-            tableData: [
-                {
-                date: '2016-05-03',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-02',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-04',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-01',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-08',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-06',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }, {
-                date: '2016-05-07',
-                name: '王小虎',
-                province: '上海',
-                city: '普陀区',
-                address: '上海市普陀区金沙江路 1518 弄',
-                zip: 200333
-                }
-            ]
+            tableData: []
         }
     },
     activated(){
@@ -102,8 +55,11 @@ export default {
         this.init()
     },
     methods:{
-        
-        getLists(){//获取列表
+        countFn(){
+            this.page = 1 
+            this.init()
+        },
+        getLists(){ //获取列表
             let conf = {
 				url:'/api/api_backend.php?r=statistics/init-data',
 				success:(data)=>{
@@ -116,9 +72,21 @@ export default {
             }
             axiosRequest(conf)
         },
-        init(){//初始化
+        init(){ //初始化
+            if( this.formInline.monthValue.length == 0 ){
+                Message({
+                    message: '请先选择催收员',
+                    type: 'warning',
+                    duration: 3 * 1000
+                })
+                return 
+            }
+            this.formInline.page = this.page
+            this.formInline.page_size = this.page
+            this.formInline.staff_ids = this.formInline.monthValue.join(',')
             let conf = {
-				url:'/api/api_backend.php?r=statistics/daily',
+                url:'/api/api_backend.php?r=statistics/daily',
+                data:this.formInline,
 				success:(data)=>{
                     if( data.statusCode == 1 ){
                         // this.tableData = 
