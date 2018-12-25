@@ -36,7 +36,7 @@
           </el-form>
         </div>
         <div>
-          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" height="500">
+          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" show-summary>
             <el-table-column type="index"  label="序号" width="50"></el-table-column>
             <el-table-column prop="case_type" label="案件状态"> </el-table-column>
             <el-table-column prop="case_money" label="委案金额"></el-table-column>
