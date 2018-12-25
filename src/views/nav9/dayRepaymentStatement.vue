@@ -1,34 +1,128 @@
 <template>
     <div>
-        <div>
-            <el-button type="primary" @click="saveFn" >电催员点翠月度统计</el-button>
-            <el-button type="primary" @click="saveFn" >电催还款率单月统计</el-button>
-            <el-button type="primary" @click="saveFn" >电催还款日度统计</el-button>
-            <el-button type="primary" @click="saveFn" >电催还款月度统计</el-button>
-        </div>
-        <div>
-            <el-button type="primary" @click="saveFn" >委托方还款日度统计</el-button>
-            <el-button type="primary" @click="saveFn" >案件还款明细表</el-button>
-            <el-button type="primary" @click="saveFn" >案件跟进度统计</el-button>
-            <el-button type="primary" @click="saveFn" >批次状态分类统计</el-button>
-        </div>
+        <div-form
+            :options = 'options'
+            :formInline = 'formInline'
+        ></div-form>
+        <div-table
+            :tableData='tableData'
+        ></div-table>
+        <page-change 
+			:total="total"
+			:page="page"
+			:page_size ="page_size"
+			v-on:pageSizeChange='pageSizeChangeFn($event)'
+			v-on:currentPageChange='currentPageChangeFn($event)'
+		></page-change>
     </div>
 </template>
 <script>
+import formDayRepayment from '@/functions/formCollection/formDayRepayment.vue'
+import tableDayRepayment from '@/functions/tableCollection/tableDayRepayment.vue'
 
+import pageChange from '@/components/pageChange.vue'
 export default {
     components:{
-        
+        'div-form':formDayRepayment,
+        'div-table':tableDayRepayment,
+        'page-change':pageChange,
     },
     data(){
         return{
-            
+            page:1,
+            page_size:10,
+            total:0,
+            formInline:{
+                monthValue:[]
+            },
+            options:[
+                {
+                value: '选项1',
+                label: '黄金糕'
+                },
+                 {
+                value: '选项2',
+                label: '双皮奶'
+                }, 
+                {
+                value: '选项3',
+                label: '蚵仔煎'
+                }, 
+                {
+                value: '选项4',
+                label: '龙须面'
+                }, 
+                {
+                value: '选项5',
+                label: '北京烤鸭'
+                }
+            ],
+            tableData: [
+                {
+                date: '2016-05-03',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }, {
+                date: '2016-05-02',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }, {
+                date: '2016-05-04',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }, {
+                date: '2016-05-01',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }, {
+                date: '2016-05-08',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }, {
+                date: '2016-05-06',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }, {
+                date: '2016-05-07',
+                name: '王小虎',
+                province: '上海',
+                city: '普陀区',
+                address: '上海市普陀区金沙江路 1518 弄',
+                zip: 200333
+                }
+            ]
         }
     },
     methods:{
         saveFn(){
             
-        }
+        },
+        pageSizeChangeFn(val){
+            this.page_size = val
+            this.init()
+        },
+        currentPageChangeFn(val){
+            this.page = val
+            this.init()
+		},
     }
 }
 </script>
