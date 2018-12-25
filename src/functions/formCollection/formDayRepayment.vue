@@ -56,7 +56,7 @@
                 ></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="包已退案" >
+        <el-form-item label="包含已退案" >
             <el-radio v-model="formInline.is_cancel" label="1">是</el-radio>
             <el-radio v-model="formInline.is_cancel" label="0">否</el-radio>
         </el-form-item>
