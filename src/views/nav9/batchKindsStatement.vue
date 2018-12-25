@@ -28,7 +28,7 @@
              <el-form-item label="批次:">
               <el-select v-model="form.id" placeholder="请选择" :style="width">
                 <el-option label="请选择" value=""></el-option>
-                <el-option :label="item.name" :value="item.id" v-for="(item,index) in caseData" :key="index"></el-option>
+                <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in caseData" :key="index"></el-option>
               </el-select>
             </el-form-item>
             <el-button type="primary" @click="init()">开始统计</el-button>

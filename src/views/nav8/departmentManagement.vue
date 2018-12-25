@@ -34,15 +34,15 @@
             </span>
         </el-tree>
       </div>
-      <div style="float:left;width:82%;padding-left:3px">
-        <p style="background:#fff;padding:20px 0 10px 5px">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
+      <div style="float:left;width:81%;padding-left:3px;background:#fff;margin-left:10px;padding-left:10px;padding-right:10px;">
+        <p style="padding:20px 0 10px 5px">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
         <el-table ref="multipleTable" :data="infos" style="width:100%" border height="600">
           <el-table-column type="index" label="序号" width="60"  fixed="left" :index="index"></el-table-column>
-          <el-table-column prop="true_name" label="姓名"></el-table-column>  
+          <el-table-column prop="true_name" label="姓名" width="100"></el-table-column>  
           <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
           <el-table-column prop="login_name" label="账号"></el-table-column>  
           <el-table-column prop="phone" label="联系方式"></el-table-column>  
-          <el-table-column  label="操作" width="320">
+          <el-table-column  label="操作" width="350">
             <template slot-scope="scope">
               <el-button type="primary" plain  @click="addMemberEdit(scope.$index,scope.row)" style="padding:10px">编辑</el-button>
               <el-button type="primary" plain  @click="editPassword(scope.$index,scope.row)" style="padding:10px">修改密码</el-button>
