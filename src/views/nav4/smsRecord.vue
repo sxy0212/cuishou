@@ -61,21 +61,24 @@ export default {
 		data() {
 			return {
         width:"width:160px",
-        pickerOptions0: {
-          disabledDate: (time) => {                 
-            return time.getTime() > Date.now()
-          }
-        },
-        pickerOptions1: {
-          disabledDate:(time) => {
-            if(this.formRecord.start_time != ""){
-              let currentTime = this.formRecord.start_time;
-                return time.getTime() < currentTime || time.getTime() > Date.now();
-            }else{
-              return time.getTime() > Date.now()
-            }
-          }
-        } ,  
+         pickerOptions0: {
+                disabledDate: time => {
+                let endDateVal = this.formRecord.end_time;
+                if (endDateVal) {
+                    return time.getTime() > new Date(endDateVal).getTime();
+                }else{return time.getTime() > Date.now();}
+                }
+            },
+            pickerOptions1: {
+                disabledDate: time => {
+                let beginDateVal = this.formRecord.start_time;
+                if (beginDateVal) {
+                    return (
+                    time.getTime() < new Date(beginDateVal).getTime() ||time.getTime() > Date.now()
+                    );
+                }
+             }
+            }, 
         total:0,
         currentPage:1,
         formRecord:{

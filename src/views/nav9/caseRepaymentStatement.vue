@@ -5,7 +5,7 @@
         <div class="seachForm">
           <el-form ref="form" :model="form" label-width="75px" :inline="true" >
             <el-form-item label="催收员:">
-              <el-select v-model="form.status" placeholder="请选择状态" :style="width">
+              <el-select v-model="form.status" placeholder="请选择" :style="width" multiple>
                 <el-option label="全部" value=""></el-option>
                 <el-option label="发送成功" value="1"></el-option>
                 <el-option label="发送失败" value="0"></el-option>  
@@ -78,21 +78,24 @@ export default {
     },
     data(){
         return{
-           pickerOptions0: {
-          disabledDate: (time) => {                 
-            return time.getTime() > Date.now()
-          }
-        },
-        pickerOptions1: {
-          disabledDate:(time) => {
-            if(this.form.start_time != ""){
-              let currentTime = this.form.start_time;
-                return time.getTime() < currentTime || time.getTime() > Date.now();
-            }else{
-              return time.getTime() > Date.now()
-            }
-          } 
-        },
+            pickerOptions0: {
+                disabledDate: time => {
+                let endDateVal = this.form.end_time;
+                if (endDateVal) {
+                    return time.getTime() > new Date(endDateVal).getTime();
+                }else{return time.getTime() > Date.now();}
+                }
+            },
+            pickerOptions1: {
+                disabledDate: time => {
+                let beginDateVal = this.form.start_time;
+                if (beginDateVal) {
+                    return (
+                    time.getTime() < new Date(beginDateVal).getTime() ||time.getTime() > Date.now()
+                    );
+                }
+             }
+            },
          total:0,
         currentPage:1,
         form:{
@@ -102,7 +105,8 @@ export default {
           end_time:""
         },
         tableData:[],
-        sms_count:0
+        sms_count:0,
+        width:"width:180px"
         }
     },
     activated(){
