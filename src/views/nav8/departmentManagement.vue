@@ -17,13 +17,13 @@
         下载模板
       </a>
     </div>
-    <div style="margin-top:60px;">
-      <div style="width:30%;float:left">
+    <div style="margin-top:25px;">
+      <div style="width:18%;float:left;" class="deparTree">
         <el-tree :data="Dates" node-key="id"  accordion :expand-on-click-node="false" :props="defaultProps2">
             <span class="custom-tree-node" slot-scope="{ node, data }">
                 <el-input v-model="showName" v-show="data.id == showId" style="width:80%;height:20px;" @keyup.enter.native="editSave"></el-input>
-                <span v-show="data.id != showId">{{ node.label }}</span>
-                <span>
+                <span v-show="data.id != showId" class="node-word" :title="node.label">{{ node.label }}</span>
+                <span style="display:inline-block">
                     <el-button type="text" size="mini" @click="edit(node, data)" style="padding:0">
                       <i class="fa fa-pencil"></i>编辑
                     </el-button>
@@ -34,9 +34,9 @@
             </span>
         </el-tree>
       </div>
-      <div style="float:left;width:70%">
-        <p style="margin-bottom:10px;">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
-        <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total>0?500:100">
+      <div style="float:left;width:82%;padding-left:3px">
+        <p style="background:#fff;padding-top:20px;padding-left:5px;">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
+        <el-table ref="multipleTable" :data="infos" style="width:100%" border height="600">
           <el-table-column type="index" label="序号" width="60"  fixed="left" :index="index"></el-table-column>
           <el-table-column prop="true_name" label="姓名"></el-table-column>  
           <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
@@ -524,5 +524,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 </script>
 <style lang="scss" >
 .DialogueMain2 .el-dialog{width:35%}
-.el-tree .el-tree-node{background:#f2f2f2}
+.el-tree .el-tree-node{background:#fff}
+.deparTree .el-tree{height:630px;padding-top:20px;}
+.node-word{max-width: 101px;float:left;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
 </style>   
