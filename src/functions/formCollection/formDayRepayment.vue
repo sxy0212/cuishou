@@ -75,8 +75,8 @@
             </el-select>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="countFn">开始统计</el-button>
-            <el-button type="primary" @click="exportStatement">导出报表</el-button>
+            <el-button type="primary" size='mini' @click="countFn">开始统计</el-button>
+            <el-button type="primary" size='mini' @click="exportStatement">导出报表</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -84,10 +84,10 @@
 export default {
     name:'formMonthly',
     props:[
-        'options',
         'area_list',
         'client_list',
         'staff_list',
+        'case_list',
         'batch_list',
         'formInline'
     ],
@@ -101,7 +101,7 @@ export default {
             this.$emit('countFn')
         },
         exportStatement(){
-
+            this.$emit('exportStatement')
         },
     }
 }

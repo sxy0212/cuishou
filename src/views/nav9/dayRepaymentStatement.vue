@@ -1,13 +1,14 @@
 <template>
     <div>
         <div-form
-            :options='options'
             :formInline='formInline'
             :area_list='area_list'
             :client_list='client_list'
             :staff_list='staff_list'
             :batch_list='batch_list'
+            :case_list='case_list'
             v-on:countFn='countFn'
+            v-on:exportStatement='exportStatement'
         ></div-form>
         <div-table
             :tableData='tableData'
@@ -44,12 +45,15 @@ export default {
                 is_cancel:'0',
                 area:'',
                 entrust:'',
-                batch_id:''
+                batch_id:'',
+                case_type:'',
+                staff:''
             },
             batch_list:[],
             area_list:[],
             client_list:[],
             staff_list:[],
+            case_list:[],
             tableData: [
             ]
         }
@@ -80,7 +84,7 @@ export default {
             }
             axiosRequest(conf)
         },
-        getLists(){//获取列表
+        getLists(){ //获取列表
             let conf = {
 				url:'/api/api_backend.php?r=call-stat/select-data',
 				success:(data)=>{
@@ -97,6 +101,10 @@ export default {
         },
         saveFn(){
             
+        },
+        exportStatement(){  //导出
+            this.formInline.staff = this.formInline.monthValue.join(',')
+            window.open('/api/api_backend.php?r=call-stat/day-stat-export&staff='+ this.formInline.staff+'&area='+this.formInline.area+'&entrust='+this.formInline.entrust+'&batch_id='+this.formInline.batch_id+'&is_cancel='+this.formInline.is_cancel+'&case_type='+this.formInline.case_type)
         },
         pageSizeChangeFn(val){
             this.page_size = val
