@@ -3,7 +3,7 @@
     <div class="CenterMain  MainHp">
       <div class="TopForm">
         <div class="seachForm">
-          <el-form ref="form" :model="form" label-width="75px" :inline="true" >
+          <el-form ref="form" :model="form" label-width="73px" :inline="true" >
             <el-form-item label="催收员:">
               <el-select v-model="staff_id" placeholder="请选择" multiple :style="width">
                 <el-option :label="item.true_name" :value="item.id" v-for="(item,index) in staff_list" :key="index"></el-option>
@@ -25,7 +25,7 @@
               <el-select v-model="form.paid" placeholder="请选择" :style="width">
                 <el-option label="请选择" value=""></el-option>
                 <el-option label="已还" value="1"></el-option>
-                <el-option label="未还" value="0"></el-option>  
+                <el-option label="未还" value="2"></el-option>  
               </el-select>
             </el-form-item>
              <el-form-item label="批次:">
@@ -82,7 +82,7 @@ export default {
                 type_id :""
             },
             tableData:[],
-            width:"width:170px"
+            width:"width:160px"
         }
     },
     activated(){
@@ -100,7 +100,6 @@ export default {
                     this.client_list = data.info.client_list
                     this.batch_list = data.info.batch_list
                     this.type_list = data.info.type_list
-                    console.log(data)
                 }
             }
             axiosRequest(conf)
@@ -110,19 +109,19 @@ export default {
             const data = this.form
             data.staff_id = this.staff_id.join(",")
             const conf = {
-            url:"/api/api_backend.php?r=collection-count/collection-list",
-            data:data,
-            success:(data)=>{
-                if( data.statusCode == 1 ){
-                    var arr = []
-                    for (let i in data.info) {
-                        arr.push(data.info[i])
+                url:"/api/api_backend.php?r=collection-count/collection-list",
+                data:data,
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        var arr = []
+                        for (let i in data.info) {
+                            arr.push(data.info[i])
+                        }
+                        this.tableData = arr
+                    }else{
+                        this.tableData = []
                     }
-                    this.tableData = arr
-                }else{
-                    this.tableData = []
                 }
-            }
             }
             axiosRequest(conf)
         },
