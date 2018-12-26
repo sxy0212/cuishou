@@ -8,9 +8,9 @@
                 ></el-option>
                 <el-option
                     v-for="item in staff_list"
-                    :key="item.staff_id"
+                    :key="item.id"
                     :label="item.true_name"
-                    :value="item.staff_id"
+                    :value="item.id"
                 ></el-option>
             </el-select>
         </el-form-item>
@@ -22,9 +22,9 @@
                 ></el-option>
                 <el-option  
                     v-for="item in area_list"
-                    :key="item.area_id"
+                    :key="item.id"
                     :label="item.name" 
-                    :value="item.area_id"
+                    :value="item.id"
                 ></el-option>
             </el-select>
         </el-form-item>
@@ -36,18 +36,26 @@
                 ></el-option>
                 <el-option 
                     v-for="item in client_list"
-                    :key="item.client_id"
+                    :key="item.id"
                     :label="item.name"
-                    :value="item.client_id"
+                    :value="item.id"
                 ></el-option>
             </el-select>
         </el-form-item>
         <el-form-item label="日期">
             <el-date-picker
-                v-model="formInline.collection_date"
-                value-format='yyyy-MM-dd'
+                v-model="formInline.start_time"
+                value-format='yyyy-MM'
                 type="date"
-                placeholder="选择日期">
+                placeholder='请选择开始日期'>
+            </el-date-picker>
+        </el-form-item>
+        <el-form-item label="-">
+            <el-date-picker
+                v-model="formInline.end_time"
+                value-format='yyyy-MM'
+                type="date"
+                placeholder='请选择结束日期'>
             </el-date-picker>
         </el-form-item>
         <el-form-item>
@@ -70,7 +78,7 @@ export default {
             this.$emit('countFn')
         },
         exportStatement(){
-            this.$emit('exportStatement')
+
         },
     }
 }

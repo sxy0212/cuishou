@@ -8,7 +8,7 @@
         width="100">
         </el-table-column>
         <el-table-column label="8:00以前">
-            <el-table-column  prop="value_8" label="有效通电" >
+            <el-table-column  prop="valid_8" label="有效通电" >
             </el-table-column>
             <el-table-column label="总通电量" prop='total_8'>
             </el-table-column>
@@ -16,14 +16,14 @@
             </el-table-column>
         </el-table-column>
         <el-table-column label="8:00-12:00">
-            <el-table-column  prop="value8_12" label="有效通电" >
+            <el-table-column  prop="valid8_12" label="有效通电" >
             </el-table-column>
             <el-table-column label="总通电量" prop='total8_12'>
             </el-table-column>
             <el-table-column label="个案量" prop='case8_12'>
             </el-table-column>
             <el-table-column label="12:00-18:00">
-                <el-table-column  prop="value12_18" label="有效通电" >
+                <el-table-column  prop="valid12_18" label="有效通电" >
                 </el-table-column>
                 <el-table-column label="总通电量" prop='total12_18'>
                 </el-table-column>
@@ -31,7 +31,7 @@
                 </el-table-column>
             </el-table-column>
             <el-table-column label="18:00以后">
-                <el-table-column  prop="value18_" label="有效通电" >
+                <el-table-column  prop="valid18_" label="有效通电" >
                 </el-table-column>
                 <el-table-column label="总通电量" prop='total18_'>
                 </el-table-column>
@@ -39,11 +39,11 @@
                 </el-table-column>
             </el-table-column>
             <el-table-column label="合计">
-                <el-table-column  prop="name" label="有效通电" >
+                <el-table-column  prop="sum_valid" label="有效通电" >
                 </el-table-column>
-                <el-table-column label="总通电量">
+                <el-table-column prop="sum_total" label="总通电量">
                 </el-table-column>
-                <el-table-column label="个案量">
+                <el-table-column prop="sum_case" label="个案量">
                 </el-table-column>
             </el-table-column>
         </el-table-column>
