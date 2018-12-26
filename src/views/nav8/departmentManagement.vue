@@ -21,7 +21,7 @@
       <div style="width:18%;" class="deparTree">
         <el-tree :data="Dates" node-key="id"  accordion :expand-on-click-node="false" :props="defaultProps2">
             <span class="custom-tree-node" slot-scope="{ node, data }" style="display:block;width:100%">
-                <el-input v-model="showName" v-show="data.id == showId" style="width:80%;height:20px;" @keyup.enter.native="editSave"></el-input>
+                <el-input v-model="showName" v-show="data.id == showId" style="width:53%;height:20px;float:left" @keyup.enter.native="editSave" @blur="editSave"></el-input>
                 <span v-show="data.id != showId" class="node-word" :title="node.label">{{ node.label }}</span>
                 <span style="float:right;margin-right:10px">
                     <el-button type="text" size="mini" @click="edit(node, data)" style="padding:0">
