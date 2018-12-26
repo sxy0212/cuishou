@@ -41,7 +41,7 @@
               </el-select>
             </el-form-item>
             <el-button type="primary" @click="init()">开始统计</el-button>
-            <el-button type="primary" @click="init(1)">导出报表</el-button>
+            <el-button type="primary" @click="exportDate">导出报表</el-button>
           </el-form>
         </div>
         <div>
@@ -125,6 +125,10 @@ export default {
             }
             axiosRequest(conf)
         },
+        exportDate(){
+            const staff_id = this.staff_id.join(",")
+            window.open('/api/api_backend.php?r=collection-count/export&staff_id='+staff_id+'&area_id='+this.form.area_id+'&client_id='+this.form.client_id+'&batch_id='+this.form.batch_id+'&paid='+this.form.paid+'&type_id='+this.form.type_id)
+        }
     }
 }
 </script>
