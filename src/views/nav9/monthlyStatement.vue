@@ -22,10 +22,10 @@
 <script>
 import formMonthly from '@/functions/formCollection/formMonthly.vue'
 import tableMonthly from '@/functions/tableCollection/tableMonthly.vue'
-
 import pageChange from '@/components/pageChange.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
+
 export default {
     components:{
         'div-form':formMonthly,
@@ -73,14 +73,14 @@ export default {
             axiosRequest(conf)
         },
         init(){ //初始化
-            if( this.formInline.monthValue.length == 0 ){
-                Message({
-                    message: '请先选择催收员',
-                    type: 'warning',
-                    duration: 3 * 1000
-                })
-                return 
-            }
+            // if( this.formInline.monthValue.length == 0 ){
+            //     Message({
+            //         message: '请先选择催收员',
+            //         type: 'warning',
+            //         duration: 3 * 1000
+            //     })
+            //     return 
+            // }
             this.formInline.page = this.page
             this.formInline.page_size = this.page
             this.formInline.staff_ids = this.formInline.monthValue.join(',')
@@ -89,7 +89,7 @@ export default {
                 data:this.formInline,
 				success:(data)=>{
                     if( data.statusCode == 1 ){
-                        // this.tableData = 
+                        this.tableData = data.info
                     }
 				} 
             }

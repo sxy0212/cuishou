@@ -1,7 +1,7 @@
 .blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;}
 .blueB .el-form-item__label,.blueB .el-form-item__content{line-height:30px;}
 .marginU{margin-top:10px;}
-.el-form-item{margin-bottom:12px;}
+.el-form .el-form-item{margin-bottom:10px;}
 .el-form-item__content,.el-form-item__label{line-height:30px;}
 .el-input__inner{height:30px;line-height:30px;}
 .dialog-footer{text-align:right;}
