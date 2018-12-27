@@ -89,7 +89,7 @@ export default {
                 '31to45': 0,
                 '46to60': 0,
                 '60tomax': 0,
-                'name': "叶子",
+                'name': "陈斌",
                 'never': 0
                 },{
                 '1to3': 5,
@@ -99,7 +99,7 @@ export default {
                 '31to45': 0,
                 '46to60': 0,
                 '60tomax': 0,
-                'name': "催收员1号",
+                'name': "程林",
                 'never': 0
                 },{
                 '1to3': 6,
@@ -109,7 +109,7 @@ export default {
                 '31to45': 3,
                 '46to60': 0,
                 '60tomax': 0,
-                'name': "23",
+                'name': "李宇",
                 'never': 0
                 },{
                 '1to3': 0,
@@ -117,9 +117,9 @@ export default {
                 '7to15': 0,
                 '16to30': 8,
                 '31to45': 0,
-                '46to60': 0,
+                '46to60': 10,
                 '60tomax': 0,
-                'name': "催收员2号",
+                'name': "张鑫",
                 'never': 0
                 },
             ],

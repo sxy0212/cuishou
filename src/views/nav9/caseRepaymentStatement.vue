@@ -99,32 +99,32 @@ export default {
             },
             tableData:[
               {
-                batch_id: "测试资料2",
+                batch_id: "房贷资料",
                 case_card_num: "465132978465946",
                 case_code: "zgyh435000003",
                 case_date: "2018-02-10",
                 case_last_paid: "5600.5",
                 case_money: "8962.12",
-                case_name: "仙玉",
-                staff_name: "23"
+                case_name: "李玉",
+                staff_name: "杨斌"
               },{
-                batch_id: "测试资料2",
+                batch_id: "房贷资料",
                 case_card_num: "465454654654654654",
                 case_code: "zgyh435000002",
                 case_date: "2018-02-09",
                 case_last_paid: "10251",
                 case_money: "88888.3",
-                case_name: "赵梅",
-                staff_name: "叶子"
+                case_name: "白旭",
+                staff_name: "杨斌"
               },{
-                batch_id: "测试资料2",
+                batch_id: "房贷资料",
                 case_card_num: "6212261001029054985",
                 case_code: "zgyh435000001",
                 case_date: "2018-02-08",
                 case_last_paid: null,
                 case_money: "189653",
-                case_name: "叶子",
-                staff_name: null
+                case_name: "李辉",
+                staff_name: "程林"
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6217230712000111266",
@@ -133,7 +133,7 @@ export default {
                 case_last_paid: "1000.6",
                 case_money: "4371.15",
                 case_name: "宫林子",
-                staff_name: null
+                staff_name:"程琳"
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6227003525240215315",
@@ -141,8 +141,8 @@ export default {
                 case_date: "2018-10-01",
                 case_last_paid: "200",
                 case_money: "3054.57",
-                case_name: "马神干",
-                staff_name: null   
+                case_name: "彭翔",
+                staff_name: "陈斌"   
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6217000850001011545",
@@ -151,7 +151,7 @@ export default {
                 case_last_paid: "600",
                 case_money: "3660.24",
                 case_name: "张东升",
-                staff_name: "23"
+                staff_name: "陈斌"
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6222620810017888799",
@@ -159,8 +159,8 @@ export default {
                 case_date: "2018-10-01",
                 case_last_paid: null,
                 case_money: "2747.41",
-                case_name: "强续伟",
-                staff_name: "叶子"
+                case_name: "张续伟",
+                staff_name: "陈辉"
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6217858000007053959",
@@ -169,7 +169,7 @@ export default {
                 case_last_paid: null,
                 case_money: "3051.09",
                 case_name: "周弘典",
-                staff_name: null
+                staff_name: "陈辉"
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6217001850001942086",
@@ -178,7 +178,7 @@ export default {
                 case_last_paid: null,
                 case_money: "3862.07",
                 case_name: "陈绍鹏",
-                staff_name: null
+                staff_name: "陈辉"
               },{
                 batch_id: "测试资料1",
                 case_card_num: "6212264000063429951",
@@ -187,7 +187,7 @@ export default {
                 case_last_paid: null,
                 case_money: "4778.28",
                 case_name: "孙凯强",
-                staff_name: null
+                staff_name: "陈辉"
               }
             ],
             
