@@ -3,9 +3,9 @@
     <div class="CenterMain  MainHp">
       <div class="TopForm">
         <div class="CallCount"> 
-          <div class="title">智能语音机器人执行状态明细 (交互中 <span style="color:red">{{call}}</span> 排队中 <span style="color:red">{{line}}</span>)</div>
+          <div style="font-size:20px;margin-bottom:10px;">智能语音机器人执行状态明细 (交互中 <span style="color:red">{{call}}</span> 排队中 <span style="color:red">{{line}}</span>)</div>
             <!--数据列表-->    
-            <div class="TableList">
+            <div>
                 <el-table ref="multipleTable" :data="infos" tooltip-effect="dark" style="width: 100%" border stripe>
                     <el-table-column type="index" label="序号" width="50" :index="index"></el-table-column>
                     <el-table-column prop="task_coding" label="机器人编号"> </el-table-column>
@@ -37,58 +37,59 @@
   </section>
 </template>
 <script>
-     import {axiosRequest,formatDate} from '@/assets/js/Yt.js'
-  import { MessageBox } from 'element-ui';
-  export default {
-		data() {
-			return {
-        call:"",
-            line:"",
-            currentPage:1,
-            infos:[],
-            page:"1",
-            page_size:"15",
-            total:""
-      }
-		},
-	  activated() {
-      this.init();
-      this.initData()
+import {axiosRequest,getCookie} from '@/assets/js/Yt.js'
+export default {
+	data() {
+		return {
+      call:"",
+      line:"",
+      currentPage:1,
+      infos:[],
+      page:1,
+      page_size:10,
+      total:0
+    }
+	},
+  mounted() {
+    this.initData()
+  },
+	methods: {
+    index(val){
+      return val+1
     },
-		methods: {
-      index(val){
-                return val+1
-            },
-            initData(){
-                setInterval(this.init,5000)
-            },
-            init() {
-                const url = "/api/api_backend.php?r=asrcall-state/index"
-                const conf = {
-                    url,
-                    success:(data)=>{
-                        if(data.statusCode == 1){
-                            this.infos = data.info.data
-                            this.call = parseInt(data.info.call)
-                            this.line = parseInt(data.info.line)
-                            this.total = parseInt(data.info.total_count)
-                        }else{
-                            this.call = 0
-                            this.line = 0
-                            this.total = 0
-                        }
-                    }
+    initData(){
+        setInterval(this.init,5000)
+    },
+    init() {
+      if(getCookie("user")&&this.$route.path == '/callStatus'){
+        const url = "/api/api_backend.php?r=asrcall-state/index"
+        const conf = {
+            url,
+            success:(data)=>{
+                if(data.statusCode == 1){
+                    this.infos = data.info.data
+                    this.call = parseInt(data.info.call)
+                    this.line = parseInt(data.info.line)
+                    this.total = parseInt(data.info.total_count)
+                }else{
+                    this.call = 0
+                    this.line = 0
+                    this.total = 0
+                    this.infos = []
                 }
-               axiosRequest(conf)
-            },
-            handleSizeChange(val){
-              this.page = val
-              this.init()
-            },
-            handleCurrentChange(val){
-              this.page_size = val
-              this.init()
-            },
+            }
+        }
+        axiosRequest(conf)
+      }
+    },
+    handleSizeChange(val){
+      this.page = val
+      this.init()
+    },
+    handleCurrentChange(val){
+      this.page_size = val
+      this.init()
+    },
     }
 	}
 </script>
