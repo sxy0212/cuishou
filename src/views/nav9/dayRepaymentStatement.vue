@@ -106,7 +106,6 @@ export default {
     activated(){
         this.init()
         this.getLists()
-        // this.getBatchList()
     },
     methods:{
         countFn(){
@@ -144,12 +143,9 @@ export default {
             }
             axiosRequest(conf)
         },
-        saveFn(){
-            
-        },
         exportStatement(){  //导出
-            this.formInline.staff = this.formInline.monthValue.join(',')
-            window.open('/api/api_backend.php?r=call-stat/day-stat-export&staff='+ this.formInline.staff+'&area='+this.formInline.area+'&entrust='+this.formInline.entrust+'&batch_id='+this.formInline.batch_id+'&is_cancel='+this.formInline.is_cancel+'&case_type='+this.formInline.case_type)
+            // this.formInline.staff = this.formInline.monthValue.join(',')
+            // window.open('/api/api_backend.php?r=call-stat/day-stat-export&staff='+ this.formInline.staff+'&area='+this.formInline.area+'&entrust='+this.formInline.entrust+'&batch_id='+this.formInline.batch_id+'&is_cancel='+this.formInline.is_cancel+'&case_type='+this.formInline.case_type)
         },
         pageSizeChangeFn(val){
             this.page_size = val

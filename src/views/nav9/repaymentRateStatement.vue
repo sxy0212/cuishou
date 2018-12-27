@@ -189,10 +189,7 @@ export default {
 				} 
             }
             axiosRequest(conf)
-        },
-        saveFn(){
-            
-        },
+        }
     }
 }
 </script>

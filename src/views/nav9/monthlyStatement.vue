@@ -195,10 +195,7 @@ export default {
         exportStatement(){
             return
             window.open('')
-        },
-        saveFn(){
-            
-        },
+        }
     }
 }
 </script>
