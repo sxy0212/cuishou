@@ -247,7 +247,7 @@ let routes = [
   },
   {
     path: '/monthlyStatement',
-    name: '电催员电催月度统计',
+    name: '电催员电催日度统计',
     component:  monthlyStatement,
     meta: {
       keepAlive: true,
