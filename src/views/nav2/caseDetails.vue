@@ -148,7 +148,7 @@ import divInfo from '@/functions/normalDiv/divInfo.vue'
 
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
-import '@/assets/css/dialog.css'
+import '@/styles/css/dialog.css'
 
 export default {
     name:'caseDetails',

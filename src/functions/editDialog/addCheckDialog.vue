@@ -59,8 +59,8 @@
     </div>
 </template>
 <script>
-// 
-import '@/assets/css/dialog.css'
+
+import '@/styles/css/dialog.css'
 export default {
     name:'addCheckDialog',
     props:[

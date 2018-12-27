@@ -1,5 +1,5 @@
 <template>
-    <el-form :inline="true" :model="formTitle" label-width="70px" class="caseForm">   
+    <el-form :inline="true" :model="formTitle" label-width="67px" class="caseForm">   
         <el-form-item label="电话号码">
             <el-input v-model="formTitle.phone" placeholder="请输入电话号码" :style="width"></el-input>
         </el-form-item>
@@ -44,6 +44,7 @@
     </el-form>
 </template>
 <script>
+
 export default {
     name:'formCaseDetail',
     props:[
@@ -54,7 +55,7 @@ export default {
     ],
     data(){
         return{
-            width:"width:260px;"
+            width:"width:180px;"
         }
     },
     methods:{
