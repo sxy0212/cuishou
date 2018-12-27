@@ -4,7 +4,7 @@
         <el-table-column label="关系" prop="relation"></el-table-column>
         <el-table-column label="电话" prop="phone"></el-table-column>
         <el-table-column label="创建者" prop="creater"></el-table-column>
-        <el-table-column label="创建时间" prop="create_time"></el-table-column>
+        <el-table-column label="创建时间" prop="create_time" width="160"></el-table-column>
         <el-table-column label="催收类型" prop="type">
             <template slot-scope='scope'>
                 <span v-show='scope.row.type==1'>呼叫 </span>
