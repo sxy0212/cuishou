@@ -7,7 +7,7 @@
                 </el-form-item>
                 <el-form-item label="选择字段" label-width="80px">
                     <el-checkbox v-model="item.choose"
-                        v-for="item in this.fieldsList"
+                        v-for="item in fieldsList"
                         :key="item.id"
                         :class="item.is_required =='1'?'red':''">
                         {{item.field_name}}

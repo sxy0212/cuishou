@@ -68,6 +68,14 @@
 			v-on:sureToDistribute='sureToDistribute($event)'
 		></second-dialog>
     </el-dialog>
+	<el-dialog title="选择导出字段" :visible.sync="exportNow" v-move>
+        <third-dialog
+			:formExport='formExport'
+			:fieldsList='fieldsList'
+			v-on:exportTo='exportTo'
+			v-on:cancelExport='cancelExport'
+		></third-dialog>
+    </el-dialog>
    </div>
 </div>
  
@@ -81,6 +89,7 @@ import formCaseSecond from '@/functions/formCollection/formCaseSecond.vue'
 import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 import addChangeArea from '@/functions/editDialog/addChangeArea.vue'
 import addDistribute from '@/functions/editDialog/addDistribute.vue'
+import addExportChoose from '@/functions/editDialog/addExportChoose.vue'
 
 import  { axiosRequest,deepClone } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -92,12 +101,17 @@ export default {
 		'second-form':formCaseSecond,
 		'div-table':tableCaseMan,
 		'edit-dialog':addChangeArea,
-		'second-dialog':addDistribute
+		'second-dialog':addDistribute,
+		'third-dialog':addExportChoose
 	},
 	data() {
         return {
+			whichOne:'',//选中的为choosen，查询为all
+			formExport:{},//表单
+			fieldsList:[],//选项
 			ableNum:0,//可分配数量
 			distributeNow:false,//分配
+			exportNow:false,//导出字段选择
 			bannerTitle:'修改区域',
 			addChangeAreaNow:false,//修改区域
 			total_money:'',//总额
@@ -212,7 +226,7 @@ export default {
 			this.page = 1
 			this.init()
 		},
-		changeFn(val){//获取催收员
+		changeFn(val){	//获取催收员
 			let conf = {
 				url : '/api/api_backend.php?r=case/depart-staff-list',
 				data: {
@@ -232,7 +246,7 @@ export default {
 		handleSelectionChange(val){
 			this.multipList = val
 		},
-		filterFn(val){//获取委托方
+		filterFn(val){	//获取委托方
             let conf = {
                 url : '/api/api_backend.php?r=case/client-list',
                 data:{
@@ -251,7 +265,7 @@ export default {
             }
             axiosRequest(conf)
 		},
-		getInfoFn(){//数据初始化
+		getInfoFn(){	//数据初始化
 			let conf = {
 				url : '/api/api_backend.php?r=case/init-data',
 				success:(data)=>{
@@ -290,7 +304,7 @@ export default {
             }
             axiosRequest(conf)
 		},
-		init(){//页面初始化
+		init(){	//页面初始化
 			this.conditions.page = this.page
 			this.conditions.page_size = this.page_size
 			let conf = {
@@ -323,7 +337,7 @@ export default {
             this.page = val
             this.init()
 		},
-		clearFn(){//清空，将数组的数据全部手写清空
+		clearFn(){	//清空，将数组的数据全部手写清空
 			this.conditions={//搜索条件
 				case_name: "",	//姓名
 				case_mobile: "",	//联系方式
@@ -349,7 +363,7 @@ export default {
 				max_case_last_collection_date:'',	//最大最后跟进
 			}
 		},
-		changeArea(){//修改区域
+		changeArea(){	//修改区域
 			if( !!this.multipList.length ){//去获取区域列表
 				this.addChangeAreaNow = true
 				this.formTitle = {
@@ -372,7 +386,7 @@ export default {
 				})
 			}
 		},
-		protectFn(){//保存区域
+		protectFn(){	//保存区域
 			let ids = this.multipList.map(item=> item.id).join(',')
 			let conf = {
 				url : '/api/api_backend.php?r=case/case-operate',
@@ -407,7 +421,7 @@ export default {
 		cancelFn(){
 			this.addChangeAreaNow = false
 		},
-		pauseFn(str){//暂停案件
+		pauseFn(str){	//暂停案件
 			if( !!this.multipList.length ){
 				let ids = this.multipList.map(item=>item.id).join(',')
 				let conf = {
@@ -563,7 +577,7 @@ export default {
 			}
 			this.staffList = []
 		},
-		sureToDistribute(num){//确定分配
+		sureToDistribute(num){	//确定分配
 			if( num == 2 ){//快速分配
 				this.$confirm('您确定要分配这些案件吗？','提示信息',{
 					confirmButtonText: "确定分配",
@@ -645,18 +659,55 @@ export default {
 				axiosRequest(conf)
 			}
 		},
-		exportFn(){	//导出查询
-			window.open('/api/api_backend.php?r=case/case-export&export_type=searched&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
-			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
-			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
-			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
-			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
-			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+		exportFn(){	//导出查询选择字段
+			this.exportNow = true
+			this.whichOne = 'all'
+			this.getFieldsList()
+			
 		},
-		exportChoosen(){	// 导出选中
-			if( this.multipList.length ){
+		getFieldsList(){
+			let conf = {
+                url : '/api/api_backend.php?r=system-setting/template-all-fields-list',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+						// this.fieldsList = data.info
+						this.fieldsList = data.info.map(item=>{
+							if( item.is_required == 1 ){
+								item["choose"] = true
+							}else{
+								item['choose'] = false
+							}
+							return item 
+						})
+					}
+                }
+            }
+            axiosRequest(conf)
+		},
+		cancelExport(){
+			this.exportNow = false
+			this.fieldsList = []
+			this.whichOne = ''
+		},
+		exportTo(){	
+			let fields = this.fieldsList.filter(item=>item.choose).map(every=>every.field_english_name).join(',')
+			if( this.whichOne == 'all' ){	//导出查询
+				window.open('/api/api_backend.php?r=case/case-export&export_type=searched&fields='+fields+'&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+				+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
+				+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
+				'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
+				'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
+				'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+			}else if( this.whichOne == 'choosen' ){	//导出选中
 				let ids =  this.multipList.map(item=>item.id).join(',')
-				window.open('/api/api_backend.php?r=case/case-export&export_type=selected&case_id_str=' + ids)
+				window.open('/api/api_backend.php?r=case/case-export&fields='+ fields +'&export_type=selected&case_id_str=' + ids)
+			}
+		},
+		exportChoosen(){	// 导出选中选择字段
+			if( this.multipList.length ){
+				this.exportNow = true
+				this.whichOne = 'choosen'
+				this.getFieldsList()
 			}else{
 				Message({
 					message: '请先选择要导出的案件',
