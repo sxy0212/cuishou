@@ -40,8 +40,8 @@
                 <el-option :label="item.name" :value="item.id" v-for="(item,index) in type_list" :key="index"></el-option>                                              
               </el-select>
             </el-form-item>
-            <el-button type="primary" @click="init()">开始统计</el-button>
-            <el-button type="primary" @click="exportDate">导出报表</el-button>
+            <el-button type="primary" >开始统计</el-button>
+            <el-button type="primary" >导出报表</el-button>
           </el-form>
         </div>
         <div>
@@ -81,13 +81,54 @@ export default {
                 batch_id:"",
                 type_id :""
             },
-            tableData:[],
+            tableData:[{
+                '1to3': 1,
+                '4to6': 3,
+                '7to15': 4,
+                '16to30': 0,
+                '31to45': 0,
+                '46to60': 0,
+                '60tomax': 0,
+                'name': "叶子",
+                'never': 0
+                },{
+                '1to3': 5,
+                '4to6': 0,
+                '7to15': 2,
+                '16to30': 0,
+                '31to45': 0,
+                '46to60': 0,
+                '60tomax': 0,
+                'name': "催收员1号",
+                'never': 0
+                },{
+                '1to3': 6,
+                '4to6': 4,
+                '7to15': 0,
+                '16to30': 0,
+                '31to45': 3,
+                '46to60': 0,
+                '60tomax': 0,
+                'name': "23",
+                'never': 0
+                },{
+                '1to3': 0,
+                '4to6': 6,
+                '7to15': 0,
+                '16to30': 8,
+                '31to45': 0,
+                '46to60': 0,
+                '60tomax': 0,
+                'name': "催收员2号",
+                'never': 0
+                },
+            ],
             width:"width:160px"
         }
     },
     activated(){
-      this.init()
-      this.initForm()
+    //   this.init()
+    //   this.initForm()
     },
     methods:{
         initForm(){

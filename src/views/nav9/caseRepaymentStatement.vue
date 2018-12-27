@@ -29,12 +29,12 @@
                     <el-date-picker v-model="form.begin_case_date" type="date" placeholder="开始时间" value-format="yyyy-MM-dd" :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
                     <el-date-picker v-model="form.end_case_date" type="date" placeholder="结束时间" value-format="yyyy-MM-dd"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
                 </el-form-item> 
-                <el-button type="primary" @click="init(1)">开始统计</el-button>
-                <el-button type="primary" @click="exportDate">导出报表</el-button>
+                <el-button type="primary" >开始统计</el-button>
+                <el-button type="primary" >导出报表</el-button>
             </el-form>
         </div>
         <div>
-            <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" :height="total>0?550:100">
+            <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" height="550">
                 <el-table-column type="index" :index="index" label="序号" width="50"></el-table-column>
                 <el-table-column prop="case_code" label="个案序列号"> </el-table-column>
                 <el-table-column prop="case_name" label="姓名" width="90"></el-table-column>
@@ -97,7 +97,99 @@ export default {
                 client_id:"",
                 batch_id:"",
             },
-            tableData:[],
+            tableData:[
+              {
+                batch_id: "测试资料2",
+                case_card_num: "465132978465946",
+                case_code: "zgyh435000003",
+                case_date: "2018-02-10",
+                case_last_paid: "5600.5",
+                case_money: "8962.12",
+                case_name: "仙玉",
+                staff_name: "23"
+              },{
+                batch_id: "测试资料2",
+                case_card_num: "465454654654654654",
+                case_code: "zgyh435000002",
+                case_date: "2018-02-09",
+                case_last_paid: "10251",
+                case_money: "88888.3",
+                case_name: "赵梅",
+                staff_name: "叶子"
+              },{
+                batch_id: "测试资料2",
+                case_card_num: "6212261001029054985",
+                case_code: "zgyh435000001",
+                case_date: "2018-02-08",
+                case_last_paid: null,
+                case_money: "189653",
+                case_name: "叶子",
+                staff_name: null
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6217230712000111266",
+                case_code: "431000026",
+                case_date: "2018-10-01",
+                case_last_paid: "1000.6",
+                case_money: "4371.15",
+                case_name: "宫林子",
+                staff_name: null
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6227003525240215315",
+                case_code: "431000025",
+                case_date: "2018-10-01",
+                case_last_paid: "200",
+                case_money: "3054.57",
+                case_name: "马神干",
+                staff_name: null   
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6217000850001011545",
+                case_code: "431000024",
+                case_date: "2018-10-01",
+                case_last_paid: "600",
+                case_money: "3660.24",
+                case_name: "张东升",
+                staff_name: "23"
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6222620810017888799",
+                case_code: "431000023",
+                case_date: "2018-10-01",
+                case_last_paid: null,
+                case_money: "2747.41",
+                case_name: "强续伟",
+                staff_name: "叶子"
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6217858000007053959",
+                case_code: "431000022",
+                case_date: "2018-10-01",
+                case_last_paid: null,
+                case_money: "3051.09",
+                case_name: "周弘典",
+                staff_name: null
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6217001850001942086",
+                case_code: "431000021",
+                case_date: "2018-10-01",
+                case_last_paid: null,
+                case_money: "3862.07",
+                case_name: "陈绍鹏",
+                staff_name: null
+              },{
+                batch_id: "测试资料1",
+                case_card_num: "6212264000063429951",
+                case_code: "431000020",
+                case_date: "2018-10-01",
+                case_last_paid: null,
+                case_money: "4778.28",
+                case_name: "孙凯强",
+                staff_name: null
+              }
+            ],
             
             width:"width:180px",
              staff_list:[],// |  | 催收员 |
@@ -107,8 +199,8 @@ export default {
         }
     },
     activated(){
-      this.init(0)
-      this.initForm()
+    //   this.init(0)
+    //   this.initForm()
     },
     methods:{
         index(val){

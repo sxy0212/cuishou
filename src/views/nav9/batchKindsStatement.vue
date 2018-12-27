@@ -31,12 +31,12 @@
                 <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in caseData" :key="index"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="primary" @click="init()">开始统计</el-button>
-            <el-button type="primary" @click="exportDate">导出报表</el-button>
+            <el-button type="primary" >开始统计</el-button>
+            <el-button type="primary">导出报表</el-button>
           </el-form>
         </div>
         <div>
-          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" show-summary>
+          <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" show-summary :summary-method="getSummaries">
             <el-table-column type="index"  label="序号" width="50"></el-table-column>
             <el-table-column prop="case_type" label="案件状态"> </el-table-column>
             <el-table-column prop="case_money" label="委案金额"></el-table-column>
@@ -64,15 +64,44 @@ export default {
         clientDate:[],      //委托方数据
         areaDate:[],        //催收区域数据
         caseData:[],        //批次号数据
-        tableData:[],
+        tableData:[{
+            case_money: "287503.5",
+            case_paid: "10500",
+            case_type: "正常",
+            count: "3",
+            estimate_rate: "3.65%",
+            pay_rate: "3.65%",
+            },{
+                case_money: "15680",
+                case_paid:"5000",
+                case_type: "暂停",
+                count: "2",
+                estimate_rate: "31.89%",
+                pay_rate:"31.89%",
+            },{
+                case_money: null,
+                case_paid: null,
+                case_type: "关闭",
+                count: "0",
+                estimate_rate: 0,
+                pay_rate: 0
+            },{
+                case_money: null,
+                case_paid: null,
+                case_type: "退案",
+                count: "0",
+                estimate_rate: 0,
+                pay_rate: 0
+            }
+        ],
         width:"width:176px"
         }
     },
     activated(){
-      this.init()
-      this.initClient()     //委托方
-      this.initArea()       //催收区域
-      this.initType()       //批次号
+    //   this.init()
+    //   this.initClient()     //委托方
+    //   this.initArea()       //催收区域
+    //   this.initType()       //批次号
     },
     methods:{
       initArea(){
@@ -137,6 +166,33 @@ export default {
           }
         }
         axiosRequest(conf)
+      },
+      getSummaries(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '总价';
+            return;
+          }
+          const values = data.map(item => parseFloat(item[column.property]));
+          if (!values.every(value =>Number (value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+          
+          } else {
+            sums[index] = '';
+          }
+        });
+        sums[5]+="%"
+        sums[6]+="%"
+        return sums;
       },
       exportDate(){
           window.open('/api/api_backend.php?r=asrcall-case-batch/case-type-count&action=export&case_status='+this.form.case_status+'&id='+this.form.id)
