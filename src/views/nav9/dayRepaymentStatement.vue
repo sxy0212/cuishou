@@ -39,7 +39,7 @@ export default {
         return{
             page:1,
             page_size:10,
-            total:0,
+            total:6,
             formInline:{
                 monthValue:[],
                 is_cancel:'0',
@@ -55,6 +55,51 @@ export default {
             staff_list:[],
             case_list:[],
             tableData: [
+                {}
+            ],
+            tableData: [
+                {   
+                    staff_name:'王丽',
+                    case_money:185640.05,
+                    case_paid:25000,
+                    per_paid:'13.47%',
+                },
+                {  
+                    staff_name:'高峰',
+                    case_money:12690.69,
+                    case_paid:4500,
+                    per_paid:'35.46%',
+                },
+                {  
+                    staff_name:'江楠',
+                    case_money:26500.48,
+                    case_paid:12000,
+                    per_paid:'45.28%',
+                },
+                {  
+                    staff_name:'徐光明',
+                    case_money:16985.47,
+                    case_paid:6000,
+                    per_paid:'35.32%',
+                },
+                {  
+                    staff_name:'涂磊',
+                    case_money:17569.86,
+                    case_paid:8000,
+                    per_paid:'45.53%',
+                },
+                {  
+                    staff_name:'张雪丽',
+                    case_money:196443.75,
+                    case_paid:100500,
+                    per_paid:'51.16%',
+                },
+                {  
+                    staff_name:'合计',
+                    case_money:455830.3,
+                    case_paid:156000,
+                    per_paid:'34.22%',
+                }
             ]
         }
     },
@@ -77,8 +122,8 @@ export default {
                 data:this.formInline,
 				success:(data)=>{
                     if( data.statusCode == 1 ){
-                        this.tableData = data.info.info
-                        this.total = Number(data.info.total_count)
+                        // this.tableData = data.info.info
+                        // this.total = Number(data.info.total_count)
                     }
 				} 
             }
