@@ -55,7 +55,7 @@ export default {
     ],
     data(){
         return{
-            width:"width:180px;"
+            width:"width:150px;"
         }
     },
     methods:{

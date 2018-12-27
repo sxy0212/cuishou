@@ -14,8 +14,9 @@
 .el-form-item{margin-bottom:10px;}
 .otherI{margin-bottom:15px;}
 .el-date-editor span{margin-left:0;}
-.caseForm .el-form-item__label{font-size:13px;}
-.caseForm .el-form--inline .el-form-item{margin-right:0;}
+.middle .caseForm .el-form-item__label{font-size:12px;}
+.middle .caseForm .el-form-item{margin-right:0;margin-bottom:5px;}
+
 
 
 
