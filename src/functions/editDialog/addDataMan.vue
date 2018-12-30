@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="addDataMan">
         <el-form :model="formTitle" v-if="formShow">
             <el-form-item label="批次名称" label-width="70px">
                 <el-input v-model="formTitle.batch_name" autocomplete="off"></el-input>

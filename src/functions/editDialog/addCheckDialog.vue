@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="checkDialog">
         <div class="dial-header  speci DialogueMain2">
             <div class="info_title">被叫号码:{{detail.dst}}</div>   
             <div class="info_details">

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="checkDialog">
         <div-info
             :selfInfo='selfInfo'
             v-on:totalCaseFn='init($event)'

@@ -1,5 +1,5 @@
 <template>
-  <div class="cover">
+  <div>
     <div class="upB"> 
         <el-button type="primary" plain @click='addFn(true)'>导入资料</el-button><el-button type="success" plain @click='downloadFn(true)'>下载模板</el-button>
     </div>

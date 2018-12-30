@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="caseManagementCss">
 	<div class="cover">
 		<div-form
 			:conditions='conditions'

@@ -1,10 +1,8 @@
-.el-date-editor .el-range-separator,.el-date-editor .el-range__icon{line-height:24px;}
-.textIn{text-indent:15px;}
-.el-input__prefix .el-input__icon,.el-input__suffix-inner .el-input__icon{line-height:30px;}
-.formCase{border:1px solid #d2d2d2;}
-.cover .formCase .el-form-item{margin-bottom:0;}
+.formCassCss .el-date-editor .el-range-separator,.el-date-editor .el-range__icon{line-height:24px;}
+.formCassCss .textIn{text-indent:15px;}
+.formCassCss  .el-input__prefix .el-input__icon,.el-input__suffix-inner .el-input__icon{line-height:30px;}
+.cover .formCse .el-form-item{margin-bottom:0;}
 .formCase .el-input{width:190px;}
-.formCase .el-date-editor.el-input, .formCase .el-date-editor.el-input__inner{width:190px;}
 .formCase .el-form{padding:15px 0 0 5px;}
 
 

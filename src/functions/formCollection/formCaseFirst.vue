@@ -1,5 +1,5 @@
 <template>
-    <div class="formCase">
+    <div class="formCase formCassCss">
         <el-form :inline="true" :model="conditions" class="demo-form-inline" label-width="85px">   
             <el-form-item label="姓名">
                 <el-input v-model="conditions.case_name" placeholder="请输入姓名"></el-input>
