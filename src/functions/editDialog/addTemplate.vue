@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <div class="addTemplateCheckCover">
             <el-form :model="formTitle">
                 <el-form-item label="模板名称" label-width="80px">
                     <el-input v-model="formTitle.name" autocomplete="off"></el-input>
