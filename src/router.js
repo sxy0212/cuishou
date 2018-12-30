@@ -3,6 +3,7 @@ import taskManagement from './views/nav1/taskManagement.vue'
 import caseManagement from './views/nav2/caseManagement.vue'
 import dataManagement from './views/nav3/dataManagement.vue'
 import dataStatistics from './views/nav31/dataStatistics.vue'
+import callStatus from './views/nav32/callStatus.vue'
 import smsManagement from './views/nav4/smsManagement.vue'
 import smsRecord from "./views/nav4/smsRecord.vue"
 import smsSend from './views/nav4/smsSend.vue'
@@ -82,6 +83,14 @@ let routes = [
     path: '/caseDetails',
     name: '',
     component:  caseDetails,
+    meta: {
+      keepAlive: true,
+    }
+  },
+  {
+    path: '/callStatus',
+    name: '呼叫状态',
+    component:  callStatus,
     meta: {
       keepAlive: true,
     }
