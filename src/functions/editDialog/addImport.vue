@@ -33,9 +33,9 @@ export default {
             let data = this.formTitle
             let url 
             if( this.title == '区域添加' ){
-                url = '/api/api_backend.php?r=system-setting/area-add'
+                url = '/api_backend.php?r=system-setting/area-add'
             }else if( this.title == "区域编辑" ){
-                url = '/api/api_backend.php?r=system-setting/area-edit'
+                url = '/api_backend.php?r=system-setting/area-edit'
                 data.id = this.id
             }
             let conf = {

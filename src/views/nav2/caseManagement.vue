@@ -228,7 +228,7 @@ export default {
 		},
 		changeFn(val){	//获取催收员
 			let conf = {
-				url : '/api/api_backend.php?r=case/depart-staff-list',
+				url : '/api_backend.php?r=case/depart-staff-list',
 				data: {
 					depart_id:val
 				},
@@ -248,7 +248,7 @@ export default {
 		},
 		filterFn(val){	//获取委托方
             let conf = {
-                url : '/api/api_backend.php?r=case/client-list',
+                url : '/api_backend.php?r=case/client-list',
                 data:{
                     client_name:val
                 },
@@ -267,7 +267,7 @@ export default {
 		},
 		getInfoFn(){	//数据初始化
 			let conf = {
-				url : '/api/api_backend.php?r=case/init-data',
+				url : '/api_backend.php?r=case/init-data',
 				success:(data)=>{
 					if( data.statusCode == 1 ){
 						let arr = []
@@ -308,7 +308,7 @@ export default {
 			this.conditions.page = this.page
 			this.conditions.page_size = this.page_size
 			let conf = {
-				url : '/api/api_backend.php?r=case/case-list',
+				url : '/api_backend.php?r=case/case-list',
 				data: this.conditions,
 				success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -370,7 +370,7 @@ export default {
 					id:''
 				}
 				let conf = {
-					url : '/api/api_backend.php?r=case/area-list',
+					url : '/api_backend.php?r=case/area-list',
 					success:(data)=>{
 						if( data.statusCode == 1 ){
 							this.areaList = data.info
@@ -389,7 +389,7 @@ export default {
 		protectFn(){	//保存区域
 			let ids = this.multipList.map(item=> item.id).join(',')
 			let conf = {
-				url : '/api/api_backend.php?r=case/case-operate',
+				url : '/api_backend.php?r=case/case-operate',
 				data:{
 					case_id: ids,
 					case_area:this.formTitle.id
@@ -425,7 +425,7 @@ export default {
 			if( !!this.multipList.length ){
 				let ids = this.multipList.map(item=>item.id).join(',')
 				let conf = {
-					url : '/api/api_backend.php?r=case/case-operate',
+					url : '/api_backend.php?r=case/case-operate',
 					data:{
 						case_id: ids,
 						case_status:str
@@ -461,7 +461,7 @@ export default {
 			if( !!this.multipList.length ){
 				let ids = this.multipList.map(item=>item.id).join(',')
 				let conf = {
-					url : '/api/api_backend.php?r=case/case-color',
+					url : '/api_backend.php?r=case/case-color',
 					data:{
 						case_id : ids,
 						case_color : str
@@ -495,7 +495,7 @@ export default {
 		},
 		getDistributeDepartmentList(){	//获取部门
 			let conf = {
-				url : '/api/api_backend.php?r=case/department-list',
+				url : '/api_backend.php?r=case/department-list',
 				success:(data)=>{
 					if( data.statusCode == 1 ){
 						let arr = []
@@ -531,7 +531,7 @@ export default {
 		},
 		getStaffFn(val){	//获取催收员
 			let conf = {
-				url : '/api/api_backend.php?r=case/depart-staff-list',
+				url : '/api_backend.php?r=case/depart-staff-list',
 				data: {
 					depart_id:val
 				},
@@ -552,7 +552,7 @@ export default {
 			let data = deepClone(this.conditions)
 			data.distributable = '1'
 			let conf = {
-				url : '/api/api_backend.php?r=case/case-list',
+				url : '/api_backend.php?r=case/case-list',
 				data,
 				success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -587,7 +587,7 @@ export default {
 					let data = deepClone(this.conditions)
 					data.quick_distributor = '1'
 					let conf = {
-						url : '/api/api_backend.php?r=case/distributor',
+						url : '/api_backend.php?r=case/distributor',
 						data,
 						success:(data)=>{
 							if( data.statusCode == 1 ){
@@ -628,7 +628,7 @@ export default {
 				data.distributor_num = this.formDistribute.split_num
 				data.distributor_staff_ids = ids
 				let conf = {
-					url : '/api/api_backend.php?r=case/distributor',
+					url : '/api_backend.php?r=case/distributor',
 					data,
 					success:(data)=>{
 						if( data.statusCode == 1 ){
@@ -667,7 +667,7 @@ export default {
 		},
 		getFieldsList(){
 			let conf = {
-                url : '/api/api_backend.php?r=system-setting/template-all-fields-list',
+                url : '/api_backend.php?r=system-setting/template-all-fields-list',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
 						// this.fieldsList = data.info
@@ -692,7 +692,7 @@ export default {
 		exportTo(){	
 			let fields = this.fieldsList.filter(item=>item.choose).map(every=>every.field_english_name).join(',')
 			if( this.whichOne == 'all' ){	//导出查询
-				window.open('/api/api_backend.php?r=case/case-export&export_type=searched&fields='+fields+'&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+				window.open('/api_backend.php?r=case/case-export&export_type=searched&fields='+fields+'&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 				+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 				+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 				'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
@@ -700,7 +700,7 @@ export default {
 				'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
 			}else if( this.whichOne == 'choosen' ){	//导出选中
 				let ids =  this.multipList.map(item=>item.id).join(',')
-				window.open('/api/api_backend.php?r=case/case-export&fields='+ fields +'&export_type=selected&case_id_str=' + ids)
+				window.open('/api_backend.php?r=case/case-export&fields='+ fields +'&export_type=selected&case_id_str=' + ids)
 			}
 		},
 		exportChoosen(){	// 导出选中选择字段
@@ -717,7 +717,7 @@ export default {
 			}
 		},
 		exportTel(){	// 导出电话
-			window.open('/api/api_backend.php?r=case/case-export&export_type=selectedphone&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+			window.open('/api_backend.php?r=case/case-export&export_type=selectedphone&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
@@ -725,7 +725,7 @@ export default {
 			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
 		},
 		exportHistory(){ //导出催收记录
-			window.open('/api/api_backend.php?r=case/case-export&export_type=searchedrecord&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+			window.open('/api_backend.php?r=case/case-export&export_type=searchedrecord&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +

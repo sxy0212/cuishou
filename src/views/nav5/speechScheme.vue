@@ -173,7 +173,7 @@ import pageChange from '@/components/pageChange.vue'
 			init(){
 				const page = this.page;
 				const page_size = this.page_size;
-				const url = "/api/api_backend.php?r=template/template-list"
+				const url = "/api_backend.php?r=template/template-list"
 				const conf = {
 					url,
 					data:{
@@ -190,7 +190,7 @@ import pageChange from '@/components/pageChange.vue'
 			},
 				// 新建模板中选择模板中所有数据
 			addListTpl(){
-				const url = "/api/api_backend.php?r=template/template-list-all"
+				const url = "/api_backend.php?r=template/template-list-all"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -206,7 +206,7 @@ import pageChange from '@/components/pageChange.vue'
 			},
 				//  新建模板中语音库中所有数据
 				addListSound(){
-					const url = "/api/api_backend.php?r=template/sound-list-all"
+					const url = "/api_backend.php?r=template/sound-list-all"
 					const conf = {
 						url,
 						success:(data)=>{
@@ -234,7 +234,7 @@ import pageChange from '@/components/pageChange.vue'
 					}else if( this.AddTplData.sound_type == "真人录音"){
 						data.sound_type = 1
 					}
-					const url = "/api/api_backend.php?r=template/template-add"
+					const url = "/api_backend.php?r=template/template-add"
 					const conf = {
 						url,
 						data:data,
@@ -258,7 +258,7 @@ import pageChange from '@/components/pageChange.vue'
 				},
 				AddSoundSave(){
 					const name = this.AddSoundData.name
-					const url = "/api/api_backend.php?r=template/sound-add"
+					const url = "/api_backend.php?r=template/sound-add"
 					const conf = {
 						url,
 						data:{name},
@@ -277,7 +277,7 @@ import pageChange from '@/components/pageChange.vue'
             // 修改模板
             edit(index,row){
               this.EditTpl = true
-              const url = "/api/api_backend.php?r=template/template-info"
+              const url = "/api_backend.php?r=template/template-info"
               const conf = {
                 url,
                 data:{template_id:row.id},
@@ -292,7 +292,7 @@ import pageChange from '@/components/pageChange.vue'
               var template_id = this.EditTplData.template_id
               const name = this.EditTplData.name
               const forcehangup = this.EditTplData.forcehangup
-              const url = "/api/api_backend.php?r=template/template-edit"
+              const url = "/api_backend.php?r=template/template-edit"
               const conf = {
                 url,
                 data:{template_id,name,forcehangup},
@@ -316,7 +316,7 @@ import pageChange from '@/components/pageChange.vue'
                   type: 'warning'
                 }).then(() => {
                   const template_id = row.id
-                  const url = "/api/api_backend.php?r=template/template-del"
+                  const url = "/api_backend.php?r=template/template-del"
                   const conf = {
                     url,
                     data:{template_id},
@@ -338,7 +338,7 @@ import pageChange from '@/components/pageChange.vue'
             // 关键字搜索
             onSubmit(){
               const keywords = this.keyword
-              const url = "/api/api_backend.php?r=template/template-search"
+              const url = "/api_backend.php?r=template/template-search"
               const conf = {
                 url,
                 data:{keywords},

@@ -55,7 +55,7 @@
 		methods: {
       //获取短信模板
 			AddInitSms(){
-				const url = "/api/api_backend.php?r=sms-rule/list"
+				const url = "/api_backend.php?r=sms-rule/list"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -79,7 +79,7 @@
         const data = this.form
         data.id = this.active
         const conf = {
-            url:"/api/api_backend.php?r=sms-rule/send-sms",
+            url:"/api_backend.php?r=sms-rule/send-sms",
             data:data,
             success:(data)=>{
               this.$alert(data.message)
@@ -99,7 +99,7 @@
       },
       rightData(node){ 
         this.rightList = []
-        const url = "/api/api_backend.php?r=sms-rule/round-list"
+        const url = "/api_backend.php?r=sms-rule/round-list"
         const conf = {
             url,
             data:{id:node},

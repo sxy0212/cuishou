@@ -48,9 +48,9 @@ export default {
             let data = this.formTitle
             let url 
             if( this.title == '模板添加' ){
-                url = '/api/api_backend.php?r=system-setting/template-add'
+                url = '/api_backend.php?r=system-setting/template-add'
             }else if( this.title == "模板编辑" ){
-                url = '/api/api_backend.php?r=system-setting/template-edit'
+                url = '/api_backend.php?r=system-setting/template-edit'
                 data.id = this.id
             }
             let conf = {

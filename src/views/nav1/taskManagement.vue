@@ -760,7 +760,7 @@ import store from '@/vuex/store.js'
 			// 页面机器人列表
 			init(){
 				if(getCookie("user")&&this.$route.path == '/taskManagement'){
-					const url = '/api/api_backend.php?r=asroperate/list'
+					const url = '/api_backend.php?r=asroperate/list'
 					const conf = {
 						url,
 						success: (data)=>{
@@ -775,7 +775,7 @@ import store from '@/vuex/store.js'
       		},
 			// 点击添加任务时数据初始化
 			addInit(){
-				const url = "/api/api_backend.php?r=asroperate/add-init"
+				const url = "/api_backend.php?r=asroperate/add-init"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -789,7 +789,7 @@ import store from '@/vuex/store.js'
 			},
 			// 点击添加时获取话术
 			AddInitSound(){
-				const url = "/api/api_backend.php?r=template/template-list-all"
+				const url = "/api_backend.php?r=template/template-list-all"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -803,7 +803,7 @@ import store from '@/vuex/store.js'
 			},
 			// 点击获取短信
 			AddInitSms(){
-				const url = "/api/api_backend.php?r=sms-rule/list"
+				const url = "/api_backend.php?r=sms-rule/list"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -814,7 +814,7 @@ import store from '@/vuex/store.js'
 			},
 			// 转分机数据
 			addExtension(){
-				const url = "/api/api_backend.php?r=asroperate/turn-extension"
+				const url = "/api_backend.php?r=asroperate/turn-extension"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -873,7 +873,7 @@ import store from '@/vuex/store.js'
                     }else{
                         this.AddQueueData.QueueShow = true
                         const caller_id = this.form.caller_id
-                        const url = "/api/api_backend.php?r=asroperate/turn-queue"   //获取转队列弹框中的数据
+                        const url = "/api_backend.php?r=asroperate/turn-queue"   //获取转队列弹框中的数据
                         const conf = {
                             url,
                             data:{caller_id},
@@ -897,7 +897,7 @@ import store from '@/vuex/store.js'
                     }else{
                         this.AddQueueData.QueueShow = true
                         const caller_id = this.form.caller_id
-                        const url = "/api/api_backend.php?r=asroperate/turn-queue"
+                        const url = "/api_backend.php?r=asroperate/turn-queue"
                         const conf = {
                             url,
                             data:{caller_id},
@@ -950,7 +950,7 @@ import store from '@/vuex/store.js'
 				data.start_time_pm = this.form.start_time_pm+":00" 
         		data.end_time_pm = this.form.end_time_pm + ":00"
 				data.round_rule = JSON.stringify(this.round_rule)
-				const url = "/api/api_backend.php?r=asroperate/add-handle"
+				const url = "/api_backend.php?r=asroperate/add-handle"
 				const conf = {
 					url,
 					data:data,
@@ -979,7 +979,7 @@ import store from '@/vuex/store.js'
 				this.AddInitSound()
 				this.AddInitSms()
 				this.Index.editTask = true
-				const url = "/api/api_backend.php?r=asroperate/info"
+				const url = "/api_backend.php?r=asroperate/info"
 				const conf = {
 					url,
 					data:{id:id},
@@ -1053,7 +1053,7 @@ import store from '@/vuex/store.js'
                         this.formEdit.agent_or_queue = ""
                     }else{
                          this.EditQueueData.QueueShow = true
-                        const url = "/api/api_backend.php?r=asroperate/edit-turn-queue"
+                        const url = "/api_backend.php?r=asroperate/edit-turn-queue"
                         const num = this.formEdit.caller_id
                         const conf = {
                             url,
@@ -1088,7 +1088,7 @@ import store from '@/vuex/store.js'
                
             },
             editQueue(){
-                const url = "/api/api_backend.php?r=asroperate/edit-turn-queue"
+                const url = "/api_backend.php?r=asroperate/edit-turn-queue"
                 const num = this.formEdit.caller_id
                 const conf = {
                     url,
@@ -1140,7 +1140,7 @@ import store from '@/vuex/store.js'
                         this.formEdit.agent_or_queue = ""
                     }else{
                          this.EditQueueData.QueueShow = true
-                        const url = "/api/api_backend.php?r=asroperate/edit-turn-queue"
+                        const url = "/api_backend.php?r=asroperate/edit-turn-queue"
                         const num = this.formEdit.caller_id
                         const conf = {
                             url,
@@ -1226,7 +1226,7 @@ import store from '@/vuex/store.js'
               
                 data.staff_id_queue = this.formEdit.staff_id_queue
 				data.round_rule = JSON.stringify(this.round_rule_edit)
-				const url = "/api/api_backend.php?r=asroperate/edit-handle"
+				const url = "/api_backend.php?r=asroperate/edit-handle"
 				const conf = {
 					url,
 					data:data,
@@ -1257,7 +1257,7 @@ import store from '@/vuex/store.js'
 				}else{
 					statusId = 2
 				}
-                const url = "/api/api_backend.php?r=asroperate/start-and-close"
+                const url = "/api_backend.php?r=asroperate/start-and-close"
                 const conf = {
                 	url,
                     data:{
@@ -1278,7 +1278,7 @@ import store from '@/vuex/store.js'
 						cancelButtonText: '取消',
 						type: 'warning'
 				}).then(() =>{
-					const url = "/api/api_backend.php?r=asroperate/del"
+					const url = "/api_backend.php?r=asroperate/del"
 					const conf = {
 						url,
 						data:{id:id},
@@ -1296,7 +1296,7 @@ import store from '@/vuex/store.js'
            queueAdd(){
                 this.AddQueue.show = true
                 this.AddQueue.name = ""
-                const url = "/api/api_backend.php?r=asroperate/config-list"
+                const url = "/api_backend.php?r=asroperate/config-list"
                 const conf = {
                     url,
                     success:(data)=>{
@@ -1314,7 +1314,7 @@ import store from '@/vuex/store.js'
                     return item.id
                 })
                 const configId = ids.join(",")
-                const url = "/api/api_backend.php?r=asroperate/config-queue-add"
+                const url = "/api_backend.php?r=asroperate/config-queue-add"
                 const conf = {
                     url,
                     data:{
@@ -1335,7 +1335,7 @@ import store from '@/vuex/store.js'
             // 队列列表
             queueList(){
                 this.showQueue.show = true
-                const url = "/api/api_backend.php?r=asroperate/config-queue-list"
+                const url = "/api_backend.php?r=asroperate/config-queue-list"
                 const conf = {
                     url,
                     success:(data)=>{
@@ -1351,7 +1351,7 @@ import store from '@/vuex/store.js'
                     cancelButtonText: '取消',
                     type: 'warning'
                     }).then(() => {
-                        const url = "/api/api_backend.php?r=asroperate/config-queue-list-del"
+                        const url = "/api_backend.php?r=asroperate/config-queue-list-del"
                         const conf = {
                             url,
                             data:{id:row.id},
@@ -1378,7 +1378,7 @@ import store from '@/vuex/store.js'
 				this.callTest.telephone = ""
 				this.callTest.template_id = ""
                 this.callTest.id = id
-				const url = "/api/api_backend.php?r=asroperate/test-template-list"
+				const url = "/api_backend.php?r=asroperate/test-template-list"
 				const conf = {
 					url,
 					data:{
@@ -1392,7 +1392,7 @@ import store from '@/vuex/store.js'
             },
             startText(){
 				const data = this.callTest
-                const url = "/api/api_backend.php?r=asroperate/test"
+                const url = "/api_backend.php?r=asroperate/test"
                 const conf = {
                     url,
                     data:data,

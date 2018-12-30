@@ -47,7 +47,7 @@ import store from '@/vuex/store.js'
 		},
 		beforeMount() {
 				var  conf = {
-				url:"/api/api_backend.php?r=user/index",
+				url:"/api_backend.php?r=user/index",
 				success:(data)=>{
 					this.info = data
 				}
@@ -75,7 +75,7 @@ import store from '@/vuex/store.js'
 					cancelButtonText: '取消',
 					type: 'warning'
 				}).then(() => {
-					const url = "/api/api_backend.php?r=login/logout"
+					const url = "/api_backend.php?r=login/logout"
 					const conf = {
 						url,
 						success:(data)=>{
