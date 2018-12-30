@@ -120,7 +120,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
             },
             // 方案名称初始化
             templateListData(){
-                const url = "/api_backend.php?r=asrcall-record-noanswer/template-name"
+                const url = "/api/api_backend.php?r=asrcall-record-noanswer/template-name"
                 const conf = {
                     url,
                     success:(data)=>{
@@ -147,7 +147,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                     data.page = 1;
                     data.page_size = 10
                 }
-                const url = "/api_backend.php?r=asrcall-record-noanswer/no-answer-list"
+                const url = "/api/api_backend.php?r=asrcall-record-noanswer/no-answer-list"
                 const conf = {
                     url,
                     data:data,
@@ -175,7 +175,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                 this.addForm.noAnsId = row.id
                 const template_id = this.form.template_id
                 // const id = row.id
-                const url = "/api_backend.php?r=asrcall-record-noanswer/content-next-list"
+                const url = "/api/api_backend.php?r=asrcall-record-noanswer/content-next-list"
                 const conf = {
                     url,
                     data:{
@@ -188,7 +188,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
                axiosRequest(conf)
             },
             addNodeSave(){
-                const url ="/api_backend.php?r=asrcall-record-noanswer/add-node"
+                const url ="/api/api_backend.php?r=asrcall-record-noanswer/add-node"
                 const data = this.addForm
                 const conf = {
                     url,

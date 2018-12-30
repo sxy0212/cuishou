@@ -96,7 +96,7 @@ export default {
         },
         init(){
             let conf = {
-                url : '/api_backend.php?r=system-setting/case-level-list',
+                url : '/api/api_backend.php?r=system-setting/case-level-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
@@ -153,7 +153,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api_backend.php?r=system-setting/case-level-del',
+                    url : '/api/api_backend.php?r=system-setting/case-level-del',
                     data : {
                         id:row.id
                     },

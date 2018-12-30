@@ -377,7 +377,7 @@
 			},
 			// 数据列表
 			init(){
-				const url = "/api_backend.php?r=sms-rule/list"
+				const url = "/api/api_backend.php?r=sms-rule/list"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -388,7 +388,7 @@
       },
 			// 点击添加任务时数据初始化
 			addInit(){
-					const url = "/api_backend.php?r=sms-rule/add-init"
+					const url = "/api/api_backend.php?r=sms-rule/add-init"
 					const conf = {
 						url,
 						success:(data)=>{
@@ -420,7 +420,7 @@
 				this.round_info[2] = this.form3
 				const data = this.form
 				data.round_info = JSON.stringify(this.round_info)
-				const url = "/api_backend.php?r=sms-rule/add-handle"
+				const url = "/api/api_backend.php?r=sms-rule/add-handle"
 				const conf = {
 					url,
 					data:data,
@@ -448,7 +448,7 @@
 			edit(id){
 				this.addOrEdit.editShow = true
 				this.addInit()
-				const url = "/api_backend.php?r=sms-rule/info"
+				const url = "/api/api_backend.php?r=sms-rule/info"
 				const conf = {
 					url,
 					data:{id:id},
@@ -510,7 +510,7 @@
 				this.round_rule_edit[2] = this.form3Edit
 				const data = this.formEdit
 				data.round_info = JSON.stringify(this.round_rule_edit)
-				const url = "/api_backend.php?r=sms-rule/edit-handle"
+				const url = "/api/api_backend.php?r=sms-rule/edit-handle"
 				const conf = {
 					url,
 					data:data,
@@ -533,7 +533,7 @@
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-              const url = "/api_backend.php?r=sms-rule/del"
+              const url = "/api/api_backend.php?r=sms-rule/del"
               const conf = {
                 url,
                 data:{

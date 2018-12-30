@@ -545,7 +545,7 @@ import { MessageBox } from 'element-ui';
               const page = this.init.page;
               const page_size = this.init.page_size
               const keywords = this.init.keywords
-              const url = "/api_backend.php?r=template/req-ans-data-list"
+              const url = "/api/api_backend.php?r=template/req-ans-data-list"
               const conf = {
                 url,
                 data:{
@@ -599,7 +599,7 @@ import { MessageBox } from 'element-ui';
 							this.req_id = row.id
               this.baseMessage.Edit = true
               this.getSoundContent()
-              const url = "/api_backend.php?r=template/template-base-info"
+              const url = "/api/api_backend.php?r=template/template-base-info"
               const conf = {
                   url,
                   data:{
@@ -643,7 +643,7 @@ import { MessageBox } from 'element-ui';
                 data.wait_time = this.baseMessageDataEdit.wait_time
                 data.record = this.baseMessageDataEdit.record
                 data.compose_record = this.baseMessageDataEdit.compose_record
-                const url = "/api_backend.php?r=template/template-base-info-edit"
+                const url = "/api/api_backend.php?r=template/template-base-info-edit"
                 const conf = {
                   url,
                   data:data,
@@ -669,7 +669,7 @@ import { MessageBox } from 'element-ui';
                 }).then(() => {
                   const template_id = this.template_id
                   const req_id = row.id
-                  const url = "/api_backend.php?r=template/template-base-info-delete"
+                  const url = "/api/api_backend.php?r=template/template-base-info-delete"
                   const conf = {
                     url,
                     data:{
@@ -693,7 +693,7 @@ import { MessageBox } from 'element-ui';
             // 添加话术基本信息
             // 点击添加的时候请求接口获取话术内容
             getSoundContent(){
-              const url = "/api_backend.php?r=template/sound-content"
+              const url = "/api/api_backend.php?r=template/sound-content"
               const conf = {
                 url,
                 data:{
@@ -714,7 +714,7 @@ import { MessageBox } from 'element-ui';
             // 获取主线序列
             getMainLine(){
               const conf = {
-                url:"/api_backend.php?r=template/max-main-line",
+                url:"/api/api_backend.php?r=template/max-main-line",
                 data:{
                   template_id:this.template_id
                 },
@@ -770,7 +770,7 @@ import { MessageBox } from 'element-ui';
 									data.name = ".question"
 								}
                 data.template_id = this.template_id
-                const url = "/api_backend.php?r=template/template-base-info-add"
+                const url = "/api/api_backend.php?r=template/template-base-info-add"
                 const conf = {
                   url,
                   data:data,
@@ -808,7 +808,7 @@ import { MessageBox } from 'element-ui';
             },
             // 点击触发词请求到的数据(左侧)
             touchInit(){
-              const url = "/api_backend.php?r=template/trigger-usable-list"
+              const url = "/api/api_backend.php?r=template/trigger-usable-list"
               const conf = {
                 url,
                 data:{
@@ -823,7 +823,7 @@ import { MessageBox } from 'element-ui';
 						// 触发词左侧数据双击进行编辑
 						dblclickTouchEdit(row,event){
 							this.touch.EditTouchLeft = true;
-							const url = "/api_backend.php?r=template/trigger-info"
+							const url = "/api/api_backend.php?r=template/trigger-info"
 							const conf = {
 								url,
 								data:{
@@ -838,7 +838,7 @@ import { MessageBox } from 'element-ui';
 						},
 						//  触发词左侧数据编辑保存
 						touchEditSaveLeft(){
-							const url = "/api_backend.php?r=template/trigger-edit"
+							const url = "/api/api_backend.php?r=template/trigger-edit"
 							const conf = {
 								url,
 								data:{
@@ -861,7 +861,7 @@ import { MessageBox } from 'element-ui';
 						},
             // 触发词中搜索
             touchSearch(){
-              const url = "/api_backend.php?r=template/trigger-search"
+              const url = "/api/api_backend.php?r=template/trigger-search"
               const conf = {
                 url,
                 data:{
@@ -888,7 +888,7 @@ import { MessageBox } from 'element-ui';
             touchAddSave(){
 							const data = this.touchAddData
 							data.template_id = this.template_id
-              const url = "/api_backend.php?r=template/trigger-add"
+              const url = "/api/api_backend.php?r=template/trigger-add"
               const conf = {
                 url,
                 data:data,
@@ -906,7 +906,7 @@ import { MessageBox } from 'element-ui';
             },
             // 左侧点击+号
             touchLeftPlus(index,row){
-              const url = "/api_backend.php?r=template/req-ans-trigger-add"
+              const url = "/api/api_backend.php?r=template/req-ans-trigger-add"
               const conf = {
                 url,
                 data:{
@@ -927,7 +927,7 @@ import { MessageBox } from 'element-ui';
             },
             // 触发词中请求到的数据(右侧)
             touchDataRight(){
-              const url = "/api_backend.php?r=template/req-ans-trigger-list"
+              const url = "/api/api_backend.php?r=template/req-ans-trigger-list"
               const page = this.touch.page
               const page_size = this.touch.page_size
               const conf = {
@@ -965,7 +965,7 @@ import { MessageBox } from 'element-ui';
             },
             // 编辑保存
             touchEditSave(){
-              const url = "/api_backend.php?r=template/req-ans-trigger-edit"
+              const url = "/api/api_backend.php?r=template/req-ans-trigger-edit"
               const conf = {
                 url,
                 data:{
@@ -994,7 +994,7 @@ import { MessageBox } from 'element-ui';
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  const url = "/api_backend.php?r=template/req-ans-trigger-delete"
+                  const url = "/api/api_backend.php?r=template/req-ans-trigger-delete"
                   const conf = {
                     url,
                     data:{
@@ -1022,7 +1022,7 @@ import { MessageBox } from 'element-ui';
             // 点击语境设置
             // 获取下个话术列表
             contextNext(){
-              const url = "/api_backend.php?r=template/content-next-list"
+              const url = "/api/api_backend.php?r=template/content-next-list"
               const conf = {
                 url,
                 data:{
@@ -1037,7 +1037,7 @@ import { MessageBox } from 'element-ui';
             },
             // 获取触发词列表
             contextTouch(){
-              const url = "/api_backend.php?r=template/content-common-type-list"
+              const url = "/api/api_backend.php?r=template/content-common-type-list"
               const conf = {
                 url,
                 data:{
@@ -1064,7 +1064,7 @@ import { MessageBox } from 'element-ui';
               const data = this.contextData
               data.template_id = this.template_id
               data.req_id = this.req_id
-              const url = "/api_backend.php?r=template/content-add"
+              const url = "/api/api_backend.php?r=template/content-add"
               const conf = {
                 url,
                 data:data,
@@ -1086,7 +1086,7 @@ import { MessageBox } from 'element-ui';
             },
             // 右侧数据列表
             contextInit(){
-              const url = "/api_backend.php?r=template/content-list"
+              const url = "/api/api_backend.php?r=template/content-list"
               const page = this.context.page
               const page_size = this.context.page_size
               const conf = {
@@ -1117,7 +1117,7 @@ import { MessageBox } from 'element-ui';
             // 编辑
             editContext(index,row){
               this.context.EditContext = true
-              const url = "/api_backend.php?r=template/content-info"
+              const url = "/api/api_backend.php?r=template/content-info"
               const conf = {
                 url,
                 data:{
@@ -1133,7 +1133,7 @@ import { MessageBox } from 'element-ui';
             },
             // 保存编辑
             editContextSave(){
-              const url = "/api_backend.php?r=template/content-edit"
+              const url = "/api/api_backend.php?r=template/content-edit"
               const conf = {
                 url,
                 data:{
@@ -1165,7 +1165,7 @@ import { MessageBox } from 'element-ui';
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  const url = "/api_backend.php?r=template/content-delete"
+                  const url = "/api/api_backend.php?r=template/content-delete"
                   const conf = {
                     url,
                     data:{

@@ -87,7 +87,7 @@ export default {
         },
         init(){
             let conf = {
-                url : '/api_backend.php?r=system-setting/area-list',
+                url : '/api/api_backend.php?r=system-setting/area-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
@@ -139,7 +139,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api_backend.php?r=system-setting/area-del',
+                    url : '/api/api_backend.php?r=system-setting/area-del',
                     data : {
                         id:row.id
                     },

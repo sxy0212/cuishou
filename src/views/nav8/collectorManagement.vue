@@ -119,7 +119,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
         return  (this.form.page-1)*this.form.page_size+val+1
       },
       initList(){
-        const url = "/api_backend.php?r=collect-depart/sort-list"
+        const url = "/api/api_backend.php?r=collect-depart/sort-list"
         const conf = {
           url,
           success:(data)=>{
@@ -130,7 +130,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
       },
       // table
       init(num){
-        const url = "/api_backend.php?r=collect-depart/manage-list"
+        const url = "/api/api_backend.php?r=collect-depart/manage-list"
         const data = this.form
         if(num==0){
           data.page = this.form.page
@@ -213,7 +213,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            const url = "/api_backend.php?r=collect-depart/batch-cancel"
+            const url = "/api/api_backend.php?r=collect-depart/batch-cancel"
             const staff_id = this.staff_id_arr.join(",")
             const conf = {
               url,
@@ -235,7 +235,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
       },
       // 导出
       exportDate(){
-        window.open('/api_backend.php?r=collect-depart/manage-export&depart_id='+this.form.depart_id+'&name='+this.form.name+'&case_paid='+this.form.case_paid+'&case_money='+this.form.case_money+'&alloc_time='+this.form.alloc_time)
+        window.open('/api/api_backend.php?r=collect-depart/manage-export&depart_id='+this.form.depart_id+'&name='+this.form.name+'&case_paid='+this.form.case_paid+'&case_money='+this.form.case_money+'&alloc_time='+this.form.alloc_time)
       },
       // 查看任务
       check(index,row){

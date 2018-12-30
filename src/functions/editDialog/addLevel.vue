@@ -51,9 +51,9 @@ export default {
             let data = this.formTitle
             let url 
             if( this.title == '等级添加' ){
-                url = '/api_backend.php?r=system-setting/case-level-add'
+                url = '/api/api_backend.php?r=system-setting/case-level-add'
             }else if( this.title == "等级编辑" ){
-                url = '/api_backend.php?r=system-setting/case-level-edit'
+                url = '/api/api_backend.php?r=system-setting/case-level-edit'
                 data.id = this.id
             }
             let conf = {

@@ -45,7 +45,7 @@ export default {
     methods:{
         init(){
             let conf = {
-                url : '/api_backend.php?r=system-setting/template-list',
+                url : '/api/api_backend.php?r=system-setting/template-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
@@ -60,7 +60,7 @@ export default {
             axiosRequest(conf)
         },
         downloadFn(row){
-            window.open('/api_backend.php?r=system-setting/template-download&id=' + row.id)
+            window.open('/api/api_backend.php?r=system-setting/template-download&id=' + row.id)
         },
         pageSizeChangeFn(val){
             this.page_size = val

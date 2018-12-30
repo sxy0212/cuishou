@@ -34,7 +34,7 @@ import store from '@/vuex/store.js'
     },
     mounted () {
       let conf = {
-          url : '/api_backend.php?r=system-setting/load-menu',
+          url : '/api/api_backend.php?r=system-setting/load-menu',
           success:(data)=>{
             if( data.statusCode == 1 ){
               this.menus=data.info

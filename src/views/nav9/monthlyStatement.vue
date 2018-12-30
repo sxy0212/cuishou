@@ -159,7 +159,7 @@ export default {
         },
         getLists(){ //获取列表
             let conf = {
-				url:'/api_backend.php?r=statistics/init-data',
+				url:'/api/api_backend.php?r=statistics/init-data',
 				success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.area_list = data.info.area_list
@@ -175,7 +175,7 @@ export default {
             this.formInline.page_size = this.page
             this.formInline.staff_ids = this.formInline.monthValue.join(',')
             let conf = {
-                url:'/api_backend.php?r=statistics/daily',
+                url:'/api/api_backend.php?r=statistics/daily',
                 data:this.formInline,
 				success:(data)=>{
                     if( data.statusCode == 1 ){

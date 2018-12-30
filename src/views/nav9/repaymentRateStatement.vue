@@ -162,7 +162,7 @@ export default {
             if( !this.formInline.start_time ) this.formInline.start_time = ''
             if( !this.formInline.end_time ) this.formInline.end_time = ''
             let conf = {
-                url:'/api_backend.php?r=statistics-daily/list',
+                url:'/api/api_backend.php?r=statistics-daily/list',
                 data:this.formInline,
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -179,7 +179,7 @@ export default {
         },
         getLists(){
             let conf = {
-				url:'/api_backend.php?r=statistics-daily/init',
+				url:'/api/api_backend.php?r=statistics-daily/init',
 				success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.area_list = data.info.area_list

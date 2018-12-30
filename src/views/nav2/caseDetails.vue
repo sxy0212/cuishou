@@ -89,7 +89,7 @@
                 <el-upload 
                     class="upload-demo"
                     ref="upload"
-                    action="/api_backend.php?r=asrcall-case-batch-data/upload-log-img"
+                    action="/api/api_backend.php?r=asrcall-case-batch-data/upload-log-img"
                     :before-remove="beforeRemoveFile"
                     :before-upload="beforeUploadFile"
                     :on-success="successFile"
@@ -119,7 +119,7 @@
                  <el-upload 
                     class="upload-demo"
                     ref="uploads"
-                    action="/api_backend.php?r=asrcall-case-batch-data/upload-memorandum-img"
+                    action="/api/api_backend.php?r=asrcall-case-batch-data/upload-memorandum-img"
                     :before-remove="beforeRemoveFileMemorandum"
                     :before-upload="beforeUploadFileMemorandum"
                     :on-success="successFileMemorandum"
@@ -320,7 +320,7 @@ export default {
         },
         init(str){
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/case-info',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/case-info',
                 data:{
                     id:this.id
                 },
@@ -350,7 +350,7 @@ export default {
         },
         getTableSecond(){//获取催收记录
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/collection-record-list',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/collection-record-list',
                 data:{
                     case_id:this.id
                 },
@@ -366,7 +366,7 @@ export default {
         },
         callFn(phone,relation){//呼叫
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/call-out',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/call-out',
                 data:{
                     phone:relation[0],
                     case_id:this.id,
@@ -408,7 +408,7 @@ export default {
             }
             this.formTitle.case_id = this.id
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/add-collection-record',
                 data:this.formTitle,
                 success:(data)=>{
 					if( data.statusCode == 1 ){
@@ -437,7 +437,7 @@ export default {
             this.checkNow = true
             this.whichOne = column.id
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/look-over',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/look-over',
                 data:{
                     id:column.id
                 },
@@ -461,7 +461,7 @@ export default {
         changeLevelFn(){//修改等级
             this.changeLevel = true
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/level-list',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/level-list',
                 data:{
                     id:this.id
                 },
@@ -480,7 +480,7 @@ export default {
         },
         saveLevelFn(){//提交更改
             let conf = {
-                url : '/api_backend.php?r=asrcall-case-batch-data/edit-level',
+                url : '/api/api_backend.php?r=asrcall-case-batch-data/edit-level',
                 data:{
                     case_level:this.formLevel.case_level,
                     id:this.id
@@ -512,7 +512,7 @@ export default {
             if( this.remarkTitle == '新增记录'){
                 this.formRemark.case_id = this.id
                 let conf = {
-                    url : '/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
+                    url : '/api/api_backend.php?r=asrcall-case-batch-data/letter-and-outbound',
                     data:this.formRemark,
                     success:(data)=>{
                         if( data.statusCode == 1 ){
@@ -538,7 +538,7 @@ export default {
                 axiosRequest(conf)
             }else if( this.remarkTitle == '修改备注' ){
                 let conf = {
-                    url : '/api_backend.php?r=asrcall-case-batch-data/edit-remark',
+                    url : '/api/api_backend.php?r=asrcall-case-batch-data/edit-remark',
                     data:this.formRemark,
                     success:(data)=>{
                         if( data.statusCode == 1 ){
@@ -581,11 +581,11 @@ export default {
             }
         },
         downloadFn(){//下载录音
-            window.open('/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
+            window.open('/api/api_backend.php?r=asrcall-case-batch-data/look-over&action=download&id=' + this.whichOne)
         },
         // 案件日志列表
         initDio(){
-            const url = "/api_backend.php?r=asrcall-case-batch-data/case-log-list"
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/case-log-list"
             const conf = {
                 url,
                 data:{
@@ -615,7 +615,7 @@ export default {
         },
         // 保存日志
         addDioSave(){
-            const url = "/api_backend.php?r=asrcall-case-batch-data/add-case-log"
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/add-case-log"
             const conf = {
                     url,
                     data:{
@@ -665,7 +665,7 @@ export default {
         },
         // 案件备忘录列表
         initDioMemorandum(){
-            const url = "/api_backend.php?r=asrcall-case-batch-data/case-memorandum-list"
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/case-memorandum-list"
             const conf = {
                 url,
                 data:{
@@ -687,7 +687,7 @@ export default {
         },
         // 保存日志
         addDioSaveMemorandum(){
-            const url = "/api_backend.php?r=asrcall-case-batch-data/add-case-memorandum"
+            const url = "/api/api_backend.php?r=asrcall-case-batch-data/add-case-memorandum"
             const conf = {
                 url,
                 data:{

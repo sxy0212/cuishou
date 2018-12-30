@@ -66,7 +66,7 @@ export default {
     methods: {
         init(){
             let conf = {
-                url : '/api_backend.php?r=system-setting/commissioning-party-list',
+                url : '/api/api_backend.php?r=system-setting/commissioning-party-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
@@ -118,7 +118,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api_backend.php?r=system-setting/commissioning-party-del',
+                    url : '/api/api_backend.php?r=system-setting/commissioning-party-del',
                     data : {
                         id:row.id
                     },

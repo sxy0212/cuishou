@@ -33,9 +33,9 @@ export default {
             let data = this.formTitle
             let url 
             if( this.title == '案件类型添加' ){
-                url = '/api_backend.php?r=system-setting/case-type-add'
+                url = '/api/api_backend.php?r=system-setting/case-type-add'
             }else if( this.title == "案件类型编辑" ){
-                url = '/api_backend.php?r=system-setting/case-type-edit'
+                url = '/api/api_backend.php?r=system-setting/case-type-edit'
                 data.id = this.id
             }
             let conf = {

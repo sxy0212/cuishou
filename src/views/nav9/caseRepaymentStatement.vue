@@ -207,7 +207,7 @@ export default {
             return  (this.form.page-1)*this.form.page_size+val+1
         },
         initForm(){
-            const url = "/api_backend.php?r=statistics/init-data"
+            const url = "/api/api_backend.php?r=statistics/init-data"
             const conf = {
                 url,
                 success:(data)=>{
@@ -231,7 +231,7 @@ export default {
                 data.page_size = 10
             }
             const conf = {
-                url:"/api_backend.php?r=statistics/repayment",
+                url:"/api/api_backend.php?r=statistics/repayment",
                 data:data,
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -255,7 +255,7 @@ export default {
         },
         exportDate(){
             const staff_ids = this.staff_id.join(",")
-            window.open('/api_backend.php?r=statistics/repayment&is_export=1&staff_ids='+staff_ids+'&area_id='+this.form.area_id+'&client_id='+this.form.client_id+'&batch_id='+this.form.batch_id+'&begin_case_date='+this.form.begin_case_date+'&end_case_date='+this.form.end_case_date)
+            window.open('/api/api_backend.php?r=statistics/repayment&is_export=1&staff_ids='+staff_ids+'&area_id='+this.form.area_id+'&client_id='+this.form.client_id+'&batch_id='+this.form.batch_id+'&begin_case_date='+this.form.begin_case_date+'&end_case_date='+this.form.end_case_date)
         }
     }
 }

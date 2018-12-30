@@ -132,7 +132,7 @@ export default {
     },
     methods:{
         initForm(){
-            const url = "/api_backend.php?r=collection-count/init"
+            const url = "/api/api_backend.php?r=collection-count/init"
             const conf = {
                 url,
                 success:(data)=>{
@@ -150,7 +150,7 @@ export default {
             const data = this.form
             data.staff_id = this.staff_id.join(",")
             const conf = {
-                url:"/api_backend.php?r=collection-count/collection-list",
+                url:"/api/api_backend.php?r=collection-count/collection-list",
                 data:data,
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -168,7 +168,7 @@ export default {
         },
         exportDate(){
             const staff_id = this.staff_id.join(",")
-            window.open('/api_backend.php?r=collection-count/export&staff_id='+staff_id+'&area_id='+this.form.area_id+'&client_id='+this.form.client_id+'&batch_id='+this.form.batch_id+'&paid='+this.form.paid+'&type_id='+this.form.type_id)
+            window.open('/api/api_backend.php?r=collection-count/export&staff_id='+staff_id+'&area_id='+this.form.area_id+'&client_id='+this.form.client_id+'&batch_id='+this.form.batch_id+'&paid='+this.form.paid+'&type_id='+this.form.type_id)
         }
     }
 }

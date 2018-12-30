@@ -37,9 +37,9 @@ export default {
             let data = this.formTitle
             let url 
             if( this.title == '委托方添加' ){
-                url = '/api_backend.php?r=system-setting/commissioning-party-add'
+                url = '/api/api_backend.php?r=system-setting/commissioning-party-add'
             }else if( this.title == '委托方编辑' ){
-                url = '/api_backend.php?r=system-setting/commissioning-party-edit'
+                url = '/api/api_backend.php?r=system-setting/commissioning-party-edit'
                 data.id = this.id
             }
             let conf = {

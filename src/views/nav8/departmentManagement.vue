@@ -6,7 +6,7 @@
        <el-button type="success" @click="exportMember" style="diaplay:inline-block;float:left">导出成员</el-button>
        <el-upload style="diaplay:inline-block;float:left"
             class="upload-demo"
-            action="/api_backend.php?r=collect-depart/staff-batch-add"
+            action="/api/api_backend.php?r=collect-depart/staff-batch-add"
             :on-success="successFile"
             :before-upload="beforeUploadFile"
             multiple
@@ -248,7 +248,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         return  (this.page-1)*this.page_size+val+1
       },
       initTree(){
-        const url = "/api_backend.php?r=collect-depart/sort-list"
+        const url = "/api/api_backend.php?r=collect-depart/sort-list"
         const conf = {
           url,
           success:(data)=>{
@@ -263,7 +263,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       // 保存添加部门
       addBranchSave(){
-        const url = "/api_backend.php?r=collect-depart/depart-add"
+        const url = "/api/api_backend.php?r=collect-depart/depart-add"
         const data = this.form;
         if(this.form.parent_id == 0){
           data.parent_str = '0'
@@ -292,7 +292,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       // 左侧部门编辑
       edit(node,data){
         const id = data.id
-        const url = "/api_backend.php?r=collect-depart/depart-show"
+        const url = "/api/api_backend.php?r=collect-depart/depart-show"
         const conf = {
           url,
           data:{id:id},
@@ -305,7 +305,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       // 左侧编辑保存
       editSave(){
-        const url = "/api_backend.php?r=collect-depart/depart-edit"
+        const url = "/api/api_backend.php?r=collect-depart/depart-edit"
         const conf = {
           url,
           data:{
@@ -326,7 +326,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         this.addMemberDio = true;
       },
       addMemberSave(){
-        const url = "/api_backend.php?r=collect-depart/staff-add"
+        const url = "/api/api_backend.php?r=collect-depart/staff-add"
         const data = this.formMember
         data.depart_str = 0 + "," +data.depart_id
         const conf = {
@@ -373,7 +373,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-              const url = "/api_backend.php?r=collect-depart/depart-del"
+              const url = "/api/api_backend.php?r=collect-depart/depart-del"
               const conf = {
                 url,
                 data:{
@@ -394,7 +394,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       // 右侧数据
       init(){
-        const url = "/api_backend.php?r=collect-depart/staff-list"
+        const url = "/api/api_backend.php?r=collect-depart/staff-list"
         const conf = {
           url,
           data:{
@@ -412,7 +412,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       // 右侧编辑
       addMemberEdit(index,row){
         this.addMemberDioEdit = true
-        const url = "/api_backend.php?r=collect-depart/staff-show"
+        const url = "/api/api_backend.php?r=collect-depart/staff-show"
         const conf = {
           url,
           data:{id:row.id},
@@ -424,7 +424,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         axiosRequest(conf)
       },
       addMemberSaveEdit(){
-        const url = "/api_backend.php?r=collect-depart/staff-edit"
+        const url = "/api/api_backend.php?r=collect-depart/staff-edit"
         const data = this.formMemberEdit
         data.depart_str = 0 + "," +data.depart_id
         const conf = {
@@ -448,7 +448,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
         this.editPasswordForm.id = row.id
       },
       editPasswordSave(){
-        const url = "/api_backend.php?r=collect-depart/staff-change-pwd"
+        const url = "/api/api_backend.php?r=collect-depart/staff-change-pwd"
         const data = this.editPasswordForm
         const conf = {
           url,
@@ -469,7 +469,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       // 复制
       exportMember(){
-        window.open('/api_backend.php?r=collect-depart/staff-export')
+        window.open('/api/api_backend.php?r=collect-depart/staff-export')
       },
       copyName(index,row){
         this.Copy(row.login_name)
@@ -494,7 +494,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                   cancelButtonText: '取消',
                   type: 'warning'
                 }).then(() => {
-                  	const url = "/api_backend.php?r=collect-depart/staff-del"
+                  	const url = "/api/api_backend.php?r=collect-depart/staff-del"
                     const conf = {
                       url,
                       data:{

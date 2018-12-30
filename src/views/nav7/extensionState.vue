@@ -79,7 +79,7 @@ export default {
     },
     // 坐席状态数据初始化
     init(){
-      const url = '/api_backend.php?r=seat-manage/seat-list'
+      const url = '/api/api_backend.php?r=seat-manage/seat-list'
       const page = this.page
       const page_size = this.page_size
       const conf = {
@@ -114,7 +114,7 @@ export default {
     changePassSure(){
         const password = (this.editPassword.password).trim()
         const exten = this.editPassword.exten
-        const url = "/api_backend.php?r=seat-manage/change-pwd"
+        const url = "/api/api_backend.php?r=seat-manage/change-pwd"
         const conf = {
             url,
             data:{exten,password},

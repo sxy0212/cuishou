@@ -109,7 +109,7 @@ export default {
           data.page_size = 10
         }
         const conf = {
-          url:"/api_backend.php?r=sms-log/sms-log",
+          url:"/api/api_backend.php?r=sms-log/sms-log",
           data:data,
           success:(data)=>{
             if( data.statusCode == 1 ){

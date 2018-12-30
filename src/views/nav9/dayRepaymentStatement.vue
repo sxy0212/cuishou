@@ -117,7 +117,7 @@ export default {
             this.formInline.page = this.page
             this.formInline.page_size = this.page_size
             let conf = {
-                url:'/api_backend.php?r=call-stat/day-stat',
+                url:'/api/api_backend.php?r=call-stat/day-stat',
                 data:this.formInline,
 				success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -130,7 +130,7 @@ export default {
         },
         getLists(){ //获取列表
             let conf = {
-				url:'/api_backend.php?r=call-stat/select-data',
+				url:'/api/api_backend.php?r=call-stat/select-data',
 				success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.area_list = data.info.area
@@ -145,7 +145,7 @@ export default {
         },
         exportStatement(){  //导出
             // this.formInline.staff = this.formInline.monthValue.join(',')
-            // window.open('/api_backend.php?r=call-stat/day-stat-export&staff='+ this.formInline.staff+'&area='+this.formInline.area+'&entrust='+this.formInline.entrust+'&batch_id='+this.formInline.batch_id+'&is_cancel='+this.formInline.is_cancel+'&case_type='+this.formInline.case_type)
+            // window.open('/api/api_backend.php?r=call-stat/day-stat-export&staff='+ this.formInline.staff+'&area='+this.formInline.area+'&entrust='+this.formInline.entrust+'&batch_id='+this.formInline.batch_id+'&is_cancel='+this.formInline.is_cancel+'&case_type='+this.formInline.case_type)
         },
         pageSizeChangeFn(val){
             this.page_size = val

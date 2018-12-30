@@ -156,7 +156,7 @@ export default {
     methods: {
         initData(){ 
             if(getCookie("user")){
-                const url = "/api_backend.php?r=index/index"
+                const url = "/api/api_backend.php?r=index/index"
                 const conf = {
                     url,
                     success:(data)=>{
@@ -176,7 +176,7 @@ export default {
         },
         init(){
             if(getCookie("user")){
-                const url = "/api_backend.php?r=index/data-show"
+                const url = "/api/api_backend.php?r=index/data-show"
                 const batch_id = this.batch_id
                 const conf = {
                     url,
@@ -199,7 +199,7 @@ export default {
         },
         initCir(){
             if(getCookie("user")){
-                const url = "/api_backend.php?r=index/case-count"
+                const url = "/api/api_backend.php?r=index/case-count"
                 const conf = {
                     url,
                     success:(data)=>{
