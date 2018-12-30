@@ -105,7 +105,7 @@ export default {
     },
     methods:{
       initArea(){
-          const url = "/api/api_backend.php?r=asrcall-case-batch/collection-area"
+          const url = "/api_backend.php?r=asrcall-case-batch/collection-area"
           const conf = {
               url,
               success:(data)=>{
@@ -115,7 +115,7 @@ export default {
           axiosRequest(conf)
       },
       initClient(){
-          const url = "/api/api_backend.php?r=asrcall-case-batch/client"
+          const url = "/api_backend.php?r=asrcall-case-batch/client"
           const conf = {
               url,
               success:(data)=>{
@@ -125,7 +125,7 @@ export default {
           axiosRequest(conf)
       },
       initType(){
-          const url = "/api/api_backend.php?r=asrcall-case-batch/case-num"
+          const url = "/api_backend.php?r=asrcall-case-batch/case-num"
           const client = this.form.client
           const area = this.form.area
           const conf = {
@@ -151,7 +151,7 @@ export default {
       //数据列表
       init(){
         const conf = {
-          url:"/api/api_backend.php?r=asrcall-case-batch/case-type-count",
+          url:"/api_backend.php?r=asrcall-case-batch/case-type-count",
           data:{
               case_status:this.form.case_status,
               id:this.form.id
@@ -195,7 +195,7 @@ export default {
         return sums;
       },
       exportDate(){
-          window.open('/api/api_backend.php?r=asrcall-case-batch/case-type-count&action=export&case_status='+this.form.case_status+'&id='+this.form.id)
+          window.open('/api_backend.php?r=asrcall-case-batch/case-type-count&action=export&case_status='+this.form.case_status+'&id='+this.form.id)
       }
     }
 }

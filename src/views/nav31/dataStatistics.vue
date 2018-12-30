@@ -48,7 +48,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
     },
 		methods: {
 			initBatch(){
-				const url = "/api/api_backend.php?r=call-stat/batch-list"
+				const url = "/api_backend.php?r=call-stat/batch-list"
 				const conf = {
 					url,
 					success:(data)=>{
@@ -62,7 +62,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
         this.init()
       },
       init(){
-        const url = "/api/api_backend.php?r=call-stat/data-show"
+        const url = "/api_backend.php?r=call-stat/data-show"
         const batch_id = this.batch_id
         const conf = {
           url,
@@ -84,7 +84,7 @@ import {axiosRequest,message} from '@/assets/js/Yt.js'
         axiosRequest(conf)
       },
       exportData(){
-        window.open("/api/api_backend.php?r=call-stat/export&batch_id="+this.batch_id)
+        window.open("/api_backend.php?r=call-stat/export&batch_id="+this.batch_id)
       },
 		  // 生成图表
       loadchart(num1,num2){

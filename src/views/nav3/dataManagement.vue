@@ -138,7 +138,7 @@ export default {
     methods: {
         init(){
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/case-batch-list',
+                url : '/api_backend.php?r=asrcall-case-batch/case-batch-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
@@ -160,7 +160,7 @@ export default {
             data.page = this.page
             data.page_size = this.page_size
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/search-batch-list',
+                url : '/api_backend.php?r=asrcall-case-batch/search-batch-list',
                 data,
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -176,7 +176,7 @@ export default {
         },
         getAreaList(){//获取基本数据
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/collection-area',
+                url : '/api_backend.php?r=asrcall-case-batch/collection-area',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.areaList = data.info
@@ -187,7 +187,7 @@ export default {
         },
         getClientList(){//获取基本数据
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/client',
+                url : '/api_backend.php?r=asrcall-case-batch/client',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.clientList = data.info
@@ -198,7 +198,7 @@ export default {
         },
         getTypeList(){//获取基本数据
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/case-type',
+                url : '/api_backend.php?r=asrcall-case-batch/case-type',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.typeList = data.info
@@ -212,7 +212,7 @@ export default {
             this.addNow = val
             this.id = ''
             this.fileList =[]
-            this.action = '/api/api_backend.php?r=asrcall-case-batch/import-batch'
+            this.action = '/api_backend.php?r=asrcall-case-batch/import-batch'
             this.formTitle = {
                 batch_name:'',
                 collection_area:'',
@@ -240,7 +240,7 @@ export default {
             this.id = row.id
             this.addNow = true
             this.fileList =[]
-            this.action = '/api/api_backend.php?r=asrcall-case-batch/superaddition'
+            this.action = '/api_backend.php?r=asrcall-case-batch/superaddition'
         },
         pageSizeChangeFn(val){
             this.page_size = val
@@ -257,7 +257,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api/api_backend.php?r=asrcall-case-batch/fake-del-batch',
+                    url : '/api_backend.php?r=asrcall-case-batch/fake-del-batch',
                     data : {
                         batch_id:row.id
                     },
@@ -288,7 +288,7 @@ export default {
             })
         },
         exportFn(row){//导出
-            window.open('/api/api_backend.php?r=asrcall-case-batch/export-batch&batch_id='+row.id)
+            window.open('/api_backend.php?r=asrcall-case-batch/export-batch&batch_id='+row.id)
         },
         addToTask(row){//获取任务
             this.addTask= true
@@ -297,7 +297,7 @@ export default {
                             value:''
                         }
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/config-list',
+                url : '/api_backend.php?r=asrcall-case-batch/config-list',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         this.taskList = data.info
@@ -314,7 +314,7 @@ export default {
         },
         untyingFn(row){//解绑
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/unbind-task',
+                url : '/api_backend.php?r=asrcall-case-batch/unbind-task',
                 data:{
                     id:row.id
                 },
@@ -339,7 +339,7 @@ export default {
         },
         sureToAddTask(){//添加到外呼任务
             let conf = {
-                url : '/api/api_backend.php?r=asrcall-case-batch/add-to-config',
+                url : '/api_backend.php?r=asrcall-case-batch/add-to-config',
                 data:{
                     batch_id:this.batch_id,
                     config_id:this.formTask.value

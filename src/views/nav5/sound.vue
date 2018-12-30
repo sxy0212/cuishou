@@ -86,7 +86,7 @@
                         <el-upload
                                 class="upload-demo"
                                 ref="upload"
-                                action="/api/api_backend.php?r=sound/word-to-sound-add"
+                                action="/api_backend.php?r=sound/word-to-sound-add"
                                 :before-remove="beforeRemoveFile"
                                 :on-success="successFile"
                                 :before-upload="beforeUploadFile"
@@ -117,7 +117,7 @@
                     <el-form-item label="选择语音包：">
                         <el-upload
                                 class="upload-demo" 
-                                action="/api/api_backend.php?r=sound/sound-file-package-upload"
+                                action="/api_backend.php?r=sound/sound-file-package-upload"
                                 :before-remove="beforeRemoveZip"
                                 :on-success="successZip"
                                 ref="uploads"
@@ -160,7 +160,7 @@
                 <el-form-item label="选择上传语音：">
                     <el-upload
                         class="upload-demo"
-                        action="/api/api_backend.php?r=sound/word-to-sound-instead"
+                        action="/api_backend.php?r=sound/word-to-sound-instead"
                         :before-remove="beforeRemove"
                         :on-success="success"
                         :before-upload="beforeUpload"
@@ -245,7 +245,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
 	methods: {
       // 获取到下拉列表数据
       initList(){
-        const url = "/api/api_backend.php?r=sound/sound-list-all"
+        const url = "/api_backend.php?r=sound/sound-list-all"
         const conf = {
           url,
           success:(data)=>{
@@ -265,7 +265,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       //获取到数据列表
       init(){
-          const url =  "/api/api_backend.php?r=sound/word-to-sound-list";
+          const url =  "/api_backend.php?r=sound/word-to-sound-list";
           const conf = {
               url,
               data:{
@@ -321,7 +321,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                     type: 'warning'
                 }).then(() =>{
                     const id= row.id;
-                    const url = '/api/api_backend.php?r=sound/word-to-sound-del'
+                    const url = '/api_backend.php?r=sound/word-to-sound-del'
                     const conf = {
                         url,
                         data:{id},
@@ -346,7 +346,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
                 this.Voice.text = row.word
             },
             onSubmit(){  
-                const url = "/api/api_backend.php?r=sound/word-to-sound-desc-update"
+                const url = "/api_backend.php?r=sound/word-to-sound-desc-update"
                 const id = this.updata.id
                 const word = this.rerecord.word
                 const conf = {
@@ -457,7 +457,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
             // 新建语音库
             onSubmitVoice(){
               const name = this.soundName
-              const url = "/api/api_backend.php?r=template/sound-add"
+              const url = "/api_backend.php?r=template/sound-add"
               const conf = {
                 url,
                 data:{name},

@@ -76,7 +76,7 @@ export default {
         
         init(){
             let conf = {
-                url : '/api/api_backend.php?r=system-setting/template-list',
+                url : '/api_backend.php?r=system-setting/template-list',
                 data : {
                     page:this.page,
                     page_size:this.page_size
@@ -92,7 +92,7 @@ export default {
         },
         askFields(val,str){//调取多选选项
             let conf = {
-                url : '/api/api_backend.php?r=system-setting/template-all-fields-list',
+                url : '/api_backend.php?r=system-setting/template-all-fields-list',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
                         if(val == 1){
@@ -155,7 +155,7 @@ export default {
                 type: 'warning'
             }).then(() => {
                 let conf = {
-                    url : '/api/api_backend.php?r=system-setting/template-del',
+                    url : '/api_backend.php?r=system-setting/template-del',
                     data : {
                         id:row.id
                     },
@@ -186,7 +186,7 @@ export default {
             })
         },
         downloadFn(row){
-            window.open('/api/api_backend.php?r=system-setting/template-download&id=' + row.id)
+            window.open('/api_backend.php?r=system-setting/template-download&id=' + row.id)
         }
     }
 }
