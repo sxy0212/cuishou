@@ -1,7 +1,7 @@
 <template>
 	<section>
 		<div class="header">
-			<div class="title"> <router-link to="/charts" style="color:#fff">言小信AI贷后管理系统</router-link></div>
+			<div class="title"> <router-link to="/charts" style="color:#fff">言通言小信AI贷后管理软件</router-link></div>
 			<div class="drop">
 			<span @click="shuxian" style="margin-right:20px;cursor:pointer;">刷新</span>
 			<span v-show="info.sys_login == 1"> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
