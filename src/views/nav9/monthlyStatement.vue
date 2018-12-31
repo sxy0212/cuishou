@@ -45,7 +45,6 @@ export default {
     },
     methods:{
         countFn(){
-            this.page = 1 
             this.init()
         },
         getLists(){ //获取列表
@@ -62,8 +61,6 @@ export default {
             axiosRequest(conf)
         },
         init(){ //初始化
-            this.formInline.page = this.page
-            this.formInline.page_size = this.page
             this.formInline.staff_ids = this.formInline.monthValue.join(',')
             let conf = {
                 url:'/api/api_backend.php?r=statistics/daily',
@@ -79,8 +76,7 @@ export default {
             axiosRequest(conf)
         },
         exportStatement(){
-            return
-            window.open('')
+            window.open('/api/api_backend.php?r=statistics/daily&is_export=1'+'&staff_ids='+this.formInline.staff_ids+'&collection_date='+this.formInline.collection_date+"&area_id="+this.formInline.area_id+'&client_id='+this.formInline.client_id)
         }
     }
 }
