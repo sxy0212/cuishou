@@ -78,7 +78,7 @@ export default {
             this.$emit('countFn')
         },
         exportStatement(){
-
+            this.$emit('exportStatement')
         },
     }
 }

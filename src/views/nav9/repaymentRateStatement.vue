@@ -6,6 +6,7 @@
             :client_list='client_list'
             :staff_list='staff_list'
             v-on:countFn='countFn'
+            v-on:exportStatement='exportStatement'
         ></div-form>
         <div-table
             :tableData='tableData'
@@ -62,13 +63,16 @@ export default {
                         if( data.info.length ){
                             this.list = data.info[0].list
                         }
-                    }else if(data.statusCode == 0){
+                    }else if( data.statusCode == 0 ){
                         this.tableData = []
                         this.list = []
                     }
 				} 
             }
             axiosRequest(conf)
+        },
+        exportStatement(){//导出报表
+            window.open('/api/api_backend.php?r=statistics-daily/export&staff_id='+this.formInline.staff_id+'&start_time='+this.formInline.start_time+'&end_time='+this.formInline.end_time+'&area_id='+this.formInline.area_id+"&client_id="+this.formInline.client_id)
         },
         getLists(){
             let conf = {
