@@ -62,7 +62,7 @@ export default {
     },
     init() {
       if(getCookie("user")&&this.$route.path == '/callStatus'){
-        const url = "/api/api/api_backend.php?r=asrcall-state/index"
+        const url = "/api/api_backend.php?r=asrcall-state/index"
         const conf = {
             url,
             success:(data)=>{
