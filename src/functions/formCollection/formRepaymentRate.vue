@@ -45,7 +45,7 @@
         <el-form-item label="日期">
             <el-date-picker
                 v-model="formInline.start_time"
-                value-format='yyyy-MM'
+                value-format='yyyy-MM-dd'
                 type="date"
                 placeholder='请选择开始日期'>
             </el-date-picker>
@@ -53,7 +53,7 @@
         <el-form-item label="-">
             <el-date-picker
                 v-model="formInline.end_time"
-                value-format='yyyy-MM'
+                value-format='yyyy-MM-dd'
                 type="date"
                 placeholder='请选择结束日期'>
             </el-date-picker>
