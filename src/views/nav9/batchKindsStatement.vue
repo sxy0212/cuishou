@@ -31,8 +31,8 @@
                 <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in caseData" :key="index"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="primary" >开始统计</el-button>
-            <el-button type="primary">导出报表</el-button>
+            <el-button type="primary" @click="init">开始统计</el-button>
+            <el-button type="primary" @click="exportDate">导出报表</el-button>
           </el-form>
         </div>
         <div>
@@ -64,44 +64,45 @@ export default {
         clientDate:[],      //委托方数据
         areaDate:[],        //催收区域数据
         caseData:[],        //批次号数据
-        tableData:[{
-            case_money: "287503.5",
-            case_paid: "10500",
-            case_type: "正常",
-            count: "3",
-            estimate_rate: "3.65%",
-            pay_rate: "3.65%",
-            },{
-                case_money: "15680",
-                case_paid:"5000",
-                case_type: "暂停",
-                count: "2",
-                estimate_rate: "31.89%",
-                pay_rate:"31.89%",
-            },{
-                case_money: null,
-                case_paid: null,
-                case_type: "关闭",
-                count: "0",
-                estimate_rate: 0,
-                pay_rate: 0
-            },{
-                case_money: null,
-                case_paid: null,
-                case_type: "退案",
-                count: "0",
-                estimate_rate: 0,
-                pay_rate: 0
-            }
+        tableData:[
+            // {
+            // case_money: "287503.5",
+            // case_paid: "10500",
+            // case_type: "正常",
+            // count: "3",
+            // estimate_rate: "3.65%",
+            // pay_rate: "3.65%",
+            // },{
+            //     case_money: "15680",
+            //     case_paid:"5000",
+            //     case_type: "暂停",
+            //     count: "2",
+            //     estimate_rate: "31.89%",
+            //     pay_rate:"31.89%",
+            // },{
+            //     case_money: null,
+            //     case_paid: null,
+            //     case_type: "关闭",
+            //     count: "0",
+            //     estimate_rate: 0,
+            //     pay_rate: 0
+            // },{
+            //     case_money: null,
+            //     case_paid: null,
+            //     case_type: "退案",
+            //     count: "0",
+            //     estimate_rate: 0,
+            //     pay_rate: 0
+            // }
         ],
         width:"width:176px"
         }
     },
     activated(){
-    //   this.init()
-    //   this.initClient()     //委托方
-    //   this.initArea()       //催收区域
-    //   this.initType()       //批次号
+      this.init()
+      this.initClient()     //委托方
+      this.initArea()       //催收区域
+      this.initType()       //批次号
     },
     methods:{
       initArea(){
