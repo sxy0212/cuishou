@@ -1,7 +1,7 @@
 .caseManagementCss .blueB{background-color:rgba(0, 204, 255, 0.0980392156862745);padding:10px 0;}
 .caseManagementCss .blueB .el-form-item__label,.blueB .el-form-item__content{line-height:30px;}
 .caseManagementCss .marginU{margin-top:10px;}
-.caseManagementCss .el-form .el-form-item{margin-bottom:10px;}
+.caseManagementCss .el-form .el-form-item{margin-bottom:0;}
 .caseManagementCss .el-form-item__content,.el-form-item__label{line-height:30px;}
 .caseManagementCss .el-input__inner{height:30px;line-height:30px;}
 .caseManagementCss .dialog-footer{text-align:right;}
