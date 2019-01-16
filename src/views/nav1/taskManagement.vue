@@ -574,7 +574,7 @@ import store from '@/vuex/store.js'
 					templates:[],   //呼叫使用话术
 					ext_list:[],     //转分机数据
 					smsList:[],               //短信
-					usable_ai_count:0         //添加时机器人最大数
+					usable_ai_count:0        //添加时机器人最大数
         		},
 				AddQueueData:{            //添加任务的时候转队列需要用到的数据
 					QueueShow:false,      //转队列的时候出现的弹框
@@ -783,14 +783,14 @@ import store from '@/vuex/store.js'
 						this.AddData.recognition_lies = data.info.recognition_lies
 						this.AddData.call_result = data.info.call_result_status
 						this.AddData.usable_ai_count = data.info.usable_ai_count
+						if(this.AddData.usable_ai_count == 0){
+							this.$alert("无可用机器人,不能添加!")
+						}else{
+							this.Index.addTask = true
+						}	
 					}
 				}
 				axiosRequest(conf)
-				if(this.AddData.usable_ai_count == 0){
-					this.$alert("无可用机器人,无法进行添加!")
-				}else{
-					this.Index.addTask = true
-				}
 			},
 			// 点击添加时获取话术
 			AddInitSound(){
