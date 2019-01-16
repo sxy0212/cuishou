@@ -786,6 +786,11 @@ import store from '@/vuex/store.js'
 					}
 				}
 				axiosRequest(conf)
+				if(this.AddData.usable_ai_count == 0){
+					this.$alert("无可用机器人,无法进行添加!")
+				}else{
+					this.Index.addTask = true
+				}
 			},
 			// 点击添加时获取话术
 			AddInitSound(){
@@ -831,11 +836,6 @@ import store from '@/vuex/store.js'
 			},
 		  	addTask(){
 				this.addInit()
-				if(this.AddData.usable_ai_count == 0){
-					this.$alert("无可用机器人,无法进行添加!")
-				}else{
-					this.Index.addTask = true
-				}
 				this.AddInitSound()
 				this.addExtension()
 				this.AddInitSms()
