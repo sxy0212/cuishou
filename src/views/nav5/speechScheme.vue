@@ -24,7 +24,7 @@
 									<el-table-column prop="create_time" label="创建时间" ></el-table-column>
 									<el-table-column prop="sound_type" label="操作"  width="350">
 											<template slot-scope="scope">
-													<el-button type="primary" plain @click="sound(scope.row)">语音库</el-button>
+													<el-button type="primary" plain @click="sound(scope.row)" :disabled="scope.row.sound_type!='真人录音'">语音库</el-button>
 													<el-button type="primary" plain @click="asrSound(scope.row)">话术库</el-button>
 													<el-button type="primary" plain @click="tree(scope.$index,scope.row)">流程图</el-button>
 													<el-button type="primary" plain @click="edit(scope.$index,scope.row)">修改</el-button>
