@@ -51,7 +51,8 @@
                   </el-form-item>
                   <el-form-item label="语音模式:">
                     <el-select v-model="AddTplData.sound_type"  placeholder="请选择语音模式" >
-                      <el-option :label="item.sound_type" :value="item.sound_type" v-for="(item,index) in AddData.sound_type" :key="index" :disabled="item.sound_type == '人工合成'"></el-option>
+                      <el-option label="真人录音" value="1" ></el-option>
+                      <el-option label="人工合成" value="0"></el-option>
                     </el-select>
                   </el-form-item>
                   <el-form-item label="选择模板:">
@@ -60,7 +61,7 @@
                       <el-option :label="item.tpl_name" :value="item.id" v-for="(item,index) in  AddData.select_tpl_id" disabled :key="index"></el-option>
                     </el-select>
                   </el-form-item>
-                  <el-form-item label="语音库:">
+                  <el-form-item label="语音库:" v-show="AddTplData.sound_type==1">
                     <el-select v-model="AddTplData.sound_id"  placeholder="请选择语音库" >
                       <el-option  :label="item.name" :value="item.id" v-for="(item,index) in  AddData.sound" :key="index"></el-option>
                     </el-select>
@@ -139,13 +140,13 @@ import pageChange from '@/components/pageChange.vue'
         select_tpl_id:"0",
         AddTplData:{       //新建模板里面的参数
           name:"",
-          sound_type:"真人录音",
+          sound_type:"1",
           sound_id:"",
           template_id:"0"      //选择模板
         },
 				AddTplData1:{       //新建模板里面的参数
           name:"",
-          sound_type:"真人录音",
+          sound_type:"1",
           sound_id:"",
           template_id:"0"      //选择模板
         },
@@ -218,7 +219,6 @@ import pageChange from '@/components/pageChange.vue'
 				// 点击添加模板按钮
 				addTpl(){ 
 					this.AddTpl = true
-					this.AddData.sound_type = [{sound_type:"真人录音"},{sound_type:"人工合成"}]
 					this.addListTpl()
 					this.addListSound()
 				},
@@ -229,11 +229,11 @@ import pageChange from '@/components/pageChange.vue'
 				AddSave(){
 					this.saving = true
 					const data = this.AddTplData
-					if( this.AddTplData.sound_type == "人工合成"){
-						data.sound_type = 0
-					}else if( this.AddTplData.sound_type == "真人录音"){
-						data.sound_type = 1
-					}
+					// if( this.AddTplData.sound_type == "人工合成"){
+					// 	data.sound_type = 0
+					// }else if( this.AddTplData.sound_type == "真人录音"){
+					// 	data.sound_type = 1
+					// }
 					const url = "/api/api_backend.php?r=template/template-add"
 					const conf = {
 						url,
