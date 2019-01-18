@@ -5,11 +5,11 @@
 .checkDialog .info{ padding:10px 0; font-size:14px;background-color:rgba(0, 204, 255, 0.0980392156862745);}
 .checkDialog .coverMiddle .middle{display:inline-block;vertical-align:top;}
 .checkDialog .coverMiddle .middle:nth-of-type(1){width:18%;}
-.checkDialog .coverMiddle .middle:nth-of-type(2){width:77%;}
+.checkDialog .coverMiddle .middle:nth-of-type(2){width:80%;}
 .checkDialog .tableCover{margin: 15px 0;}
 .checkDialog .redS{color:red;}
 .checkDialog .el-button--mini, .el-button--mini.is-round{padding:4px 15px;}
-.checkDialog .middle{margin:0 10px;}
+.checkDialog .middle{display: flex;justify-content: space-between}
 .checkDialog .el-form--inline .el-form-item{margin-right:0;}
 .checkDialog .el-form-item{margin-bottom:10px;}
 .checkDialog .otherI{margin-bottom:15px;}
