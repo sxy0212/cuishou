@@ -31,6 +31,8 @@ Vue.use(Element)
 Vue.use(Vuex)
 /* eslint-disable no-new */
 
+console.log(router)
+
 new Vue({
   el: '#app',
   router,

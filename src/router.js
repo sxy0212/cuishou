@@ -1,318 +1,352 @@
-import charts from './views/charts/echarts.vue'
-import taskManagement from './views/nav1/taskManagement.vue'
-import caseManagement from './views/nav2/caseManagement.vue'
-import dataManagement from './views/nav3/dataManagement.vue'
-import dataStatistics from './views/nav31/dataStatistics.vue'
-import callStatus from './views/nav32/callStatus.vue'
-import smsManagement from './views/nav4/smsManagement.vue'
-import smsRecord from "./views/nav4/smsRecord.vue"
-import smsSend from './views/nav4/smsSend.vue'
-import speechScheme from './views/nav5/speechScheme.vue'
-import asrSoundScheme from "./views/nav5/asrSoundScheme.vue"
-import learning from './views/nav5/learning.vue'
-import sound from './views/nav5/sound.vue'
-import templateTree from "./views/nav5/templateTree.vue"
-import privilegeManagement from './views/nav6/privilegeManagement.vue'
-import caseDetails from './views/nav2/caseDetails.vue'
-import monthlyStatement from './views/nav9/monthlyStatement.vue'
-import repaymentRateStatement from './views/nav9/repaymentRateStatement.vue'
-import dayRepaymentStatement from './views/nav9/dayRepaymentStatement.vue'
-import clientRepaymentStatement from './views/nav9/clientRepaymentStatement.vue'
-import caseRepaymentStatement from './views/nav9/caseRepaymentStatement.vue'
-import caseProgressStatement from './views/nav9/caseProgressStatement.vue'
-import batchKindsStatement from './views/nav9/batchKindsStatement.vue'
-
-
-
-
-import regionalConfiguration from "./views/nav7/regionalConfiguration.vue"
-import clientConfiguration from './views/nav7/clientConfiguration.vue'
-import caseConfiguration from './views/nav7/caseConfiguration.vue'
-import accountManagement from './views/nav7/accountManagement.vue'
-import templateManagement from './views/nav7/templateManagement.vue'
-import levelSetting from './views/nav7/levelSetting.vue'
-import extensionState from './views/nav7/extensionState.vue'
-
-import collectorManagement from './views/nav8/collectorManagement.vue'
-import departmentManagement from './views/nav8/departmentManagement.vue'
-import Login from './views/Login.vue'
-import NotFound from './views/404.vue'
-import Index from "./views/Index.vue";
-
-// import Page6 from './views/nav3/Page6.vue'
-// import echarts from './views/charts/echarts.vue'
 import Vue from 'vue'
 import Router from 'vue-router'
 import {getCookie} from '@/assets/js/Yt.js'
 Vue.use(Router)
+
+/* Layout 管理员*/
+import Layout from '@/views/layout/Layout'
+
+
+/* StaffLayout 催收员*/
+import StaffLayout from '@/staffViews/layout/Layout'
+
 let routes = [
+
+  //管理员和催收员共用登录页
   {
     path: '/login',
     name: 'login',
-    component: Login,
-    meta: {
-      keep:true,
-      keepAlive: false
-    }
+    component: () => import('@/views/Login.vue'),
+    hidden: true 
   },
+
+  // 管理员页面
   {
     path: '/charts',
-    name: '首页',
-    component: charts,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '',
+      name: '首页',
+      component: () => import('@/views/charts/echarts.vue')
+    }]
   },
   {
     path: '/taskManagement',
-    name: '任务管理',
-    component:  taskManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '任务管理',
+      component: () => import('@/views/nav1/taskManagement.vue')
+    }]
   },
   {
     path: '/caseManagement',
-    name: '案件管理',
-    component:  caseManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '案件管理',
+      component: () => import('@/views/nav2/caseManagement.vue')
+    }]
   },
   {
     path: '/caseDetails',
-    name: '',
-    component:  caseDetails,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '',
+      component: () => import('@/views/nav2/caseDetails.vue')
+    }]
   },
   {
     path: '/callStatus',
-    name: '呼叫状态',
-    component:  callStatus,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '呼叫状态',
+      component: () => import('@/views/nav32/callStatus.vue')
+    }]
   },
   {
     path: '/dataStatistics',
-    name: '数据统计',
-    component:  dataStatistics,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '数据统计',
+      component: () => import('@/views/nav31/dataStatistics.vue')
+    }]
   },
-  
   {
     path: '/dataManagement',
-    name: '资料管理',
-    component:  dataManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '资料管理',
+      component: () => import('@/views/nav3/dataManagement.vue')
+    }]
   },
   {
     path: '/smsManagement',
-    name: '短信方案',
-    component:  smsManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '短信方案',
+      component: () => import('@/views/nav4/smsManagement.vue')
+    }]
   },
   {
     path: '/smsRecord',
-    name: '发送记录',
-    component:smsRecord,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '发送记录',
+      component: () => import('@/views/nav4/smsRecord.vue')
+    }]
   },
   {
     path: '/smsSend',
-    name: '发送短信',
-    component:smsSend,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '发送短信',
+      component: () => import('@/views/nav4/smsSend.vue')
+    }]
   },
   {
     path: '/speechScheme',
-    name: '话术管理',
-    component: speechScheme,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '话术管理',
+      component: () => import('@/views/nav5/speechScheme.vue')
+    }]
   },
   {
     path: '/Learning',
-    component: learning,
-    name:"自主学习",
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '自主学习',
+      component: () => import('@/views/nav5/learning.vue')
+    }]
   },
   {
     path: '/asrSoundScheme/:id',
-    component: asrSoundScheme,
-    name:"",
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '',
+      component: () => import('@/views/nav5/asrSoundScheme.vue')
+    }]
   },
   {
     path: '/templateTree/:id',
-    component: templateTree,
-    name:"",
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '',
+      component: () => import('@/views/nav5/templateTree.vue')
+    }]
   },
   {
     path: '/sound/:id',
-    component: sound,
-    name:"",
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '',
+      component: () => import('@/views/nav5/sound.vue')
+    }]
   },
   {
     path: '/departmentManagement',
-    name: '部门管理',
-    component: departmentManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '部门管理',
+      component: () => import('@/views/nav8/departmentManagement.vue')
+    }]
   },
   {
     path: '/collectorManagement',
-    name: '催收员管理',
-    component: collectorManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '催收员管理',
+      component: () => import('@/views/nav8/collectorManagement.vue')
+    }]
   },
-  
   {
     path: '/privilegeManagement',
-    name: '权限管理',
-    component:  privilegeManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '权限管理',
+      component: () => import('@/views/nav6/privilegeManagement.vue')
+    }]
   },
   {
     path: '/regionalConfiguration',
-    name: '催收区域配置',
-    component: regionalConfiguration,
-    meta: {
-      keepAlive: true,
-    }
-  }, {
+    component: Layout,
+    children: [{
+      path: '',
+      name: '催收区域配置',
+      component: () => import('@/views/nav7/regionalConfiguration.vue')
+    }]
+  }, 
+  {
     path: '/clientConfiguration',
-    name: '委托方配置',
-    component:clientConfiguration,
-    meta: {
-      keepAlive: true,
-    }
-  }, {
+    component: Layout,
+    children: [{
+      path: '',
+      name: '委托方配置',
+      component: () => import('@/views/nav7/clientConfiguration.vue')
+    }]
+  }, 
+  {
     path: '/caseConfiguration',
-    name: '案件类型配置',
-    component:  caseConfiguration,
-    meta: {
-      keepAlive: true,
-    }
-  }, {
+    component: Layout,
+    children: [{
+      path: '',
+      name: '案件类型配置',
+      component: () => import('@/views/nav7/caseConfiguration.vue')
+    }]
+  }, 
+  {
     path: '/accountManagement',
-    name: '账号管理',
-    component:  accountManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '账号管理',
+      component: () => import('@/views/nav7/accountManagement.vue')
+    }]
   },
   {
     path: '/templateManagement',
-    name: '模板管理',
-    component: templateManagement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '模板管理',
+      component: () => import('@/views/nav7/templateManagement.vue')
+    }]
   },
   {
     path: '/levelSetting',
-    name: '案件等级设置',
-    component: levelSetting,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '案件等级设置',
+      component: () => import('@/views/nav7/levelSetting.vue')
+    }]
   },
   {
     path: '/extensionState',
-    name: '分机状态',
-    component: extensionState,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '分机状态',
+      component: () => import('@/views/nav7/extensionState.vue')
+    }]
   },
   {
     path: '/monthlyStatement',
-    name: '电催员电催日度统计',
-    component:  monthlyStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '电催员电催日度统计',
+      component: () => import('@/views/nav9/monthlyStatement.vue')
+    }]
   },
   {
     path: '/repaymentRateStatement',
-    name: '电催还款率单月统计',
-    component:  repaymentRateStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '电催还款率单月统计',
+      component: () => import('@/views/nav9/repaymentRateStatement.vue')
+    }]
   },
   {
     path: '/dayRepaymentStatement',
-    name: '电催还款日度统计',
-    component:  dayRepaymentStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '电催还款日度统计',
+      component: () => import('@/views/nav9/dayRepaymentStatement.vue')
+    }]
   },
   {
     path: '/clientRepaymentStatement',
-    name: '委托方还款日度统计',
-    component:  clientRepaymentStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '委托方还款日度统计',
+      component: () => import('@/views/nav9/clientRepaymentStatement.vue')
+    }]
   },
   {
     path: '/caseRepaymentStatement',
-    name: '案件还款明细表',
-    component:  caseRepaymentStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '案件还款明细表',
+      component: () => import('@/views/nav9/caseRepaymentStatement.vue')
+    }]
   },
   {
     path: '/caseProgressStatement',
-    name: '案件跟进度统计',
-    component:  caseProgressStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '案件跟进度统计',
+      component: () => import('@/views/nav9/caseProgressStatement.vue')
+    }]
   },
   {
     path: '/batchKindsStatement',
-    name: '批次状态分类统计',
-    component:  batchKindsStatement,
-    meta: {
-      keepAlive: true,
-    }
+    component: Layout,
+    children: [{
+      path: '',
+      name: '批次状态分类统计',
+      component: () => import('@/views/nav9/batchKindsStatement.vue')
+    }]
   },
   
   
- 
+//  催收员页面
+  {//首页
+    path: '/staffInfo/index',// 催收员
+    component: StaffLayout,
+    children: [{
+      path: '',
+      name: '首页',
+      component: () => import('@/staffViews/staffInfo/index')
+    }]
+  },
+  {
+    path: '/staffCaseManagement/index',// 催收员
+    component: StaffLayout,
+    children: [{
+      path: '',
+      name: '案件管理',
+      component: () => import('@/staffViews/caseManagement/index'),
+      meta: { title: '案件管理', icon: 'fa-address-card-o' }
+    }]
+  },
+  {
+    path: '/staffCaseDetails/index',// 案件详情
+    component: StaffLayout,
+    hidden: true,
+    children: [
+      {
+        path: '',
+        name: '案件详情',
+        component: () => import('@/staffViews/caseDetails/index'),
+        meta: { title: '案件详情', icon: 'fa-address-card-o' }
+      }
+    ]
+  },
+
+
   
   // {
   //   path: '/login',
@@ -392,20 +426,28 @@ const router = new Router({
       routes
 })
 router.beforeEach((to, from, next) => {
-    let user = getCookie('user');
-    if(user&&to.path=='/login'){
-      next({ path: '/charts' })
-    }else {
-      next()
-    }
-    if(!user){
-      next({path:'/login'})
-    }
-    if (!user && to.path != '/login') {
-      next({ path: '/login' })
+    // let user = getCookie('user');
+    // if( user&&to.path=='/login' ){//如果用户存在，并且要去的是登录页面的话，就到首页去
+    //   next({ path: '/charts' })
+    // } else{
+    //   next()
+    // }
+    // if( !user ){//如果用户不存在的话，返回登录页面
+    //   next('/login')
+    // }
+
+    // console.log(to.path)
+    if (to.path === '/') {//如果是/地址的话，跳到登录页面
+      next('/login')
     } else {
       next()
     }
+
+    // if (!user && to.path != '/login') {//如果用户不存在，并且想要去的界面不是登录的话，返回登录页面
+    //   next({ path: '/login' })
+    // } else {
+    //   next()
+    // }
   })
 
 export default router;

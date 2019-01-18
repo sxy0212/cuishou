@@ -69,7 +69,26 @@ axios.interceptors.response.use(
       location.reload()
     })
     return false
- }else {
+ }
+//  else if (response.data.statusCode == 0 &&response.data.message =="用户名不能为空！") {
+//   MessageBox.confirm(
+//     '请先登录',
+//     {
+//       confirmButtonText: '确定',
+//       type: 'warning',
+//       showClose:false,
+//       showCancelButton:false,
+//       closeOnClickModal:false,
+//       closeOnPressEscape:false
+//     }
+//   ).then(() => {
+//     router.push("/login")
+//     delCookie("staff")
+//     location.reload()
+//   })
+//   return false
+// }
+else {
       return response
     }
     
