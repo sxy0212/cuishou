@@ -34,24 +34,28 @@ export default {
         }
       })
       const first = matched[0]
+      console.log(first)
       if (first && first.name !== 'dashboard') {
         matched = [{ path: '/dashboard', meta: { title: '导航栏' }}].concat(matched)
       }
       this.levelList = matched
     },
-    pathCompile(path) {
-      // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
-      const { params } = this.$route
-      var toPath = pathToRegexp.compile(path)
-      return toPath(params)
-    },
+    // pathCompile(path) {
+    //   // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
+    //   console.log('0000')
+    //   const { params } = this.$route
+    //   console.log(pathToRegexp)
+    //   var toPath = pathToRegexp.compile(path)
+    //   console.log('939838')
+    //   return toPath(params)
+    // },
     handleLink(item) {
       const { redirect, path } = item
       if (redirect) {
         this.$router.push(redirect)
         return
       }
-      this.$router.push(this.pathCompile(path))
+      this.$router.push({path:path})
     }
   }
 }

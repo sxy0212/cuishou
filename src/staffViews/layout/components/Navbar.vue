@@ -7,13 +7,13 @@
         <i class="el-icon-caret-bottom"/>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
-        <router-link class="inlineBlock" to="/">
+        <!-- <router-link class="inlineBlock" to="/dashboard">
           <el-dropdown-item>
             Home
           </el-dropdown-item>
-        </router-link>
+        </router-link> -->
         <el-dropdown-item divided>
-          <span style="display:block;" @click="logout">LogOut</span>
+          <span style="display:block;" @click="logout">退出登录</span>
         </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

@@ -314,8 +314,9 @@ let routes = [
   
 //  催收员页面
   {//首页
-    path: '/staffInfo/index',// 催收员
+    path: '/dashboard',// 催收员
     component: StaffLayout,
+    hidden: true,
     children: [{
       path: '',
       name: '首页',

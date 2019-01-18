@@ -24,7 +24,7 @@
         <el-table-column label="通话备注" prop="remark"></el-table-column>
         <el-table-column label="操作" prop="case_id_num">
             <template slot-scope='scope'>
-                <el-button type="success" :disabled='selfInfo.case_status==3' size='mini' @click="addRemarkFn(scope.row)" >修改备注</el-button>
+                <el-button type="success" :disabled='selfInfo.case_status==3||scope.row.id ==""' size='mini' @click="addRemarkFn(scope.row)" >修改备注</el-button>
             </template>
         </el-table-column>
     </el-table>

@@ -130,7 +130,7 @@ export default {
         success:(data)=>{
           if( data.statusCode == 1 ){
             setCookie('staff','yes');
-            this.$router.push({ path: '/staffInfo/index' })
+            this.$router.push({ path: '/dashboard' })
             this.loading = false
           }else if(data.statusCode == 0){
             this.$alert(data.message)
