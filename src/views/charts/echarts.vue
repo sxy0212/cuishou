@@ -302,7 +302,7 @@ export default {
     .chart-container {width: 100%;float: left;}
     .el-col {padding: 20px 20px;}
     .content-charts{display:flex;justify-content: space-around;}
-    .content-charts-con{display:flex;flex-direction: column;align-items: center;padding:10px;color:gray;}
+    .content-charts-con{display:flex;flex-direction: column;align-items: center;color:gray;}
     .content-charts-con p:nth-of-type(1){margin-bottom:10px;}
     .title-charts{border-bottom:1px solid #f2f2f2;font-size:16px;margin-bottom:20px;padding-bottom:10px;}
     .color{color:#0099ff}
