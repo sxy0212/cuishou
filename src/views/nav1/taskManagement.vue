@@ -79,19 +79,13 @@
 													<span style="color:#8876f4" v-if="form.calling_round == -1">呼叫已完成
 													</span>
 													<span style="color:#8876f4" v-else-if="form.calling_round == 0">本人
-														<span style="color:#8876f4" v-if="form.calling_times == 0">第一次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.calling_times == 1">第二次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.calling_times == 2">第三次呼叫</span>
+														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>
 													</span>
 													<span style="color:#8876f4" v-else-if="form.calling_round == 1">第一联系人
-														<span style="color:#8876f4" v-if="form.calling_times == 0">第一次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.calling_times == 1">第二次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.calling_times == 2">第三次呼叫</span>
+														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>														
 													</span>
 													<span style="color:#8876f4" v-else-if="form.calling_round == 2">第二联系人
-														<span style="color:#8876f4" v-if="form.calling_times == 0">第一次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.calling_times == 1">第二次呼叫</span>
-														<span style="color:#8876f4" v-else-if="form.calling_times == 2">第三次呼叫</span>
+														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>														
 													</span>
 												</em>
 											</div> 
@@ -765,7 +759,11 @@ import store from '@/vuex/store.js'
 						url,
 						success: (data)=>{
 							// message(data)
-							this.Dates = data.info
+							this.Dates = data.info.map((item)=>{
+								item.calling_times = Number(item.calling_times)+1
+								return item;
+							})
+
 							this.isAnyoneOn = this.Dates.some(item=>item.status==="1")
 						}
 					}

@@ -61,7 +61,7 @@
 								</el-form>
 							</el-col>
 							<el-col :span="8">
-								<el-form :model="form2" label-width="160px" ref="forms" class="addTaskForm" style="margin-left:10px;">
+								<el-form :model="form2" label-width="160px" ref="forms" class="addTaskForm" style="margin-left:5px;">
 									<el-form-item label="第一联系人号码接通:">
 										<el-select v-model="form2.connected_send" :style="Index.width">
 											<el-option value="0" label="不发送" ></el-option>
@@ -187,7 +187,7 @@
 									</el-form>
 								</el-col>
 								<el-col :span="8">
-									<el-form :model="form2Edit" label-width="160px" ref="forms" class="addTaskForm" style="margin-left:10px;">
+									<el-form :model="form2Edit" label-width="160px" ref="forms" class="addTaskForm" style="margin-left:5px;">
 										<el-form-item label="第一联系人号码接通:">
 											<el-select v-model="form2Edit.connected_send" :style="Index.width">
 												<el-option value="0" label="不发送" ></el-option>
@@ -560,5 +560,5 @@
 .addTask1 .el-checkbox+.el-checkbox{margin-left:5px;}
 .addTask1 .el-dialog{width:75%;max-width:75%;background:#f2f2f2}
 .el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
-.addTaskForm{display:inline-block;background:#fff;padding-right:10px;padding-top:10px;min-height:600px;max-height:1000px;}
+.addTaskForm{display:inline-block;background:#fff;padding-top:10px;min-height:600px;max-height:1000px;width:100%}
 </style>
