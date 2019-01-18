@@ -171,7 +171,7 @@
 											<el-input v-model="form1.call_times" :style="Index.width"></el-input>
 									</el-form-item>
 									<el-form-item label="呼叫使用话术:">
-										<li @click="changeTemplate1" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName1"></el-input></li>
+										<li @click="changeTemplate(1)" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName1"></el-input></li>
 									</el-form-item>
 									<el-form-item label="未接通状态:">
 										<el-select v-model="not_connected_status1" multiple  placeholder="请选择" @change="changeStatus1" :style="Index.width">
@@ -202,7 +202,7 @@
 										<el-input v-model="form2.call_times" :style="Index.width"></el-input>
 									</el-form-item>
 									<el-form-item label="呼叫使用话术:">
-										<li @click="changeTemplate2" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName2"></el-input></li>
+										<li @click="changeTemplate(2)" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName2"></el-input></li>
 									</el-form-item>
 									<el-form-item label="未接通状态:">
 										<el-select v-model="not_connected_status2" multiple  placeholder="请选择" @change="changeStatus2" :style="Index.width">
@@ -228,7 +228,7 @@
                         				<el-input v-model="form3.call_times" :style="Index.width"></el-input>
 									</el-form-item>
 									<el-form-item label="呼叫使用话术:">
-										<li @click="changeTemplate3" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName3"></el-input></li>
+										<li @click="changeTemplate(3)" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName3"></el-input></li>
 									</el-form-item>         
                 				</el-form>
 								<!--短信-->
@@ -315,7 +315,7 @@
 										<el-input v-model="form1Edit.call_times" :style="Index.width"></el-input>
 								</el-form-item>
 								<el-form-item label="呼叫使用话术:">
-									<li @click="changeTemplateEdit1" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit1"></el-input></li>
+									<li @click="changeTemplateEdit(1)" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit1"></el-input></li>
 								</el-form-item>
 								<el-form-item label="未接通状态:">
 									<el-select v-model="not_connected_status1Edit" multiple placeholder="请选择" @change="changeStatus1Edit" :style="Index.width">
@@ -346,7 +346,7 @@
 								<el-input v-model="form2Edit.call_times" :style="Index.width"></el-input>
 							</el-form-item>
 							<el-form-item label="呼叫使用话术:">
-								<li @click="changeTemplateEdit2" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit2"></el-input></li>
+								<li @click="changeTemplateEdit(2)" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit2"></el-input></li>
 							</el-form-item>
 							<el-form-item label="未接通状态:">
 										<el-select v-model="not_connected_status2Edit" multiple placeholder="请选择" @change="changeStatus2Edit" :style="Index.width">
@@ -372,7 +372,7 @@
 								<el-input v-model="form3Edit.call_times" :style="Index.width"></el-input>
 							</el-form-item>
 							<el-form-item label="呼叫使用话术:">
-								<li @click="changeTemplateEdit3" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit3"></el-input></li>
+								<li @click="changeTemplateEdit(3)" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit3"></el-input></li>
 							</el-form-item>         
                 		</el-form>
 						<!--短信-->
@@ -884,8 +884,14 @@ import store from '@/vuex/store.js'
 				axiosRequest(conf)
 			},
 			// 点击话术出现弹框
-			changeTemplate1(){
-				this.showTemplate1 = true
+			changeTemplate(num){
+				if(num == 1){
+					this.showTemplate1 = true
+				}else if(num == 2){
+					this.showTemplate2 = true
+				}else if(num == 3){
+					this.showTemplate3 = true
+				}
 			},
 			// 保存话术
 			sureTemplate1(){
@@ -901,11 +907,11 @@ import store from '@/vuex/store.js'
 					}
 				})
 				this.showTemplateName1 = arr1[0].name
+				if(this.showTemplateId1 == ""){
+					this.showTemplateId1 = "0"
+				}
 				this.form1.template_id = this.showTemplateId1
 				this.showTemplate1 = false
-			},
-			changeTemplate2(){
-				this.showTemplate2 = true
 			},
 			sureTemplate2(){
 				var arr = []
@@ -920,11 +926,11 @@ import store from '@/vuex/store.js'
 					}
 				})
 				this.showTemplateName2 = arr1[0].name
+				if(this.showTemplateId2 == ""){
+					this.showTemplateId2 = "0"
+				}
 				this.form2.template_id = this.showTemplateId2
 				this.showTemplate2 = false
-			},
-			changeTemplate3(){
-				this.showTemplate3 = true
 			},
 			sureTemplate3(){
 				var arr = []
@@ -939,13 +945,23 @@ import store from '@/vuex/store.js'
 					}
 				})
 				this.showTemplateName3 = arr1[0].name
+				if(this.showTemplateId3 == ""){
+					this.showTemplateId3 = "0"
+				}
 				this.form1Edit.template_id = this.showTemplateId3
 				this.showTemplate3 = false
 			},
 
 			// 点击话术编辑出现弹框
-			changeTemplateEdit1(){
-				this.showTemplateEdit1 = true
+			changeTemplateEdit(num){
+				if(num == 1){
+					this.showTemplateEdit1 = true
+				}else if(num == 2){
+					this.showTemplateEdit2 = true
+				}else if(num == 3){
+					this.showTemplateEdit3 = true
+				}
+				
 			},
 			// 保存话术
 			sureTemplateEdit1(){
@@ -964,9 +980,6 @@ import store from '@/vuex/store.js'
 				this.form1Edit.template_id = this.showTemplateIdEdit1
 				this.showTemplateEdit1 = false
 			},
-			changeTemplateEdit2(){
-				this.showTemplateEdit2 = true
-			},
 			sureTemplateEdit2(){
 				var arr = []
 				arr = this.editData.templates.map((item)=>{
@@ -982,9 +995,6 @@ import store from '@/vuex/store.js'
 				this.showTemplateNameEdit2 = arr1[0].name
 				this.form2Edit.template_id = this.showTemplateIdEdit2
 				this.showTemplateEdit2 = false
-			},
-			changeTemplateEdit3(){
-				this.showTemplateEdit3 = true
 			},
 			sureTemplateEdit3(){
 				var arr = []
