@@ -171,9 +171,7 @@
 											<el-input v-model="form1.call_times" :style="Index.width"></el-input>
 									</el-form-item>
 									<el-form-item label="呼叫使用话术:">
-											<el-select v-model="form1.template_id" :style="Index.width" placeholder="请选择话术">
-													<el-option v-for="(item,index) in AddData.templates" :label="item.name" :value="item.id"  :key="index"></el-option>
-											</el-select>
+										<li @click="changeTemplate1" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName1"></el-input></li>
 									</el-form-item>
 									<el-form-item label="未接通状态:">
 										<el-select v-model="not_connected_status1" multiple  placeholder="请选择" @change="changeStatus1" :style="Index.width">
@@ -204,9 +202,7 @@
 										<el-input v-model="form2.call_times" :style="Index.width"></el-input>
 									</el-form-item>
 									<el-form-item label="呼叫使用话术:">
-										<el-select v-model="form2.template_id" :style="Index.width" placeholder="请选择话术">
-											<el-option v-for="(item,index) in AddData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
-										</el-select>
+										<li @click="changeTemplate2" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName2"></el-input></li>
 									</el-form-item>
 									<el-form-item label="未接通状态:">
 										<el-select v-model="not_connected_status2" multiple  placeholder="请选择" @change="changeStatus2" :style="Index.width">
@@ -232,9 +228,7 @@
                         				<el-input v-model="form3.call_times" :style="Index.width"></el-input>
 									</el-form-item>
 									<el-form-item label="呼叫使用话术:">
-										<el-select v-model="form3.template_id" :style="Index.width" placeholder="请选择话术">
-											<el-option v-for="(item,index) in AddData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
-										</el-select>
+										<li @click="changeTemplate3" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateName3"></el-input></li>
 									</el-form-item>         
                 				</el-form>
 								<!--短信-->
@@ -321,9 +315,7 @@
 										<el-input v-model="form1Edit.call_times" :style="Index.width"></el-input>
 								</el-form-item>
 								<el-form-item label="呼叫使用话术:">
-										<el-select v-model="form1Edit.template_id" :style="Index.width" placeholder="请选择话术">
-												<el-option v-for="(item,index) in editData.templates" :label="item.name" :value="item.id"  :key="index"></el-option>
-										</el-select>
+									<li @click="changeTemplateEdit1" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit1"></el-input></li>
 								</el-form-item>
 								<el-form-item label="未接通状态:">
 									<el-select v-model="not_connected_status1Edit" multiple placeholder="请选择" @change="changeStatus1Edit" :style="Index.width">
@@ -354,9 +346,7 @@
 								<el-input v-model="form2Edit.call_times" :style="Index.width"></el-input>
 							</el-form-item>
 							<el-form-item label="呼叫使用话术:">
-								<el-select v-model="form2Edit.template_id" :style="Index.width" placeholder="请选择话术">
-									<el-option v-for="(item,index) in editData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
-								</el-select>
+								<li @click="changeTemplateEdit2" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit2"></el-input></li>
 							</el-form-item>
 							<el-form-item label="未接通状态:">
 										<el-select v-model="not_connected_status2Edit" multiple placeholder="请选择" @change="changeStatus2Edit" :style="Index.width">
@@ -382,9 +372,7 @@
 								<el-input v-model="form3Edit.call_times" :style="Index.width"></el-input>
 							</el-form-item>
 							<el-form-item label="呼叫使用话术:">
-								<el-select v-model="form3Edit.template_id" :style="Index.width" placeholder="请选择话术">
-									<el-option v-for="(item,index) in editData.templates" :value="item.id" :label="item.name" :key="index"></el-option>
-								</el-select>
+								<li @click="changeTemplateEdit3" style="list-style:none"><el-input :style="Index.width" v-model="showTemplateNameEdit3"></el-input></li>
 							</el-form-item>         
                 		</el-form>
 						<!--短信-->
@@ -541,6 +529,78 @@
 						</el-form>
 						<div class="button" style="text-align:center;padding:20px 0px 15px">
 							<el-button type="primary" @click="startText">开始测试</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 话术弹框1 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择话术" :visible.sync="showTemplate1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-radio-group v-model="showTemplateId1">
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+						</el-radio-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showTemplate1 = false">取消</el-button>  
+							<el-button type="primary" @click="sureTemplate1">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 话术弹框 2-->
+				<div class="dial-header queue">
+					<el-dialog title="选择话术" :visible.sync="showTemplate2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-radio-group v-model="showTemplateId2">
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+						</el-radio-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showTemplate2 = false">取消</el-button>  
+							<el-button type="primary" @click="sureTemplate2">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 话术弹框3 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择话术" :visible.sync="showTemplate3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-radio-group v-model="showTemplateId3">
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+						</el-radio-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showTemplate3 = false">取消</el-button>  
+							<el-button type="primary" @click="sureTemplate3">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 话术弹框编辑1 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择话术" :visible.sync="showTemplateEdit1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-radio-group v-model="showTemplateIdEdit1">
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+						</el-radio-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showTemplateEdit1 = false">取消</el-button>  
+							<el-button type="primary" @click="sureTemplateEdit1">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 话术弹框编辑2-->
+				<div class="dial-header queue">
+					<el-dialog title="选择话术" :visible.sync="showTemplateEdit2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-radio-group v-model="showTemplateIdEdit2">
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+						</el-radio-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showTemplateEdit2 = false">取消</el-button>  
+							<el-button type="primary" @click="sureTemplateEdit2">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 话术弹框编辑3 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择话术" :visible.sync="showTemplateEdit3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-radio-group v-model="showTemplateIdEdit3">
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+						</el-radio-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showTemplateEdit3 = false">取消</el-button>  
+							<el-button type="primary" @click="sureTemplateEdit3">确定</el-button>
 						</div>
 					</el-dialog>
 				</div>
@@ -732,7 +792,26 @@ import store from '@/vuex/store.js'
 					telephone:"",
 					id:"",
 					template_id:""
-				}
+				},
+				showTemplate1:false,
+				showTemplateName1:"",
+				showTemplateId1:0,
+				showTemplate2:false,
+				showTemplateName2:"",
+				showTemplateId2:0,
+				showTemplate3:false,
+				showTemplateName3:"",
+				showTemplateId3:0,
+
+				showTemplateEdit1:false,
+				showTemplateNameEdit1:"",
+				showTemplateIdEdit1:0,
+				showTemplateEdit2:false,
+				showTemplateNameEdit2:"",
+				showTemplateIdEdit2:0,
+				showTemplateEdit3:false,
+				showTemplateNameEdit3:"",
+				showTemplateIdEdit3:0
 			}
 		},
 		activated() {
@@ -803,6 +882,125 @@ import store from '@/vuex/store.js'
 					}
 				}
 				axiosRequest(conf)
+			},
+			// 点击话术出现弹框
+			changeTemplate1(){
+				this.showTemplate1 = true
+			},
+			// 保存话术
+			sureTemplate1(){
+				var arr = []
+				arr = this.AddData.templates.map((item)=>{
+					if(item.id == this.showTemplateId1){
+						return item;
+					}
+				})
+				var arr1 = arr.filter((item)=>{
+					if(item !=undefined){
+						return item;
+					}
+				})
+				this.showTemplateName1 = arr1[0].name
+				this.form1.template_id = this.showTemplateId1
+				this.showTemplate1 = false
+			},
+			changeTemplate2(){
+				this.showTemplate2 = true
+			},
+			sureTemplate2(){
+				var arr = []
+				arr = this.AddData.templates.map((item)=>{
+					if(item.id == this.showTemplateId2){
+						return item;
+					}
+				})
+				var arr1 = arr.filter((item)=>{
+					if(item !=undefined){
+						return item;
+					}
+				})
+				this.showTemplateName2 = arr1[0].name
+				this.form2.template_id = this.showTemplateId2
+				this.showTemplate2 = false
+			},
+			changeTemplate3(){
+				this.showTemplate3 = true
+			},
+			sureTemplate3(){
+				var arr = []
+				arr = this.AddData.templates.map((item)=>{
+					if(item.id == this.showTemplateId3){
+						return item;
+					}
+				})
+				var arr1 = arr.filter((item)=>{
+					if(item !=undefined){
+						return item;
+					}
+				})
+				this.showTemplateName3 = arr1[0].name
+				this.form1Edit.template_id = this.showTemplateId3
+				this.showTemplate3 = false
+			},
+
+			// 点击话术编辑出现弹框
+			changeTemplateEdit1(){
+				this.showTemplateEdit1 = true
+			},
+			// 保存话术
+			sureTemplateEdit1(){
+					var arr = []
+				arr = this.editData.templates.map((item)=>{
+					if(item.id == this.showTemplateIdEdit1){
+						return item;
+					}
+				})
+				var arr1 = arr.filter((item)=>{
+					if(item !=undefined){
+						return item;
+					}
+				})
+				this.showTemplateNameEdit1 = arr1[0].name
+				this.form1Edit.template_id = this.showTemplateIdEdit1
+				this.showTemplateEdit1 = false
+			},
+			changeTemplateEdit2(){
+				this.showTemplateEdit2 = true
+			},
+			sureTemplateEdit2(){
+				var arr = []
+				arr = this.editData.templates.map((item)=>{
+					if(item.id == this.showTemplateIdEdit2){
+						return item;
+					}
+				})
+				var arr1 = arr.filter((item)=>{
+					if(item !=undefined){
+						return item;
+					}
+				})
+				this.showTemplateNameEdit2 = arr1[0].name
+				this.form2Edit.template_id = this.showTemplateIdEdit2
+				this.showTemplateEdit2 = false
+			},
+			changeTemplateEdit3(){
+				this.showTemplateEdit3 = true
+			},
+			sureTemplateEdit3(){
+				var arr = []
+				arr = this.editData.templates.map((item)=>{
+					if(item.id == this.showTemplateIdEdit1){
+						return item;
+					}
+				})
+				var arr1 = arr.filter((item)=>{
+					if(item !=undefined){
+						return item;
+					}
+				})
+				this.showTemplateNameEdit3 = arr1[0].name
+				this.form3Edit.template_id = this.showTemplateIdEdit3
+				this.showTemplateEdit3 = false
 			},
 			// 点击获取短信
 			AddInitSms(){
@@ -1033,10 +1231,49 @@ import store from '@/vuex/store.js'
 						this.EditQueueData.member = data.info.queue_count
 						this.form1Edit = arr[0]
 						this.form1Edit.template_id =arr[0].template_id
+						this.showTemplateIdEdit1 = arr[0].template_id
 						this.form2Edit = arr1[0]
 						this.form2Edit.template_id =arr1[0].template_id
+						this.showTemplateIdEdit2 = arr1[0].template_id
 						this.form3Edit = arr2[0]
 						this.form3Edit.template_id = arr2[0].template_id
+						this.showTemplateIdEdit3 = arr2[0].template_id
+						var showNameEdit1 = []
+						showNameEdit1 = this.editData.templates.map((item)=>{
+							if(item.id == this.form1Edit.template_id){
+								return item;
+							}
+						})
+						var showNameEditQ1 = showNameEdit1.filter((item)=>{
+							if(item !=undefined){
+								return item;
+							}
+						})
+						this.showTemplateNameEdit1 = showNameEditQ1[0].name
+						var showNameEdit2 = []
+						showNameEdit2 = this.editData.templates.map((item)=>{
+							if(item.id == this.form2Edit.template_id){
+								return item;
+							}
+						})
+						var showNameEditQ2 = showNameEdit2.filter((item)=>{
+							if(item !=undefined){
+								return item;
+							}
+						})
+						this.showTemplateNameEdit2 = showNameEditQ2[0].name
+						var showNameEdit3 = []
+						showNameEdit3 = this.editData.templates.map((item)=>{
+							if(item.id == this.form3Edit.template_id){
+								return item;
+							}
+						})
+						var showNameEditQ3 = showNameEdit3.filter((item)=>{
+							if(item !=undefined){
+								return item;
+							}
+						})
+						this.showTemplateNameEdit3 = showNameEditQ3[0].name
 						this.not_connected_status1Edit = (arr[0].not_connected_status).split(",")
 						this.not_connected_status2Edit = (arr1[0].not_connected_status).split(",")
 					}
@@ -1291,7 +1528,7 @@ import store from '@/vuex/store.js'
 				})
 			},
 			// 队列
-           queueAdd(){
+           	queueAdd(){
                 this.AddQueue.show = true
                 this.AddQueue.name = ""
                 const url = "/api/api_backend.php?r=asroperate/config-list"
@@ -1337,7 +1574,12 @@ import store from '@/vuex/store.js'
                 const conf = {
                     url,
                     success:(data)=>{
-                        this.showQueue.tableData = data.info
+						if(data.statusCode == 1){
+							this.showQueue.tableData = data.info
+						}else{
+							this.showQueue.tableData = []
+						}
+                        
                     }
                 }
                 axiosRequest(conf)
@@ -1415,4 +1657,5 @@ import store from '@/vuex/store.js'
 </style>
 <style>
  .TopForm .el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
+ .el-radio+.el-radio{margin:0}
 </style>
