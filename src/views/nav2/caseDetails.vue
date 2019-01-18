@@ -445,6 +445,9 @@ export default {
 					if( data.statusCode == 1 ){
                         this.audioData = data.info.info
                         this.detail = data.info.call_record
+                    }else if( data.statusCode == 0 ){
+                        this.audioData = []
+                        this.detail = {}
                     }
                 }
             }

@@ -16,21 +16,17 @@
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
 
-
-
 export default {
   name: 'Layout',
   components: {
     Navbar,
     Sidebar,
     AppMain
-  },
- 
-  
+  }
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
+<style rel="stylesheet/scss" lang="scss" scoped>  //  催收系统全局样式引入
   @import "@/styles/css/mixin.scss";
   @import "@/styles/css/sidebar.scss";
   .app-wrapper {
