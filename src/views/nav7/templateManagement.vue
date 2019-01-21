@@ -6,7 +6,7 @@
     <div class="tableCover">
         <div-table
             :templateUse='templateUse'
-            :tableData = 'tableData'
+            :templateList = 'tableData'
             :page="page"
             :page_size ="page_size"
             v-on:editFn='editFn($event)'
