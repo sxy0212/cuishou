@@ -125,7 +125,8 @@ export default {
 
             ],
             formTask:{//添加外呼数据
-                value:''
+                value:'',
+                type:'1'
             }
         }
     },
@@ -137,7 +138,7 @@ export default {
 	},
     methods: {
         init(){
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/case-batch-list',
                 data : {
                     page:this.page,
@@ -159,7 +160,7 @@ export default {
             let data = this.formInline
             data.page = this.page
             data.page_size = this.page_size
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/search-batch-list',
                 data,
                 success:(data)=>{
@@ -175,7 +176,7 @@ export default {
             axiosRequest(conf)
         },
         getAreaList(){//获取基本数据
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/collection-area',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -186,7 +187,7 @@ export default {
             axiosRequest(conf)
         },
         getClientList(){//获取基本数据
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/client',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -197,7 +198,7 @@ export default {
             axiosRequest(conf)
         },
         getTypeList(){//获取基本数据
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/case-type',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -256,7 +257,7 @@ export default {
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                let conf = {
+                const conf = {
                     url : '/api/api_backend.php?r=asrcall-case-batch/fake-del-batch',
                     data : {
                         batch_id:row.id
@@ -294,9 +295,10 @@ export default {
             this.addTask= true
             this.batch_id = row.id
             this.formTask = {
-                            value:''
-                        }
-            let conf = {
+                    value:'',
+                    type:'1'
+                }
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/config-list',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -313,7 +315,7 @@ export default {
             axiosRequest(conf)
         },
         untyingFn(row){//解绑
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/unbind-task',
                 data:{
                     id:row.id
@@ -338,11 +340,12 @@ export default {
             axiosRequest(conf)
         },
         sureToAddTask(){//添加到外呼任务
-            let conf = {
+            const conf = {
                 url : '/api/api_backend.php?r=asrcall-case-batch/add-to-config',
                 data:{
                     batch_id:this.batch_id,
-                    config_id:this.formTask.value
+                    config_id:this.formTask.value,
+                    type:this.formTask.type
                 },
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -350,7 +353,8 @@ export default {
                         this.addTask= false
                         this.batch_id = ''
                         this.formTask = {
-                            value:''
+                            value:'',
+                            type:'1'
                         }
                         Message({
                             message: data.message,

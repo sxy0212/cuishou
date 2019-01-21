@@ -15,6 +15,10 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
+                <el-form-item label="" label-width="100px">
+                    <el-radio v-model="formTask.type" label="1">全部呼叫</el-radio>
+                    <el-radio v-model="formTask.type" label="2">只呼叫未接通</el-radio>
+                </el-form-item>
             </el-form>
         </div>
        
