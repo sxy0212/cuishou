@@ -782,10 +782,10 @@ import store from '@/vuex/store.js'
 					not_connected_status:""
 				},
 				data3:{
-					round:'2',
+					round:'1',
 					template_id:"",
 					call_times:"",
-					next_round:"3",
+					next_round:"2",
 					not_connected_status:""
 				},
 				data4:{

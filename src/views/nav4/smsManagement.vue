@@ -761,6 +761,7 @@
 <style lang="scss" >
 .addTask1 .el-checkbox+.el-checkbox{margin-left:5px;}
 .addTask1 .el-dialog{width:75%;max-width:75%;background:#f2f2f2}
+.el-checkbox+.el-checkbox{margin-left:0px}
 .el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
 .addTaskForm{display:inline-block;background:#fff;padding-top:10px;min-height:600px;max-height:1000px;width:100%}
 </style>
