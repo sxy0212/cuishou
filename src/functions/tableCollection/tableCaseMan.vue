@@ -25,6 +25,11 @@
           prop="call_result_number"
           label="接通状态"
           >
+            <template slot-scope="scope">
+                <span v-show="scope.row.call_result_number == 0">未拨打</span>
+                <span v-show="scope.row.call_result_number == 1">接通</span>
+                <span v-show="scope.row.call_result_number == -1">未接通</span>
+            </template>
         </el-table-column>
         <el-table-column
         label="催收区域"
