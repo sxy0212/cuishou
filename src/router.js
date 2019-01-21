@@ -310,6 +310,15 @@ let routes = [
       component: () => import('@/views/nav9/batchKindsStatement.vue')
     }]
   },
+  {
+    path: '/AsrcdrBak',
+    component: Layout,
+    children: [{
+      path: '',
+      name: '呼叫记录',
+      component: () => import('@/views/nav10/AsrcdrBak.vue')
+    }]
+  },
   
   
 //  催收员页面
@@ -444,11 +453,11 @@ router.beforeEach((to, from, next) => {
       
     
 
-    // if (!user && to.path != '/login') {//如果用户不存在，并且想要去的界面不是登录的话，返回登录页面
-    //   next({ path: '/login' })
-    // } else {
-    //   next()
-    // }
+    if (!user && to.path != '/login') {//如果用户不存在，并且想要去的界面不是登录的话，返回登录页面
+      next({ path: '/login' })
+    } else {
+      next()
+    }
   })
 
 export default router;
