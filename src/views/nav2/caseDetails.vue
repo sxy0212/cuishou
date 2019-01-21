@@ -196,6 +196,10 @@ export default {
             },
             relationList:[
                 {
+                    name:'本人',
+                    value:'10'
+                },
+                {
                     name:'父亲',
                     value:'1'
                 },

@@ -48,10 +48,13 @@
             :areaList='areaList'
             :typeList='typeList'
             :clientList='clientList'
+            :templateList='templateList'
         ></edit-dialog>
     </el-dialog>
     <el-dialog title="下载模板" :visible.sync="addDown" v-move>
-        <div-dialog></div-dialog>
+        <div-dialog
+            :templateList='templateList'
+        ></div-dialog>
     </el-dialog>
     <el-dialog title="添加到外呼任务" :visible.sync="addTask" v-move>
         <task-dialog
@@ -121,6 +124,7 @@ export default {
             taskList:[//任务列表
 
             ],
+            templateList:[],//
             tableDownload:[//下载模板数据
 
             ],
@@ -221,12 +225,25 @@ export default {
                 case_type:'',
                 remark:''
             }
+            this.getTemplateList()
+        },
+        getTemplateList(){
+            const conf = {
+                url : '/api/api_backend.php?r=system-setting/template-list',
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+                        this.templateList = data.info
+                    }
+                }
+            }
+            axiosRequest(conf)
         },
         changeAddNow(val){
             this.addNow = val
         },
         downloadFn(val){//添加弹框的打开与关闭
             this.addDown = val
+            this.getTemplateList()
         },
         changeId(){//清空编辑的具体项
             this.id = ''

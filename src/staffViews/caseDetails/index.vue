@@ -196,6 +196,10 @@ export default {
             },
             relationList:[
                 {
+                    name:'本人',
+                    value:'10'
+                },
+                {
                     name:'父亲',
                     value:'1'
                 },
@@ -230,7 +234,8 @@ export default {
                 {
                     name:'同学',
                     value:'9'
-                }
+                },
+                
             ],//关系列表
             endList:[
                 {

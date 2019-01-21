@@ -2,7 +2,7 @@
     <div>
         <div-table
             :templateUse='templateUse'
-            :tableData='tableData'
+            :templateList='templateList'
             :page="page"
             :page_size ="page_size"
             v-on:downloadFn = 'downloadFn($event)'
@@ -26,12 +26,12 @@ import { Message } from 'element-ui'
 
 export default {
     name:'addDownload',
+    props:[
+        'templateList'
+    ],
     components:{
         'div-table':tableTemplate,
         'page-change':pageChange
-    },
-    created() {
-        this.init()
     },
     data(){
         return {
@@ -43,22 +43,6 @@ export default {
         }
     },
     methods:{
-        init(){
-            let conf = {
-                url : '/api/api_backend.php?r=system-setting/template-list',
-                data : {
-                    page:this.page,
-                    page_size:this.page_size
-                },
-                success:(data)=>{
-                    if( data.statusCode == 1 ){
-                        this.tableData = data.info
-                        this.total = Number(data.total)
-                    }
-                }
-            }
-            axiosRequest(conf)
-        },
         downloadFn(row){
             window.open('/api/api_backend.php?r=system-setting/template-download&id=' + row.id)
         },

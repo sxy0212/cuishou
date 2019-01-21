@@ -98,10 +98,10 @@ export default {
     },
     methods:{
         countFn(){
-            // this.$emit('countFn')
+            this.$emit('countFn')
         },
         exportStatement(){
-            // this.$emit('exportStatement')
+            this.$emit('exportStatement')
         },
     }
 }

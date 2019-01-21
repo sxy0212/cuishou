@@ -34,6 +34,20 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label="模板选择" label-width="70px">
+                <el-select v-model="formTitle.template_id" placeholder="请选择模板">
+                    <el-option 
+                        label="请选择模板"
+                        value=""
+                    ></el-option>
+                    <el-option 
+                        v-for="item in templateList"
+                        :key="item.id"
+                        :label="item.name"
+                        :value="item.id"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
             <el-form-item label="备注" label-width="70px">
                 <el-input v-model="formTitle.remark" 
                     type="textarea"
@@ -72,6 +86,7 @@ export default {
         'areaList',
         'typeList',
         'clientList',
+        'templateList',
         'action'
     ],
     computed:{

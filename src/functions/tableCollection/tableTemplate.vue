@@ -1,7 +1,7 @@
 <template>
     <el-table
         border
-        :data="tableData"
+        :data="templateList"
         style="width: 98%">
         <el-table-column
           label="序号"
@@ -31,7 +31,7 @@ import indexMethod  from '@/utils/indexMethod.js'
 export default {
     name:'tableTemplate',
     props:[
-        'tableData',
+        'templateList',
         'templateUse',//决定给哪个模块使用
         'page',
         'page_size'
@@ -41,8 +41,6 @@ export default {
             this.$emit('editFn',val)
         },
         downloadFn(val){
-            console.log(this.templateUse)
-            
             this.$emit('downloadFn',val)
         },
         deleteFn(val){
