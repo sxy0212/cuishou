@@ -427,22 +427,22 @@ const router = new Router({
       routes
 })
 router.beforeEach((to, from, next) => {
-    // let user = getCookie('user');
-    // if( user&&to.path=='/login' ){//如果用户存在，并且要去的是登录页面的话，就到首页去
-    //   next({ path: '/charts' })
-    // } else{
-    //   next()
-    // }
+    let user = getCookie('user');
+    
     // if( !user ){//如果用户不存在的话，返回登录页面
     //   next('/login')
     // }
 
     // console.log(to.path)
-    if (to.path === '/') {//如果是/地址的话，跳到登录页面
+    if ( to.path === '/' ) {//如果是/地址的话，跳到登录页面
       next('/login')
-    } else {
+    } else if( user=='sysadmin'&&to.path=='/login' ){//如果用户存在，并且要去的是登录页面的话，就到首页去
+      next({ path: '/charts' })
+    } else{
       next()
     }
+      
+    
 
     // if (!user && to.path != '/login') {//如果用户不存在，并且想要去的界面不是登录的话，返回登录页面
     //   next({ path: '/login' })
