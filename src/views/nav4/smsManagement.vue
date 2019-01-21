@@ -47,13 +47,15 @@
 												<el-input v-model="form1.times" style="width:50px;"></el-input> 
 											<p style="display:inline-block">次</p>
 									</el-form-item>
-									<el-form-item label="未接通:">
+									<!--<el-form-item label="未接通:">
 										<el-select v-model="not_connected_status1" multiple placeholder="请选择" @change="changeStatus1" :style="Index.width">
 											<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index" :value="item.id"></el-option>
 										</el-select>
-										<!--<el-checkbox-group v-model="not_connected_status1" @change="changeStatus1">
-											<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-										</el-checkbox-group>-->
+									</el-form-item>-->
+									<el-form-item label="未接通:">
+										<li @click="changeUnconnected1(1)" style="list-style:none">
+											<el-input :style="Index.width" v-model="showUnconnectedName1"></el-input>
+										</li>
 									</el-form-item>
 									<el-form-item label="发送内容:">
 										<el-input v-model="form1.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -82,13 +84,15 @@
 												<el-input v-model="form2.times" style="width:50px;"></el-input> 
 											<p style="display:inline-block">次</p>
 									</el-form-item>
-									<el-form-item label="未接通:">
+									<!--<el-form-item label="未接通:">
 										<el-select v-model="not_connected_status2" multiple placeholder="请选择" @change="changeStatus2" :style="Index.width">
 											<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index" :value="item.id"></el-option>
 										</el-select>
-										<!--<el-checkbox-group v-model="not_connected_status2" @change="changeStatus2">
-											<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-										</el-checkbox-group>-->
+									</el-form-item>-->
+									<el-form-item label="未接通:">
+										<li @click="changeUnconnected1(2)" style="list-style:none">
+											<el-input :style="Index.width" v-model="showUnconnectedName2"></el-input>
+										</li>
 									</el-form-item>
 									<el-form-item label="发送内容:">
 											<el-input v-model="form2.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -117,13 +121,15 @@
 												<el-input v-model="form3.times" style="width:50px;"></el-input> 
 											<p style="display:inline-block">次</p>
 									</el-form-item>
-									<el-form-item label="未接通:">
-										<!--<el-checkbox-group v-model="not_connected_status3" @change="changeStatus3">
-											<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-										</el-checkbox-group>-->
+									<!--<el-form-item label="未接通:">
 										<el-select v-model="not_connected_status3" multiple placeholder="请选择" @change="changeStatus3" :style="Index.width">
 											<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index" :value="item.id"></el-option>
 										</el-select>
+									</el-form-item>-->
+									<el-form-item label="未接通:">
+										<li @click="changeUnconnected1(3)" style="list-style:none">
+											<el-input :style="Index.width" v-model="showUnconnectedName3"></el-input>
+										</li>
 									</el-form-item>
 									<el-form-item label="发送内容:">
 										<el-input v-model="form3.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -173,13 +179,15 @@
 													<el-input v-model="form1Edit.times" style="width:50px;"></el-input> 
 												<p style="display:inline-block">次</p>
 										</el-form-item>
-										<el-form-item label="未接通:">
-											<!--<el-checkbox-group v-model="not_connected_status1Edit" @change="changeStatus1Edit">
-												<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-											</el-checkbox-group>-->
+										<!--<el-form-item label="未接通:">
 											<el-select v-model="not_connected_status1Edit" multiple placeholder="请选择" @change="changeStatus1Edit" :style="Index.width">
 												<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index" :value="item.id"></el-option>
 											</el-select>
+										</el-form-item>-->
+										<el-form-item label="未接通:">
+											<li @click="changeUnconnectedEdit1(1)" style="list-style:none">
+												<el-input :style="Index.width" v-model="showUnconnectedNameEdit1"></el-input>
+											</li>
 										</el-form-item>
 										<el-form-item label="发送内容:">
 												<el-input v-model="form1Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -208,13 +216,15 @@
 													<el-input v-model="form2Edit.times" style="width:50px;"></el-input> 
 												<p style="display:inline-block">次</p>
 										</el-form-item>
-										<el-form-item label="未接通:">
-										<!--<el-checkbox-group v-model="not_connected_status2Edit" @change="changeStatus2Edit">
-												<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-											</el-checkbox-group>-->
+										<!--<el-form-item label="未接通:">
 											<el-select v-model="not_connected_status2Edit" multiple placeholder="请选择" @change="changeStatus2Edit" :style="Index.width">
 												<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index" :value="item.id"></el-option>
 											</el-select>
+										</el-form-item>-->
+											<el-form-item label="未接通:">
+											<li @click="changeUnconnectedEdit1(2)" style="list-style:none">
+												<el-input :style="Index.width" v-model="showUnconnectedNameEdit2"></el-input>
+											</li>
 										</el-form-item>
 										<el-form-item label="发送内容:">
 											<el-input v-model="form2Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -243,13 +253,15 @@
 													<el-input v-model="form3Edit.times" style="width:50px;"></el-input> 
 												<p style="display:inline-block">次</p>
 										</el-form-item>
-										<el-form-item label="未接通:">
-										<!--<el-checkbox-group v-model="not_connected_status3Edit" @change="changeStatus3Edit">
-												<el-checkbox  v-for="(item,index) in AddData.call_result" :label="item.id" :key="index">{{item.status}}</el-checkbox>
-											</el-checkbox-group>-->
+										<!--<el-form-item label="未接通:">
 											<el-select v-model="not_connected_status3Edit" multiple placeholder="请选择" @change="changeStatus3Edit" :style="Index.width">
 												<el-option :label="item.status" v-for="(item,index) in AddData.call_result" :key="index" :value="item.id"></el-option>
 											</el-select>
+										</el-form-item>-->
+											<el-form-item label="未接通:">
+											<li @click="changeUnconnectedEdit1(3)" style="list-style:none">
+												<el-input :style="Index.width" v-model="showUnconnectedNameEdit3"></el-input>
+											</li>
 										</el-form-item>
 										<el-form-item label="发送内容:">
 											<el-input v-model="form3Edit.not_connected_content" :style="Index.width" type="textarea" :rows="4"></el-input>
@@ -268,6 +280,79 @@
 							</div>
             </el-dialog>
         	</div>
+
+				<!-- 未接通弹框1 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择未接通状态" :visible.sync="showUnconnected1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-checkbox-group v-model="not_connected_status1">
+							<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index" style="width:130px;margin-bottom:15px;padding-right:10px" >{{item.status}}</el-checkbox>
+						</el-checkbox-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showUnconnected1 = false">取消</el-button>  
+							<el-button type="primary" @click="sureUnconnected1">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+					<!-- 未接通弹框2 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择未接通状态" :visible.sync="showUnconnected2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-checkbox-group v-model="not_connected_status2">
+							<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index" style="width:130px;margin-bottom:15px;padding-right:10px">{{item.status}}</el-checkbox>
+						</el-checkbox-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showUnconnected2 = false">取消</el-button>  
+							<el-button type="primary" @click="sureUnconnected2">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+					<!-- 未接通弹框3 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择未接通状态" :visible.sync="showUnconnected3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-checkbox-group v-model="not_connected_status3">
+							<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index" style="width:130px;margin-bottom:15px;padding-right:10px">{{item.status}}</el-checkbox>
+						</el-checkbox-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showUnconnected3 = false">取消</el-button>  
+							<el-button type="primary" @click="sureUnconnected3">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 未接通编辑弹框1 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择未接通状态" :visible.sync="showUnconnectedEdit1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-checkbox-group v-model="not_connected_status1Edit">
+							<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index" style="width:130px;margin-bottom:15px;padding-right:10px" >{{item.status}}</el-checkbox>
+						</el-checkbox-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showUnconnectedEdit1 = false">取消</el-button>  
+							<el-button type="primary" @click="sureUnconnectedEdit1">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+				<!-- 未接通编辑弹框2 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择未接通状态" :visible.sync="showUnconnectedEdit2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-checkbox-group v-model="not_connected_status2Edit">
+							<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index" style="width:130px;margin-bottom:15px;padding-right:10px">{{item.status}}</el-checkbox>
+						</el-checkbox-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showUnconnectedEdit2 = false">取消</el-button>  
+							<el-button type="primary" @click="sureUnconnectedEdit2">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
+					<!-- 未接通编辑弹框3 -->
+				<div class="dial-header queue">
+					<el-dialog title="选择未接通状态" :visible.sync="showUnconnectedEdit3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
+					 	<el-checkbox-group v-model="not_connected_status3Edit">
+							<el-checkbox :label="item.id" v-for="(item,index) in AddData.call_result" :key="index" style="width:130px;margin-bottom:15px;padding-right:10px">{{item.status}}</el-checkbox>
+						</el-checkbox-group>
+					 	<div slot="footer" class="dialog-footer"> 
+							<el-button @click="showUnconnectedEdit3 = false">取消</el-button>  
+							<el-button type="primary" @click="sureUnconnectedEdit3">确定</el-button>
+						</div>
+					</el-dialog>
+				</div>
 				</div>
 			</div>
 		</section>
@@ -366,6 +451,19 @@
 						form1Edit:{},
 						form2Edit:{},
 						form3Edit:{},
+						showUnconnected1:false,
+						showUnconnectedName1:"",
+						showUnconnected2:false,
+						showUnconnectedName2:"",
+						showUnconnected3:false,
+						showUnconnectedName3:"",
+
+						showUnconnectedEdit1:false,
+						showUnconnectedNameEdit1:"",
+						showUnconnectedEdit2:false,
+						showUnconnectedNameEdit2:"",
+						showUnconnectedEdit3:false,
+						showUnconnectedNameEdit3:"",
 			}
 		},
 		activated() {
@@ -393,21 +491,104 @@
 						url,
 						success:(data)=>{
 							this.AddData.call_result = 	data.info.call_result_status.map(item=>{
-							item.id = item.id.toString()
+							item.id = ''+item.id+''
 							return item
 						})
 						}
 					}
 					axiosRequest(conf)
 			},
-			changeStatus1(val){
+			// 未接通状态弹框
+			changeUnconnected1(num){
+				if(num == 1){
+					this.showUnconnected1 = true
+				}else if(num == 2){
+					this.showUnconnected2 = true
+				}else if(num == 3){
+					this.showUnconnected3 = true
+				}
+			},
+			sureUnconnected1(){
+				var arr = []
+				var arr1 = this.not_connected_status1
+				  arr = this.AddData.call_result.filter(function(item){
+						return arr1.indexOf(item.id) != -1;
+					})  
+				this.showUnconnectedName1 = arr.map(item=>{
+					return item.status
+				})
 				this.form1.not_connected_status = this.not_connected_status1.join(",")
+				this.showUnconnected1 = false
 			},
-			changeStatus2(val){
+			sureUnconnected2(){
+				var arr = []
+				var arr1 = this.not_connected_status2
+				  arr = this.AddData.call_result.filter(function(item){
+						return arr1.indexOf(item.id) != -1;
+					})  
+				this.showUnconnectedName2 = arr.map(item=>{
+					return item.status
+				})
 				this.form2.not_connected_status = this.not_connected_status2.join(",")
+				this.showUnconnected2 = false
 			},
-			changeStatus3(val){
+			sureUnconnected3(){
+				var arr = []
+				var arr1 = this.not_connected_status3
+				  arr = this.AddData.call_result.filter(function(item){
+						return arr1.indexOf(item.id) != -1;
+					})  
+				this.showUnconnectedName3 = arr.map(item=>{
+					return item.status
+				})
 				this.form3.not_connected_status = this.not_connected_status3.join(",")
+				this.showUnconnected3 = false
+			},
+			// 未接通编辑弹框
+			changeUnconnectedEdit1(num){
+				if(num == 1){
+					this.showUnconnectedEdit1 = true
+				}else if(num == 2){
+					this.showUnconnectedEdit2 = true
+				}else if (num == 3){
+					this.showUnconnectedEdit3 = true
+				}
+			},
+			sureUnconnectedEdit1(){
+				var arr = []
+				var arr1 = this.not_connected_status1Edit
+				  arr = this.AddData.call_result.filter(function(item){
+						return arr1.indexOf(item.id) != -1;
+					})  
+				this.showUnconnectedNameEdit1 = arr.map(item=>{
+					return item.status
+				})
+				this.form1Edit.not_connected_status = this.not_connected_status1Edit.join(",")
+				this.showUnconnectedEdit1 = false
+			},
+			sureUnconnectedEdit2(){
+				var arr = []
+				var arr1 = this.not_connected_status2Edit
+				  arr = this.AddData.call_result.filter(function(item){
+						return arr1.indexOf(item.id) != -1;
+					})  
+				this.showUnconnectedNameEdit2 = arr.map(item=>{
+					return item.status
+				})
+				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join(",")
+				this.showUnconnectedEdit2 = false
+			},
+				sureUnconnectedEdit3(){
+				var arr = []
+				var arr1 = this.not_connected_status3Edit
+				  arr = this.AddData.call_result.filter(function(item){
+						return arr1.indexOf(item.id) != -1;
+					})  
+				this.showUnconnectedNameEdit3 = arr.map(item=>{
+					return item.status
+				})
+				this.form3Edit.not_connected_status = this.not_connected_status3Edit.join(",")
+				this.showUnconnectedEdit3 = false
 			},
 		  addTask(){
 				this.addOrEdit.addShow = true
@@ -434,6 +615,9 @@
 							this.not_connected_status1 = []
 							this.not_connected_status2 = []
 							this.not_connected_status3 = []
+							this.showUnconnectedName1 = ""
+							this.showUnconnectedName2 = ""
+							this.showUnconnectedName3 = ""
 							this.form.name = ""
 							this.form.remark = ""
 							this.init()
@@ -477,31 +661,49 @@
 						this.form3Edit = arr3[0]
 						if(arr1[0].not_connected_status!=""){
 							this.not_connected_status1Edit = (arr1[0].not_connected_status).split(",")
+								var arr = []
+								var arr1 = this.not_connected_status1Edit
+									arr = this.AddData.call_result.filter(function(item){
+										return arr1.indexOf(item.id) != -1;
+									})  
+								this.showUnconnectedNameEdit1 = arr.map(item=>{
+									return item.status
+								})
 						}else{
 							this.not_connected_status1Edit=[]
+							this.showUnconnectedNameEdit1 = ""
 						}
 						if(arr2[0].not_connected_status!=""){
 							this.not_connected_status2Edit = (arr2[0].not_connected_status).split(",")
+								var arr = []
+								var arr1 = this.not_connected_status2Edit
+									arr = this.AddData.call_result.filter(function(item){
+										return arr1.indexOf(item.id) != -1;
+									})  
+								this.showUnconnectedNameEdit2 = arr.map(item=>{
+									return item.status
+								})
 						}else{
 							this.not_connected_status2Edit = []
+							this.showUnconnectedNameEdit2 = ""
 						}
 						if(arr3[0].not_connected_status!=""){
 							this.not_connected_status3Edit = (arr3[0].not_connected_status).split(",")
+								var arr = []
+								var arr1 = this.not_connected_status3Edit
+									arr = this.AddData.call_result.filter(function(item){
+										return arr1.indexOf(item.id) != -1;
+									})  
+								this.showUnconnectedNameEdit3 = arr.map(item=>{
+									return item.status
+								})
 						}else{
 							this.not_connected_status3Edit = []
+							this.showUnconnectedNameEdit3 = ""
 						}
 					}
 				}
 				axiosRequest(conf)
-			},
-			changeStatus1Edit(){
-				this.form1Edit.not_connected_status = this.not_connected_status1Edit.join(",")
-			},
-			changeStatus2Edit(){
-				this.form2Edit.not_connected_status = this.not_connected_status2Edit.join(",")
-			},
-			changeStatus3Edit(){
-				this.form3Edit.not_connected_status = this.not_connected_status3Edit.join(",")
 			},
 			// 保存修改
 			onSubmitEdit(){
