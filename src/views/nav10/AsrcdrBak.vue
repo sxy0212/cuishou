@@ -6,8 +6,8 @@
                     <!--条件查询form提交-->
                     <el-form ref="form" :model="form" label-width="90px" :inline="true">
                         <el-form-item label="案件编号：">
-                            <el-select v-model="form.task_coding" placeholder="请选择任务编号" @change="changeSrc" style="width:220px;">
-                                <el-option  v-for="item in initSearchData.inline"  :label="item.task_coding_name" :value="item.task_coding" ></el-option>
+                            <el-select v-model="form.case_id" placeholder="请选择任务编号" @change="changeSrc" style="width:200px;">
+                                <el-option  v-for="item in initSearchData.case_name"  :label="item.case_code" :value="item.id" ></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="通话时长：">
@@ -15,13 +15,13 @@
                             <el-input v-model="form.max_billsec" placeholder="请输入内容" style="width:103px"></el-input>
                         </el-form-item>  
                         <el-form-item label="线路号码：">
-                            <el-input v-model="form.clid" style="width:220px;"></el-input>
+                            <el-input v-model="form.clid" style="width:200px;"></el-input>
                         </el-form-item>
                         <el-form-item label="客户号码：">
-                            <el-input v-model="form.dst" style="width:220px;"></el-input>
+                            <el-input v-model="form.dst" style="width:200px;"></el-input>
                         </el-form-item>
                         <el-form-item label="所属批次：">
-                            <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:220px;">
+                            <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:200px;">
                                 <el-option :label="item.batch_name" :value="item.id" v-for="item in initSearchData.batch"></el-option>
                             </el-select>
                         </el-form-item>
@@ -51,8 +51,8 @@
                             </el-select>
                         </el-form-item>
                         <el-form-item label="通话日期：">
-                            <el-date-picker v-model="form.fromdate" type="datetime" placeholder="通话开始日期" default-time="00:00:00" :picker-options="pickerOptions0" :clearable="false" style="width:265px;"></el-date-picker>~
-                            <el-date-picker v-model="form.todate" type="datetime" placeholder="通话结束日期"  default-time="23:59:59" :picker-options="pickerOptions1" :clearable="false" style="width:267px;"></el-date-picker>
+                            <el-date-picker v-model="form.fromdate" type="datetime" placeholder="通话开始日期" default-time="00:00:00" :picker-options="pickerOptions0" :clearable="false" style="width:210px;" ></el-date-picker>~
+                            <el-date-picker v-model="form.todate" type="datetime" placeholder="通话结束日期"  default-time="23:59:59" :picker-options="pickerOptions1" :clearable="false" style="width:210px;" ></el-date-picker>
                         </el-form-item> 
                         <!--<el-form-item label="关键字：">
                             <el-input v-model="form.key" style="width:220px;"></el-input>
@@ -70,7 +70,7 @@
                             <el-checkbox v-model="form.busy_tel" @change="filter">排队未通话客户</el-checkbox>
                         </el-form-item>-->
                         <el-form-item>
-                            <el-button type="primary" @click="init">立即查询</el-button>   
+                            <el-button type="primary" @click="init(1)">立即查询</el-button>   
                         </el-form-item>           
                     </el-form>
                      <!--客户分类及一些常用操作-->
@@ -117,11 +117,17 @@
                     <div class="TableList">
                         <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total?450:100" @selection-change="handleSelectionChange">
                             <el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
-                            <el-table-column prop="task_coding" label="案件编号" > </el-table-column>
+                            <el-table-column prop="case_name" label="案件编号" > </el-table-column>
                             <el-table-column prop="clid" label="线路号码"></el-table-column>
                             <el-table-column prop="dst" label="客户号码" width="110"></el-table-column>
                             <el-table-column prop="name" label="姓名" ></el-table-column>
-                            <el-table-column prop="name" label="关系" ></el-table-column>
+                            <el-table-column prop="rounds" label="关系" >
+                               <template scope="scope">
+                                    <span v-if="scope.row.rounds== 0">本人</span>
+                                    <span v-else-if="scope.row.rounds==1">第一联系人</span>
+                                    <span v-else-if="scope.row.rounds==2">第二联系人 </span>
+                                </template>
+                            </el-table-column>
                             <el-table-column prop="gender" label="性别" width="80"> 
                                 <template scope="scope">
                                     <span v-if="scope.row.gender==0">未识别</span>
@@ -389,7 +395,7 @@ export default {
                 call_date:""
             },  
             value4: '',
-            total:"",
+            total:0,
             ButtonList:[],    //播放变颜色
             downButtonList:[], //下载后按钮变颜色
             CallCount: {
@@ -411,8 +417,8 @@ export default {
             },
             pickerOptions1: {
               disabledDate:(time) => {
-                if(app.form.fromdate != ""){
-                  let currentTime = app.form.fromdate;
+                if(this.form.fromdate != ""){
+                  let currentTime = this.form.fromdate;
                   return time.getTime() < currentTime || time.getTime() > Date.now();
                 }else{
                   return time.getTime() > Date.now()
@@ -422,7 +428,7 @@ export default {
             form: {
                 page:"1",
                 page_size:"15",
-                task_coding: '' ,  //任务编号
+                case_id: '' ,  //任务编号
                 batch_id:"", //所属批次
                 min_billsec: '' ,//通话时长最小值
                 max_billsec: '' ,//通话时长最大值
@@ -442,7 +448,7 @@ export default {
                 company_name:""   //公司名称
             },
             initSearchData:{
-                inline:[],//下拉任务编号 
+                case_name:[],//下拉任务编号 
                 batch:[], //所属批次
                 asrType: [],//标签
                 staff : [{user_name: "全部", staff_id: ""}], //服务客服
@@ -511,8 +517,8 @@ export default {
     };
   },
         created(){
-            this.init();
-            this.initShow()
+            this.init(0);
+            // this.initShow()
         },
       methods: {
           initShow(){
@@ -566,9 +572,16 @@ export default {
                 console.log(val)
             },
 			      //加载页面获取相应数据// 搜索
-            init(){
+            init(num){
                 this.loading = true
                 let data = clone(this.form)
+                if(num == 0){
+                  data.page = this.form.page
+                  data.page_size = this.form.page_size
+                }else if(num == 1){
+                  data.page = 1;
+                  data.page_size = 15
+                }
                 var index = this.index1
                 if(this.form.fromdate == null){
                     data.fromdate = ""
@@ -582,17 +595,20 @@ export default {
                 }
                 data.level_id = this.value4
                 data.action = ""
+                // if(num == 0){
+                //   data.page = this.form.page
+                //   data.page_size = this.form.page_size
+                // }else if(num == 1){
+                //   data.page = 1
+                //   data.page_size = 15
+                // }
                 const conf = {
-                    url:"/api_backend.php?r=asrcdr-log-bak/records" ,
-                    data,
+                    url:"/api/api_backend.php?r=asrcdr-bak/records" ,
+                    data:data,
                     success:(data)=>{
                         this.loading = false
                         this.message(data)
-                        this.infos = data.info.data.map((item)=>{
-                            item.scoresA = item.scores.substr(0,2)
-                            item.scoresB = item.scores.substr(2)
-                            return item
-                        })
+                        this.infos = data.info.data
                         if(data.info.data.length>0){
                             this.scores = this.infos[index].scores
                             this.user_scores = this.infos[index].user_scores
@@ -602,7 +618,7 @@ export default {
                         this.options = data.info.level_list
                         this.customerFollow.options = data.info.followup_state_list //客户跟进的数据
                         this.total = parseInt(data.info.total_count)
-                        this.initSearchData.inline = data.info.inline
+                        this.initSearchData.case_name = data.info.case_name
                         this.initSearchData.batch = data.info.batch
                         this.tagData = data.info.asrType     //标签管理里数据
                         for(let i = 0;i <data.info.staff.length;i++){
@@ -610,7 +626,7 @@ export default {
                         }
                         this.distributionTask.tableData = data.info.task  //分配坐席里面的下拉列表的数据
                         this.distributionTask.staffIdList = data.info.staff    //坐席中数据
-                        data.info.inline.unshift({task_coding:"",task_coding_name:"全部"})
+                        data.info.case_name.unshift({task_coding:"",task_coding_name:"全部"})
                         data.info.batch.unshift({batch_name: "全部",id:"" })
                         this.distributionTask.tableData.unshift({id:"",name:"请选择任务"})
                         if( !this.form.fromdate ){
@@ -640,19 +656,11 @@ export default {
             },
             handleSizeChange(val) {
                 this.form.page_size = val
-                if( this.value4 ){
-                    this.changeClientType()
-                } else{
-                    this.init()
-                }
+                this.init(0)
             },
             handleCurrentChange(val) {
                 this.form.page = val
-                if( this.value4 ){
-                    this.changeClientType()
-                } else{
-                    this.init()
-                }
+                this.init(0)
                 document.getElementsByClassName("el-table__body-wrapper")[0].scrollTop = 0
             },
             // 客户分类搜索
@@ -693,20 +701,20 @@ export default {
                 this.form.keyword = word
                 this.form.page = "1"
                 this.form.page_size = "15"
-                this.init()
+                this.init(0)
             },
              // 点击标签处搜索(老)
              tagOld(index){
                 this.form.keyword = this.tagData[index].keyword
                 this.form.page = "1"
                 this.form.page_size = "15"
-                this.init()
+                this.init(0)
             },
             tagAll(){
                 this.form.keyword = ""
                 this.form.page = "1"
                 this.form.page_size = "15"
-                this.init()
+                this.init(0)
             },
             // 添加标签
             addTag(){
@@ -1256,7 +1264,7 @@ export default {
 .ButtonList .el-button{ font-size: 12px; padding: 10px 15px;}
 .TopForm .timep  .call-active .el-input__inner {min-width: 102px !important;}
 .TopForm .timep .el-input__inner{ width: 180px}
-
+.el-form-item{margin-bottom:10px;}
 .tag-dial .el-form-item__label{ float: left; text-align: right}
 
 .Prompt-dial .el-dialog{ width: 320px} 
