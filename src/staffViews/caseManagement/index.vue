@@ -8,6 +8,7 @@
 			:batchList='batchList'
 			:caseStatusList='caseStatusList'
 			v-on:filterFn='filterFn($event)'
+			v-on:filterGetBatchList='filterGetBatchList($event)'
 			v-on:searchFn='searchFn($event)'
 			v-on:clearFn='clearFn($event)'
 		>
@@ -221,6 +222,28 @@ export default {
                 success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.clientList = data.info
+						this.clientList.unshift({
+							name:'请选择委托方',
+							id:''
+						})
+					}
+                }
+            }
+            axiosRequest(conf)
+		},
+		filterGetBatchList(val){	//获取委托方 
+			const conf = {
+                url : '/api/api_staff.php?r=case/batch-list',
+                data:{
+                    batch_name:val
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.batchList = data.info
+						this.batchList.unshift({
+							batch_name:'请选择批次',
+							id:''
+						})
 					}
                 }
             }
@@ -251,6 +274,10 @@ export default {
                 success:(data)=>{
 					if( data.statusCode == 1 ){
 						this.batchList = data.info.batchList
+						this.batchList.unshift({
+							batch_name:'请选择批次',
+							id:''
+						})
 						this.caseLevelList = data.info.caseLevelList
 						this.clientList = data.info.clientList
 						this.clientList.unshift({
@@ -280,6 +307,7 @@ export default {
 				case_status: "",	//案件状态
 				case_level:'', //案件等级
 				client_id:'', //委托方
+				call_result_number:'',//接通状态
 				min_case_money:'',     //最小金额
 				max_case_money:'',	//最高金额
 				min_talk_time:'',	//最小通话时长

@@ -220,7 +220,7 @@ export default {
 		this.init()
 		this.getStaffFn('-1')
 		// this.changeFn('')
-		this.filterFn('')
+		// this.filterFn('')
 	},
     methods: {
 		searchFn(){
@@ -311,7 +311,15 @@ export default {
 						this.batchList = data.info.batchList
 						this.caseLevelList = data.info.caseLevelList
 						this.clientList = data.info.clientList
-                    }else if(data.statusCode == 0){
+						this.clientList.unshift({
+							name:'请选择委托方',
+							id:''
+						})
+						this.batchList.unshift({
+							batch_name:'请选择批次',
+							id:''
+						})
+					}else if(data.statusCode == 0){
 						Message({
 							message: data.message,
 							type: 'error',

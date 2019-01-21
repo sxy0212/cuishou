@@ -22,6 +22,15 @@
         prop="case_name">
         </el-table-column>
         <el-table-column
+        label="接通状态"
+        prop="call_result_number">
+            <template slot-scope="scope">  
+                <span v-show="scope.row.call_result_number == 0">未拨打</span>
+                <span v-show="scope.row.call_result_number == 1">接通</span>
+                <span v-show="scope.row.call_result_number == -1">未接通</span>
+            </template>
+        </el-table-column>
+        <el-table-column
         label="催收区域"
         prop="collection_area">
         </el-table-column>
@@ -29,7 +38,7 @@
         prop="case_status"
         label="催收状态"
         >
-            <template slot-scope="scope">
+            <template slot-scope="scope"> 
                 <span v-show="scope.row.case_status == 0">正常状态</span>
                 <span v-show="scope.row.case_status == 1">暂停</span>
                 <span v-show="scope.row.case_status == 2">关闭</span>
