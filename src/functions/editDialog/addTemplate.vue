@@ -11,6 +11,11 @@
                         :key="item.id"
                         :class="item.is_required =='1'?'red':''">
                         {{item.field_name}}
+
+                        <el-input 
+                            v-if="!!item.choose" 
+                            v-model="item.otherName" 
+                            placeholder='请输入别名'></el-input>
                     </el-checkbox>
                 </el-form-item>
             </el-form>
@@ -34,17 +39,31 @@ export default {
         'formTitle',//表单
         'fieldsList'//多选选项
     ],
+    data(){
+        return {
+            copyList:[]
+        }
+    },
+    watch: {
+        fieldsList(){
+            this.copyList = this.fieldsList
+        }
+    },
     methods:{
         cancelFn(){//更改菜单标题
             this.$emit("addNowChange",false)
             this.$emit("clearFormTitle")
         },
         protectFn(){
-            this.formTitle.fields = this.fieldsList.map(item=>{
-                if(item.choose == true){
-                    return item.id
+            let middleList = this.fieldsList.filter(item=>item.choose)
+            this.formTitle.fields = middleList.map(every=>every.id).join(",")
+            this.formTitle.alias = middleList.map(item=>{
+                if( item.otherName ){
+                    return item.id + ':' + item.otherName
+                }else{
+                    return item.id + ':'
                 }
-            }).join(",")
+            }).join(';')
             let data = this.formTitle
             let url 
             if( this.title == '模板添加' ){
@@ -81,4 +100,6 @@ export default {
     }
 }
 </script>
+
+
 

@@ -90,23 +90,29 @@ export default {
             }
             axiosRequest(conf)
         },
-        askFields(val,str){//调取多选选项
+        askFields(val,str,alias){//调取多选选项
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/template-all-fields-list',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
-                        if(val == 1){
-                            this.fieldsList = data.info
-                        }else if(val == 2){
+                        if( val == 1 ){
+                            this.fieldsList = data.info.map(item=>{
+                                item["choose"] = false
+                                return item
+                            })
+                        }else if( val == 2 ){
                             this.fieldsList = data.info.map(item=>{
                                 let cod = "," + str + ","
+                                console.log( alias,typeof(alias))
                                 if( cod.indexOf(","+item.id+",") != -1 ){
                                     item["choose"] = true
+                                    let min = '"'+item.id+'"' +':"'
+                                    let mid = alias.split(min)[1].split('"')[0]
+                                    item['otherName'] = mid 
                                 }
                                 return item 
                             })
                         }
-                        
                     }
                 }
             }
@@ -137,8 +143,7 @@ export default {
             this.formTitle = {
                 name:row.name
             }
-            this.askFields(2,row.fields)
-
+            this.askFields(2,row.fields,row.alias)
         },
         pageSizeChangeFn(val){
             this.page_size = val

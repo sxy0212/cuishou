@@ -45,11 +45,12 @@
       <el-table-column
         prop="create_time"
         label="上传时间"
+        width='162'
         >
       </el-table-column>
       <el-table-column
         prop="batch_over"
-        label="任务状态"
+        label="AI呼叫状态"
         >
         <template slot-scope="scope">
           <span v-if="scope.row.batch_over==0">未完成</span>
