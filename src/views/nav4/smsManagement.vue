@@ -758,7 +758,7 @@
 	}
 
 </script>
-<style lang="scss" >
+<style lang="scss" scoped>
 .addTask1 .el-checkbox+.el-checkbox{margin-left:5px;}
 .addTask1 .el-dialog{width:75%;max-width:75%;background:#f2f2f2}
 .el-checkbox+.el-checkbox{margin-left:0px}

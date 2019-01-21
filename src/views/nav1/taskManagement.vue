@@ -1800,7 +1800,7 @@ import store from '@/vuex/store.js'
 <style lang="scss" scoped>
  @import '../../../static/css/taskManagement.scss'
 </style>
-<style>
+<style  lang="scss" scoped>
  .TopForm .el-select__tags{overflow: hidden;white-space: nowrap;text-overflow: ellipsis}
  .el-radio+.el-radio{margin:0}
  .el-checkbox+.el-checkbox{margin:0}
