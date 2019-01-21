@@ -75,6 +75,7 @@ import addChangeArea from '@/staffFunctions/editDialog/addChangeArea.vue'
 import addExportChoose from '@/staffFunctions/editDialog/addExportChoose.vue'
 
 import  { axiosRequest, message } from '@/assets/js/Yt.js'
+import { Message } from 'element-ui'
 
 // import { initCase, getCaseList, filterCaseFn, pauseCaseFn, changeCaseArea, protectCaseFn  } from '@/api/login'
 
@@ -219,7 +220,7 @@ export default {
                 },
                 success:(data)=>{
 					if( data.statusCode == 1 ){
-						this.clientList = response.info
+						this.clientList = data.info
 					}
                 }
             }
@@ -228,7 +229,6 @@ export default {
 		init(){
 			this.conditions.page = this.page
 			this.conditions.page_size = this.page_size
-			console.log('案件管理页面初始化')
 			const conf = {
                 url : '/api/api_staff.php?r=case/case-list',
                 data:this.conditions,
@@ -306,9 +306,7 @@ export default {
 					url : '/api/api_staff.php?r=case/area-list',
 					success:(data)=>{
 						if( data.statusCode == 1 ){
-							if( response.statusCode == 1 ){
-								this.areaList = data.info
-							}
+							this.areaList = data.info
 						}
 					}
 				}
