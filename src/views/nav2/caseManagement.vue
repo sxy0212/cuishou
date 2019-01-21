@@ -11,6 +11,7 @@
 			:caseStatusList='caseStatusList'
 			v-on:changeFn='changeFn($event)'
 			v-on:filterFn='filterFn($event)'
+			v-on:filterGetBatchList='filterGetBatchList($event)'
 			v-on:searchFn='searchFn($event)'
 			v-on:clearFn='clearFn($event)'
 		>
@@ -259,7 +260,24 @@ export default {
 							name:'请选择委托方',
 							id:''
 						})
-						console.log(this.clientList)
+					}
+                }
+            }
+            axiosRequest(conf)
+		},
+		filterGetBatchList(val){	//实时获取批次
+			let conf = {
+                url : '/api/api_backend.php?r=case/batch-list',
+                data:{
+                    batch_name:val
+                },
+                success:(data)=>{
+					if( data.statusCode == 1 ){
+						this.batchList = data.info
+						this.batchList.unshift({
+							batch_name:'请选择批次',
+							id:''
+						})
 					}
                 }
             }
@@ -346,6 +364,7 @@ export default {
 				case_code:'',	//案件序列号
 				case_status: "",	//案件状态
 				case_level:'', //案件等级
+				call_result_number:'',//接通状态
 				client_id:'', //委托方
 				min_case_money:'',     //最小金额
 				max_case_money:'',	//最高金额

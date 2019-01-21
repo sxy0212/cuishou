@@ -22,6 +22,11 @@
         prop="case_name">
         </el-table-column>
         <el-table-column
+          prop="call_result_number"
+          label="接通状态"
+          >
+        </el-table-column>
+        <el-table-column
         label="催收区域"
         prop="collection_area">
         </el-table-column>

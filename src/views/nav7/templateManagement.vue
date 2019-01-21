@@ -103,12 +103,11 @@ export default {
                         }else if( val == 2 ){
                             this.fieldsList = data.info.map(item=>{
                                 let cod = "," + str + ","
-                                console.log( alias,typeof(alias))
                                 if( cod.indexOf(","+item.id+",") != -1 ){
-                                    item["choose"] = true
+                                    item["choose"] = true   //编辑时原来选中的选项
                                     let min = '"'+item.id+'"' +':"'
-                                    let mid = alias.split(min)[1].split('"')[0]
-                                    item['otherName'] = mid 
+                                    let mid = alias.split(min)[1].split('"')[0] 
+                                    item['otherName'] = mid //编辑时原来更改的别名
                                 }
                                 return item 
                             })

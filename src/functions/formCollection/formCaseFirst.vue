@@ -46,11 +46,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="所属批次">
-                <el-select v-model="conditions.batch_id" placeholder="请选择批次">
-                    <el-option 
-                        label="请选择批次" 
-                        value=""
-                    ></el-option>
+                <el-select v-model="conditions.batch_id" placeholder="请选择批次" filterable :filter-method='filterGetBatchList'>
                     <el-option 
                         v-for="item in batchList"
                         :key='item.id'
@@ -105,6 +101,22 @@
                         :key='item.id'
                         :label='item.name'
                         :value='item.id'
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="接通状态">
+                <el-select v-model="conditions.call_result_number" placeholder="请选择接通状态">
+                    <el-option 
+                        label="请选择接通状态" 
+                        value="0"
+                    ></el-option>
+                    <el-option 
+                        label="接通" 
+                        value="1"
+                    ></el-option>
+                    <el-option 
+                        label="未接通" 
+                        value="-1"
                     ></el-option>
                 </el-select>
             </el-form-item>
@@ -181,6 +193,9 @@ export default {
     methods:{
         filterFn(val){
             this.$emit('filterFn',val)
+        },
+        filterGetBatchList(val){
+            this.$emit('filterGetBatchList',val)
         },
         changeFn(val){
             this.$emit('changeFn',val)
