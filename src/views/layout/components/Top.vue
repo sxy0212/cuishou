@@ -3,7 +3,7 @@
 		<div class="header">
 			<div class="title"> <router-link to="/charts" style="color:#fff">言通言小信AI贷后管理软件</router-link></div>
 			<div class="drop">
-			<span> 账户话费余额：<em class="red" style="font-weight: 800 ">{{money}}</em>元</span>
+			<span> 账户话费余额：<span style="font-weight: 800;color:red">{{money}}</span>元</span>
 			<span @click="shuaxin" style="margin-right:20px;cursor:pointer;margin-left:10px;">刷新</span>
      	<span v-show="info.sys_login == 1"> <a href="/sysadmin.php" style="display:inline-block;color:#fff;margin-right:20px;cursor:pointer;"> 切回管理</a></span>
 			<el-dropdown trigger="hover" >
