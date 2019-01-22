@@ -75,7 +75,8 @@
 										</div>  
 										<div class="Countp">
 											<div class="According" style="display:block">
-												<em>当前状态:
+												<em v-show="form.status == 0">当前状态:<span style="color:#8876f4">机器人未启动</span></em>
+												<em v-show="form.status == 1">当前状态:
 													<span style="color:#8876f4" v-if="form.calling_round == -1">呼叫已完成
 													</span>
 													<span style="color:#8876f4" v-else-if="form.calling_round == 0">本人
