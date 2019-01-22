@@ -7,7 +7,7 @@
                     <el-form ref="form" :model="form" label-width="90px" :inline="true">
                         <el-form-item label="案件编号：">
                             <el-select v-model="form.case_id" placeholder="请选择任务编号" @change="changeSrc" style="width:200px;">
-                                <el-option  v-for="item in initSearchData.case_name"  :label="item.case_code" :value="item.id" ></el-option>
+                                <el-option  v-for="(item,index) in initSearchData.case_name" :key="index" :label="item.case_code" :value="item.id" ></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="通话时长：">
@@ -22,7 +22,7 @@
                         </el-form-item>
                         <el-form-item label="所属批次：">
                             <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:200px;">
-                                <el-option :label="item.batch_name" :value="item.id" v-for="item in initSearchData.batch"></el-option>
+                                <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in initSearchData.batch" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                         <!--<el-form-item label="服务客服：">
@@ -47,7 +47,7 @@
                         </el-form-item>-->
                         <el-form-item label="通话类型：">
                             <el-select v-model="form.call_result_number" placeholder="通话类型" style="width:220px;">
-                                <el-option :label="item.name" :value="item.val" v-for="item in call_results"></el-option>
+                                <el-option :label="item.name" :value="item.val" v-for="(item,index) in call_results" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="通话日期：">
@@ -122,14 +122,14 @@
                             <el-table-column prop="dst" label="客户号码" width="110"></el-table-column>
                             <el-table-column prop="name" label="姓名" ></el-table-column>
                             <el-table-column prop="rounds" label="关系" >
-                               <template scope="scope">
+                               <template slot-scope="scope">
                                     <span v-if="scope.row.rounds== 0">本人</span>
                                     <span v-else-if="scope.row.rounds==1">第一联系人</span>
                                     <span v-else-if="scope.row.rounds==2">第二联系人 </span>
                                 </template>
                             </el-table-column>
                             <el-table-column prop="gender" label="性别" width="80"> 
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                     <span v-if="scope.row.gender==0">未识别</span>
                                     <span v-else-if="scope.row.gender==1">女</span>
                                     <span v-else-if="scope.row.gender==2">男 </span>
@@ -137,7 +137,7 @@
                                 </template>
                             </el-table-column>
                             <el-table-column prop="call_result_number" label="通话状态" >
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                     <span v-if='scope.row.call_result_number == 1'>接通</span>
                                     <span v-else-if = "scope.row.call_result_number == 0">未接通</span>
                                     <span v-else-if = "scope.row.call_result_number == 2">关机</span>
@@ -205,7 +205,7 @@
                 分配 <span style="color:red">{{distributionTask.allotnums}}</span> 条
                 <el-input v-model="distributionTask.num" style="width:200px"  placeholder="请输入分配条数"></el-input>
                 <el-select v-model="distributionTask.task_id" placeholder="请选择任务">
-                    <el-option :label="item.name" :value="item.id" v-for="(item,index) in distributionTask.tableData"></el-option>
+                    <el-option :label="item.name" :value="item.id" v-for="(item,index) in distributionTask.tableData" :key="index"></el-option>
                 </el-select>
                 <el-table ref="multipleTable" :data="distributionTask.staffIdList" height="300" tooltip-effect="dark" style="width: 100%" @selection-change="handleSelectionChangeTask">
                     <el-table-column type="selection"></el-table-column>
@@ -248,7 +248,7 @@
                             <el-table-column prop="name" label="标签名称"></el-table-column>
                             <el-table-column prop="keyword" label="关键字"> </el-table-column>
                             <el-table-column prop="mainphone" label="操作">
-                                <template scope="scope">
+                                <template slot-scope="scope">
                                     <el-button type="primary" plain @click="editTag(scope.$index,scope.row)">编辑</el-button>
                                     <el-button type="danger" plain @click="delTag(scope.$index,scope.row)">删除</el-button>
                                 </template>
@@ -321,13 +321,13 @@
                    <div style="margin-top:10px">
                         <p style="color:#409EFE;margin:0;padding-bottom:10px">客户意向分类</p>
                         <div style="width:240px;">
-                            <el-button v-for="item in options" type="primary" :plain="item.start != radio1" style="padding: 6px 0px;margin-left:5px;margin-bottom:5px;width:100px" @click="RedistributionSave(item.start)">{{item.name}}</el-button>
+                            <el-button v-for="(item,index) in options" type="primary" :plain="item.start != radio1" style="padding: 6px 0px;margin-left:5px;margin-bottom:5px;width:100px" @click="RedistributionSave(item.start)" :key="index">{{item.name}}</el-button>
                         </div>
                    </div>
                    <div style="margin-top:10px">
                         <p style="color:#409EFE;margin:0;padding-bottom:10px">客户跟进</p>
                         <div style="width:240px;">
-                            <el-button v-for="item in customerFollow.options" type="primary" :plain="item.id != customerFollow.default" style="padding: 6px 0px;margin-left:5px;margin-bottom:5px;width:100px" @click="customerFollowSave(item.id)">{{item.name}}</el-button>
+                            <el-button v-for="(item,index) in customerFollow.options" type="primary" :plain="item.id != customerFollow.default" style="padding: 6px 0px;margin-left:5px;margin-bottom:5px;width:100px" @click="customerFollowSave(item.id)" :key="index">{{item.name}}</el-button>
                         </div>
                     </div>
                 </div>                      
