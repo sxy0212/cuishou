@@ -57,12 +57,6 @@
                         <!--<el-form-item label="关键字：">
                             <el-input v-model="form.key" style="width:220px;"></el-input>
                         </el-form-item>
-                        <el-form-item label="客户跟进：">
-                            <el-select v-model="form.followup_id" placeholder="请选择" style="width:220px;">
-                                <el-option value="" label="不查询"></el-option>
-                                <el-option :label="item.name" :value="item.id" v-for="item in customerFollow.options"></el-option>
-                            </el-select>
-                        </el-form-item>
                         <el-form-item label="公司名称：">
                             <el-input v-model="form.company_name" style="width:220px;"></el-input>
                         </el-form-item>
@@ -115,11 +109,11 @@
                     </div>-->
                     <!--数据列表-->    
                     <div class="TableList">
-                        <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total?450:100" @selection-change="handleSelectionChange">
+                        <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total?450:100" @selection-change="handleSelectionChange"  v-loading="loading">
                             <el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
                             <el-table-column prop="case_name" label="案件编号" > </el-table-column>
                             <el-table-column prop="clid" label="线路号码"></el-table-column>
-                            <el-table-column prop="dst" label="客户号码" width="110"></el-table-column>
+                            <el-table-column prop="dst" label="客户号码" width="120"></el-table-column>
                             <el-table-column prop="name" label="姓名" ></el-table-column>
                             <el-table-column prop="rounds" label="关系" >
                                <template slot-scope="scope">
@@ -164,11 +158,11 @@
                             <el-table-column prop="call_date" label="通话时间"></el-table-column>
                             <el-table-column prop="billsec" label="通话时长"></el-table-column>
                             <el-table-column prop="batch_name" label="所属批次" ></el-table-column>
-                            <!--<el-table-column prop="call_result_number" label="操作"  fixed="right">
-                                <template scope="scope">
+                            <el-table-column prop="call_result_number" label="操作"  fixed="right">
+                                <template slot-scope="scope">
                                     <el-button type="primary" plain  @click="detail(scope.$index,scope.row)" :class="ButtonList.indexOf(scope.row.id)!=-1 ? 'active' : '' " >详情</el-button>
                                 </template>
-                            </el-table-column>-->
+                            </el-table-column>
                         </el-table>
                     </div>
                     <div class="pagination" v-show="!!total">
@@ -296,78 +290,65 @@
         </div>
         <!--详情-->
         <div class="dial-header DialogueMain2">
-            <el-dialog title="语音播放" :visible.sync="CallCount.Plays" v-move :before-close="handleClose">
-                <div style="padding-bottom:10px;padding-left:5%;font-size:24px;">被叫号码:{{phone}}</div>   
-                <div style="width:30%;height:560px;background:#fff;float:left;padding-left:5%">
-                   <div style="max-height:50px;">
-                        <span style="color:#409EFF">客户姓名:</span>{{user_name}}
-                   </div>
-                   <div style="max-height:100px;">
-                       <span style="color:#409EFF">客户地址:</span> {{address}}
-                   </div>
-                   <div style="max-height:100px;">
-                        <span style="color:#409EFF">公司名称:</span> {{company_name}}
-                    </div>
-                   <!-- <div style="max-height:50px;">
-                       <span style="color:#409EFF">通话时长:</span>{{billsec}}
-                   </div> -->
-                   <div style="max-height:50px;">
-                        <span style="color:#409EFF"> 客户分类: </span>
-                        <span>{{scores}}</span>
-                   </div>
-                   <div style="max-height:50px;">
-                       <span style="color:#409EFF">号码归属地:</span>{{ numberAssigned}}
-                   </div>
-                   <div style="margin-top:10px">
+          <el-dialog title="通话详情" :visible.sync="CallCount.Plays" v-move :before-close="handleClose" style="padding:0px;">
+            <div style="padding-bottom:10px;padding-left:40px;font-size:24px;">被叫号码:{{phone}}</div>   
+            <el-row>
+              <el-col :span="6" style="padding-left:40px">
+                <div class="grid-content bg-purple">
+                  <div style="height:30px;">
+                    <span style="color:#409EFF">客户姓名:</span>{{user_name}}
+                  </div>
+                  <div style="height:30px;">
+                      <span style="color:#409EFF">号码归属地:</span>{{numberAssigned}}
+                  </div>
+                  <!--<div style="margin-top:10px">
                         <p style="color:#409EFE;margin:0;padding-bottom:10px">客户意向分类</p>
                         <div style="width:240px;">
                             <el-button v-for="(item,index) in options" type="primary" :plain="item.start != radio1" style="padding: 6px 0px;margin-left:5px;margin-bottom:5px;width:100px" @click="RedistributionSave(item.start)" :key="index">{{item.name}}</el-button>
                         </div>
-                   </div>
-                   <div style="margin-top:10px">
-                        <p style="color:#409EFE;margin:0;padding-bottom:10px">客户跟进</p>
-                        <div style="width:240px;">
-                            <el-button v-for="(item,index) in customerFollow.options" type="primary" :plain="item.id != customerFollow.default" style="padding: 6px 0px;margin-left:5px;margin-bottom:5px;width:100px" @click="customerFollowSave(item.id)" :key="index">{{item.name}}</el-button>
-                        </div>
-                    </div>
-                </div>                      
-                <div class="dialogue" style="width:60%;float:left;background:#fff;padding-right:5%;height:560px;"> 
-                    <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-                        <span> 完整录音 </span> 
-                        <el-button type="primary" @click="download" >下载录音</el-button> 
-                    </div>
-                    <audio style="width:100%" :src="spath" controls="controls" id="play1" @click="playOne"></audio> 
-                    <div class="dialogueList" style="border-bottom:none">
-                        <ul id="messageBox">
-                            <li :class="[{ 'layim-chat-mine':item.user==1 }, {'layim-chat-mine1':item.user==0}]" v-for="(item,index) in audioData" style="font-size:14px;display:block" >
-                                <div class="layim-chat-user">
-                                    <img src="<?=STATIC_BACKEND?>/images/yantong.png" v-if="item.user==1">
-                                    <img src="<?=STATIC_BACKEND?>/images/user.png" v-if="item.user==0">                                    
-                                </div>
-                                <div v-if="item.user==0" style="max-width:420px;float:left">
-                                    <p v-if="item.user==0" style="margin:0">言小通 <i>{{item.create_time}}</i></p>
-                                    <p v-else="item.user==1"><i>{{item.create_time}} </i>用户</p>
-                                    <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
-                                </div> 
-                                <div v-if="item.user==1" style="max-width:420px;float:right">
-                                    <p v-if="item.user==0" style="margin:0">言小通 <i>{{item.create_time}}</i></p>
-                                    <p v-else="item.user==1" style="margin:0"><i>{{item.create_time}} </i>用户</p>
-                                    <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
-                                </div> 
-                                 <div v-if="item.user==0" style="float:left;margin-top:20px" v-show="item.path">
-                                    <img src="<?=STATIC_BACKEND?>/images/textListen.png"  @click="textListen(item.path)" style="width:23px">
-                                </div>
-                                <div v-if="item.user==1" style="float:right;margin-top:20px" v-show="item.path">
-                                    <img src="<?=STATIC_BACKEND?>/images/textListen.png"  @click="textListen(item.path)" style="width:23px">
-                                </div>
-                            </li> 
-                            <li>
-                                <audio style="width:100%" :src="textAudio" id="audioPlay" autoplay></audio> 
-                            </li>
-                        </ul>
-                    </div>    
+                  </div> -->
                 </div>
-            </el-dialog>
+              </el-col>
+              <el-col :span="18" style="padding-right:10px;">
+                <div class="grid-content bg-purple-light">
+                  <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+                    <span> 完整录音 </span> 
+                    <el-button type="primary" @click="download" >下载录音</el-button> 
+                  </div>
+                  <audio style="width:100%" :src="spath" controls="controls" id="play1" @click="playOne"></audio> 
+                  <div class="dialogueList" style="border-bottom:none">
+                    <ul id="messageBox">
+                      <li :class="[{ 'layim-chat-mine':item.user==1 }, {'layim-chat-mine1':item.user==0}]" v-for="(item,index) in audioData" style="font-size:14px;display:block" >
+                        <div class="layim-chat-user">
+                          <img src="static/image/yantong.png" v-if="item.user==1">
+                          <img src="static/image/user.png" v-if="item.user==0">                                    
+                        </div>
+                        <div v-if="item.user==0" style="max-width:420px;float:left">
+                          <p v-if="item.user==0" style="margin:0">言小通 <i>{{item.create_time}}</i></p>
+                          <p v-else="item.user==1"><i>{{item.create_time}} </i>用户</p>
+                          <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
+                        </div> 
+                        <div v-if="item.user==1" style="max-width:420px;float:right">
+                          <p v-if="item.user==0" style="margin:0">言小通 <i>{{item.create_time}}</i></p>
+                          <p v-else="item.user==1" style="margin:0"><i>{{item.create_time}} </i>用户</p>
+                          <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
+                        </div> 
+                        <div v-if="item.user==0" style="float:left;margin-top:20px" >
+                          <img src="static/image/textListen.png"  @click="textListen(item.path)" style="width:23px">
+                        </div>
+                        <div v-if="item.user==1" style="float:right;margin-top:20px" v-show="item.path">
+                          <img src="static/image/textListen.png"  @click="textListen(item.path)" style="width:23px">
+                        </div>
+                      </li> 
+                      <li>
+                        <audio style="width:100%" :src="textAudio" id="audioPlay" autoplay></audio> 
+                      </li>
+                    </ul>
+                  </div>    
+                </div>
+              </el-col>
+            </el-row>
+          </el-dialog>
         </div>
         </section>
     </template>
@@ -380,6 +361,7 @@ import {axiosRequest,getCookie,setCookie,message,formatDate,clone} from '@/asset
 export default {
   data() {
     return { 
+      loading:true,
        radio1:"",    //默认选中
             redistributionId:"" ,  //重新分类的id
             checked:false,      //是否导出对话内容
@@ -388,12 +370,6 @@ export default {
             call_results: [{val:'',name:'全部'},{val:'0',name:'未接通'},{val:'1',name:'接通'},{val:'2',name:'关机'},{val:'3',name:'空号'},{val:'4',name:'停机'},{val:'5',name:'正在通话中'},{val:'6',name:'用户拒接'},{val:'7',name:'无法接通'},{val:'8',name:'暂停服务'},{val:'9',name:'用户正忙'},{val:'10',name:'拨号方式不正确'},{val:'11',name:'呼入限制'},{val:'12',name:'来电提醒'},{val:'13',name:'呼叫转移失败'},{val:'14',name:'网络忙'},{val:'15',name:'无人接听'},{val:'16',name:'欠费'},{val:'17',name:'无法接听'},{val:'18',name:'改号'},{val:'19',name:'服务暂停'},{val:'20',name:'稍后再拨'}],
             textAudio:"",   //试听播放路径
             options: [],    //客户分类的数据
-            customerFollow:{ //客户跟进参数
-                options:[],
-                default:"",
-                unique_id:"",
-                call_date:""
-            },  
             value4: '',
             total:0,
             ButtonList:[],    //播放变颜色
@@ -439,7 +415,7 @@ export default {
                 dcontext:"",    //呼叫类型
                 // key:"",   //关键字
                 // busy_tel:false,//未接通
-                fromdate:new Date(new Date().setHours(0, 0, 0, 0)), //通话时间最小范围
+                fromdate:new Date(new Date().setHours(0, 0, 0, 0)-24*60*60*1000), //通话时间最小范围
                 todate: new Date(new Date().setHours(23, 59,59, 59)), //通话时间最大范围 
                 // keyword:"" ,//标签关键字
                 call_result_number:"1",   //通话类型
@@ -476,10 +452,6 @@ export default {
             ava_count:"",   //回收资料的时候提示用户去重后的条数
             phone:"",     //点击详情的时候出现的信息
             user_name:"",
-            address:"",
-            billsec:"",
-            scores:"",
-            company_name:"",   //公司名称
             index1:"0",
             user_scores:"",
             numberAssigned:"",
@@ -600,29 +572,25 @@ export default {
                     data:data,
                     success:(data)=>{
                         this.loading = false
-                        this.message(data)
                         this.infos = data.info.data
-                        if(data.info.data.length>0){
-                            this.scores = this.infos[index].scores
-                            this.user_scores = this.infos[index].user_scores
-                            this.radio1 = this.infos[index].start_scores
-                            this.customerFollow.default = this.infos[index].followup_status
-                        }
-                        this.options = data.info.level_list
-                        this.customerFollow.options = data.info.followup_state_list //客户跟进的数据
-                        this.total = parseInt(data.info.total_count)
                         this.initSearchData.case_name = data.info.case_data      //案件编号
                         this.initSearchData.case_name.unshift({id:"",case_code:"全部"})
                         this.initSearchData.batch = data.info.batch_data         //批次
                         this.initSearchData.batch.unshift({batch_name: "全部",id:"" })
+                        this.total = parseInt(data.info.total_count)
+                        if(data.info.data.length>0){
+                            this.scores = this.infos[index].scores
+                            this.user_scores = this.infos[index].user_scores
+                            this.radio1 = this.infos[index].start_scores
+                        
+                        }
+                        this.options = data.info.level_list
                         this.tagData = data.info.asrType     //标签管理里数据
                         for(let i = 0;i <data.info.staff.length;i++){
                             this.initSearchData.staff.push(data.info.staff[i])
                         }
                         this.distributionTask.tableData = data.info.task  //分配坐席里面的下拉列表的数据
                         this.distributionTask.staffIdList = data.info.staff    //坐席中数据
-                        
-                       
                         this.distributionTask.tableData.unshift({id:"",name:"请选择任务"})
                         if( !this.form.fromdate ){
                             this.form.fromdate = new Date(new Date().setHours(0, 0, 0, 0))
@@ -685,7 +653,6 @@ export default {
                             this.scores = this.infos[index].scores
                             this.user_scores = this.infos[index].user_scores
                             this.radio1 = this.infos[index].start_scores
-                            this.customerFollow.default = this.infos[index].followup_status
                         }
                     }
                 }
@@ -982,51 +949,48 @@ export default {
             },
                //点击详情
             detail(index, row){  
-                app.numberAssigned = ""
+                this.numberAssigned = ""
                 this.ButtonList.push(row.id)
                 this.redistributionId = row.id
-                this.customerFollow.unique_id = row.unique_id
-                this.customerFollow.default = row.followup_status
-                this.customerFollow.call_date = row.call_date
                 this.index1 = index
                 this.phone = row.dst
                 this.user_name = row.name
-                this.address = row.address
-                this.billsec = row.billsec
-                this.scores = row.scores
-                this.company_name=row.company_name
-                this.radio1 = row.start_scores
-                this.user_scores = row.user_scores
+                // this.address = row.address
+                // this.billsec = row.billsec
+                // this.scores = row.scores
+                // this.company_name=row.company_name
+                // this.radio1 = row.start_scores
+                // this.user_scores = row.user_scores
                 this.downloadDate.path = row.path
                 this.downloadDate.dst  = row.dst
                 this.CallCount.Plays = true
-                axios.get('/api/api_backend.php?r=asrcdr-taping/wave-record', {
-                        params: {
-                            action: "play",
-                            path:row.path,
-                            phone:row.dst,
-                            unique_id:row.unique_id
-                        }
-                    }).then(function (response) {
-                        if(response.data.statusCode == 1){ 
-                            app.spath = response.data.info.path
-                            app.audioData = response.data.info.asrdata
-                            if( response.data.info.state == 1){
-                                app.numberAssigned = response.data.info.home.province +"-"+ response.data.info.home.city
-                            }else{
-                                app.numberAssigned = response.data.info.home
-                            } 
+                var _this = this
+                axios.get('/api/api_backend.php?r=asrcdr-bak/wave-record', {
+                  params: {
+                      action: "play",
+                      path:row.path,
+                      phone:row.dst,
+                      unique_id:row.unique_id
+                  }
+                }).then(function (response) {
+                    if(response.data.statusCode == 1){ 
+                        _this.spath = response.data.info.path
+                        _this.audioData = response.data.info.asrdata
+                        if( response.data.info.state == 1){
+                            _this.numberAssigned = response.data.info.home.province +"-"+ response.data.info.home.city
                         }else{
-                            app.spath = ""
-                            app.audioData = ""
-                        }
-                        app.message(response.data)
-                    })
+                            _this.numberAssigned = response.data.info.home
+                        } 
+                    }else{
+                        _this.spath = ""
+                        _this.audioData = ""
+                    }
+                })
             },
-            // 下载语音
+            // 下载语音(详情里的整条的)
             download(){
                 if(this.downloadDate.path){
-                    window.open("/api/api_backend.php?r=asrcdr-taping/wave-record&action=download&path="+this.downloadDate.path+"&phone="+this.downloadDate.dst)
+                    window.open("/api/api_backend.php?r=asrcdr-bak/wave-record&action=download&path="+this.downloadDate.path+"&phone="+this.downloadDate.dst)
                 }else{
                     this.$alert("暂无录音")
                 }
@@ -1053,32 +1017,6 @@ export default {
                             this.$alert(data.message)
                         }else{
                             this.$alert(data.message)
-                        }
-                        this.message(data)
-                    }
-                }
-                axiosRequest(conf)
-            },
-             // 客户跟进情况
-             customerFollowSave(id){
-                const url = "/api/api_backend.php?r=customer-followup/edit"
-                const conf = {
-                    url,
-                    data:{
-                        unique_id:this.customerFollow.unique_id,
-                        followup_id:id,
-                        call_date:this.customerFollow.call_date
-                    },
-                    success:(data)=>{
-                        if(data.statusCode == 1){
-                           if(this.value4){
-                            this.changeClientType()
-                            }else{
-                                this.init()
-                            }
-                            this.$alert("跟进状态更新成功")
-                        }else{
-                            this.$alert("更新失败")
                         }
                         this.message(data)
                     }
@@ -1159,96 +1097,9 @@ export default {
                     this.$alert("填写批次名称")
                 }
                
-            },
-            message(data){
-                if(data.statusCode == 0 && data.message == "请先登录"){
-                    this.$alert(data.message, '提示', {
-                        confirmButtonText: '确定',
-                        callback: action => {
-                            go("/backend.php?r=login/index")
-                        }
-                        });                  
-                }
-            },
-             // 短信
-             SendMessage(){
-                this.sendMes = true
-                this.getTemplet()
-            },
-            getTemplet(){//获取短信模板
-                const conf = {
-                    url:"/api/api_backend.php?r=sms/sms-tpl",
-                    success:(data)=>{
-                        if( Number(data.statusCode) === 1 ){
-                            this.messageList = data.info
-                        }else if( Number(data.statusCode) === 0 ){
-                            this.$message({
-                                type: 'waring',
-                                message: data.message
-                            })
-                            return
-                        }
-                    }
-                }
-                axiosRequest(conf)
-            },
-            getMessage(index){
-                this.form1.sms_id = this.messageList[index].id
-                const conf = {
-                    url:"/api/api_backend.php?r=sms/sms-link",
-                    data:{
-                        id:this.messageList[index].id
-                    },
-                    success:(data)=>{
-                        if( Number(data.statusCode) === 1 ){
-                            this.form1.content = data.info
-                        }else if(Number(data.statusCode) === 0){
-                            this.$message({
-                                type: 'waring',
-                                message: data.message
-                            })
-                            return
-                        }
-                    }
-                }
-                axiosRequest(conf)
-            },
-            sendNow(){
-                let data = clone(this.form)
-                if(this.form.fromdate == null){
-                    data.fromdate = ""
-                }else {
-                    data.fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
-                }
-                if(this.form.todate == null){
-                    data.todate = ""
-                }else{
-                    data.todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-                }
-                data.sms_id = this.form1.sms_id
-                data.content = this.form1.content
-                const conf = {
-                    url:"/api/api_backend.php?r=sms/send-sms",
-                    data:data,
-                    success:(data)=>{
-                        if( Number(data.statusCode) === 1 ){
-                            this.$message({
-                                type: 'success',
-                                message: "发送成功"
-                            })
-                            this.sendMes = false
-                            this.form = {}
-                        }else if(Number(data.statusCode) === 0){
-                            this.$message({
-                                type: 'waring',
-                                message: data.message
-                            })
-                            return
-                        }
-                    }
-                }
-                axiosRequest(conf)
-            },
+            },          
+         
+         
   },
 }
 </script>
@@ -1286,8 +1137,7 @@ export default {
 }
 .dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px;
     overflow-y: auto;  padding: 15px; background-size:cover;  }
-.DialogueMain .dialogue {height:500px; background: #FFF}
-.DialogueInput{ padding-top: 10px}
+.dialogueList ul{padding:0}
 .dialogueList ul .layim-chat-mine {text-align: right;padding-left: 0;padding-right: 60px;min-height:100px}
 .dialogueList ul .layim-chat-mine1 {min-height:120px}
 .dialogueList ul .layim-chat-mine .layim-chat-user {left: auto;right: 3px;}
@@ -1295,12 +1145,9 @@ export default {
 .dialogueList ul .layim-chat-mine .layim-chat-user cite i {padding-left: 0;padding-right: 15px;}
 .dialogueList ul .layim-chat-mine .layim-chat-text {margin-left: 0;text-align: left;background-color: #5FB878;color: #fff;}
 .dialogueList ul .layim-chat-mine .layim-chat-text:after {left: auto;right: -10px;border-top-color: #5FB878;}
-
-.DialogueMain .el-dialog__body{ padding: 10px 20px;}
-.DialogueMain2 .el-dialog__body{ padding: 10px 0px;}
-
-
 .PredictAdd{height: auto; overflow: hidden; margin-bottom: 20px;}
+.TableList .play{color:red;}
+.cell .active{ background:#f56c6c !important;border-color:#f56c6c !important;color:#fff !important;}
 </style>
 
   
