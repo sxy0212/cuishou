@@ -448,7 +448,7 @@ export default {
                 // company_name:""   //公司名称
             },
             initSearchData:{
-                case_name:[],//下拉任务编号 
+                case_name:[],//案件编号 
                 batch:[], //所属批次
                 asrType: [],//标签
                 staff : [{user_name: "全部", staff_id: ""}], //服务客服
@@ -595,13 +595,6 @@ export default {
                 }
                 data.level_id = this.value4
                 data.action = ""
-                // if(num == 0){
-                //   data.page = this.form.page
-                //   data.page_size = this.form.page_size
-                // }else if(num == 1){
-                //   data.page = 1
-                //   data.page_size = 15
-                // }
                 const conf = {
                     url:"/api/api_backend.php?r=asrcdr-bak/records" ,
                     data:data,
@@ -618,9 +611,9 @@ export default {
                         this.options = data.info.level_list
                         this.customerFollow.options = data.info.followup_state_list //客户跟进的数据
                         this.total = parseInt(data.info.total_count)
-                        this.initSearchData.case_name = data.info.case_data
-                       this.initSearchData.case_name.unshift({id:"",case_code:"全部"})
-                        this.initSearchData.batch = data.info.batch_data
+                        this.initSearchData.case_name = data.info.case_data      //案件编号
+                        this.initSearchData.case_name.unshift({id:"",case_code:"全部"})
+                        this.initSearchData.batch = data.info.batch_data         //批次
                         this.initSearchData.batch.unshift({batch_name: "全部",id:"" })
                         this.tagData = data.info.asrType     //标签管理里数据
                         for(let i = 0;i <data.info.staff.length;i++){

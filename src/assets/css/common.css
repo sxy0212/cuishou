@@ -2,6 +2,3 @@
 
 .el-table th>.cell, .el-table .cell{text-align:center;}
 .pageChangeCover{margin-top:20px;}
-/* 话术库中样式 */
-.tag-dial1 .el-dialog {width:95%;} 
-.TableList .el-table .el-table_1_column_2 >.cell{text-align:left;}

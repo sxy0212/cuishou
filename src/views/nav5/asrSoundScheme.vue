@@ -22,11 +22,11 @@
                           <el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
                           <el-table-column  label="自定义话术">
                             <template slot-scope="scope">
-                              <p>名称:{{scope.row.show_name}}</p>
-                              <p>内容:{{scope.row.answer}}</p>
-                              <p>触发词:{{scope.row.condition}}</p>
-                              <p v-show="scope.row.is_interrupt == 1">类型: <span style="color:#0099FF">{{scope.row.type}}</span> <span style="color:#FF6600">可以打断</span> </p>
-                              <p v-show="scope.row.is_interrupt == 0">类型: <span style="color:#0099FF"> {{scope.row.type}}</span> <span style="color:#FF6600">不可以打断</span> </p>
+                              <p style="text-align:left">名称:{{scope.row.show_name}}</p>
+                              <p style="text-align:left">内容:{{scope.row.answer}}</p>
+                              <p style="text-align:left">触发词:{{scope.row.condition}}</p>
+                              <p v-show="scope.row.is_interrupt == 1" style="text-align:left">类型: <span style="color:#0099FF">{{scope.row.type}}</span> <span style="color:#FF6600">可以打断</span> </p>
+                              <p v-show="scope.row.is_interrupt == 0" style="text-align:left">类型: <span style="color:#0099FF"> {{scope.row.type}}</span> <span style="color:#FF6600">不可以打断</span> </p>
                             </template>
                           </el-table-column>
                           <el-table-column prop="record" label="录音状况">
@@ -1191,11 +1191,11 @@ import { MessageBox } from 'element-ui';
 	}
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .over .el-dialog__body{overflow:hidden;}
   .el-select-dropdown__item{width:215px;}
   .padding .el-dialog__body{padding:10px 60px;}
   .width{width:260px}
-	.TableList .el-table .el-table_1_column_2 >.cell{text-align:left;}
-	.TableList .el-table .el-table__row td:nth-of-type(2) .cell{text-align:left}
+	// .TableList .el-table .el-table_1_column_2 >.cell{text-align:left;}
+	// .TableList .el-table .el-table__row td:nth-child(2) .cell{text-align:left}
 </style>
