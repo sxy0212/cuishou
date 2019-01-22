@@ -463,12 +463,6 @@ router.beforeEach((to, from, next) => {
     if ( !user && to.path != '/login' && !staff ) {//如果管理员不存在，催收员不存在，要去的不是登录页面的话，跳到登录页面
       console.log('444')
       next({ path: '/login' })
-    }else if(!user && to.path != '/login'){
-      console.log('999')
-      next({ path: '/login' })
-    }else if(to.path != '/login' && !staff){
-      console.log('777')
-      next({ path: '/login' })
     }else {
       console.log('555')
       next()
