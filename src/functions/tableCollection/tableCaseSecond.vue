@@ -3,7 +3,7 @@
         <el-table-column label="姓名" prop="name"></el-table-column>
         <el-table-column label="关系" prop="relation"></el-table-column>
         <el-table-column label="电话" prop="phone" width="119"></el-table-column>
-        <el-table-column label="创建者" prop="creater"></el-table-column>
+        <el-table-column label="创建者" prop="creater" width="69"></el-table-column>
         <el-table-column label="创建时间" prop="create_time" width="160"></el-table-column>
         <el-table-column label="催收类型" prop="type">
             <template slot-scope='scope'>
@@ -23,9 +23,9 @@
         </el-table-column>
         <el-table-column prop="call_billsec" label="通话时长"></el-table-column>
         <el-table-column label="催收记录" prop="remark"></el-table-column>
-        <el-table-column label="操作" prop="case_id_num">
+        <el-table-column label="操作" prop="case_id_num" width='116'>
             <template slot-scope='scope'>
-                <el-button type="success" :disabled="selfInfo.case_status==3||scope.row.id ==''  " size='mini' @click="addRemarkFn(scope.row)">修改备注</el-button>
+                <el-button type="success" :disabled="selfInfo.case_status==3||scope.row.id ==''  " size='mini' @click="addRemarkFn(scope.row)">修改催收记录</el-button>
             </template>
         </el-table-column>
     </el-table>
