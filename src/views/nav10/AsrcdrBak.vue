@@ -428,24 +428,24 @@ export default {
             form: {
                 page:"1",
                 page_size:"15",
-                case_id: '' ,  //任务编号
+                case_id: '' ,  //案件编号
                 batch_id:"", //所属批次
                 min_billsec: '' ,//通话时长最小值
                 max_billsec: '' ,//通话时长最大值
-                clid: '' , //主叫号码
-                dst: '',//被叫号码
-                staff_id: '', //服务客服
+                clid: '' , //线路号码
+                dst: '',//客户号码
+                // staff_id: '', //服务客服
                 call_type: '', //呼叫状态
                 dcontext:"",    //呼叫类型
-                key:"",   //关键字
-                busy_tel:false,//未接通
+                // key:"",   //关键字
+                // busy_tel:false,//未接通
                 fromdate:new Date(new Date().setHours(0, 0, 0, 0)), //通话时间最小范围
                 todate: new Date(new Date().setHours(23, 59,59, 59)), //通话时间最大范围 
-                keyword:"" ,//标签关键字
-                call_result_number:"1",
-                followup_id:"",
-                to_staff_status:"",//转人工
-                company_name:""   //公司名称
+                // keyword:"" ,//标签关键字
+                call_result_number:"1",   //通话类型
+                // followup_id:"",
+                // to_staff_status:"",//转人工
+                // company_name:""   //公司名称
             },
             initSearchData:{
                 case_name:[],//下拉任务编号 
@@ -619,15 +619,17 @@ export default {
                         this.customerFollow.options = data.info.followup_state_list //客户跟进的数据
                         this.total = parseInt(data.info.total_count)
                         this.initSearchData.case_name = data.info.case_name
+                       this.initSearchData.case_name.unshift({id:"",case_code:"全部"})
                         this.initSearchData.batch = data.info.batch
+                        this.initSearchData.batch.unshift({batch_name: "全部",id:"" })
                         this.tagData = data.info.asrType     //标签管理里数据
                         for(let i = 0;i <data.info.staff.length;i++){
                             this.initSearchData.staff.push(data.info.staff[i])
                         }
                         this.distributionTask.tableData = data.info.task  //分配坐席里面的下拉列表的数据
                         this.distributionTask.staffIdList = data.info.staff    //坐席中数据
-                        data.info.case_name.unshift({task_coding:"",task_coding_name:"全部"})
-                        data.info.batch.unshift({batch_name: "全部",id:"" })
+                        
+                       
                         this.distributionTask.tableData.unshift({id:"",name:"请选择任务"})
                         if( !this.form.fromdate ){
                             this.form.fromdate = new Date(new Date().setHours(0, 0, 0, 0))
