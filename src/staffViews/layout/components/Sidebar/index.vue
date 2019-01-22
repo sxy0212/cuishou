@@ -13,7 +13,7 @@
       <!-- <el-menu-item index="/dashboard" > -->
         <!-- <span slot="title">首页</span> -->
       <!-- </el-menu-item> -->
-      <el-menu-item index="/staffCaseManagement/index" >
+      <el-menu-item index="/staffCaseManagement" >
         <span slot="title">案件管理</span>
       </el-menu-item>
     </el-menu>
@@ -44,11 +44,10 @@ export default {
     },
     handleSelect(key,path){
       console.log('侧边栏点击')
-      console.log(key,path)
       router.push({
         path:key
       })
-      // store.commit('save_index', path[1])
+      store.commit('save_index', key)
     },
   }
 }

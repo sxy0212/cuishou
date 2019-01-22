@@ -1,6 +1,5 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
-    <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -22,13 +21,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/staffComponents/Breadcrumb'
 import Hamburger from '@/components/staffComponents/Hamburger'
 import {axiosRequest,delCookie,setCookie} from '@/assets/js/Yt.js'
 
 export default {
   components: {
-    Breadcrumb,
     Hamburger
   },
   computed: {
@@ -68,10 +65,15 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
+.el-menu.el-menu--horizontal{border-bottom:0px solid transparent;}
+
 .navbar {
   height: 50px;
   line-height: 50px;
   border-radius: 0px !important;
+  background-color:#23262e;
+
+  
   .hamburger-container {
     line-height: 58px;
     height: 50px;

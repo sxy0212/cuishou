@@ -29,6 +29,7 @@ const store =  new Vuex.Store({
     mutations : {
         // 管理员
         add_tabs (state,data) {
+            console.log(data)
             if(data.name != ""){
                 state.options.push(data) 
             }
