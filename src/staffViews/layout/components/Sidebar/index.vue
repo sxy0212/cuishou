@@ -33,6 +33,9 @@ export default {
       default_url:"/staffInfo/index"
     }
   },
+  mounted(){
+    console.log(router.path)
+  },
   computed: {
     isCollapse(){
       return false

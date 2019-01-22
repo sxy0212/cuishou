@@ -21,9 +21,11 @@ const store =  new Vuex.Store({
         userInfo: {},
         menuIndex: '0',
         caseBatchId:'',//案件管理当前批次
-        menusList:''//侧边连数据
+        menusList:'',//侧边连数据
 
         // 催收员
+        staffActive:'/dashboard',
+        staffOptions:[],
 
     },
     mutations : {
@@ -63,6 +65,25 @@ const store =  new Vuex.Store({
 
 
         // 催收员
+        set_staff_active (state, index) {
+            state.staffActive = index;
+        },
+        del_staff_tabs (state,route) {
+            let index = 0;
+            for (let option of state.staffOptions) {
+                if(option.route === route){
+                    break;
+                }
+                index++;
+            }
+            this.state.staffOptions.splice(index, 1);
+        },
+        add_staff_tabs (state,data) {
+            console.log(data)
+            if(data.name != ""){
+                state.staffOptions.push(data) 
+            }
+        },
         
     }
 })

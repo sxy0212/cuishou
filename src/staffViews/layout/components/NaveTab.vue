@@ -1,6 +1,6 @@
 <template>
     <div class="NaveTab">
-        <el-tabs v-model="activeIndex" type="card" closable  @tab-click="tabClick" v-if="options.length"   @tab-remove="tabRemove">
+        <el-tabs v-model="staffActive" type="card" closable  @tab-click="tabClick" v-if="options.length"   @tab-remove="tabRemove">
             <el-tab-pane
               :key="index"
               v-for="(item,index) in options"
@@ -25,22 +25,22 @@ export default {
     },
     methods: {
         tabClick (tab) {
-            let path = this.activeIndex;
+            let path = this.staffActive;
             console.log(path)
-            if(this.activeIndex === '/dashboard') {
-               // path = this.activeIndex + '/' + this.$store.state.userInfo.name; 
+            if(this.staffActive === '/dashboard') {
+               // path = this.staffActive + '/' + this.$store.state.userInfo.name; 
             }
             this.$router.push({path:path});
         },
         tabRemove (targetName) {
-            if(targetName == '/dashboard') {
+            if( targetName == '/dashboard' ) {
                 return
             }
-            store.commit('del_tabs',targetName);
-            if(this.activeIndex === targetName ) {
-                if(store && this.options.length >= 1) {
-                    store.commit('set_active_index', this.options[this.options.length-1].route);
-                    this.$router.push({path: this.activeIndex});
+            store.commit('del_staff_tabs',targetName);
+            if( this.staffActive === targetName ) {
+                if( store && this.options.length >= 1 ) {
+                    store.commit('set_staff_active', this.options[this.options.length-1].route);
+                    this.$router.push({path: this.staffActive});
                 }else {
                     this.$router.push({path: '/dashboard'});
                 }
@@ -49,14 +49,14 @@ export default {
     },
     computed: {
         options () {
-            return store.state.options;
+            return store.state.staffOptions;
         },
-        activeIndex: {
+        staffActive: {
             get () {
-                return store.state.activeIndex;
+                return store.state.staffActive;
             },
             set ( val ) {
-                store.commit('set_active_index', val);
+                store.commit('set_staff_active', val);
             }
         }
     },
@@ -66,13 +66,13 @@ export default {
             for(let option of this.options ) {
                 if(option.name === to.name ) {
                     flag = true ;
-                    store.commit('set_active_index', '/' + to.path.split('/')[1]);
+                    store.commit('set_staff_active', '/' + to.path.split('/')[1]);
                     break
                 }
             }
             if(!flag) {
-                store.commit('add_tabs', {route: '/' + to.path.split('/')[1], name: to.name});
-                store.commit('set_active_index', '/' + to.path.split('/')[1]);
+                store.commit('add_staff_tabs', {route: '/' + to.path.split('/')[1], name: to.name});
+                store.commit('set_staff_active', '/' + to.path.split('/')[1]);
             }
         }
     }
