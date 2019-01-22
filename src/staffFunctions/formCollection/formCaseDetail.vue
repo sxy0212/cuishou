@@ -26,8 +26,8 @@
                 ></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="通话备注">
-            <el-input type="textarea" v-model="formTitle.remark" placeholder="请输入通话备注" :style="width"></el-input>
+        <el-form-item label="催收记录">
+            <el-input type="textarea" v-model="formTitle.remark" placeholder="请输入催收记录" :style="width"></el-input>
         </el-form-item>
         <el-form-item label="下次跟进">
             <el-date-picker
