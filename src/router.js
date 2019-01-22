@@ -333,7 +333,7 @@ let routes = [
     }]
   },
   {
-    path: '/staffCaseManagement/index',// 催收员
+    path: '/staffCaseManagement',// 催收员
     component: StaffLayout,
     children: [{
       path: '',
@@ -343,7 +343,7 @@ let routes = [
     }]
   },
   {
-    path: '/staffCaseDetails/index',// 案件详情
+    path: '/staffCaseDetails',// 案件详情
     component: StaffLayout,
     hidden: true,
     children: [
@@ -443,22 +443,37 @@ router.beforeEach((to, from, next) => {
     if ( to.path === '/' ) {//如果是/地址的话，跳到登录页面
       console.log('111')
       next('/login')
-    } else if( to.path == '/login' && user == 'sysadmin' ){//如果是从后台进入，并且要去的是登录页面的话，就到管理员首页去
+    } else if( to.path == '/login' && user == 'sysadmin'){
       console.log('222')
       next({ path: '/charts' })
+      // if( user == 'sysadmin '){//如果是从后台进入，并且要去的是登录页面的话，就到管理员首页去
+      //   console.log('222')
+      //   next({ path: '/charts' })
+      // }
+      // else if( !user ){//如果要去的是登录页面的话，管理员不存在，就到登录页面去
+      //   next('/login')
+      // }
+      // 如果管理员不存在，催收员存在，要去的是登录页面的话，就到登录页面去
     }else{
       console.log('333')
       next()
     }
 
 
-    if (!user && to.path != '/login' && !staff ) {//如果管理员不存在，催收员不存在，要去的不是登录页面的话，跳到登录页面
+    if ( !user && to.path != '/login' && !staff ) {//如果管理员不存在，催收员不存在，要去的不是登录页面的话，跳到登录页面
       console.log('444')
       next({ path: '/login' })
-    }else{
+    }else if(!user && to.path != '/login'){
+      console.log('999')
+      next({ path: '/login' })
+    }else if(to.path != '/login' && !staff){
+      console.log('777')
+      next({ path: '/login' })
+    }else {
       console.log('555')
       next()
     }
+    
   })
 
 export default router;

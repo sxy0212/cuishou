@@ -423,7 +423,7 @@ export default {
 			if( !!this.multipList.length ){
 				let ids = this.multipList.map(item=>item.id).join(',')
 				let conf = {
-					url : '/api/api_backend.php?r=case/case-color',
+					url : '/api/api_staff.php?r=case/case-color',
 					data:{
 						case_id : ids,
 						case_color : str

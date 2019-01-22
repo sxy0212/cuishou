@@ -118,7 +118,7 @@ export default {
             console.log('双击一行')
             console.log(router)
             router.push({
-                path:'/staffCaseDetails/index/',
+                path:'/staffCaseDetails/',
                 query:{
                     id:row.id
                 }
