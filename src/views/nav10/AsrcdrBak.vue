@@ -1279,6 +1279,35 @@ export default {
 .CallCount ul.up,.CallCount ul.down{ height: auto; overflow: hidden; display: block}
 .CallCount ul.up li,.CallCount ul.down li{ float: left;}
 .CallCount ul.down li .timep .el-input__inner{ width: 190px}
+/*测试对话样式*/
+.dialogueList ul li{position: relative;font-size: 0;margin-bottom: 10px;padding-left: 60px;min-height: 68px; height: auto; overflow: hidden;}
+.dialogueList ul li .el-button{ padding: 5px 10px;font-size: 12px}
+.layim-chat-text, .layim-chat-user {display: inline-block;vertical-align: top;font-size: 14px;}
+.layim-chat-user {position: absolute;left: 3px;}
+.layim-chat-user img {width: 40px;height: 40px;border-radius: 100%;}
+.layim-chat-user cite {position: absolute;left: 60px;top: -2px;width: 500px;line-height: 24px;font-size: 12px;white-space: nowrap;color: #999;text-align: left;font-style: normal;}
+.layim-chat-user cite i {padding-left: 15px;font-style: normal;}
+.layim-chat-text {position: relative;line-height: 22px;margin-top: 25px;padding: 8px 15px;background-color: #e2e2e2; border-radius: 3px;color: #333;word-break: break-all;max-width: 462px\9;}
+.layim-chat-text:after {content: '';position: absolute;
+    left: -10px;top: 13px;width: 0;height: 0;border-style: solid dashed dashed;border-color: #e2e2e2 transparent transparent;overflow: hidden;border-width: 10px;
+}
+.dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px;
+    overflow-y: auto;  padding: 15px; background-size:cover;  }
+.DialogueMain .dialogue {height:500px; background: #FFF}
+.DialogueInput{ padding-top: 10px}
+.dialogueList ul .layim-chat-mine {text-align: right;padding-left: 0;padding-right: 60px;min-height:100px}
+.dialogueList ul .layim-chat-mine1 {min-height:120px}
+.dialogueList ul .layim-chat-mine .layim-chat-user {left: auto;right: 3px;}
+.dialogueList ul .layim-chat-mine .layim-chat-user cite {left: auto;right: 60px;text-align: right;}
+.dialogueList ul .layim-chat-mine .layim-chat-user cite i {padding-left: 0;padding-right: 15px;}
+.dialogueList ul .layim-chat-mine .layim-chat-text {margin-left: 0;text-align: left;background-color: #5FB878;color: #fff;}
+.dialogueList ul .layim-chat-mine .layim-chat-text:after {left: auto;right: -10px;border-top-color: #5FB878;}
+
+.DialogueMain .el-dialog__body{ padding: 10px 20px;}
+.DialogueMain2 .el-dialog__body{ padding: 10px 0px;}
+
+
+.PredictAdd{height: auto; overflow: hidden; margin-bottom: 20px;}
 </style>
 
   
