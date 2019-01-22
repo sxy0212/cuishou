@@ -522,7 +522,7 @@ export default {
         },
       methods: {
           initShow(){
-                const url = "/api_backend.php?r=asroperate/code-detection"
+                const url = "/api/api_backend.php?r=asroperate/code-detection"
                 const conf = {
                     url,
                     success:(data)=>{
@@ -680,7 +680,7 @@ export default {
                     data.todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
                 }
                 data.level_id = this.value4
-                const url = "/api_backend.php?r=asrcdr-log/records"
+                const url = "/api/api_backend.php?r=asrcdr-log/records"
                 const conf = {
                     url,
                     data,
@@ -728,7 +728,7 @@ export default {
                 }
             },
             addTagSave(){
-                const url = "/api_backend.php?r=asrcdr-log/lable"
+                const url = "/api/api_backend.php?r=asrcdr-log/lable"
                 const conf = {
                     url,
                     data:{
@@ -756,7 +756,7 @@ export default {
                     cancelButtonText: '取消',
                     type: 'warning'
                     }).then(() => {
-                        const url = "/api_backend.php?r=asrcdr-log/lable"
+                        const url = "/api/api_backend.php?r=asrcdr-log/lable"
                         const conf = {
                             url,
                             data:{
@@ -784,7 +784,7 @@ export default {
                 this.editTagData.id = row.id              
             },
             editTagSave(){
-                const url = "/api_backend.php?r=asrcdr-log/lable"
+                const url = "/api/api_backend.php?r=asrcdr-log/lable"
                 const conf = {
                     url,
                     data:{
@@ -841,7 +841,7 @@ export default {
                 data.level_id = this.value4
                 data.type = "0"
                 const conf = {
-                    url:"/api_backend.php?r=asrcdr-allot/allot",
+                    url:"/api/api_backend.php?r=asrcdr-allot/allot",
                     data,
                     success:(data)=>{
                         if(data.statusCode == 1){
@@ -870,7 +870,7 @@ export default {
             //         }).then(() => {
             //             const fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
             //             const todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-            //             window.open('/api_backend.php?r=asrcdr-log/records&action=zipwav&task_coding='+this.form.task_coding+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&call_result_number='+this.form.call_result_number+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel)
+            //             window.open('/api/api_backend.php?r=asrcdr-log/records&action=zipwav&task_coding='+this.form.task_coding+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&call_result_number='+this.form.call_result_number+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel)
             //     })
             // },
             // open1() {
@@ -884,7 +884,7 @@ export default {
             //         }).then(() => {
             //             var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
             //             var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-            //             window.open('/api_backend.php?r=asrcdr-log/records&action=zipwav&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel)
+            //             window.open('/api/api_backend.php?r=asrcdr-log/records&action=zipwav&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel)
             //     })
             //     }
             // },
@@ -918,7 +918,7 @@ export default {
                     }).then(() => {
                         var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
                         var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-                        window.open('/api_backend.php?r=asrcdr-log/records&action='+y+'&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel+'&company_name='+this.form.company_name)
+                        window.open('/api/api_backend.php?r=asrcdr-log/records&action='+y+'&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel+'&company_name='+this.form.company_name)
                 })
                 }
             },
@@ -933,7 +933,7 @@ export default {
                         var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
                         var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
                         var _this = this
-                            axios.get('/api_backend.php?r=asrcdr-log/records', {
+                            axios.get('/api/api_backend.php?r=asrcdr-log/records', {
                                 params: {
                                     action: x,
                                     task_coding:this.form.task_coding,
@@ -1007,7 +1007,7 @@ export default {
                 this.downloadDate.path = row.path
                 this.downloadDate.dst  = row.dst
                 this.CallCount.Plays = true
-                axios.get('/api_backend.php?r=asrcdr-taping/wave-record', {
+                axios.get('/api/api_backend.php?r=asrcdr-taping/wave-record', {
                         params: {
                             action: "play",
                             path:row.path,
@@ -1033,7 +1033,7 @@ export default {
             // 下载语音
             download(){
                 if(this.downloadDate.path){
-                    window.open("/api_backend.php?r=asrcdr-taping/wave-record&action=download&path="+this.downloadDate.path+"&phone="+this.downloadDate.dst)
+                    window.open("/api/api_backend.php?r=asrcdr-taping/wave-record&action=download&path="+this.downloadDate.path+"&phone="+this.downloadDate.dst)
                 }else{
                     this.$alert("暂无录音")
                 }
@@ -1043,7 +1043,7 @@ export default {
                 if(score == '0'){
                     score = 1
                 }
-                const url = "/api_backend.php?r=asrcdr-log/edit"
+                const url = "/api/api_backend.php?r=asrcdr-log/edit"
                 const conf = {
                     url,
                     data:{
@@ -1068,7 +1068,7 @@ export default {
             },
              // 客户跟进情况
              customerFollowSave(id){
-                const url = "/api_backend.php?r=customer-followup/edit"
+                const url = "/api/api_backend.php?r=customer-followup/edit"
                 const conf = {
                     url,
                     data:{
@@ -1111,7 +1111,7 @@ export default {
                 data.level_id = this.value4
                 data.type = "0"
                 data.ava_count = "1"
-                const url = "/api_backend.php?r=asrcdr-recycle/records"
+                const url = "/api/api_backend.php?r=asrcdr-recycle/records"
                 const conf = {
                 url,
                 data,
@@ -1143,7 +1143,7 @@ export default {
                         data.batch_name = this.distributionTask.batch_name
                         data.level_id = this.value4
                         data.type = "0"
-                        const url = "/api_backend.php?r=asrcdr-recycle/records"
+                        const url = "/api/api_backend.php?r=asrcdr-recycle/records"
                         const conf = {
                         url,
                         data,
@@ -1184,7 +1184,7 @@ export default {
             },
             getTemplet(){//获取短信模板
                 const conf = {
-                    url:"/api_backend.php?r=sms/sms-tpl",
+                    url:"/api/api_backend.php?r=sms/sms-tpl",
                     success:(data)=>{
                         if( Number(data.statusCode) === 1 ){
                             this.messageList = data.info
@@ -1202,7 +1202,7 @@ export default {
             getMessage(index){
                 this.form1.sms_id = this.messageList[index].id
                 const conf = {
-                    url:"/api_backend.php?r=sms/sms-link",
+                    url:"/api/api_backend.php?r=sms/sms-link",
                     data:{
                         id:this.messageList[index].id
                     },
@@ -1235,7 +1235,7 @@ export default {
                 data.sms_id = this.form1.sms_id
                 data.content = this.form1.content
                 const conf = {
-                    url:"/api_backend.php?r=sms/send-sms",
+                    url:"/api/api_backend.php?r=sms/send-sms",
                     data:data,
                     success:(data)=>{
                         if( Number(data.statusCode) === 1 ){
