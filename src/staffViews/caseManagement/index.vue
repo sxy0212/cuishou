@@ -491,7 +491,7 @@ export default {
 				+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 				'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
 				'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
-				'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+				'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&call_result_number'+this.conditions.call_result_number)
 			}else if( this.whichOne == 'choosen' ){	//导出选中
 				let ids =  this.multipList.map(item=>item.id).join(',')
 				window.open('/api/api_staff.php?r=case/case-export&fields='+ fields +'&export_type=selected&case_id_str=' + ids)
@@ -516,7 +516,7 @@ export default {
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
 			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
-			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&call_result_number'+this.conditions.call_result_number)
 		},
 		exportHistory(){ //导出催收记录
 			window.open('/api/api_staff.php?r=case/case-export&export_type=searchedrecord&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
@@ -524,7 +524,7 @@ export default {
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
 			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
 			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
-			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date)
+			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&call_result_number'+this.conditions.call_result_number)
 		}
 	}
 }
