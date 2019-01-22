@@ -6,7 +6,7 @@
                     <!--条件查询form提交-->
                     <el-form ref="form" :model="form" label-width="90px" :inline="true">
                         <el-form-item label="案件编号：">
-                            <el-select v-model="form.case_id" placeholder="请选择任务编号" @change="changeSrc" style="width:200px;">
+                            <el-select v-model="form.case_id" placeholder="请选择任务编号" @change="changeSrc" style="width:200px;" filterable>
                                 <el-option  v-for="(item,index) in initSearchData.case_name" :key="index" :label="item.case_code" :value="item.id" ></el-option>
                             </el-select>
                         </el-form-item>
@@ -21,7 +21,7 @@
                             <el-input v-model="form.dst" style="width:200px;"></el-input>
                         </el-form-item>
                         <el-form-item label="所属批次：">
-                            <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:200px;">
+                            <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:200px;" filterable>
                                 <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in initSearchData.batch" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
@@ -618,9 +618,9 @@ export default {
                         this.options = data.info.level_list
                         this.customerFollow.options = data.info.followup_state_list //客户跟进的数据
                         this.total = parseInt(data.info.total_count)
-                        this.initSearchData.case_name = data.info.case_name
+                        this.initSearchData.case_name = data.info.case_data
                        this.initSearchData.case_name.unshift({id:"",case_code:"全部"})
-                        this.initSearchData.batch = data.info.batch
+                        this.initSearchData.batch = data.info.batch_data
                         this.initSearchData.batch.unshift({batch_name: "全部",id:"" })
                         this.tagData = data.info.asrType     //标签管理里数据
                         for(let i = 0;i <data.info.staff.length;i++){
