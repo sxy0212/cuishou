@@ -440,8 +440,8 @@ router.beforeEach((to, from, next) => {
     let staff = getCookie('staff')
     
     
-    if ( to.path === '/' ) {//如果是/地址的话，跳到登录页面
-      console.log('111')
+    if ( to.path === '/') {//如果是/地址的话，跳到登录页面
+      // console.log('111')
       next('/login')
     } else if( to.path == '/login' && user == 'sysadmin'){
       console.log('222')
@@ -467,6 +467,12 @@ router.beforeEach((to, from, next) => {
         }
       }else{
         next()
+        if(to.path =="/login"){
+          next({ path: '/login' })
+        }else{
+          next({ path: '/login' })
+        }
+        
       }
     }else {
       next()

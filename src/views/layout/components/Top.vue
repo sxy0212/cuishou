@@ -97,7 +97,7 @@ import store from '@/vuex/store.js'
 								store.commit('clearOptions')
 								this.$router.push({path:'/login'})
 								setCookie('user',"")
-								location.reload()
+								// location.reload()
 							}else{
 								this.$alert(data.message)
 							}
