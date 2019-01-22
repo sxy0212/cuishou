@@ -34,7 +34,6 @@ export default {
         }
       })
       const first = matched[0]
-      console.log(first)
       if (first && first.name !== 'dashboard') {
         matched = [{ path: '/dashboard', meta: { title: '导航栏' }}].concat(matched)
       }

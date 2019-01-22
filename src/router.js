@@ -436,38 +436,27 @@ const router = new Router({
       routes
 })
 router.beforeEach((to, from, next) => {
-    let user = getCookie('user');
-    let staff = getCookie('staff');
+    let user = getCookie('user')
+    let staff = getCookie('staff')
     
-    // if( !user ){//如果用户不存在的话，返回登录页面
-    //   next('/login')
-    // }
-
-    // console.log(to.path)
+    
     if ( to.path === '/' ) {//如果是/地址的话，跳到登录页面
       console.log('111')
       next('/login')
-    } else if( to.path=='/login' ){
-      if( user=='sysadmin' ){//如果管理员存在，并且要去的是登录页面的话，就到管理员首页去
-        console.log('222')
-        next({ path: '/charts' })
-      }
+    } else if( to.path == '/login' && user == 'sysadmin' ){//如果是从后台进入，并且要去的是登录页面的话，就到管理员首页去
+      console.log('222')
+      next({ path: '/charts' })
     }else{
       console.log('333')
       next()
     }
-    // if( staff=='yes' && to.path=='/login'){
-    //   next({ path: '/dashboard' })
-    // }else{
-    //   next()
-    // }
-    
 
-    if (!user && to.path != '/login' && to.path != '/dashboard') {//如果用户不存在，并且想要去的界面不是登录的话，返回登录页面
+
+    if (!user && to.path != '/login' && !staff ) {//如果管理员不存在，催收员不存在，要去的不是登录页面的话，跳到登录页面
       console.log('444')
       next({ path: '/login' })
     }else{
-      console.log('666')
+      console.log('555')
       next()
     }
   })
