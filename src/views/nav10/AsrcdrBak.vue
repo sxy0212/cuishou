@@ -333,7 +333,7 @@
                           <p v-else="item.user==1" style="margin:0"><i>{{item.create_time}} </i>用户</p>
                           <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
                         </div> 
-                        <div v-if="item.user==0" style="float:left;margin-top:20px" >
+                        <div v-if="item.user==0" style="float:left;margin-top:20px" v-show="item.path">
                           <img src="static/image/textListen.png"  @click="textListen(item.path)" style="width:23px">
                         </div>
                         <div v-if="item.user==1" style="float:right;margin-top:20px" v-show="item.path">
