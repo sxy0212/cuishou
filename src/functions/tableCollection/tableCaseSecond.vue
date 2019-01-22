@@ -2,7 +2,7 @@
     <el-table border :data="tableSecond" style="width: 100%">
         <el-table-column label="姓名" prop="name"></el-table-column>
         <el-table-column label="关系" prop="relation"></el-table-column>
-        <el-table-column label="电话" prop="phone"></el-table-column>
+        <el-table-column label="电话" prop="phone" width="119"></el-table-column>
         <el-table-column label="创建者" prop="creater"></el-table-column>
         <el-table-column label="创建时间" prop="create_time" width="160"></el-table-column>
         <el-table-column label="催收类型" prop="type">
@@ -14,10 +14,7 @@
                 <span v-show='scope.row.type==6'>机器人呼叫 </span>
             </template>
         </el-table-column>
-        <el-table-column prop="record_status" label="呼叫状态">
-            <template slot-scope='scope' >
-                <span v-show='!scope.row.id'>未接通</span>
-            </template>
+        <el-table-column prop="record_status" label="呼叫状态" width="149">
         </el-table-column>
         <el-table-column label="通话记录" prop="type" >
             <template slot-scope='scope' >
