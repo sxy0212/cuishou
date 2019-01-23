@@ -26,7 +26,6 @@ export default {
     methods: {
         tabClick (tab) {
             let path = this.staffActive;
-            console.log(path)
             if(this.staffActive === '/dashboard') {
                // path = this.staffActive + '/' + this.$store.state.userInfo.name; 
             }

@@ -15,14 +15,6 @@
 import store from '@/vuex/store.js'
 export default {
     name: 'NaveTab',
-    data () {
-        return {
-            
-        }   
-    },
-    mounted() {
-        
-    },
     methods: {
         tabClick (tab) {
             let path = this.activeIndex;

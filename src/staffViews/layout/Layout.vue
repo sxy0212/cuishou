@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container>
-        <el-header style="background-color: #23262e;color:white; padding:0;">
+        <el-header style="position:relative;background-color: #23262e;color:white; padding:0;">
           <navbar/><!-- 导航栏 -->
         </el-header>
         <el-aside class="sidebar-container" style="margin-top:60px;">
