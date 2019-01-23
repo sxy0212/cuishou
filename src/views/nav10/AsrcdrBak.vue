@@ -415,7 +415,7 @@ export default {
                 dcontext:"",    //呼叫类型
                 // key:"",   //关键字
                 // busy_tel:false,//未接通
-                fromdate:new Date(new Date().setHours(0, 0, 0, 0)-24*60*60*1000), //通话时间最小范围
+                fromdate:new Date(new Date().setHours(0, 0, 0, 0)), //通话时间最小范围
                 todate: new Date(new Date().setHours(23, 59,59, 59)), //通话时间最大范围 
                 // keyword:"" ,//标签关键字
                 call_result_number:"1",   //通话类型
