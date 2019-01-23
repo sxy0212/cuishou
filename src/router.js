@@ -443,17 +443,11 @@ router.beforeEach((to, from, next) => {
     if ( to.path === '/') {//如果是/地址的话，跳到登录页面
       // console.log('111')
       next('/login')
-    } else if( to.path == '/login' && user == 'sysadmin'){
+    } else if( to.path == '/login' && user == 'sysadmin'){  //如果是从后台进入，并且要去的是登录页面的话，就到管理员首页去
       console.log('222')
       next({ path: '/charts' })
-      // if( user == 'sysadmin '){//如果是从后台进入，并且要去的是登录页面的话，就到管理员首页去
-      //   console.log('222')
-      //   next({ path: '/charts' })
-      // }
-      // else if( !user ){//如果要去的是登录页面的话，管理员不存在，就到登录页面去
-      //   next('/login')
-      // }
-      // 如果管理员不存在，催收员存在，要去的是登录页面的话，就到登录页面去
+      
+     
     }else{
       console.log('333')
       next()
@@ -465,6 +459,14 @@ router.beforeEach((to, from, next) => {
     }else{
       next()
     }
+    // if( !user && staff && to.path == '/login' ){  // 如果管理员不存在，催收员存在，要去的是登录页面的话，就到登录页面去
+    //   console.log('888')
+    //   next({path:'/login'})
+    // }else {
+    //   console.log('999')
+    //   next()
+    // }
+     
 
     // if( !user ){
     //   if( !staff ){
