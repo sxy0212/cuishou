@@ -11,10 +11,10 @@
       active-text-color="#409EFF"
     >
       <el-menu-item index="/dashboard" >
-        <span slot="title">首页</span>
+        <i class="fa fa-home"></i><span slot="title">首页</span>
       </el-menu-item>
       <el-menu-item index="/staffCaseManagement" >
-        <span slot="title">案件管理</span>
+        <i class="fa fa-address-card-o"></i><span slot="title">案件管理</span>
       </el-menu-item>
     </el-menu>
 </template>
@@ -67,3 +67,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+.el-menu-item .fa+span{
+  margin-left:5px;
+}
+</style>
+
