@@ -10,14 +10,13 @@
       text-color="#bfcbd9"
       active-text-color="#409EFF"
     >
-      <!-- <el-menu-item index="/dashboard" > -->
-        <!-- <span slot="title">首页</span> -->
-      <!-- </el-menu-item> -->
+      <el-menu-item index="/dashboard" >
+        <span slot="title">首页</span>
+      </el-menu-item>
       <el-menu-item index="/staffCaseManagement" >
         <span slot="title">案件管理</span>
       </el-menu-item>
     </el-menu>
-  <!-- </el-scrollbar> -->
 </template>
 
 <script>
@@ -30,14 +29,28 @@ export default {
   },
   data(){
     return {
-      default_url:"/staffInfo/index"
+      default_url:"/dashboard"
     }
   },
   mounted(){
-    console.log(router.path)
+    if( this.$route.name != "" ){
+        if(this.$route.path !== '/dashboard' && this.$route.path.indexOf('dashboard') === -1) {
+          store.commit('add_staff_tabs', {route: '/dashboard', name: '首页'}); 
+          store.commit('add_staff_tabs', {route: this.$route.path , name: this.$route.name });
+          store.commit('set_staff_active', this.$route.path);
+          store.commit('save_index', this.$route.query.num); 
+        
+        } else {
+          store.commit('add_staff_tabs', {route: '/dashboard', name: '首页'});
+          store.commit('set_staff_active', '/dashboard');
+          this.$router.push('/dashboard');
+        }
+      }
+      console.log(this.$route.path)
+      this.default_url = this.$route.path
   },
   computed: {
-    isCollapse(){
+    isCollapse(){ 
       return false
     }
   },
@@ -46,11 +59,10 @@ export default {
       this.default_url = this.$route.path
     },
     handleSelect(key,path){
-      console.log('侧边栏点击')
       router.push({
         path:key
       })
-      store.commit('save_index', key)
+      store.commit('save_staff_index', key)
     },
   }
 }

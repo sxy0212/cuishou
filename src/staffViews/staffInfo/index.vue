@@ -1,12 +1,6 @@
 <template>
     <div>
-        <div>催收员：{{info.staff}}</div>
-        <div>登陆吗：{{info.user_name}}</div>
-        <div>编号{{info.staff_id}}</div>
-        <div>真实姓名：{{info.true_name}}</div>
-        <div>部门编号：{{info.department_id}}</div>
-        <div>机构编号：{{info.company_id}}</div>
-        <div>分机号：{{info.extension}}</div>
+        <h2>欢迎{{info.user_name}}的登陆!</h2>
     </div>
 </template>
 
@@ -43,3 +37,7 @@ export default {
     },
 }
 </script>
+<style scoped>
+h2{padding:20px;}
+</style>
+

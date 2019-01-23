@@ -55,6 +55,7 @@ import store from '@/vuex/store.js'
           this.$router.push('/charts');
         }
       }
+      console.log(this.$route.path)
       this.default_url = this.$route.path
     },
     methods:{

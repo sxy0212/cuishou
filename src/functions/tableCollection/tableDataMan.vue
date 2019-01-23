@@ -103,7 +103,6 @@ export default {
         this.$emit('addToTask',val)
       },
       rowDblclick(row,event){//单击
-        store.commit('changeBatchId', row.id)
         router.push( {
           path:'/caseManagement/',
           query:{

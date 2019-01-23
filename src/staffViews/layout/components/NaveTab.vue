@@ -21,7 +21,7 @@ export default {
         }   
     },
     mounted() {
-        console.log(store)
+        // console.log(store)
     },
     methods: {
         tabClick (tab) {

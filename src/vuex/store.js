@@ -18,15 +18,12 @@ const store =  new Vuex.Store({
         // 管理员
         options: [],
         activeIndex: '/charts',
-        userInfo: {},
         menuIndex: '0',
-        caseBatchId:'',//案件管理当前批次
-        menusList:'',//侧边连数据
-
+        
         // 催收员
         staffActive:'/dashboard',
         staffOptions:[],
-
+        menuStaffIndex:'0'
     },
     mutations : {
         // 管理员
@@ -53,12 +50,6 @@ const store =  new Vuex.Store({
         set_active_index (state, index) {
             state.activeIndex = index;
         },
-        save_detail_info (state, info) {// 设置详情信息
-            state.userInfo = info;
-        },
-        changeBatchId( state, info ){
-            state.caseBatchId = info
-        },
         clearOptions( state ){//退出登录时，清空tab框
             state.options = []
         },
@@ -83,6 +74,22 @@ const store =  new Vuex.Store({
             if(data.name != ""){
                 state.staffOptions.push(data) 
             }
+        },
+        save_staff_index(state, data){
+            state.menuStaffIndex=data?data:'0';
+        },
+        del_staff_tabs (state,route) {
+            let index = 0;
+            for (let option of state.staffOptions) {
+                if(option.route === route){
+                    break;
+                }
+                index++;
+            }
+            this.state.staffOptions.splice(index, 1);
+        },
+        clearStaffOptions( state ){//退出登录时，清空tab框
+            state.staffOptions = []
         },
         
     }

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import store from '@/vuex/store.js'
 import { mapGetters } from 'vuex'
 import Hamburger from '@/components/staffComponents/Hamburger'
 import {axiosRequest,delCookie,setCookie} from '@/assets/js/Yt.js'
@@ -45,8 +46,9 @@ export default {
                 url,
                 success:(data)=>{
                   if(data.statusCode == 1){
-                      this.$router.push({path:'/login'})
-                      setCookie('staff',"")
+                    store.commit('clearStaffOptions')
+                    this.$router.push({path:'/login'})
+                    setCookie('staff',"")
                   }else{
                     this.$alert(data.message)
                   }
