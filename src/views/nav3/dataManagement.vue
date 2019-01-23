@@ -40,6 +40,7 @@
             v-on:saveFn="init($event)"
             v-on:clearId="changeId($event)"
             v-on:clearFormTitle="clearFormTitle($event)"
+            v-on:changeImportNow="changeImportNow($event)"
             :id="id"
             :action="action"
             :title = "bannerTitle"
@@ -49,6 +50,7 @@
             :typeList='typeList'
             :clientList='clientList'
             :templateList='templateList'
+            :importNow='importNow'
         ></edit-dialog>
     </el-dialog>
     <el-dialog title="下载模板" :visible.sync="addDown" v-move>
@@ -63,6 +65,15 @@
             v-on:sureToAddTask='sureToAddTask($event)'
         ></task-dialog>
     </el-dialog>
+
+    <!-- 导入文件时出现的正在上传提示 -->
+    <el-dialog title="上传文件" :visible.sync="importNow" :show-close="false" :close-on-click-modal="false">
+        <div class="option" style="height:130px">
+            <img  src="@/assets/images/import.gif" alt="" style="float:left"> 
+            <div style="float:left">文件正在上传中,请耐心等待......</div>
+        </div>
+    </el-dialog>
+    
   </div>
 </template>
 <script>
@@ -131,7 +142,8 @@ export default {
             formTask:{//添加外呼数据
                 value:'',
                 type:'1'
-            }
+            },
+            importNow:false,
         }
     },
     activated(){
@@ -388,6 +400,9 @@ export default {
                 }
             }
             axiosRequest(conf)
+        },
+        changeImportNow(val){   // 上传动画
+            this.importNow = val
         }
         
     }

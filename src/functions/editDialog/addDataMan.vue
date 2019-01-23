@@ -87,7 +87,8 @@ export default {
         'typeList',
         'clientList',
         'templateList',
-        'action'
+        'action',
+        'importNow'//上传
     ],
     computed:{
         formShow(){
@@ -109,11 +110,13 @@ export default {
             this.$emit("clearFormTitle")
         },
         submitUpload(){
+            this.$emit("changeImportNow",true)
+            this.$emit('changeAddNow',false)
             this.$refs.upload.submit()
         },
         successFn(res,file, fileList) {
-            if(res.statusCode == 1){
-                this.$emit('changeAddNow',false)
+            if( res.statusCode == 1 ){
+                this.$emit("changeImportNow",false)
                 this.$emit('init')
                 Message({
                     message: res.message,
