@@ -3,8 +3,8 @@
     <div style="margin-bottom:10px;">
       <el-button type="success" @click="addBranch" style="diaplay:inline-block;float:left"><i class="fa fa-plus"></i>添加部门</el-button>
       <el-button type="success" @click="addMember" style="diaplay:inline-block;float:left">添加成员</el-button>
-       <el-button type="success" @click="exportMember" style="diaplay:inline-block;float:left">导出成员</el-button>
-       <el-upload style="diaplay:inline-block;float:left"
+      <el-button type="success" @click="exportMember" style="diaplay:inline-block;float:left">导出成员</el-button>
+      <el-upload style="diaplay:inline-block;float:left"
             class="upload-demo"
             action="/api/api_backend.php?r=collect-depart/staff-batch-add"
             :on-success="successFile"
@@ -20,17 +20,17 @@
     <div style="margin-top:25px;display: flex;justify-content: space-between;">
       <div style="width:18%;" class="deparTree">
         <el-tree :data="Dates" node-key="id"  accordion :expand-on-click-node="false" :props="defaultProps2">
-            <span class="custom-tree-node" slot-scope="{ node, data }" style="display:block;width:100%">
-                <el-input v-model="showName" v-show="data.id == showId" style="width:53%;height:20px;float:left" @keyup.enter.native="editSave" @blur="editSave"></el-input>
-                <span v-show="data.id != showId" class="node-word" :title="node.label">{{ node.label }}</span>
-                <span style="float:right;margin-right:10px">
-                    <el-button type="text" size="mini" @click="edit(node, data)" style="padding:0">
-                      <i class="fa fa-pencil"></i>编辑
-                    </el-button>
-                    <el-button type="text" size="mini" @click="remove(data.id)" style="padding:0">
-                      <i class="el-icon-delete"></i>删除
-                    </el-button>
-                </span>
+          <span class="custom-tree-node" slot-scope="{ node, data }" style="display:block;width:100%">
+              <el-input v-model="showName" v-show="data.id == showId" style="width:53%;height:20px;float:left" @keyup.enter.native="editSave" @blur="editSave"></el-input>
+              <span v-show="data.id != showId" class="node-word" :title="node.label">{{ node.label }}</span>
+              <span style="float:right;margin-right:10px">
+                <el-button type="text" size="mini" @click="edit(node, data)" style="padding:0">
+                  <i class="fa fa-pencil"></i>编辑
+                </el-button>
+                <el-button type="text" size="mini" @click="remove(data.id)" style="padding:0">
+                  <i class="el-icon-delete"></i>删除
+                </el-button>
+              </span>
             </span>
         </el-tree>
       </div>
@@ -52,41 +52,34 @@
             </template>
           </el-table-column>
 				</el-table>
-        
-        </div>
-        
-         <div class="block" style="background:#f2f2f2;padding-left:0px;padding-right:0px;"> 
-          <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page="curr"
-              :page-sizes="[10, 20, 25, 30]"
-              :page-size="page_size"
-              layout="total, sizes, prev, pager, next, jumper"
-              :total="total">
-          </el-pagination>
       </div>
+      <div class="block" style="background:#f2f2f2;padding-left:0px;padding-right:0px;"> 
+        <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="curr"
+            :page-sizes="[10, 20, 25, 30]"
+            :page-size="page_size"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total">
+        </el-pagination>
       </div>
-      
     </div>
+  </div>
     
     <!-- 添加部门弹框 -->
     <div class="dial-header DialogueMain2">
       <el-dialog title="添加部门" :visible.sync="node_operate" v-move>
         <el-form ref="form" :inline="true"  label-width="80px" >
-          <div>
-            <el-form-item label="上级部门:">
-              <el-select v-model="form.parent_id" placeholder="请选择类型">
-                <el-option label="一级目录" value="0"></el-option>
-                <el-option v-for="(item,index) in Dates" :label="item.depart_name" :value="item.id" :key="index"></el-option>
-              </el-select> 
-            </el-form-item>
-          </div>
-          <div>
-            <el-form-item label="部门名称:">
-                <el-input v-model="form.depart_name"></el-input>
-            </el-form-item> 
-          </div>
+          <el-form-item label="上级部门:" style="width:100%">
+            <el-select v-model="form.parent_id" placeholder="请选择类型" style="width:201px;">
+              <el-option label="一级目录" value="0"></el-option>
+              <el-option v-for="(item,index) in Dates" :label="item.depart_name" :value="item.id" :key="index"></el-option>
+            </el-select> 
+          </el-form-item>
+          <el-form-item label="部门名称:" style="width:100%">
+            <el-input v-model="form.depart_name"></el-input>
+          </el-form-item> 
         </el-form>
         <div slot="footer" class="dialog-footer">     
             <el-button type="primary" @click="addBranchSave">确认保存</el-button>
@@ -98,29 +91,21 @@
     <div class="dial-header DialogueMain2">
       <el-dialog title="添加成员" :visible.sync="addMemberDio" v-move>
         <el-form ref="formMember" :inline="true"  label-width="80px" >
-          <div>
-            <el-form-item label="上级部门:">
-              <el-select v-model="formMember.depart_id" placeholder="请选择类型">
-                <el-option v-for="(item,index) in Dates" :label="item.depart_name" :value="item.id" :key="index"></el-option>
-                <el-option v-for="item in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
-              </el-select> 
-            </el-form-item>
-          </div>
-          <div>
-            <el-form-item label="真实姓名:">
-                <el-input v-model="formMember.true_name"></el-input>
-            </el-form-item> 
-          </div>
-          <div>
-            <el-form-item label="联系方式:">
-                <el-input v-model="formMember.phone"></el-input>
-            </el-form-item> 
-          </div>
-          <div>
-            <el-form-item label="登录密码:">
-                <el-input v-model="formMember.password"></el-input>
-            </el-form-item> 
-          </div>
+          <el-form-item label="上级部门:" style="width:100%">
+            <el-select v-model="formMember.depart_id" placeholder="请选择类型" style="width:201px;">
+              <el-option v-for="(item,index) in Dates" :label="item.depart_name" :value="item.id" :key="index"></el-option>
+              <el-option v-for="item in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
+            </el-select> 
+          </el-form-item>       
+          <el-form-item label="真实姓名:" style="width:100%">
+              <el-input v-model="formMember.true_name"></el-input>
+          </el-form-item>        
+          <el-form-item label="联系方式:" style="width:100%">
+              <el-input v-model="formMember.phone"></el-input>
+          </el-form-item>        
+          <el-form-item label="登录密码:" style="width:100%">
+              <el-input v-model="formMember.password"></el-input>
+          </el-form-item>         
         </el-form>
         <div slot="footer" class="dialog-footer">     
             <el-button type="primary" @click="addMemberSave">确认保存</el-button>
@@ -132,34 +117,24 @@
     <div class="dial-header DialogueMain2">
       <el-dialog title="编辑" :visible.sync="addMemberDioEdit" v-move>
         <el-form ref="formMemberEdit" :inline="true"  label-width="80px" >
-          <div>
-            <el-form-item label="上级部门:">
-              <el-select v-model="formMemberEdit.depart_id" placeholder="请选择类型">
-                <el-option v-for="(item,index) in DatesEdit" :label="item.depart_name" :value="item.id" :key="index"></el-option>
-                 <el-option v-for="item in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
-              </el-select> 
-            </el-form-item>
-          </div>
-          <div>
-            <el-form-item label="真实姓名:">
-                <el-input v-model="formMemberEdit.true_name"></el-input>
-            </el-form-item> 
-          </div>
-          <div>
-            <el-form-item label="联系方式:">
-                <el-input v-model="formMemberEdit.phone"></el-input>
-            </el-form-item> 
-          </div>
-          <div>
-            <el-form-item label="登录账号:">
-                <el-input v-model="formMemberEdit.login_name" disabled></el-input>
-            </el-form-item> 
-          </div>
-          <div>
-            <el-form-item label="登录密码:">
-                <el-input v-model="formMemberEdit.password"></el-input>
-            </el-form-item> 
-          </div>
+          <el-form-item label="上级部门:" style="width:100%">
+            <el-select v-model="formMemberEdit.depart_id" placeholder="请选择类型" style="width:201px;">
+              <el-option v-for="(item,index) in DatesEdit" :label="item.depart_name" :value="item.id" :key="index"></el-option>
+                <el-option v-for="item in Dates" v-if="item.child.length>0" :label="item.child[0].depart_name" :value="item.child[0].id" :key="item.id"></el-option>
+            </el-select> 
+          </el-form-item>
+          <el-form-item label="真实姓名:" style="width:100%">
+              <el-input v-model="formMemberEdit.true_name"></el-input>
+          </el-form-item> 
+          <el-form-item label="联系方式:" style="width:100%">
+              <el-input v-model="formMemberEdit.phone"></el-input>
+          </el-form-item> 
+          <el-form-item label="登录账号:" style="width:100%">
+              <el-input v-model="formMemberEdit.login_name" disabled></el-input>
+          </el-form-item> 
+          <el-form-item label="登录密码:" style="width:100%">
+              <el-input v-model="formMemberEdit.password"></el-input>
+          </el-form-item> 
         </el-form>
         <div slot="footer" class="dialog-footer">     
             <el-button type="primary" @click="addMemberSaveEdit">确认保存</el-button>
