@@ -486,6 +486,9 @@ export default {
 		exportTo(){	
 			let fields = this.fieldsList.filter(item=>item.choose).map(every=>every.field_english_name).join(',')
 			if( this.whichOne == 'all' ){	//导出查询
+				if( typeof( this.conditions.call_result_number ) == 'undefined' ){
+					this.conditions.call_result_number = ''
+				}
 				window.open('/api/api_staff.php?r=case/case-export&export_type=searched&fields='+fields+'&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 				+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 				+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
@@ -511,6 +514,9 @@ export default {
 			}
 		},
 		exportTel(){	// 导出电话
+			if( typeof( this.conditions.call_result_number ) == 'undefined' ){
+				this.conditions.call_result_number = ''
+			}
 			window.open('/api/api_staff.php?r=case/case-export&export_type=selectedphone&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
@@ -519,6 +525,9 @@ export default {
 			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&call_result_number='+this.conditions.call_result_number)
 		},
 		exportHistory(){ //导出催收记录
+			if( typeof( this.conditions.call_result_number ) == 'undefined' ){
+				this.conditions.call_result_number = ''
+			}
 			window.open('/api/api_staff.php?r=case/case-export&export_type=searchedrecord&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
 			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
 			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
