@@ -123,12 +123,14 @@ export default {
                     type: 'success',
                     duration: 3 * 1000
                 })
-            }else{
+            }else if(res.statusCode == 0 ){
+                this.$emit("changeImportNow",false)
                 Message({
                     message: res.message,
-                    type: 'erro',
-                    duration: 3 * 1000
+                    type: 'error',
+                    duration: 4 * 1000
                 })
+                // this.$emit('changeAddNow',true)
             }
         },
         

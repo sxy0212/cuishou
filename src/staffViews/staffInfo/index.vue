@@ -6,8 +6,6 @@
 
 <script>
 import store from '@/vuex/store.js'
-import {axiosRequest, message } from '@/assets/js/Yt.js'
-import { Message } from 'element-ui'
 export default {
     computed: {
         trueName () {
