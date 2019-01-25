@@ -26,6 +26,7 @@
                 </el-form-item>
             </el-form> 
             <div>
+                <div style="color:red;font-size:18px;">请选择字段，（姓名、证件号、卡号、委案金额和委案日期这五个字段为必填字段）</div>
                 <table style="width:100%" class="messageTable">
                     <tr style="font-size:20px;font-weight:800; line-height: 45px;height: 45px;">客户信息</tr>
                     <tr style="font-size:16px;font-weight:500;">基本信息</tr>
