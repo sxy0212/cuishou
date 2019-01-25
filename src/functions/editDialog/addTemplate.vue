@@ -27,7 +27,8 @@
             </el-form> 
             <div>
                 <table style="width:100%" class="messageTable">
-                    <tr style="font-size:16px;font-weight:800;">基本信息</tr>
+                    <tr style="font-size:20px;font-weight:800; line-height: 45px;height: 45px;">客户信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">基本信息</tr>
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_name.checked"></el-checkbox>姓名<el-input v-show="selfInfo.case_name.checked" v-model="selfInfo.case_name.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_num_type.checked"></el-checkbox>证件类型<el-input v-show="selfInfo.case_num_type.checked" v-model="selfInfo.case_num_type.input" placeholder="请输入别名"></el-input></td>
@@ -49,7 +50,7 @@
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_email.checked"></el-checkbox>邮箱<el-input v-show="selfInfo.case_email.checked" v-model="selfInfo.case_email.input" placeholder="请输入别名"></el-input></td>
                     </tr>
-                    <tr style="font-size:16px;font-weight:800;">职业信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">职业信息</tr>
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_work_phone.checked"></el-checkbox>单位号码<el-input v-show="selfInfo.case_work_phone.checked" v-model="selfInfo.case_work_phone.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_organization_name.checked"></el-checkbox>单位名称<el-input v-show="selfInfo.case_organization_name.checked" v-model="selfInfo.case_organization_name.input" placeholder="请输入别名"></el-input></td>
@@ -61,7 +62,7 @@
                         <td><el-checkbox v-model="selfInfo.case_work_postcode.checked"></el-checkbox>单位邮编<el-input v-show="selfInfo.case_work_postcode.checked" v-model="selfInfo.case_work_postcode.input" placeholder="请输入别名"></el-input></td>
                     
                     </tr>
-                    <tr style="font-size:16px;font-weight:800;">其他信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">其他客户信息</tr>
                      <tr>
                        <td><el-checkbox v-model="selfInfo.case_social_number.checked"></el-checkbox>社保电脑号<el-input v-show="selfInfo.case_social_number.checked" v-model="selfInfo.case_social_number.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_social_card.checked"></el-checkbox>社保卡号<el-input v-show="selfInfo.case_social_card.checked" v-model="selfInfo.case_social_card.input" placeholder="请输入别名"></el-input></td>
@@ -79,7 +80,7 @@
                         <td><el-checkbox v-model="selfInfo.case_remark1.checked"></el-checkbox>备注1<el-input v-show="selfInfo.case_remark1.checked" v-model="selfInfo.case_remark1.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_district.checked"></el-checkbox>区县<el-input v-show="selfInfo.case_district.checked" v-model="selfInfo.case_district.input" placeholder="请输入别名"></el-input></td>
                     </tr>
-                    <tr style="font-size:16px;font-weight:800;">联系人信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">联系人信息</tr>
                      <tr>
                         <td><el-checkbox v-model="selfInfo.case_name1.checked"></el-checkbox>联系人1姓名<el-input v-show="selfInfo.case_name1.checked" v-model="selfInfo.case_name1.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_card1.checked"></el-checkbox>联系人1证件号<el-input v-show="selfInfo.case_card1.checked" v-model="selfInfo.case_card1.input" placeholder="请输入别名"></el-input></td>
@@ -104,7 +105,8 @@
                         <td><el-checkbox v-model="selfInfo.case_mobile2.checked"></el-checkbox>联系人2手机<el-input v-show="selfInfo.case_mobile2.checked" v-model="selfInfo.case_mobile2.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_address2.checked"></el-checkbox>联系人2地址<el-input v-show="selfInfo.case_address2.checked" v-model="selfInfo.case_address2.input" placeholder="请输入别名"></el-input></td>
                     </tr>
-                    <tr style="font-size:16px;font-weight:800;">账户金额</tr>
+                    <tr style="font-size:20px;font-weight:800; line-height: 45px;height: 45px;">账户信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">账户金额</tr>
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_account.checked"></el-checkbox>账号<el-input v-show="selfInfo.case_account.checked" v-model="selfInfo.case_account.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_account_name.checked"></el-checkbox>账户名称<el-input v-show="selfInfo.case_account_name.checked" v-model="selfInfo.case_account_name.input" placeholder="请输入别名"></el-input></td>
@@ -139,7 +141,7 @@
                     <tr> 
                         <td><el-checkbox v-model="selfInfo.case_deposit.checked"></el-checkbox>保证金<el-input v-show="selfInfo.case_deposit.checked" v-model="selfInfo.case_deposit.input" placeholder="请输入别名"></el-input></td>
                     </tr>
-                    <tr style="font-size:16px;font-weight:800;">委托信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">委托信息</tr>
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_money.checked"></el-checkbox>委案金额<el-input v-show="selfInfo.case_money.checked" v-model="selfInfo.case_money.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_date.checked"></el-checkbox>委案日期<el-input v-show="selfInfo.case_date.checked" v-model="selfInfo.case_date.input" placeholder="请输入别名"></el-input></td>
@@ -152,7 +154,7 @@
                         <td><el-checkbox v-model="selfInfo.case_client_num.checked"></el-checkbox>委托方档案号<el-input v-show="selfInfo.case_client_num.checked" v-model="selfInfo.case_client_num.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_client_code.checked"></el-checkbox>委托方单号<el-input v-show="selfInfo.case_client_code.checked" v-model="selfInfo.case_client_code.input" placeholder="请输入别名"></el-input></td>
                     </tr>  
-                    <tr style="font-size:16px;font-weight:800;">产品信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">产品信息</tr>
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_credit_limit.checked"></el-checkbox>信用额度<el-input v-show="selfInfo.case_credit_limit.checked" v-model="selfInfo.case_credit_limit.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_fixed_credit.checked"></el-checkbox>固定额度<el-input v-show="selfInfo.case_fixed_credit.checked" v-model="selfInfo.case_fixed_credit.input" placeholder="请输入别名"></el-input></td>
@@ -186,7 +188,7 @@
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_no_out.checked"></el-checkbox>未出账金额<el-input v-show="selfInfo.case_no_out.checked" v-model="selfInfo.case_no_out.input" placeholder="请输入别名"></el-input></td>
                     </tr>
-                    <tr style="font-size:16px;font-weight:800;">其他信息</tr>
+                    <tr style="font-size:16px;font-weight:500;">其他账户信息</tr>
                     <tr>
                         <td><el-checkbox v-model="selfInfo.case_commission_rate.checked"></el-checkbox>公司佣金比率<el-input v-show="selfInfo.case_commission_rate.checked" v-model="selfInfo.case_commission_rate.input" placeholder="请输入别名"></el-input></td>
                         <td><el-checkbox v-model="selfInfo.case_commission.checked"></el-checkbox>公司佣金金额<el-input v-show="selfInfo.case_commission.checked" v-model="selfInfo.case_commission.input" placeholder="请输入别名"></el-input></td>
@@ -296,7 +298,7 @@ export default {
         height:30px;
         line-height:30px;
         td{
-            width:250px;
+            width:230px;
             .el-checkbox{
                 min-width:14px;
                 max-width:14px;
