@@ -299,7 +299,7 @@ export default {
         height:30px;
         line-height:30px;
         td{
-            width:230px;
+            width:200px;
             .el-checkbox{
                 min-width:14px;
                 max-width:14px;
