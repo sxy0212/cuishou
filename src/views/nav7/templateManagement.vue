@@ -192,7 +192,6 @@ export default {
 	},
     methods: {
         init(){
-            console.log(this.otherAccountInfo.length+this.productInfo.length+this.commissionInfo.length+this.accountMoney.length+this.contactInfo.length+this.otherCustomerInfo.length+this.workInfo.length+this.basicInfo.length)
             let conf = {
                 url : '/api/api_backend.php?r=system-setting/template-list',
                 data : {
