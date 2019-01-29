@@ -319,9 +319,7 @@ export default {
                             }
                             for( let m in this.selfInfo ){
                                 let cod = "," + str + ","
-                                
                                 if( cod.indexOf(','+this.selfInfo[m].id+',') != -1 ){
-                                    console.log(cod,this.selfInfo[m].id)
                                     this.selfInfo[m].checked = true
                                     this.selfInfo[m].input = alias.split( this.selfInfo[m].id+ '":"' )[1].split('"')[0]
                                 }
