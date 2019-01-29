@@ -321,7 +321,7 @@ export default {
                                 let cod = "," + str + ","
                                 if( cod.indexOf(','+this.selfInfo[m].id+',') != -1 ){
                                     this.selfInfo[m].checked = true
-                                    this.selfInfo[m].input = alias.split( this.selfInfo[m].id+ '":"' )[1].split('"')[0]
+                                    this.selfInfo[m].input = alias.split( '"'+this.selfInfo[m].id+ '":"' )[1].split('"')[0]
                                 }
                             }
                             // this.fieldsList = data.info.map(item=>{
