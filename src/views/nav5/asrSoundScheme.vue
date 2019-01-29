@@ -1196,6 +1196,7 @@ import { MessageBox } from 'element-ui';
   .el-select-dropdown__item{width:215px;}
   .padding .el-dialog__body{padding:10px 60px;}
   .width{width:260px}
+ 
 	// .TableList .el-table .el-table_1_column_2 >.cell{text-align:left;}
 	// .TableList .el-table .el-table__row td:nth-child(2) .cell{text-align:left}
 </style>

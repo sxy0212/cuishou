@@ -113,5 +113,6 @@ html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
     .el-tabs__item{ flex: 5; text-align: center}
   } 
   .DialogueMain2 .el-dialog{width: 950px;min-width: 950px;}
+   .tag-dial1 .el-dialog {width:95%;} 
   // .TopForm .el-pagination{width:350px;margin:0 auto}
 </style>

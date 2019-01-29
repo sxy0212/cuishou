@@ -380,7 +380,5 @@ import pageChange from '@/components/pageChange.vue'
 <style lang="scss" scoped>
 .TableList .el-button{padding:8px 12px;}
 .TableList .el-button+.el-button{margin-left:0}
-/* 话术库中样式 */
-.tag-dial1 .el-dialog {width:95%;} 
 // .TableList .el-table .el-table_1_column_2 >.cell{text-align:left;}
 </style>
