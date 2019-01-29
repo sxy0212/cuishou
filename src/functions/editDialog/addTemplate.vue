@@ -237,7 +237,7 @@ export default {
             let combineArrInputId = []
             for(let m in this.selfInfo ){
                 if( this.selfInfo[m].checked ){
-                    sureArrId.push(m)
+                    sureArrId.push(this.selfInfo[m].id)
                     if( !!this.selfInfo[m].input ){
                         combineArrInputId.push(this.selfInfo[m].id+':'+this.selfInfo[m].input)
                     }else {
