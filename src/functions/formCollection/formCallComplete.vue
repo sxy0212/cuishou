@@ -1,18 +1,11 @@
 <template>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="批次">
-            <el-select v-model="formInline.monthValue" multiple placeholder="请选择批次">
-                <el-option 
-                    label="请选择批次"
-                    value=""
-                ></el-option>
-                <el-option
-                    v-for="item in batchList"
-                    :key="item.id"
-                    :label="item.batch_name"
-                    :value="item.id"
-                ></el-option>
-            </el-select>
+    <el-form :inline="true" class="demo-form-inline">
+        <el-form-item label="请选择批次" label-width="100px">
+            <el-checkbox 
+                v-model="item.choose"
+                v-for="item in batchList"
+                :key="item.id"
+                >{{item.batch_name}}</el-checkbox>
         </el-form-item>
         <el-form-item>
             <el-button type="primary" @click="countFn" size='mini'>开始统计</el-button>
@@ -25,7 +18,6 @@ export default {
     name:'formCallComplete',
     props:[
         'batchList',
-        'formInline',
     ],
     methods:{
         countFn(){
@@ -37,3 +29,7 @@ export default {
     }
 }
 </script>
+<style scoped>
+.el-checkbox{margin-left:30px;}
+</style>
+

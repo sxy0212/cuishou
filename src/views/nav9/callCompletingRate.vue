@@ -1,7 +1,6 @@
 <template>
     <div>
         <div-form
-            :formInline='formInline'
             :batchList='batchList'
             v-on:countFn='init($event)'
             v-on:exportStatement='exportStatement($event)'
@@ -35,9 +34,6 @@ export default {
     },
     data(){
         return{
-            formInline:{
-                monthValue:[]
-            },
             batchList:[],
             tableData: [],
             page:1,
@@ -51,7 +47,7 @@ export default {
     },
     methods:{
         init(){ //初始化
-            const batchid_str = this.formInline.monthValue.join(',')
+            const batchid_str = this.batchList.filter(item=>item.choose).map(item=>item.id).join(',')
             const conf = {
                 url:'/api/api_backend.php?r=asrcall-case-batch/case-call-count',
                 data:{
@@ -85,7 +81,8 @@ export default {
 
         },
         exportStatement(){
-            window.open('/api/api_backend.php?r=asrcall-case-batch/case-call-count-export&action=export'+'&batchid_str='+this.formInline.monthValue.join(','))
+            const ids =  this.batchList.filter(item=>item.choose).map(item=>item.id).join(',')
+            window.open('/api/api_backend.php?r=asrcall-case-batch/case-call-count-export&action=export'+'&batchid_str='+ids)
         },
         pageSizeChangeFn(val){
             this.page_size = val
