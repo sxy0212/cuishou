@@ -1,6 +1,7 @@
 <template>
     <div>
         <div-form
+            v-show="batchList.length"
             :batchList='batchList'
             v-on:countFn='init($event)'
             v-on:exportStatement='exportStatement($event)'
