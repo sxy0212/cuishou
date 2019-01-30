@@ -63,9 +63,6 @@ export default {
                     if( data.statusCode == 1 ){
                         this.tableData = data.info.info
                         this.total = Number(data.info.total)
-                        this.formInline = {
-                            monthValue:[]
-                        }
                     }else if(data.statusCode == 0 ){
                         this.tableData = []
                     }
@@ -88,7 +85,7 @@ export default {
 
         },
         exportStatement(){
-            window.open('/api/api_backend.php?r=statistics/daily&is_export=1'+'&staff_ids='+this.formInline.staff_ids+'&collection_date='+this.formInline.collection_date+"&area_id="+this.formInline.area_id+'&client_id='+this.formInline.client_id)
+            window.open('/api/api_backend.php?r=asrcall-case-batch/case-call-count-export&action=export'+'&batchid_str='+this.formInline.monthValue.join(','))
         },
         pageSizeChangeFn(val){
             this.page_size = val
