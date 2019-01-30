@@ -302,6 +302,15 @@ let routes = [
     }]
   },
   {
+    path: '/callCompletingRate',
+    component: Layout,
+    children: [{
+      path: '',
+      name: '案件接通率统计',
+      component: () => import('@/views/nav9/callCompletingRate.vue')
+    }]
+  },
+  {
     path: '/batchKindsStatement',
     component: Layout,
     children: [{
