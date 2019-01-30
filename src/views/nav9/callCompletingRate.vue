@@ -5,7 +5,7 @@
             :batchList='batchList'
         ></div-form>
         <div>
-            <el-button type="primary" @click="countFn" size='mini'>开始统计</el-button>
+            <el-button type="primary" @click="init" size='mini'>开始统计</el-button>
             <el-button type="primary" @click="exportStatement" size='mini'>导出报表</el-button>
         </div>
         <div-table
