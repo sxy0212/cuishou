@@ -171,7 +171,7 @@ let routes = [
     component: Layout,
     children: [{
       path: '',
-      name: '催收员管理',
+      name: '人员管理',
       component: () => import('@/views/nav8/collectorManagement.vue')
     }]
   },
