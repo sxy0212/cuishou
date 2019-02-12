@@ -109,7 +109,7 @@
                     </div>-->
                     <!--数据列表-->    
                     <div class="TableList">
-                        <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total?450:100" @selection-change="handleSelectionChange"  v-loading="loading">
+                        <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total?600:100" @selection-change="handleSelectionChange"  v-loading="loading">
                             <el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
                             <el-table-column prop="case_name" label="案件编号" > </el-table-column>
                             <el-table-column prop="clid" label="线路号码"></el-table-column>
