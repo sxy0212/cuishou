@@ -31,7 +31,7 @@
         </div>
         <!--分页-->   
         <div class="pagination">
-            <div class="block"> 
+            <div class="block"  v-show="!!total"> 
                 <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handlePageChange"
