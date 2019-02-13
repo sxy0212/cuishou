@@ -161,13 +161,13 @@
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.min_last_call"
                     type="date"
-                    placeholder="请选择最小呼叫时间">
+                    placeholder="请选择上次呼叫时间">
                 </el-date-picker>-
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.max_last_call"
                     type="date"
-                    placeholder="请选择最大呼叫时间">
+                    placeholder="请选择上次呼叫时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="最后跟进">
