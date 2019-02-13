@@ -76,7 +76,7 @@
                     <el-option label="枣红色" class="seven" value="7"></el-option>
                 </el-select>
             </el-form-item>
-        <el-form-item label="案件状态">
+            <el-form-item label="案件状态">
                 <el-select v-model="conditions.case_status" placeholder="请选择案件状态">
                     <el-option 
                         label="请选择案件状态" 
@@ -134,8 +134,8 @@
                     type="date"
                     value-format="yyyy-MM-dd HH:mm:ss"
                     placeholder="请选择委案开始日期">
-                </el-date-picker>
-            - <el-date-picker
+                </el-date-picker>- 
+                <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.max_case_date"
                     type="date"
@@ -154,6 +154,20 @@
                     v-model="conditions.max_case_back_date"
                     type="date"
                     placeholder="请选择最大退案时间">
+                </el-date-picker>
+            </el-form-item>
+            <el-form-item label="呼叫时间">
+                <el-date-picker
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    v-model="conditions.min_last_call"
+                    type="date"
+                    placeholder="请选择最小呼叫时间">
+                </el-date-picker>-
+                <el-date-picker
+                    value-format="yyyy-MM-dd HH:mm:ss"
+                    v-model="conditions.max_last_call"
+                    type="date"
+                    placeholder="请选择最大呼叫时间">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="最后跟进">
