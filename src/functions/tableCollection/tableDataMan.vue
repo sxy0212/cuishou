@@ -64,7 +64,7 @@
       </el-table-column>
       <el-table-column
         label="操作"
-        width='250'
+        width='330'
       >
         <template slot-scope="scope">
           <el-button size="mini" type="success" plain round @click="addToFn(scope.row)">追加</el-button>
