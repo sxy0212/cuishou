@@ -7,6 +7,10 @@
                 :key="item.id"
                 >{{item.batch_name}}</el-checkbox>
         </el-form-item>
+        <el-form-item label="">
+            <el-button type="primary" @click="init" size='mini'>开始统计</el-button>
+            <el-button type="primary" @click="exportStatement" size='mini'>导出报表</el-button>
+        </el-form-item>
     </el-form>
 </template>
 <script>
@@ -14,7 +18,15 @@ export default {
     name:'formCallComplete',
     props:[
         'batchList',
-    ]
+    ],
+    methods:{
+        init(){
+            this.$emit('init')
+        },
+        exportStatement(){
+            this.$emit('exportStatement')
+        }
+    }
 }
 </script>
 <style scoped>
