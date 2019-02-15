@@ -1,6 +1,6 @@
 <template>
     <el-form :inline="true" class="demo-form-inline">
-        <el-form-item label="请选择批次" label-width="100px">
+        <el-form-item label="请选择批次:" label-width="100px">
             <el-checkbox 
                 v-model="item.choose"
                 v-for="item in batchList"

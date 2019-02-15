@@ -1,6 +1,6 @@
 <template>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
-        <el-form-item label="催收员">
+        <el-form-item label="催收员:">
             <el-select v-model="formInline.monthValue" multiple placeholder="请选择催收员">
                 <el-option 
                     label="请选择催收员"
@@ -14,7 +14,7 @@
                 ></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="催收区域">
+        <el-form-item label="催收区域:">
             <el-select v-model="formInline.area_id" placeholder="请选择催收区域">
                 <el-option 
                     label="请选择催收区域"
@@ -28,7 +28,7 @@
                 ></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="委托方">
+        <el-form-item label="委托方:">
             <el-select v-model="formInline.client_id" placeholder="请选择委托方">
                 <el-option 
                     label="请选择委托方"
@@ -42,7 +42,7 @@
                 ></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item label="日期">
+        <el-form-item label="日期:">
             <el-date-picker
                 v-model="formInline.start_time"
                 value-format='yyyy-MM-dd'
