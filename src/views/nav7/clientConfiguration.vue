@@ -32,7 +32,6 @@
   </div>
 </template>
 <script>
-import '@/assets/css/system.css'
 import addClient from '@/functions/editDialog/addClient.vue'
 import pageChange from '@/components/pageChange.vue'
 import tableClientCon from '@/functions/tableCollection/tableClientCon.vue'
