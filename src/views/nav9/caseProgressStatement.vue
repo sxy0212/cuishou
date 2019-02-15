@@ -40,8 +40,10 @@
                 <el-option :label="item.name" :value="item.id" v-for="(item,index) in type_list" :key="index"></el-option>                                              
               </el-select>
             </el-form-item>
-            <el-button type="primary" size='mini' @click="init">开始统计</el-button>
-            <el-button type="primary" size='mini' @click="exportDate">导出报表</el-button>
+            <el-form-item label="">
+              <el-button type="primary" size='mini' @click="init">开始统计</el-button>
+              <el-button type="primary" size='mini' @click="exportDate">导出报表</el-button>
+            </el-form-item>
           </el-form>
         </div>
         <div>

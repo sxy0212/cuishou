@@ -29,8 +29,10 @@
                     <el-date-picker v-model="form.begin_case_date" type="date" placeholder="开始时间" value-format="yyyy-MM-dd" :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
                     <el-date-picker v-model="form.end_case_date" type="date" placeholder="结束时间" value-format="yyyy-MM-dd"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
                 </el-form-item> 
-                <el-button type="primary" size='mini' @click="init(0)">开始统计</el-button>
-                <el-button type="primary" size='mini' @click="exportDate">导出报表</el-button>
+                <el-form-item label="">
+                    <el-button type="primary" size='mini' @click="init(0)">开始统计</el-button>
+                    <el-button type="primary" size='mini' @click="exportDate">导出报表</el-button>
+                </el-form-item> 
             </el-form>
         </div>
         <div>
