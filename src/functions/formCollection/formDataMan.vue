@@ -1,6 +1,6 @@
 <template>
     <el-form :inline="true" :model="formInline" class="demo-form-inline">
-		<el-form-item label="催收区域">
+		<el-form-item label="催收区域:">
 			<el-select v-model="formInline.collection_area" placeholder="请选择催收区域">
 				<el-option 
                     v-for="item in areaList"
@@ -10,7 +10,7 @@
                 ></el-option>
 			</el-select>
 		</el-form-item>
-		<el-form-item label="委托方">
+		<el-form-item label="委托方:">
 			<el-select v-model="formInline.client" placeholder="请选择委托方">
 				<el-option 
                     v-for="item in clientList"
@@ -20,7 +20,7 @@
                 ></el-option>
 			</el-select>
 		</el-form-item>
-		<el-form-item label="案件类型">
+		<el-form-item label="案件类型:">
 			<el-select v-model="formInline.case_type" placeholder="请选择案件类型">
 				<el-option 
                     v-for="item in typeList"
@@ -31,7 +31,7 @@
 			</el-select>
 		</el-form-item>
 		<el-form-item>
-            <el-button type="primary" size="mini" plain @click='addFn(true)'>搜索</el-button>
+            <el-button type="primary" @click='addFn(true)'>搜索</el-button>
         </el-form-item>
 	</el-form>
 </template>

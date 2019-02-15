@@ -1,7 +1,7 @@
 <template>
   <div class="cover">
     <div> 
-        <el-button @click='addFn(true)'>添加案件类型</el-button>
+        <el-button type="success" @click='addFn(true)'>添加案件类型</el-button>
     </div>
     <div class="tableCover">
         <div-table
@@ -35,7 +35,6 @@
   </div>
 </template>
 <script>
-import '@/assets/css/system.css'
 import addType from '@/functions/editDialog/addType.vue'
 import tableCaseCon from '@/functions/tableCollection/tableCaseCon.vue'
 import pageChange from '@/components/pageChange.vue'

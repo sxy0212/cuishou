@@ -211,15 +211,15 @@ let routes = [
       component: () => import('@/views/nav7/caseConfiguration.vue')
     }]
   }, 
-  {
-    path: '/accountManagement',
-    component: Layout,
-    children: [{
-      path: '',
-      name: '账号管理',
-      component: () => import('@/views/nav7/accountManagement.vue')
-    }]
-  },
+  // {
+  //   path: '/accountManagement',
+  //   component: Layout,
+  //   children: [{
+  //     path: '',
+  //     name: '账号管理',
+  //     component: () => import('@/views/nav7/accountManagement.vue')
+  //   }]
+  // },
   {
     path: '/templateManagement',
     component: Layout,

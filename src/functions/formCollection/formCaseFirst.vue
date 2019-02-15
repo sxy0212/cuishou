@@ -1,22 +1,22 @@
 <template>
     <div class="formCase formCassCss">
-        <el-form :inline="true" :model="conditions" class="demo-form-inline" label-width="85px">   
-            <el-form-item label="姓名">
+        <el-form :inline="true" :model="conditions" class="demo-form-inline" label-width="88px">   
+            <el-form-item label="姓名:">
                 <el-input v-model="conditions.case_name" placeholder="请输入姓名"></el-input>
             </el-form-item>
-            <el-form-item label="证件号">
+            <el-form-item label="证件号:">
                 <el-input v-model="conditions.case_id_num" placeholder="请输入证件号"></el-input>
             </el-form-item>
-            <el-form-item label="联系方式">
+            <el-form-item label="联系方式:">
                 <el-input v-model="conditions.case_mobile" placeholder="请输入联系方式"></el-input>
             </el-form-item>
-            <el-form-item label="关键词">
+            <el-form-item label="关键词:">
                 <el-input v-model="conditions.keywords" placeholder="请输入关键词"></el-input>
             </el-form-item>
-            <el-form-item label="案件序列号">
+            <el-form-item label="案件序列号:">
                 <el-input v-model="conditions.case_code" placeholder="请输入案件序列号"></el-input>
             </el-form-item>
-            <el-form-item label="部门">
+            <el-form-item label="部门:">
                  <el-select v-model="conditions.depart_id" @change="changeFn" placeholder="请选择部门">
                     <el-option 
                         label="请选择部门" 
@@ -31,7 +31,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="催收员">
+            <el-form-item label="催收员:">
                 <el-select v-model="conditions.staff_id" placeholder="请选择催收员">
                     <el-option 
                         label="请选择催收员" 
@@ -45,7 +45,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="所属批次">
+            <el-form-item label="所属批次:">
                 <el-select v-model="conditions.batch_id" placeholder="请选择批次" filterable :filter-method='filterGetBatchList'>
                     <el-option 
                         v-for="item in batchList"
@@ -55,7 +55,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="委托方">
+            <el-form-item label="委托方:">
                 <el-select v-model="conditions.client_id" filterable :filter-method='filterFn'  placeholder="请选择委托方">
                     <el-option
                         v-for="item in clientList"
@@ -65,7 +65,7 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="标色搜索">
+            <el-form-item label="标色搜索:">
                 <el-select v-model="conditions.case_color" placeholder="标色搜索" class="colorCover">
                     <el-option label="正常色" class='one' value="1"></el-option>
                     <el-option label="翠绿色" class="two" value="2"></el-option>
@@ -76,7 +76,7 @@
                     <el-option label="枣红色" class="seven" value="7"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="案件状态">
+            <el-form-item label="案件状态:">
                 <el-select v-model="conditions.case_status" placeholder="请选择案件状态">
                     <el-option 
                         label="请选择案件状态" 
@@ -90,7 +90,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="案件等级">
+            <el-form-item label="案件等级:">
                 <el-select v-model="conditions.case_level" placeholder="案件等级">
                     <el-option 
                         label="请选择案件等级" 
@@ -104,7 +104,7 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="接通状态">
+            <el-form-item label="接通状态:">
                 <el-select v-model="conditions.call_result_number" placeholder="请选择接通状态">
                     <el-option 
                         label="请选择接通状态" 
@@ -120,15 +120,15 @@
                     ></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="通话时长">
+            <el-form-item label="通话时长:">
                 <el-input v-model="conditions.min_talk_time" type='number' placeholder="最小时长"></el-input>
             -<el-input  v-model="conditions.max_talk_time" type='number' placeholder="最大时长"></el-input>
             </el-form-item>
-            <el-form-item label="委案金额">
+            <el-form-item label="委案金额:">
                 <el-input v-model="conditions.min_case_money" type='number' placeholder="最低金额"></el-input>
             - <el-input  v-model="conditions.max_case_money" type='number'  placeholder="最高金额"></el-input>
             </el-form-item>
-            <el-form-item label="委案时间">
+            <el-form-item label="委案时间:">
                 <el-date-picker
                     v-model="conditions.min_case_date"
                     type="date"
@@ -142,7 +142,7 @@
                     placeholder="请选择委案开始日期">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="退案时间">
+            <el-form-item label="退案时间:">
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.min_case_back_date"
@@ -156,7 +156,7 @@
                     placeholder="请选择最大退案时间">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="呼叫时间">
+            <el-form-item label="呼叫时间:">
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.min_last_call"
@@ -170,7 +170,7 @@
                     placeholder="请选择上次呼叫时间">
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="最后跟进">
+            <el-form-item label="最后跟进:">
                 <el-date-picker
                     value-format="yyyy-MM-dd HH:mm:ss"
                     v-model="conditions.min_case_last_collection_date"

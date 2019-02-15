@@ -21,7 +21,7 @@
                             <el-input v-model="form.dst" style="width:200px;"></el-input>
                         </el-form-item>
                         <el-form-item label="所属批次：">
-                            <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:200px;" filterable>
+                            <el-select v-model="form.batch_id" placeholder="所属批次" @change="changeBatch" filterable style="width:200px;">
                                 <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in initSearchData.batch" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
@@ -109,7 +109,7 @@
                     </div>-->
                     <!--数据列表-->    
                     <div class="TableList">
-                        <el-table ref="multipleTable" :data="infos" style="width:100%" border :height="total?600:100" @selection-change="handleSelectionChange"  v-loading="loading">
+                        <el-table ref="multipleTable" :data="infos" style="width:100%" border @selection-change="handleSelectionChange"  v-loading="loading">
                             <el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
                             <el-table-column prop="case_name" label="案件编号" > </el-table-column>
                             <el-table-column prop="clid" label="线路号码"></el-table-column>
@@ -125,9 +125,9 @@
                             <el-table-column prop="gender" label="性别" width="80"> 
                                 <template slot-scope="scope">
                                     <span v-if="scope.row.gender==0">未识别</span>
-                                    <span v-else-if="scope.row.gender==1">女</span>
-                                    <span v-else-if="scope.row.gender==2">男 </span>
-                                    <span v-else="scope.row.gender==4">未知</span>
+                                    <span v-if="scope.row.gender==1">女</span>
+                                    <span v-if="scope.row.gender==2">男 </span>
+                                    <span v-if="scope.row.gender==4">未知</span>
                                 </template>
                             </el-table-column>
                             <el-table-column prop="call_result_number" label="通话状态" >
@@ -318,19 +318,17 @@
                   <audio style="width:100%" :src="spath" controls="controls" id="play1" @click="playOne"></audio> 
                   <div class="dialogueList" style="border-bottom:none">
                     <ul id="messageBox">
-                      <li :class="[{ 'layim-chat-mine':item.user==1 }, {'layim-chat-mine1':item.user==0}]" v-for="(item,index) in audioData" style="font-size:14px;display:block" >
+                      <li :class="[{ 'layim-chat-mine':item.user==1 }, {'layim-chat-mine1':item.user==0}]" v-for="(item,index) in audioData" :key="index" style="font-size:14px;display:block" >
                         <div class="layim-chat-user">
                           <img src="static/image/yantong.png" v-if="item.user==1">
                           <img src="static/image/user.png" v-if="item.user==0">                                    
                         </div>
                         <div v-if="item.user==0" style="max-width:420px;float:left">
-                          <p v-if="item.user==0" style="margin:0">言小通 <i>{{item.create_time}}</i></p>
-                          <p v-else="item.user==1"><i>{{item.create_time}} </i>用户</p>
+                          <p style="margin:0">言小通 <i>{{item.create_time}}</i></p>
                           <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
                         </div> 
                         <div v-if="item.user==1" style="max-width:420px;float:right">
-                          <p v-if="item.user==0" style="margin:0">言小通 <i>{{item.create_time}}</i></p>
-                          <p v-else="item.user==1" style="margin:0"><i>{{item.create_time}} </i>用户</p>
+                          <p style="margin:0"><i>{{item.create_time}} </i>用户</p>
                           <div class="layim-chat-text" style="margin-top:0px">{{item.msg}}</div>
                         </div> 
                         <div v-if="item.user==0" style="float:left;margin-top:20px" v-show="item.path">
@@ -1104,7 +1102,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.ButtonList li{ display: inline-block; float: left; margin-right: 10px}
+.ButtonList li{ display: inline-block; margin-right: 10px}
 .button-right{ float: right !important; text-align: right}
 .button-right [class*=el-col-]{ float: right}
 .ButtonList .el-button{ font-size: 12px; padding: 10px 15px;}

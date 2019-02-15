@@ -1,7 +1,7 @@
 <template>
   <div class="cover templateMan">
     <div> 
-        <el-button @click='addFn(true)'>添加模板</el-button>
+        <el-button type="success" @click='addFn(true)'>添加模板</el-button>
     </div>
     <div class="tableCover">
         <div-table

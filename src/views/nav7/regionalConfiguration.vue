@@ -1,7 +1,7 @@
 <template>
   <div class="cover">
     <div> 
-        <el-button @click='addFn(true)'>添加区域</el-button>
+        <el-button type="success" @click='addFn(true)'>添加区域</el-button>
     </div>
     <div class="tableCover">
       <el-table
@@ -49,7 +49,6 @@
   </div>
 </template>
 <script>
-import '@/assets/css/system.css'
 import addArea from '@/functions/editDialog/addArea.vue'
 import pageChange from '@/components/pageChange.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
