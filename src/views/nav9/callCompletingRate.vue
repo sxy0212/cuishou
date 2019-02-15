@@ -14,6 +14,7 @@
             :page_size='page_size'
         ></div-table>
         <page-change 
+            v-show="!!total"
             :total="total"
             :page="page"
             :page_size ="page_size"

@@ -37,7 +37,7 @@
       <div style="width:82%;background:#fff;margin-left:12px;">
         <p style="padding:20px 0 10px 10px;margin:0">剩余可添加催收员人数 <span style="color:red">{{rest_num}}</span>人</p>
         <div style="padding-left:10px;padding-right:10px;">
-        <el-table ref="multipleTable" :data="infos" style="width:100%" border height="600">
+        <el-table ref="multipleTable" :data="infos" style="width:100%" border>
           <el-table-column type="index" label="序号" width="60"  fixed="left" :index="index"></el-table-column>
           <el-table-column prop="true_name" label="姓名" width="100"></el-table-column>  
           <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
@@ -53,7 +53,7 @@
           </el-table-column>
 				</el-table>
       </div>
-      <div class="block" style="background:#f2f2f2;padding-left:0px;padding-right:0px;"> 
+      <div class="block" style="background:#f2f2f2;padding-left:0px;padding-right:0px;" v-show="!!total"> 
         <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"

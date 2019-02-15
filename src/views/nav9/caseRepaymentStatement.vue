@@ -29,12 +29,12 @@
                     <el-date-picker v-model="form.begin_case_date" type="date" placeholder="开始时间" value-format="yyyy-MM-dd" :picker-options="pickerOptions0" :clearable="false" :style="width"></el-date-picker>~
                     <el-date-picker v-model="form.end_case_date" type="date" placeholder="结束时间" value-format="yyyy-MM-dd"  :picker-options="pickerOptions1" :clearable="false" :style="width"></el-date-picker>
                 </el-form-item> 
-                <el-button type="primary" @click="init(0)">开始统计</el-button>
-                <el-button type="primary" @click="exportDate">导出报表</el-button>
+                <el-button type="primary" size='mini' @click="init(0)">开始统计</el-button>
+                <el-button type="primary" size='mini' @click="exportDate">导出报表</el-button>
             </el-form>
         </div>
         <div>
-            <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%" height="550">
+            <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" border stripe style="width: 100%">
                 <el-table-column type="index" :index="index" label="序号" width="50"></el-table-column>
                 <el-table-column prop="case_code" label="个案序列号"> </el-table-column>
                 <el-table-column prop="case_name" label="姓名" width="90"></el-table-column>
@@ -190,9 +190,8 @@ export default {
             //     staff_name: "陈辉"
             //   }
             ],
-            
-            width:"width:180px",
-             staff_list:[],// |  | 催收员 |
+            width:"width:130px",
+            staff_list:[],// |  | 催收员 |
             area_list:[],// 催收区域 |
             client_list :[],// 委托方 |
             batch_list:[],// 批次 |

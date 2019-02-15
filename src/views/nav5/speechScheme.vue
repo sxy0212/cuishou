@@ -16,7 +16,7 @@
 						</el-form-item>
 					</el-form>
 					<div class="TableList">
-							<el-table ref="multipleTable" :data="infos" style="width:100%" border  v-loading="loading" :height="parseInt(total)>0?500:100">
+							<el-table ref="multipleTable" :data="infos" style="width:100%" border  v-loading="loading">
 									<el-table-column type="index" label="序号" width="60" :index="index" fixed="left"></el-table-column>
 									<el-table-column prop="name" label="方案名称"> </el-table-column>
 									<el-table-column prop="sound_type" label="语言模式"></el-table-column>

@@ -24,8 +24,8 @@
             </el-date-picker>
 		</el-form-item>
 		<el-form-item>
-            <el-button type="primary"  plain >开始统计</el-button>
-            <el-button type="primary"  plain >导出报表</el-button>
+            <el-button type="primary"  size='mini' plain >开始统计</el-button>
+            <el-button type="primary"  size='mini' plain >导出报表</el-button>
         </el-form-item>
 	</el-form>
     <el-table :data="tableData6" border show-summary style="width: 100%">

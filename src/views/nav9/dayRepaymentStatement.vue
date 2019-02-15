@@ -14,6 +14,7 @@
             :tableData='tableData'
         ></div-table>
         <page-change 
+            v-show="!!total"
 			:total="total"
 			:page="page"
 			:page_size ="page_size"
@@ -39,7 +40,7 @@ export default {
         return{
             page:1,
             page_size:10,
-            total:6,
+            total:0,
             formInline:{
                 monthValue:[],
                 is_cancel:'0',

@@ -1,5 +1,4 @@
 <template>
-<div class="pageChangeCover">
   <div class="block" v-show="!!total">
     <el-pagination
       @size-change="handleSizeChange"
@@ -11,8 +10,6 @@
       :total="total">
     </el-pagination>
   </div>
-</div>
-  
 </template>
 <script>
   export default {

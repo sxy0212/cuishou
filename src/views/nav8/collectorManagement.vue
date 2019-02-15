@@ -44,7 +44,7 @@
         </template>
       </el-table-column>
 		</el-table>
-		<div class="block"> 
+		<div class="block" v-show="!!total"> 
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"

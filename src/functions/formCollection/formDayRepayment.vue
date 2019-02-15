@@ -1,7 +1,7 @@
 <template>
-    <el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="100px">
+    <el-form :inline="true" :model="formInline" class="demo-form-inline" :label-width="labelWidth">
         <el-form-item label="催收员" >
-            <el-select v-model="formInline.monthValue" multiple placeholder="请选择催收员">
+            <el-select v-model="formInline.monthValue" multiple placeholder="请选择催收员" :style="width">
                 <el-option 
                     label="请选择催收员"
                     value=""
@@ -15,7 +15,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="催收区域" >
-            <el-select v-model="formInline.area" placeholder="请选择催收区域">
+            <el-select v-model="formInline.area" placeholder="请选择催收区域" :style="width">
                 <el-option 
                     label="请选择催收区域"
                     value=""
@@ -29,7 +29,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="委托方" >
-            <el-select v-model="formInline.entrust" placeholder="请选择委托方">
+            <el-select v-model="formInline.entrust" placeholder="请选择委托方" :style="width">
                 <el-option 
                     label="请选择委托方"
                     value=""
@@ -43,7 +43,7 @@
             </el-select>
         </el-form-item>
         <el-form-item label="批次" >
-            <el-select v-model="formInline.batch_id" placeholder="请选择批次">
+            <el-select v-model="formInline.batch_id" placeholder="请选择批次" :style="width">
                 <el-option 
                     label="请选择批次"
                     value=""
@@ -61,7 +61,7 @@
             <el-radio v-model="formInline.is_cancel" label="0">否</el-radio>
         </el-form-item>
         <el-form-item label="案件类型" >
-            <el-select v-model="formInline.case_type" placeholder="请选择案件类型">
+            <el-select v-model="formInline.case_type" placeholder="请选择案件类型" :style="width">
                 <el-option 
                     label="请选择案件类型"
                     value=""
@@ -93,7 +93,8 @@ export default {
     ],
     data(){
         return{
-            labelWidth:'100px'
+            labelWidth:'85px',
+            width:'width:130px'
         }
     },
     methods:{

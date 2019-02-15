@@ -31,8 +31,8 @@
                 <el-option :label="item.batch_name" :value="item.id" v-for="(item,index) in caseData" :key="index"></el-option>
               </el-select>
             </el-form-item>
-            <el-button type="primary" @click="init">开始统计</el-button>
-            <el-button type="primary" @click="exportDate">导出报表</el-button>
+            <el-button type="primary" size='mini' @click="init">开始统计</el-button>
+            <el-button type="primary" size='mini' @click="exportDate">导出报表</el-button>
           </el-form>
         </div>
         <div>
