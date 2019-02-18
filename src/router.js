@@ -328,6 +328,15 @@ let routes = [
       component: () => import('@/views/nav10/AsrcdrBak.vue')
     }]
   },
+  {
+    path: '/exportTask',
+    component: Layout,
+    children: [{
+      path: '',
+      name: '导出任务',
+      component: () => import('@/views/nav11/exportTask.vue')
+    }]
+  }, 
   
   
 //  催收员页面

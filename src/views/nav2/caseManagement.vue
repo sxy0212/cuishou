@@ -77,6 +77,12 @@
 			v-on:cancelExport='cancelExport'
 		></third-dialog>
     </el-dialog>
+	<el-dialog title="任务名称" :visible.sync="exportRecord" v-move>
+        <fourth-dialog
+			:exportTask='exportTask'
+			v-on:readyToExport='readyToExport'
+		></fourth-dialog>
+    </el-dialog>
    </div>
 </div>
  
@@ -91,6 +97,7 @@ import tableCaseMan from '@/functions/tableCollection/tableCaseMan.vue'
 import addChangeArea from '@/functions/editDialog/addChangeArea.vue'
 import addDistribute from '@/functions/editDialog/addDistribute.vue'
 import addExportChoose from '@/functions/editDialog/addExportChoose.vue'
+import addExportFourth from '@/functions/editDialog/addExportFourth.vue'
 
 import  { axiosRequest,deepClone } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
@@ -103,10 +110,15 @@ export default {
 		'div-table':tableCaseMan,
 		'edit-dialog':addChangeArea,
 		'second-dialog':addDistribute,
-		'third-dialog':addExportChoose
+		'third-dialog':addExportChoose,
+		'fourth-dialog':addExportFourth
 	},
 	data() {
         return {
+			exportTask:{
+				export_task_name:''
+			},//任务名称
+			exportRecord:false,//导出催收记录
 			whichOne:'',//选中的为choosen，查询为all
 			formExport:{},//表单
 			fieldsList:[],//选项
@@ -222,8 +234,6 @@ export default {
 		this.conditions.batch_id = typeof(  this.$route.query.batch_id ) == 'undefined'?'': this.$route.query.batch_id
 		this.init()
 		this.getStaffFn('-1')
-		// this.changeFn('')
-		// this.filterFn('')
 	},
     methods: {
 		searchFn(){
@@ -698,7 +708,7 @@ export default {
 			
 		},
 		getFieldsList(){
-			let conf = {
+			const conf = {
                 url : '/api/api_backend.php?r=system-setting/template-all-fields-list',
                 success:(data)=>{
                     if( data.statusCode == 1 ){
@@ -757,12 +767,45 @@ export default {
 			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&min_last_call='+this.conditions.min_last_call+'&max_last_call='+this.conditions.max_last_call+'&call_result_number='+this.conditions.call_result_number)
 		},
 		exportHistory(){ //导出催收记录
-			window.open('/api/api_backend.php?r=case/case-export&export_type=searchedrecord&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
-			+this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
-			+'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
-			'&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
-			'&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
-			'&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&min_last_call='+this.conditions.min_last_call+'&max_last_call='+this.conditions.max_last_call+'&call_result_number='+this.conditions.call_result_number)
+			this.exportTask = {
+				export_task_name:''
+			}
+			this.exportRecord = true
+		},
+		readyToExport(){
+			this.conditions.export_task_name = this.exportTask.export_task_name
+			const data = this.conditions
+			const conf = {
+				url : '/api/api_backend.php?r=case/record-export-task',
+				data,
+                success:(data)=>{
+                    if( data.statusCode == 1 ){
+						this.exportRecord = false
+						this.exportTask = {
+							export_task_name:''
+						}
+						Message({
+							message: data.message,
+							type: 'success',
+							duration: 3 * 1000
+						})
+					}else{
+						Message({
+							message: data.message,
+							type: 'warning',
+							duration: 3 * 1000
+						})
+					}
+                }
+            }
+            axiosRequest(conf)
+			// window.open('&='++'&case_name='+this.conditions.case_name+'&case_mobile='+this.conditions.case_mobile+'&case_id_num='+this.conditions.case_id_num+'&keywords='+this.conditions.keywords+'&case_code='
+			// +this.conditions.case_code+'&case_status'+this.conditions.case_status+'&case_level='+this.conditions.case_level
+			// +'&client_id='+this.conditions.client_id+'&min_case_money='+this.conditions.min_case_money+'&max_case_money='+this.conditions.max_case_money+'&min_talk_time='+this.conditions.min_talk_time+'&max_talk_time='+this.conditions.max_talk_time+
+			// '&min_case_date='+this.conditions.min_case_date+'&max_case_date='+this.conditions.max_case_date +'&depart_id='+this.conditions.depart_id+'&staff_id='+this.conditions.staff_id +
+			// '&batch_id='+this.conditions.batch_id+'&case_color='+this.conditions.case_color+'&min_case_last_collection_date='+this.conditions.min_case_last_collection_date+
+			// '&max_case_last_collection_date='+this.conditions.max_case_last_collection_date+'&min_last_call='+this.conditions.min_last_call+'&max_last_call='+this.conditions.max_last_call+'&call_result_number='+this.conditions.call_result_number)
+		
 		}
 	}
 }
