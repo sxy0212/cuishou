@@ -166,6 +166,7 @@ export default {
 				case_code:'',	//案件序列号
 				case_status: "",	//案件状态
 				case_level:'', //案件等级
+				call_result_number:'',//接通状态
 				client_id:'', //委托方
 				min_case_money:'',     //最小金额
 				max_case_money:'',	//最高金额
