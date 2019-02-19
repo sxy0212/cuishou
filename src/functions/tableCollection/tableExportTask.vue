@@ -37,11 +37,11 @@
         label="创建时间"
         >
         </el-table-column>
-        <!-- <el-table-column prop="path" label="操作" fixed="right">
+        <el-table-column prop="path" label="操作" fixed="right">
             <template slot-scope="scope">
                 <a :href="scope.row.path" download style="color:#409EFF" v-show="scope.row.status == 1">下载</a>
             </template>
-        </el-table-column> -->
+        </el-table-column>
         <el-table-column
         prop="case_status"
         label="操作"
