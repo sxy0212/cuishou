@@ -1,6 +1,6 @@
 <template>
 <div class="caseManagementCss">
-	<div class="cover">
+	<div class="coverCase">
 		<div-form
 			:conditions='conditions'
 			:caseLevelList='caseLevelList'
