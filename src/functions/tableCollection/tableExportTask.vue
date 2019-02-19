@@ -39,7 +39,7 @@
         </el-table-column>
         <el-table-column prop="path" label="操作" fixed="right">
             <template slot-scope="scope">
-                <a :href="scope.row.path" download style="color:#409EFF" v-show="scope.row.status == 1">下载</a>
+                <a :href="'/'+scope.row.path" download style="color:#409EFF" v-show="scope.row.status == 1">下载</a>
             </template>
         </el-table-column>
         <el-table-column
