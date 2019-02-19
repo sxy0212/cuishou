@@ -3,7 +3,7 @@
 		<div class="CenterMain  MainHp">
       <div class="TopForm">
 					<div class="AIadd" style="margin-bottom:20px;">
-					 	<el-button type="info" plain @click="addTask(1)"><i class="fa fa-plus"></i>添加方案</el-button>
+					 	<el-button type="primary"  @click="addTask(1)"><i class="fa fa-plus"></i>添加方案</el-button>
 					</div>
 					<el-table ref="multipleTable" :data="infos" style="width:100%" border >
 						<el-table-column type="index" label="序号" width="60" fixed="left"></el-table-column>
