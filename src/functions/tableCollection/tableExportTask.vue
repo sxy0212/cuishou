@@ -19,8 +19,8 @@
         label="文件来源"
         prop="type">
             <template slot-scope="scope">
-                <span v-if="scope.row.type == 1">通话记录</span>
-                <span v-if="scope.row.type == 2">语音文件</span>
+                <span v-if="scope.row.type == 1">催收记录</span>
+                <span v-if="scope.row.type == 2">通话记录</span>
             </template>
         </el-table-column>
         <el-table-column
