@@ -64,7 +64,8 @@
                             <el-checkbox v-model="form.busy_tel" @change="filter">排队未通话客户</el-checkbox>
                         </el-form-item>-->
                         <el-form-item>
-                            <el-button type="primary" @click="init(1)">立即查询</el-button>   
+                            <el-button type="primary" @click="init(1)">立即查询</el-button>  
+                            <el-button type="primary" @click="open(0)" :disabled="total == 0">导出</el-button>
                         </el-form-item>           
                     </el-form>
                      <!--客户分类及一些常用操作-->
@@ -216,7 +217,7 @@
         <!-- 导出弹框 -->
         <div class="dial-header tag-dial">
             <el-dialog title="任务名称" :visible.sync="exportData.show">
-                <span style="color:red;display: block;padding-bottom: 10px;">导出数据超过1000条,会在后台导出,任务名称最好以日期命名!</span>
+                <span style="color:red;display: block;padding-bottom: 10px;">数据会在后台导出,任务名称最好以日期命名!</span>
                 <el-input v-model="exportData.name" placeholder="请输入导出任务名称"></el-input>
                 <div slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="exportSave(0)">确定导出</el-button>
@@ -819,33 +820,6 @@ export default {
                 axiosRequest(conf)
                 }
             },
-             // 打包语音
-            //  open1(){
-            //     this.$confirm('将导出在搜索条件下的打包语音文件', '提示', {
-            //         confirmButtonText: '确定',
-            //         cancelButtonText: '取消',
-            //         type: 'warning'
-            //         }).then(() => {
-            //             const fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
-            //             const todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-            //             window.open('/api/api_backend.php?r=asrcdr-log/records&action=zipwav&task_coding='+this.form.task_coding+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&call_result_number='+this.form.call_result_number+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel)
-            //     })
-            // },
-            // open1() {
-            //     if(this.total>5){
-            //         this.exportZip.show = true
-            //     }else{
-            //         this.$confirm('将导出在搜索条件下的全部资料', '提示', {
-            //         confirmButtonText: '确定',
-            //         cancelButtonText: '取消',
-            //         type: 'warning'
-            //         }).then(() => {
-            //             var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
-            //             var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-            //             window.open('/api/api_backend.php?r=asrcdr-log/records&action=zipwav&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel)
-            //     })
-            //     }
-            // },
             checkDio(val){
                 this.checked = val
                 if(this.checked){
@@ -858,40 +832,40 @@ export default {
             open(num) {
                 var y = ""
                 if(num == 0){
-                    y ='data_export'
+                    this.exportData.show = true
                 }else if(num == 1){
-                    y ='zipwav'
+                    this.exportZip.show = true 
                 }
-                if(this.total>1000){
-                    if(num == 0){
-                        this.exportData.show = true 
-                    }else if(num == 1){
-                        this.exportZip.show = true 
-                    }
-                }else{
-                    this.$confirm('将导出在搜索条件下的全部资料', '提示', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                    }).then(() => {
-                        var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
-                        var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
-                        window.open('/api/api_backend.php?r=asrcdr-log/records&action='+y+'&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel+'&company_name='+this.form.company_name)
-                })
-                }
+                // if(this.total>1000){
+                //     if(num == 0){
+                        
+                //     }else if(num == 1){
+                        
+                //     }
+                // }else{
+                //     this.$confirm('将导出在搜索条件下的全部资料', '提示', {
+                //     confirmButtonText: '确定',
+                //     cancelButtonText: '取消',
+                //     type: 'warning'
+                //     }).then(() => {
+                //         var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
+                //         var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
+                //         window.open('/api/api_backend.php?r=asrcdr-log/records&action='+y+'&task_coding='+this.form.task_coding+'&call_result_number='+this.form.call_result_number+"&without_detail="+this.without_detail+'&staff_id='+this.form.staff_id+'&clid='+this.form.clid+'&dst='+this.form.dst+'&call_type='+this.form.call_type+'&batch_id='+this.form.batch_id+'&fromdate='+fromdate+'&todate='+todate+'&min_billsec='+this.form.min_billsec+'&max_billsec='+this.form.max_billsec+'&level_id='+this.value4+"&keyword="+this.form.keyword+'&key='+this.form.key+"&dcontext="+this.form.dcontext+"&to_staff_status="+this.form.to_staff_status+"&followup_id="+this.form.followup_id+"&busy_tel="+this.form.busy_tel+'&company_name='+this.form.company_name)
+                // })
+                // }
             },
             exportSave(num){
                 var x = ''
                 if((this.exportData.name).trim()){
                     if(num == 0){
-                        x = "export_queue"
+                        x = "export"
                     }else if(num == 1){
                         x = "zipwav_queue"
                     }
                         var fromdate = formatDate(this.form.fromdate,"yyyy-MM-dd hh:mm:ss")
                         var todate = formatDate(this.form.todate,"yyyy-MM-dd hh:mm:ss")
                         var _this = this
-                            axios.get('/api/api_backend.php?r=asrcdr-log/records', {
+                            axios.get('/api/api_backend.php?r=asrcdr-bak/record-export-task', {
                                 params: {
                                     action: x,
                                     task_coding:this.form.task_coding,
