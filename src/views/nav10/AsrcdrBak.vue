@@ -65,7 +65,7 @@
                         </el-form-item>-->
                         <el-form-item>
                             <el-button type="primary" @click="init(1)">立即查询</el-button>  
-                            <el-button type="primary" @click="open(0)">导出</el-button>
+                            <el-button type="primary" @click="open(0)" :disabled="total == 0">导出</el-button>
                         </el-form-item>           
                     </el-form>
                      <!--客户分类及一些常用操作-->
