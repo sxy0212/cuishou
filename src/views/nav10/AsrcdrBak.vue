@@ -65,7 +65,7 @@
                         </el-form-item>-->
                         <el-form-item>
                             <el-button type="primary" @click="init(1)">立即查询</el-button>  
-                            <el-button type="primary" @click="open(0)" :disabled="total == 0">导出</el-button>
+                            <el-button type="primary" @click="open(0)">导出</el-button>
                         </el-form-item>           
                     </el-form>
                      <!--客户分类及一些常用操作-->
@@ -215,10 +215,10 @@
             </el-dialog>
         </div>
         <!-- 导出弹框 -->
-        <div class="dial-header tag-dial">
+        <div class="dial-header export">
             <el-dialog title="任务名称" :visible.sync="exportData.show">
                 <span style="color:red;display: block;padding-bottom: 10px;">数据会在后台导出,任务名称最好以日期命名!</span>
-                <el-input v-model="exportData.name" placeholder="请输入导出任务名称"></el-input>
+                任务名称:<el-input v-model="exportData.name" placeholder="请输入导出任务名称" style="width:200px;"></el-input>
                 <div slot="footer" class="dialog-footer">
                     <el-button type="primary" @click="exportSave(0)">确定导出</el-button>
                     <el-button @click="exportData.show = false">关闭</el-button>  
@@ -895,9 +895,12 @@ export default {
                                 _this.exportZip.show = false
                                 _this.exportData.name = ""
                                 if(response.data.statusCode == 1){
-                                    _this.$alert(response.data.message+',稍后请到后台任务中的导出任务中下载文件')
+                                    _this.$message({
+                                        message: response.data.message+',稍后请到后台任务中的导出任务中下载文件',
+                                        type: 'success'
+                                    });
                                 }else{
-                                    _this.$alert(response.data.message)
+                                    _this.$message.error(response.data.message)
                                 }
                         })
                 }else{
