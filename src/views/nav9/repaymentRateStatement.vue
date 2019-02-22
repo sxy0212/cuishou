@@ -10,8 +10,10 @@
         ></div-form>
         <div-table
             :tableData='tableData'
+            v-if="tableData.length"
             :list='list'
         ></div-table>
+        <div v-if="!tableData.length" style="text-align:center;">暂无数据</div>
     </div>
 </template>
 <script>
