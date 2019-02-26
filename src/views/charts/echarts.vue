@@ -300,7 +300,7 @@ export default {
 
 <style scoped>
     .chart-container {width: 100%;float: left;}
-    .el-col {padding: 20px 20px;}
+    .el-col {padding: 25px 20px;}
     .content-charts{display:flex;justify-content: space-around;}
     .content-charts-con{display:flex;flex-direction: column;align-items: center;color:gray;}
     .content-charts-con p:nth-of-type(1){margin-bottom:10px;}
