@@ -20,16 +20,27 @@
 <script>
 import store from '@/vuex/store.js'
 import { mapGetters } from 'vuex'
-import {axiosRequest,delCookie,setCookie,message} from '@/assets/js/Yt.js'
+import {axiosRequest,delCookie,setCookie,message,getCookie} from '@/assets/js/Yt.js'
 
 export default {
+  data() {
+      return {
+        Plays:false,
+        preCaseId:'',//前一个案件id
+        newCaseId:"",  //当前案件id
+        preCallNum:"",     //前一个呼入号码
+        newCallNum:"",    //当前呼入号码
+        type:"",          //类型 呼出  呼入  机器人    预测
+        unique_id:"",     //uuid
+      };
+    },
   computed: {
     // ...mapGetters([
     //   'avatar'
     // ])
     trueName(){
       return store.state.staffInfo.true_name
-    }
+    },
   },
   beforeMount() {
     const  conf = {
@@ -47,8 +58,60 @@ export default {
       }
     }
     axiosRequest(conf)
+    if(getCookie('staff')){
+      this.getStatus()
+    }
+    
   },
   methods: {
+
+    getStatus(){//获取当前状态
+              setInterval(()=>{
+                  if( getCookie('preCaseId') == 'underfined' ){  //前一个状态没有定义时，前一个状态码是100
+                      this.preCaseId = "100"
+                  }else{
+                      this.preCaseId = getCookie('preCaseId') //前一个状态定义时，获取前一个状态
+                  }
+                  // if(getCookie("preCallNum") == 'underfined'){ //前一个呼入号码没有定义时，前一个号码是100
+                  //     preCallNum = "100"
+                  // }else{
+                  //     preCallNum =  getCookie("preCallNum")
+                  // }  
+                  const conf = {
+                      url:"/api/api_staff.php?r=cdr-call/handle",
+                      data:{
+                          action:"ExtenStatus"
+                      },
+                      success:(data)=>{
+                          if( data.statusCode == 1 ){
+                            if(data.info.status == 1){
+                              const url = '/api/api_staff.php?r=cdr-call/answer-phone'
+                              const conf = {
+                                url,
+                                data:{case_id:data.info.case_id},
+                                success:(data)=>{
+                                  console.log(data)
+                                }
+                              }
+                              axiosRequest(conf)
+                              setCookie('preCaseId',data.info.case_id)  //设置前案件id
+                              this.newCaseId = data.info.status       //当前案件id
+                              if(this.preCaseId != this.newCaseId){
+                                 router.push({
+                                      path:'/caseDetails/',
+                                      query:{
+                                          id:this.newCaseId
+                                      }
+                                  })
+                              }
+                            }
+                      }
+                  }
+                  }
+                  axiosRequest(conf)
+              },1000)
+
+          },
     logout() {//退出登录
         this.$confirm('确认退出吗?', '提示', {
             confirmButtonText: '确定',
