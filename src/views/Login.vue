@@ -1,5 +1,5 @@
 <template>
-  <section style="overflow:hidden;zoom:1;width:100%;height:100%">
+  <section >
     <div class="note" :style="note">
       <!-- 管理员登录 -->
       <div class="loginForm" > 
