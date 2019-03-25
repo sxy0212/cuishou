@@ -211,6 +211,15 @@ let routes = [
       component: () => import('@/views/nav7/caseConfiguration.vue')
     }]
   }, 
+  {
+    path: '/system-route',
+    component: Layout,
+    children: [{
+      path: '',
+      name: '路由设置',
+      component: () => import('@/views/nav7/system-route.vue')
+    }]
+  }, 
   // {
   //   path: '/accountManagement',
   //   component: Layout,
