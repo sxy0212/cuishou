@@ -151,14 +151,14 @@
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
 											</el-select>
 										</div>
-										<!--<div>
+										<div>
 											<el-radio label="queue">转队列</el-radio>
-											<el-input v-model="AddQueueData.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
-											<span @click="agentorqueueChangeWord" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
+											<el-input v-model="form.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
+											<span @click="agentorqueueChange('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
 												<span v-show="AddQueueData.member == ''">0</span>
 												<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
-										</div>-->
+										</div>
 									</el-radio-group>
 								</el-form-item>
 								<el-form-item label="振铃时长:">
@@ -294,14 +294,14 @@
 												<el-option v-for="(item,index) in AddData.ext_list" :label="item.name" :value="item.name" :key="index"></el-option>
 											</el-select>
 										</div>
-										<!--<div>
+										<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="formEdit.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
-											<span @click="agentorqueueChangeWordEdit" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
+											<span @click="agentorqueueChangeEdit('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
 												<span v-show="EditQueueData.member == ''">0</span>
 												<span v-show="EditQueueData.member != ''">{{EditQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
-										</div>-->
+										</div>
 									</el-radio-group>
 									
 								</el-form-item>
@@ -412,8 +412,18 @@
 							<el-form-item label=" 最大等待数:" style="display:block">
 								<el-input style="width:100px" v-model="AddQueueData.maxlen"></el-input> <span>个</span>
 							</el-form-item>
+							<el-form-item label="选择部门:" style="display:block">
+								<el-select v-model="AddQueueData.depart" placeholder="请选择" @change="changeFn">
+									<el-option
+									v-for="(item,index) in departmentList"
+									:key="index"
+									:label="item.depart_name"
+									:value="item.depart_name">
+									</el-option>
+								</el-select>
+							</el-form-item>
 						</el-form>
-						<el-table ref="multipleTables" :data="AddQueueData.Data" tooltip-effect="dark" height="200" style="width:100%" @selection-change="handleSelectionChangeQueue">
+						<el-table ref="multipleTables" :data='staffList' tooltip-effect="dark" height="200" style="width:100%" @selection-change="handleSelectionChangeAddQueue">
 							<el-table-column type="selection" prop="id"></el-table-column>
 							<el-table-column prop="true_name" label="用户名"></el-table-column>
 							<el-table-column prop="staff_id" label="真实姓名(工号)"></el-table-column>
@@ -449,11 +459,21 @@
 							<el-form-item label=" 最大等待数:" style="display:block">
 								<el-input style="width:100px" v-model="EditQueueData.maxlen"></el-input> <span>个</span>
 							</el-form-item>
+							<el-form-item label="选择部门:" style="display:block">
+								<el-select v-model="EditQueueData.depart" placeholder="请选择" @change="changeFn">
+									<el-option
+									v-for="(item,index) in departmentList"
+									:key="index"
+									:label="item.depart_name"
+									:value="item.depart_name">
+									</el-option>
+								</el-select>
+							</el-form-item>
 						</el-form>
-						<el-table ref="multipleTables1" :data="EditQueueData.Data" tooltip-effect="dark" height="200" style="width:100%" @selection-change="handleSelectionChangeQueueEdit">
+						<el-table ref="multipleTable1" :data="staffList" tooltip-effect="dark" height="200" style="width:100%" @selection-change="handleSelectionChangeQueueEdit">
 							<el-table-column type="selection" prop="id"></el-table-column>
 							<el-table-column prop="true_name" label="用户名"></el-table-column>
-							<el-table-column prop="staff_id" label="真实姓名(工号)"></el-table-column>
+							<el-table-column prop="id" label="真实姓名(工号)"></el-table-column>
 							<el-table-column prop="penalty" label="振铃顺序">
 								<template slot-scope="scope">
 									<el-input :value="scope.row.penalty" :disabled="true"> </el-input>
@@ -661,11 +681,20 @@
 
 <script>
 import {axiosRequest,clone,message,getCookie} from '@/assets/js/Yt.js'
-import { MessageBox } from 'element-ui';
+import { Message } from 'element-ui';
+
 import store from '@/vuex/store.js'
 	export default {
 		data() {
 			return {
+				naturalDepartmentList:[],//原始部门信息
+				naturalStaffList:[],//原始员工信息
+				departmentList:[],//部门
+				staffList:[],//成员
+				defaultProps: {
+					children: 'second',
+					label: 'depart_name'
+				},
 				images: {
               	robotOff:'static/image/off.png',
               	robotOn: 'static/image/on.png'
@@ -682,7 +711,6 @@ import store from '@/vuex/store.js'
 				AddQueueData:{            //添加任务的时候转队列需要用到的数据
 					QueueShow:false,      //转队列的时候出现的弹框
 					Data:[],      //数据
-					caller_id:"",
 					strategy:"rrmemory",//[振铃策略] 
 					timeout:"30",//[振铃时长]
 					maxlen:"10",//[最大等待数]
@@ -700,6 +728,7 @@ import store from '@/vuex/store.js'
 					staff_id_queue:"" ,
 					multipleSelection:[],
 					member:"",    //成员个数
+					depart:''//部门
             	},
 				Index:{
 						addTask:false,
@@ -871,7 +900,6 @@ import store from '@/vuex/store.js'
 				showUnconnectedNameEdit1:"",
 				showUnconnectedEdit2:false,
 				showUnconnectedNameEdit2:"",
-
 			}
 		},
 		activated() {
@@ -897,19 +925,16 @@ import store from '@/vuex/store.js'
 					const conf = {
 						url,
 						success: (data)=>{
-							// message(data)
 							this.Dates = data.info.map((item)=>{
 								item.calling_times = Number(item.calling_times)+1
 								return item;
 							})
-
 							this.isAnyoneOn = this.Dates.some(item=>item.status==="1")
 						}
 					}
 					axiosRequest(conf)
 				}
-				
-      		},
+			},
 			// 点击添加任务时数据初始化
 			addInit(){
 				const url = "/api/api_backend.php?r=asroperate/add-init"
@@ -917,7 +942,23 @@ import store from '@/vuex/store.js'
 					url,
 					success:(data)=>{
 						this.AddData.outLine = data.info.out_side_lines
+						// 测试数据
+						// this.AddData.outLine = [{
+						// 	"out_number": "6600008"
+						// }, {
+						// 	"out_number": "6600006"
+						// }, {
+						// 	"out_number": "6600001"
+						// }]
 						this.AddData.recognition_lies = data.info.recognition_lies
+						// 测试数据
+						// this.AddData.recognition_lies = [{
+						// 	"asr_number": "8500005"
+						// }, {
+						// 	"asr_number": "8500004"
+						// }, {
+						// 	"asr_number": "8500009"
+						// }]
 						this.AddData.call_result = data.info.call_result_status
 						this.AddData.usable_ai_count = data.info.usable_ai_count
 						if(this.AddData.usable_ai_count == 0){
@@ -1025,17 +1066,16 @@ import store from '@/vuex/store.js'
 			},
 			// 保存话术
 			sureTemplateEdit1(){
-					var arr = []
-				arr = this.editData.templates.map((item)=>{
-					if(item.id == this.showTemplateIdEdit1){
-						return item;
-					}
-				})
-				var arr1 = arr.filter((item)=>{
-					if(item !=undefined){
-						return item;
-					}
-				})
+				console.log(this.editData.templates, this.showTemplateIdEdit1)
+				var arr = []
+				arr = this.editData.templates.map(item=>{
+					item.id == this.showTemplateIdEdit1 
+						return item
+					})
+				var arr1 = arr.filter(item=>{
+					if( item !=undefined ){
+					return item
+				}})
 				this.showTemplateNameEdit1 = arr1[0].name
 				this.form1Edit.template_id = this.showTemplateIdEdit1
 				this.showTemplateEdit1 = false
@@ -1044,12 +1084,12 @@ import store from '@/vuex/store.js'
 				var arr = []
 				arr = this.editData.templates.map((item)=>{
 					if(item.id == this.showTemplateIdEdit2){
-						return item;
+						return item
 					}
 				})
 				var arr1 = arr.filter((item)=>{
 					if(item !=undefined){
-						return item;
+						return item
 					}
 				})
 				this.showTemplateNameEdit2 = arr1[0].name
@@ -1084,7 +1124,7 @@ import store from '@/vuex/store.js'
 				var arr = []
 				var arr1 = this.not_connected_status1
 				  arr = this.AddData.call_result.filter(function(item){
-						return arr1.indexOf(item.id) != -1;
+						return arr1.indexOf(item.id) != -1
 					})  
 				this.showUnconnectedName1 = arr.map(item=>{
 					return item.status
@@ -1096,7 +1136,7 @@ import store from '@/vuex/store.js'
 				var arr = []
 				var arr1 = this.not_connected_status2
 				  arr = this.AddData.call_result.filter(function(item){
-						return arr1.indexOf(item.id) != -1;
+						return arr1.indexOf(item.id) != -1
 					})  
 				this.showUnconnectedName2 = arr.map(item=>{
 					return item.status
@@ -1116,7 +1156,7 @@ import store from '@/vuex/store.js'
 				var arr = []
 				var arr1 = this.not_connected_status1Edit
 				  arr = this.editData.call_result.filter(function(item){
-						return arr1.indexOf(item.id) != -1;
+						return arr1.indexOf(item.id) != -1
 					})  
 				this.showUnconnectedNameEdit1 = arr.map(item=>{
 					return item.status
@@ -1128,7 +1168,7 @@ import store from '@/vuex/store.js'
 				var arr = []
 				var arr1 = this.not_connected_status2Edit
 				  arr = this.editData.call_result.filter(function(item){
-						return arr1.indexOf(item.id) != -1;
+						return arr1.indexOf(item.id) != -1
 					})  
 				this.showUnconnectedNameEdit2 = arr.map(item=>{
 					return item.status
@@ -1168,17 +1208,17 @@ import store from '@/vuex/store.js'
 				return JSON.parse(JSON.stringify(obj))
 			},
 			 // 人机交互队列中选择坐席
-            handleSelectionChangeQueue(val){
-                this.AddQueueData.multipleSelection = val
+            handleSelectionChangeAddQueue(val){
+				this.AddQueueData.multipleSelection = val
             },
             // 转队列确定保存
             QueueSure(){
-                if(this.AddQueueData.multipleSelection.length == 0){
+				if(this.AddQueueData.multipleSelection.length == 0){
                     this.$alert("选择接听坐席")
                     this.AddQueueData.QueueShow = true
                 }else{
                     var x = this.AddQueueData.multipleSelection.map((item)=>{
-                        return item.staff_id
+                        return item.id
                     })
                     this.AddQueueData.staff_id_queue = x.join(",")
                     this.form.strategy = this.AddQueueData.strategy
@@ -1189,60 +1229,66 @@ import store from '@/vuex/store.js'
                     this.AddQueueData.QueueShow = false
                 }
             },
-			agentorqueueChangeWord(){
-                if(this.form.agent_or_queue  == "queue"){
-                    if(this.form.caller_id == ""){
-                        this.$alert("请选择外线号码")
-                        this.form.agent_or_queue = ""
-                    }else{
-                        this.AddQueueData.QueueShow = true
-                        const caller_id = this.form.caller_id
-                        const url = "/api/api_backend.php?r=asroperate/turn-queue"   //获取转队列弹框中的数据
-                        const conf = {
-                            url,
-                            data:{caller_id},
-                            success:(data)=>{
-                                this.AddQueueData.Data = data.info
-                            }
-                        }
-                        axiosRequest(conf)
-                    }
-                 
-                }else{
-                    this.$alert("未选择转队列")
-                }
-            },
-			 // 添加时人机交互方式(队列)
+			// 添加时人机交互方式(队列)
             agentorqueueChange(val){
-                if(val == "queue"){
+				if(val == "queue"){
                     if(this.form.caller_id == ""){
                         this.$alert("请选择外线号码")
-                        this.form.agent_or_queue = ""
-                    }else{
-                        this.AddQueueData.QueueShow = true
-                        const caller_id = this.form.caller_id
+						this.form.agent_or_queue = ""
+					}else{
+						const caller_id = this.form.caller_id
                         const url = "/api/api_backend.php?r=asroperate/turn-queue"
                         const conf = {
                             url,
                             data:{caller_id},
                             success:(data)=>{
-                                this.AddQueueData.Data = data.info
-                            }
+								if(data.statusCode == 1){
+									this.naturalDepartmentList = data.info.depart_info
+									this.departmentList.push({
+										depart_name:'全部',
+										id:''
+									})
+									data.info.depart_info.forEach(item=>{
+										this.departmentList.push({
+											depart_name: item.depart_name,
+											id:item.id
+										})
+										if( item.second.length ){
+											item.second.forEach(every=>{
+												this.departmentList.push({
+													depart_name: every.depart_name,
+													id:every.id
+												})
+											})
+										}
+									})
+									this.naturalStaffList = data.info.staff_info
+									this.staffList = data.info.staff_info
+									this.AddQueueData.strategy =  ''
+									this.AddQueueData.timeout =  ''
+									this.AddQueueData.maxlen =  ''
+									this.AddQueueData.depart =  ''
+									this.AddQueueData.multipleSelection =  []
+									this.AddQueueData.QueueShow = true
+								}else if(data.statusCode == 0){
+									Message({
+										message: data.message,
+										type: 'warning',
+										duration: 2 * 1000
+									})
+								}
+							}
                         }
                         axiosRequest(conf)
-                        this.AddQueueData.caller_id = this.form.caller_id  
                         this.form.agent_or_queue = val
                     }
-                }else{
-                    this.AddQueueData.caller_id = ""
-                    this.form.agent_or_queue = val
                 }
             },
 			// 保存添加
 			onSubmit(){
-				this.round_rule[0] = this.form1;
-				this.round_rule[1] = this.form2;
-				this.round_rule[2] = this.form3;
+				this.round_rule[0] = this.form1
+				this.round_rule[1] = this.form2
+				this.round_rule[2] = this.form3
 				const data = this.form
 				if(this.form.agent_or_queue == "mobile"){
                     const x= this.form.asrtomobile
@@ -1265,7 +1311,6 @@ import store from '@/vuex/store.js'
                     data.strategy = this.AddQueueData.strategy
                     data.timeout = this.AddQueueData.timeout
                     data.maxlen = this.AddQueueData.maxlen
-                    data.staff_id_queue = this.AddQueueData.staff_id_queue
                 }else{
                     data.exten_num = 0
                 }
@@ -1279,9 +1324,8 @@ import store from '@/vuex/store.js'
 					url,
 					data:data,
 					success:(data)=>{
-						this.$alert(data.message)
-						if(data.statusCode == 1){
-							this.Index.addTask = false;
+						if( data.statusCode == 1 ){
+							this.Index.addTask = false
 							this.form = this.clone(this.data1)
 							this.form1 = this.clone(this.data2)
 							this.form2 = this.clone(this.data3)
@@ -1296,11 +1340,24 @@ import store from '@/vuex/store.js'
 							this.showTemplateId3 = ""
 							this.showUnconnectedName1 = ""
 							this.showUnconnectedName2 = ""
+							this.departmentList = []
+							this.NaturalDepartmentList = []
+							this.naturalStaffList = []
+							this.staffList = []
 							this.init()
+							Message({
+								message: data.message,
+								type: 'success',
+								duration: 2 * 1000
+							})
 						}else{
 							this.Index.addTask = true
+							Message({
+								message: data.message,
+								type: 'warning',
+								duration: 2 * 1000
+							})
 						}
-						message(data)
 					}
 				}
 				axiosRequest(conf)
@@ -1322,7 +1379,7 @@ import store from '@/vuex/store.js'
 							item.id = '' + item.id +''
 							return item
 						})
-						// this.editData.templates = data.info.templates
+						this.editData.templates = data.info.templates
 						this.formEdit = data.info.info
 						this.formEdit.usable_ai_count = data.info.usable_ai_count
 						this.formEdit.ai_count = parseInt(data.info.info.ai_count)
@@ -1330,27 +1387,14 @@ import store from '@/vuex/store.js'
 						this.end_time_am = data.info.info.call_time.am.e
 						this.start_time_pm = data.info.info.call_time.pm.s
 						this.end_time_pm = data.info.info.call_time.pm.e
-						var arr = data.info.round_rule.filter(item=>{
-							if(item.round == 0){
-								return item
-							}
-						})
-						var arr1 = data.info.round_rule.filter(item=>{
-							if(item.round == 1){
-								return item
-							}
-						})
-						var arr2= data.info.round_rule.filter(item=>{
-							if(item.round == 2){
-								return item
-							}
-						})
+						var arr = data.info.round_rule.filter(item=>item.round == 0)
+						var arr1 = data.info.round_rule.filter(item=>item.round == 1)
+						var arr2= data.info.round_rule.filter(item=>item.round == 2)
 						var x= data.info.info.exten_num
 						if(x.indexOf("mobile") == 0){
 							this.formEdit.agent_or_queue = "mobile"
 							this.agent_or_queue = "mobile"
 							this.formEdit.asrtomobile = x.substring(6)
-							// this.editData.exten_num = ""
 						}else if(x.indexOf("ext") == 0){
 							this.formEdit.agent_or_queue = "ext"
 							this.agent_or_queue = "ext"
@@ -1374,190 +1418,167 @@ import store from '@/vuex/store.js'
 						this.form3Edit = arr2[0]
 						this.form3Edit.template_id = arr2[0].template_id
 						this.showTemplateIdEdit3 = arr2[0].template_id
-						var showNameEdit1 = []
-						showNameEdit1 = this.editData.templates.map((item)=>{
-							if(item.id == this.form1Edit.template_id){
-								return item;
-							}
-						})
-						var showNameEditQ1 = showNameEdit1.filter((item)=>{
-							if(item !=undefined){
-								return item;
+						var showNameEditQ1 = this.editData.templates.map(item=>item.id == this.form1Edit.template_id).filter(item=>{
+							if(item != undefined ){
+								return item
 							}
 						})
 						this.showTemplateNameEdit1 = showNameEditQ1[0].name
-						var showNameEdit2 = []
-						showNameEdit2 = this.editData.templates.map((item)=>{
-							if(item.id == this.form2Edit.template_id){
-								return item;
-							}
-						})
-						var showNameEditQ2 = showNameEdit2.filter((item)=>{
-							if(item !=undefined){
-								return item;
+						var showNameEditQ2 = this.editData.templates.map(item=> item.id == this.form2Edit.template_id ).filter(item=>{
+							if(item != undefined ){
+								return item
 							}
 						})
 						this.showTemplateNameEdit2 = showNameEditQ2[0].name
-						var showNameEdit3 = []
-						showNameEdit3 = this.editData.templates.map((item)=>{
-							if(item.id == this.form3Edit.template_id){
-								return item;
-							}
-						})
-						var showNameEditQ3 = showNameEdit3.filter((item)=>{
-							if(item !=undefined){
-								return item;
+						var showNameEditQ3 = this.editData.templates.map( item =>item.id == this.form3Edit.template_id ).filter(item=>{
+							if(item != undefined ){
+								return item
 							}
 						})
 						this.showTemplateNameEdit3 = showNameEditQ3[0].name
 						this.not_connected_status1Edit = (arr[0].not_connected_status).split(",")
-						var arrNot = this.not_connected_status1Edit
-						var arrNot1 = []
-						arrNot1 = this.editData.call_result.filter(function(item){
-								return arrNot.indexOf(item.id) != -1;
-							})  
-						this.showUnconnectedNameEdit1 = arrNot1.map(item=>{
-							return item.status
-						})
+						this.showUnconnectedNameEdit1 = this.editData.call_result.filter(item=>this.not_connected_status1Edit.indexOf(item.id) != -1).map(item=>item.status)
 						this.not_connected_status2Edit = (arr1[0].not_connected_status).split(",")
-						var arrNot2 = []
-						var arrNot3 = this.not_connected_status2Edit
-						arrNot2 = this.editData.call_result.filter(function(item){
-								return arrNot3.indexOf(item.id) != -1;
-							})  
-						this.showUnconnectedNameEdit2 = arrNot2.map(item=>{
-							return item.status
-						})
-							}
+						this.showUnconnectedNameEdit2 = this.editData.call_result.filter(item=>this.not_connected_status2Edit.indexOf(item.id) != -1).map(item=>item.status)  
+					}
 				}
 				axiosRequest(conf)
 			},
 			// 编辑时人机交互方式(队列)
-             agentorqueueChangeEdit(val){
-                if(val == "queue"){
+            agentorqueueChangeEdit(val){
+				if(val == "queue"){
                     if(this.formEdit.caller_id == ""){
-                        this.$alert("请选择外线号码")
+						Message({
+							message: "请选择外线号码",
+							type: 'warning',
+							duration: 2 * 1000
+						})
                         this.formEdit.agent_or_queue = ""
                     }else{
-                         this.EditQueueData.QueueShow = true
+                        this.EditQueueData.QueueShow = true
                         const url = "/api/api_backend.php?r=asroperate/edit-turn-queue"
-                        const num = this.formEdit.caller_id
+                        const caller_id = this.formEdit.caller_id
                         const conf = {
                             url,
-                            data:{num},
+                            data:{caller_id},
                             success:(data)=>{
-                                 this.EditQueueData.Data = data.info
-                                this.EditQueueData.strategy = data.message.strategy
-                                this.EditQueueData.timeout = data.message.timeout
-                                this.EditQueueData.maxlen = data.message.maxlen
-                                 this.EditQueueData.Data.forEach((row,index)=>{
-                                    if(row.staff_id_selected == 1){
-                                        setTimeout(()=>{
-                                            this.$refs.multipleTables1.toggleRowSelection(  this.EditQueueData.Data[index])
-                                        },1)
-                                    }
-                                })
+								if(data.statusCode == 1){
+									this.EditQueueData.strategy = data.info.cfg_queue.strategy
+									this.EditQueueData.timeout = data.info.cfg_queue.timeout
+									this.EditQueueData.maxlen = data.info.cfg_queue.maxlen
+									this.naturalDepartmentList = data.info.depart_info
+									this.departmentList.push({
+										depart_name:'全部',
+										id:''
+									})
+									data.info.depart_info.forEach(item=>{
+										this.departmentList.push({
+											depart_name: item.depart_name,
+											id:item.id
+										})
+										if( item.second.length ){
+											item.second.forEach(every=>{
+												this.departmentList.push({
+													depart_name: every.depart_name,
+													id:every.id
+												})
+											})
+										}
+									})
+									this.staffList = data.info.staff_info
+									this.naturalStaffList = data.info.staff_info
+									const arrChecked = this.staffList.filter(item=>{
+										if(item.is_selected == 1){
+											return item
+										}
+									})
+									setTimeout(()=>{
+										if (arrChecked) {
+											arrChecked.forEach(row => {
+												this.$refs.multipleTable1.toggleRowSelection(row)
+											})
+											this.EditQueueData.multipleSelection  = arrChecked
+										} else {
+											this.$refs.multipleTable1.clearSelection()
+										}
+									},1)
+									this.EditQueueData.depart = '全部'
+								}else if(data.statusCode == 0){
+									Message({
+										message: data.message,
+										type: 'success',
+										duration: 2 * 1000
+									})
+								}
                             }
                         }
-                        axiosRequest(conf)
-                         this.EditQueueData.caller_id = this.formEdit.caller_id  
-                        this.formEdit.agent_or_queue = val
-                    }
-                 
+						axiosRequest(conf)
+						this.EditQueueData.caller_id = this.formEdit.caller_id  
+						this.formEdit.agent_or_queue = val
+					}
                 }else{
-                     this.EditQueueData.caller_id = ""
+                    this.EditQueueData.caller_id = ""
                     this.formEdit.agent_or_queue = val
                     this.formEdit.strategy = ""
                     this.formEdit.timeout = ""
                     this.formEdit.maxlen = ""
                     this.formEdit.staff_id_queue = ""
                 }
-               
             },
-            editQueue(){
-                const url = "/api/api_backend.php?r=asroperate/edit-turn-queue"
-                const num = this.formEdit.caller_id
-                const conf = {
-                    url,
-                    data:{num},
-                    success:(data)=>{
-                        this.EditQueueData.Data = data.info
-                        this.EditQueueData.strategy = data.message.strategy
-                        this.EditQueueData.timeout = data.message.timeout
-                        this.EditQueueData.maxlen = data.message.maxlen
-                        var x =   this.EditQueueData.Data.filter((row,index)=>{
-                            return row.staff_id_selected == 1 
-                        })
-                        const y =  x.map((row,index)=>{
-                            return row.staff_id
-                            
-                        })
-                        this.EditQueueData.staff_id_queue = y.join(",")
-                    }
-                }
-                axiosRequest(conf)
-            },
-            // 人机交互队列中选择坐席
+			// 选择部门时
+			changeFn(val){
+				let arr = []
+				if( val == '全部' ){	//添加一个全部选项
+					this.staffList = this.naturalStaffList
+				}else{
+					this.naturalDepartmentList.forEach(item=>{
+						if(item.depart_name == val){
+							arr.push(val)
+							if(item.second.length){
+								item.second.forEach(every=>{
+									arr.push(every.depart_name)
+								})
+							}
+						}else if(item.second.length){
+							item.second.forEach(only=>{
+								if(only.depart_name == val){
+									arr.push(val)
+								}
+							})
+						}
+					})
+					const strArr = ',' + arr.join(",") + ','
+					this.staffList = this.naturalStaffList.filter(item=>{
+						if( strArr.indexOf( ','+item.depart_name+',') != -1 ){
+							return item
+						}
+					})
+				}
+			},
+			// 人机交互队列中选择坐席
             handleSelectionChangeQueueEdit(val){
-                this.EditQueueData.multipleSelection = val
+				this.EditQueueData.multipleSelection = val
             },
             // 转队列确定保存
             EditQueueSure(){
                 if(this.EditQueueData.multipleSelection.length == 0){
                     this.$alert("选择接听坐席")
-                     this.EditQueueData.QueueShow = true
+                    this.EditQueueData.QueueShow = true
                 }else{
-                    var x = this.EditQueueData.multipleSelection.map((item)=>{
-                        return item.staff_id
-                    })
-                    this.EditQueueData.staff_id_queue = x.join(",")
-                    this.formEdit.strategy = this.EditQueueData.strategy
+					this.EditQueueData.staff_id_queue= this.EditQueueData.multipleSelection.map(item=>item.id).join(",")
+					this.formEdit.strategy = this.EditQueueData.strategy
                     this.formEdit.timeout = this.EditQueueData.timeout
                     this.formEdit.maxlen = this.EditQueueData.maxlen
                     this.formEdit.staff_id_queue = this.EditQueueData.staff_id_queue
                     this.EditQueueData.member = parseInt(this.EditQueueData.multipleSelection.length)
                     this.EditQueueData.QueueShow = false
                 }
-               
             },
-            agentorqueueChangeWordEdit(){
-                if( this.formEdit.agent_or_queue  == "queue"){
-                    if(this.formEdit.caller_id == ""){
-                        this.$alert("请选择外线号码")
-                        this.formEdit.agent_or_queue = ""
-                    }else{
-                         this.EditQueueData.QueueShow = true
-                        const url = "/api/api_backend.php?r=asroperate/edit-turn-queue"
-                        const num = this.formEdit.caller_id
-                        const conf = {
-                            url,
-                            data:{num},
-                            success:(data)=>{
-                                this.EditQueueData.Data = data.info
-                                this.EditQueueData.strategy = data.message.strategy
-                                this.EditQueueData.timeout = data.message.timeout
-                                this.EditQueueData.maxlen = data.message.maxlen
-                                 this.EditQueueData.Data.forEach((row,index)=>{
-                                    if(row.staff_id_selected == 1){
-                                        setTimeout(()=>{
-                                            this.$refs.multipleTables1.toggleRowSelection(  this.EditQueueData.Data[index])
-                                        },1)
-                                    }
-                                })
-                            }
-                        }
-                        axiosRequest(conf)
-                    }
-                 
-                }else{
-                    this.$alert("未选择转队列")
-                }
-            },
-			// 保存修改
+           	// 保存修改
 			onSubmitSave(){
-				this.round_rule_edit[0] = this.form1Edit;
-				this.round_rule_edit[1] = this.form2Edit;
-				this.round_rule_edit[2] = this.form3Edit;
+				this.round_rule_edit[0] = this.form1Edit
+				this.round_rule_edit[1] = this.form2Edit
+				this.round_rule_edit[2] = this.form3Edit
 				const data = this.formEdit
 				if(this.start_time_am.split(":").length == 3){
 					data.start_time_am = this.start_time_am
@@ -1596,25 +1617,22 @@ import store from '@/vuex/store.js'
                     }
                     
                 }else if(this.agent_or_queue == "queue"){
-                    this.formEdit.exten = "queue" 
+					this.formEdit.exten = "queue" 
+					data.exten_num = 'queue'
                     data.strategy = this.EditQueueData.strategy
                     data.timeout = this.EditQueueData.timeout
                     data.maxlen = this.EditQueueData.maxlen
-                    data.staff_id_queue = this.EditQueueData.staff_id_queue
                 }else{
                     data.exten_num = 0
                 }
-              
-                data.staff_id_queue = this.formEdit.staff_id_queue
-				data.round_rule = JSON.stringify(this.round_rule_edit)
+              	data.round_rule = JSON.stringify(this.round_rule_edit)
 				const url = "/api/api_backend.php?r=asroperate/edit-handle"
 				const conf = {
 					url,
 					data:data,
 					success:(data)=>{
-						this.$alert(data.message)
 						if(data.statusCode == 1){
-							this.Index.editTask = false;
+							this.Index.editTask = false
 							this.init()
 							this.formEdit = {}
 							this.form1Edit = {}
@@ -1622,10 +1640,22 @@ import store from '@/vuex/store.js'
 							this.form3Edit = {}
 							this.not_connected_status1Edit = []
 							this.not_connected_status2Edit = []
+							this.naturalStaffList = []
+							this.staffList = []
+							this.departmentList = []
+							Message({
+								message: data.message,
+								type: 'success',
+								duration: 2 * 1000
+							})
 						}else{
 							this.Index.editTask = true
+							Message({
+								message: data.message,
+								type: 'warning',
+								duration: 2 * 1000
+							})
 						}
-						message(data)
 					}
 				}
 				axiosRequest(conf)
@@ -1646,7 +1676,11 @@ import store from '@/vuex/store.js'
                         status:statusId
                     },
                     success:(data)=>{ 
-						this.$alert(data.message)
+						Message({
+							message: data.message,
+							type: 'info',
+							duration: 2 * 1000
+						})
                         this.init()
                     }
                 }
@@ -1664,10 +1698,14 @@ import store from '@/vuex/store.js'
 						url,
 						data:{id:id},
 						success:(data)=>{
-							this.$alert(data.message)
-								if(data.statusCode == 1){
-									this.init()
-								}
+							Message({
+								message: data.message,
+								type: 'info',
+								duration: 2 * 1000
+							})
+							if(data.statusCode == 1){
+								this.init()
+							}
 						}
 					}
 					axiosRequest(conf)
@@ -1703,7 +1741,11 @@ import store from '@/vuex/store.js'
                         configId
                     },
                     success:(data)=>{
-                        this.$alert(data.message)
+                        Message({
+							message: data.message,
+							type: 'info',
+							duration: 2 * 1000
+						})
                         if(data.statusCode == 1){
                             this.AddQueue.show = false
                         }else{
@@ -1742,7 +1784,11 @@ import store from '@/vuex/store.js'
                             url,
                             data:{id:row.id},
                             success:(data)=>{
-                                this.$alert(data.message)
+                                Message({
+									message: data.message,
+									type: 'info',
+									duration: 2 * 1000
+								})
                                 if(data.statusCode == 1){
                                     this.showQueue.show = false
                                 }else{
@@ -1752,11 +1798,12 @@ import store from '@/vuex/store.js'
                         }
                         axiosRequest(conf)
                     }).catch(() => {
-                    this.$message({
-                        type: 'info',
-                        message: '已取消删除'
-                    });          
-                });
+						Message({
+							message: '已取消删除',
+							type: 'warning',
+							duration: 2 * 1000
+						})
+                })
             },
 			 // 测试
             text(id){
@@ -1784,11 +1831,17 @@ import store from '@/vuex/store.js'
                     data:data,
                     success:(data)=>{
 						if(data.statusCode == 1){
-                           	this.$alert(data.message, '', {
-								confirmButtonText: '确定'
-							});
+							Message({
+								message: data.message,
+								type: 'success',
+								duration: 2 * 1000
+							})
                         }else{
-							this.$alert(data.message)
+							Message({
+								message: data.message,
+								type: 'warning',
+								duration: 2 * 1000
+							})
 						}
                     }
                 }
