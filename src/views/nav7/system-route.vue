@@ -2,7 +2,7 @@
   <section>
     <div class="CenterMain  MainHp">
       <div class="TopForm">
-        <div class="TableList">
+        <div class="TableList2">
           <el-table ref="multipleTable" :data="tableData" tooltip-effect="dark" style="width: 100%" border stripe>
               <el-table-column type="index" :index="index" label="序号"width="55"></el-table-column>
               <el-table-column prop="num" label="系统号码"></el-table-column>

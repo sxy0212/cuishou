@@ -1199,7 +1199,7 @@ import '../../../static/css/bootstrap.min.css'
 	}
 
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
   .over .el-dialog__body{overflow:hidden;}
   .el-select-dropdown__item{width:215px;}
   .padding .el-dialog__body{padding:10px 60px;}
