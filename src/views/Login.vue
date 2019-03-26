@@ -48,7 +48,7 @@
               <el-form-item>
                 <div class="input" style="display: flex;border:1px solid #409EFF;border-radius: 20px;margin-bottom: 20px;">
                   <img src="static/image/runNumber.png" style="width:20px;height:20px;margin-left: 25px;margin-top:10px;">
-                  <el-input type="password"  auto-complete="off" placeholder="分机号" v-model='ruleForm2.StaffId' @keyup.enter.native="handleLoginStaff"></el-input>
+                  <el-input type="text"  auto-complete="off" placeholder="分机号" v-model='ruleForm2.StaffId' @keyup.enter.native="handleLoginStaff"></el-input>
                 </div>
               </el-form-item>
               <el-form-item style="width:100%;">
