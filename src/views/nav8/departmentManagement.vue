@@ -41,7 +41,13 @@
           <el-table-column type="index" label="序号" width="60"  fixed="left" :index="index"></el-table-column>
           <el-table-column prop="true_name" label="姓名" width="100"></el-table-column>  
           <el-table-column prop="depart_name" label="所在部门"></el-table-column>  
-          <el-table-column prop="login_name" label="账号"></el-table-column>  
+          <el-table-column prop="login_name" label="账号"></el-table-column> 
+          <el-table-column prop="is_login" label="催收员在线状态">
+            <template slot-scope="scope">
+              <span v-if="scope.row.is_login == 1">在线</span>
+              <span v-else-if="scope.row.is_login == 0">离线</span>
+            </template>
+          </el-table-column>  
           <el-table-column prop="phone" label="联系方式"></el-table-column>  
           <el-table-column  label="操作" width="350">
             <template slot-scope="scope">
