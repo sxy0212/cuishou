@@ -115,8 +115,6 @@ export default {
             this.$emit('handleSelectionChange',val)
         },
         doubleClickFn(row,event){
-            console.log('双击一行')
-            console.log(router)
             router.push({
                 path:'/staffCaseDetails/',
                 query:{
