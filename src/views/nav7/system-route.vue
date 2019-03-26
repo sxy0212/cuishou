@@ -9,8 +9,8 @@
               <el-table-column prop="type" label="号码类型">
                   <template slot-scope="scope">
                       <span v-if="scope.row.type==0">呼入呼出</span>
-                      <span  v-else-if="scope.row.type==1">预测</span>
-                      <span  v-else="scope.row.type==2">群呼</span>
+                      <span  v-if="scope.row.type==1">预测</span>
+                      <span  v-if="scope.row.type==2">群呼</span>
                   </template>
               </el-table-column>
               <el-table-column prop="type" label="操作" width="330">
@@ -21,7 +21,7 @@
                   </template>
               </el-table-column> 
           </el-table>
-          <div class="block" style="width:400px;margin:0 auto"v-show="!!total">
+          <div class="block" style="width:400px;margin:0 auto" v-show="!!total">
               <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
