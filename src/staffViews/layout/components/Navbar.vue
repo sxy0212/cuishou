@@ -43,8 +43,10 @@ export default {
       passwordObj:{
         old_password:'',
         password:'',
-        user_name:''
+        confirm_pwd:''
       },
+      user_name:'',
+      trueName:'',
       Plays:false,
       preCaseId:'',//前一个案件id
       newCaseId:"",  //当前案件id
@@ -54,31 +56,32 @@ export default {
       unique_id:"",     //uuid
     }
   },
-  computed: {
-    trueName(){
-      return store.state.staffInfo.true_name
-    },
-  },
+  // computed: {
+  //   trueName(){
+  //     return store.state.staffInfo.true_name
+  //   },
+  // },
   beforeMount() {
     const  conf = {
       url:"/api/api_staff.php?r=login/info",
       success:(data)=>{
-          if( data.statusCode == 1 ){
-            store.commit( 'set_staff_info', data.info )
-          }else if( data.statusCode == 0 ){
-              Message({
-                  message: data.message,
-                  type: 'erro',
-                  duration: 3 * 1000
-              })
-          }
+        if( data.statusCode == 1 ){
+          store.commit( 'set_staff_info', data.info )
+          this.user_name = data.info.user_name
+          this.trueName = data.info.true_name
+        }else if( data.statusCode == 0 ){
+          Message({
+            message: data.message,
+            type: 'erro',
+            duration: 3 * 1000
+          })
+        }
       }
     }
     axiosRequest(conf)
-    if(getCookie('staff')){
+    if( getCookie('staff') ){
       this.getStatus()
     }
-    
   },
   methods: {
     getStatus(){//获取当前状态
@@ -148,29 +151,36 @@ export default {
           }
           axiosRequest(conf)
         }).catch(() => {
-          this.$message({
+          Message({
+            message: '取消退出',
             type: 'info',
-            message: '取消退出'
-          })         
+            duration: 3 * 1000
+          })
         })
     },
     changePassword(){//修改密码
       this.changePasswordNow = true
+      this.passwordObj = {
+        old_password:'',
+        confirm_pwd:'',
+        password:''
+      }
     },
     protectFn(){
       const conf = {
         url:"/api/api_staff.php?r=user-info/change-pwd",
         data:{
           old_password:this.passwordObj.old_password,
-          user_name:this.passwordObj.user_name,
-          password:this.passwordObj.password
+          user_name:this.user_name,
+          password:this.passwordObj.password,
+          confirm_pwd:this.passwordObj.confirm_pwd
         },
         success:(data)=>{
           if( data.statusCode == 1 ){
             this.changePasswordNow = false
             this.passwordObj = {
               old_password:'',
-              user_name:'',
+              confirm_pwd:'',
               password:''
             }
             Message({

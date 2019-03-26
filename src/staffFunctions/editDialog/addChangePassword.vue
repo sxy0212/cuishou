@@ -2,14 +2,14 @@
     <div>
         <div>
             <el-form :model="passwordObj">
-                <el-form-item label="旧密码" label-width="100px">
-                    <el-input v-model="passwordObj.old_password" autocomplete="off" placeholder='请输入旧密码'></el-input>
+                <el-form-item label="旧密码：" label-width="100px">
+                    <el-input  type="password" v-model="passwordObj.old_password" autocomplete="off" placeholder='请输入旧密码'></el-input>
                 </el-form-item>
-                 <el-form-item label="新密码" label-width="100px">
-                    <el-input v-model="passwordObj.password" autocomplete="off" placeholder='请输入密码'></el-input>
+                 <el-form-item label="新密码：" label-width="100px">
+                    <el-input  type="password" v-model="passwordObj.password" autocomplete="off" placeholder='请输入密码'></el-input>
                 </el-form-item>
-                 <el-form-item label="用户名" label-width="100px">
-                    <el-input v-model="passwordObj.user_name" autocomplete="off" placeholder='请输入用户名'></el-input>
+                 <el-form-item label="确认密码：" label-width="100px">
+                    <el-input type="password" v-model="passwordObj.confirm_pwd" autocomplete="off" placeholder='请再次输入密码'></el-input>
                 </el-form-item>
             </el-form>
         </div>
