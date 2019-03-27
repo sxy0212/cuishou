@@ -579,9 +579,7 @@ AddData.templates" :key="index">{{item.name}}</el-radio>
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplate2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateId2">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
-
-AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplate2 = false">取消</el-button>  
@@ -593,9 +591,7 @@ AddData.templates" :key="index">{{item.name}}</el-radio>
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplate3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateId3">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
-
-AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplate3 = false">取消</el-button>  
@@ -607,9 +603,7 @@ AddData.templates" :key="index">{{item.name}}</el-radio>
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplateEdit1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateIdEdit1">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
-
-AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplateEdit1 = false">取消</el-button>  
@@ -621,9 +615,7 @@ AddData.templates" :key="index">{{item.name}}</el-radio>
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplateEdit2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateIdEdit2">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
-
-AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplateEdit2 = false">取消</el-button>  
@@ -635,9 +627,7 @@ AddData.templates" :key="index">{{item.name}}</el-radio>
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplateEdit3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateIdEdit3">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
-
-AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplateEdit3 = false">取消</el-button>  
