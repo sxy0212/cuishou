@@ -266,16 +266,12 @@
 								<el-form-item label="上午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}" 
-
-:style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}":style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="下午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: start_time_pm}" 
-
-:style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: start_time_pm}" :style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="机器人数量:">
 									<ul style="margin-top:15px;">
@@ -307,9 +303,7 @@
 										<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="formEdit.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
-											<span @click="agentorqueueChangeEdit('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: 
-
-pointer;">
+											<span @click="agentorqueueChangeEdit('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor:pointer;">
 												<span v-show="EditQueueData.member == ''">0</span>
 												<span v-show="EditQueueData.member != ''">{{EditQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
