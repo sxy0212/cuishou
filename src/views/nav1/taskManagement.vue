@@ -1069,9 +1069,10 @@ import store from '@/vuex/store.js'
 				console.log(this.editData.templates, this.showTemplateIdEdit1)
 				var arr = []
 				arr = this.editData.templates.map(item=>{
-					item.id == this.showTemplateIdEdit1 
+					if(item.id == this.showTemplateIdEdit1){
 						return item
-					})
+					}
+				})
 				var arr1 = arr.filter(item=>{
 					if( item !=undefined ){
 					return item
