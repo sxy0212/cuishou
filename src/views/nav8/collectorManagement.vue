@@ -200,7 +200,7 @@ import {axiosRequest,clone,message,formatDate} from '@/assets/js/Yt.js'
         this.init(0)
       },
       handleCurrentChange(val){
-        this.page = val
+        this.form.page = val
         this.init(0)
       },
       // 撤回
