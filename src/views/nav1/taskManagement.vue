@@ -5,7 +5,7 @@
 				<div class="AIadd">
 					<el-button type="success" @click="addTask"><i class="fa fa-plus"></i>添加任务</el-button>
 					<el-button type="success" @click="queueAdd">队列功能</el-button>
-                    <el-button type="success" @click="queueList">队列列表</el-button>
+          <el-button type="success" @click="queueList">队列列表</el-button>
 				</div>
 				<div class="AIlist">
 					<ul class="el-row" style="padding-left:0">
@@ -17,7 +17,7 @@
 									<div class="title" style="width:30%">
 									<!--<el-button style="padding:5px 0" > 机器人状态：</el-button> -->
 										<span >机器人状态: <span v-if="form.warning_asrnumber&&form.warning_callerid">正常</span>
-                                        <span v-else style="color:red">异常</span></span>
+                    <span v-else style="color:red">异常</span></span>
 									</div>
 								</div>
 								<div class="ListMain">
@@ -39,7 +39,9 @@
 												<div class="list">
 													<div class="title">外呼时间</div>
 													<div class="time">{{form.call_time.am.s}}-{{form.call_time.am.e}}</div>
-													<div class="time">{{form.call_time.pm.s}}-{{form.call_time.pm.e}}</div>																				
+													<div class="time">{{form.call_time.pm.s}}-{{form.call_time.pm.e}}</div>									
+
+											
 												</div>
 												<span class="div1"></span>
 										</div>
@@ -83,10 +85,14 @@
 														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>
 													</span>
 													<span style="color:#8876f4" v-else-if="form.calling_round == 1">第一联系人
-														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>														
+														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>								
+
+						
 													</span>
 													<span style="color:#8876f4" v-else-if="form.calling_round == 2">第二联系人
-														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>														
+														<span style="color:#8876f4">第{{form.calling_times}}次呼叫</span>								
+
+						
 													</span>
 												</em>
 											</div> 
@@ -117,7 +123,7 @@
 								<el-form-item label="上午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="form.start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>									></el-time-select>
 								</el-form-item>
 								<el-form-item label="下午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="form.start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
@@ -154,7 +160,9 @@
 										<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="form.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
-											<span @click="agentorqueueChange('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
+											<span @click="agentorqueueChange('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: 
+
+pointer;">
 												<span v-show="AddQueueData.member == ''">0</span>
 												<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
@@ -260,12 +268,16 @@
 								<el-form-item label="上午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}" 
+
+:style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="下午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: start_time_pm}" :style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_pm" :picker-options="{ start: '11:00', step: '00:30',end: '24:00',minTime: start_time_pm}" 
+
+:style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="机器人数量:">
 									<ul style="margin-top:15px;">
@@ -297,7 +309,9 @@
 										<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="formEdit.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
-											<span @click="agentorqueueChangeEdit('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: pointer;">
+											<span @click="agentorqueueChangeEdit('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: 
+
+pointer;">
 												<span v-show="EditQueueData.member == ''">0</span>
 												<span v-show="EditQueueData.member != ''">{{EditQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
@@ -492,7 +506,9 @@
 						队列名称:
 						<el-input v-model="AddQueue.name" style="width:200px"  placeholder="请输入名称"></el-input>
 						<span style="color:red;font-size:12px">*必填</span>
-						<el-table ref="multipleTable" :data="AddQueue.date" border :height="AddQueue.date.length<=1?100:300" tooltip-effect="dark" style="width: 100%;margin-top:10px" @selection-change="handleSelectionChangeQueue" >
+						<el-table ref="multipleTable" :data="AddQueue.date" border :height="AddQueue.date.length<=1?100:300" tooltip-effect="dark" style="width: 100%;margin-top:10px" @selection-
+
+change="handleSelectionChangeQueue" >
 							<el-table-column type="selection"></el-table-column>
 							<el-table-column  prop="name" label="任务名称" ></el-table-column>
 							<el-table-column  prop="task_coding" label="任务编号" ></el-table-column>
@@ -557,7 +573,9 @@
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplate1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateId1">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
+
+AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplate1 = false">取消</el-button>  
@@ -569,7 +587,9 @@
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplate2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateId2">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
+
+AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplate2 = false">取消</el-button>  
@@ -581,7 +601,9 @@
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplate3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateId3">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
+
+AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplate3 = false">取消</el-button>  
@@ -593,7 +615,9 @@
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplateEdit1" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateIdEdit1">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
+
+AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplateEdit1 = false">取消</el-button>  
@@ -605,7 +629,9 @@
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplateEdit2" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateIdEdit2">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
+
+AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplateEdit2 = false">取消</el-button>  
@@ -617,7 +643,9 @@
 				<div class="dial-header queue">
 					<el-dialog title="选择话术" :visible.sync="showTemplateEdit3" :close-on-click-modal="false" :close-on-press-escape="false" v-move>
 					 	<el-radio-group v-model="showTemplateIdEdit3">
-							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in AddData.templates" :key="index">{{item.name}}</el-radio>
+							<el-radio style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;width:240px;margin-bottom:15px;padding-right:10px"  :label="item.id" v-for="(item,index) in 
+
+AddData.templates" :key="index">{{item.name}}</el-radio>
 						</el-radio-group>
 					 	<div slot="footer" class="dialog-footer"> 
 							<el-button @click="showTemplateEdit3 = false">取消</el-button>  
@@ -1070,9 +1098,11 @@ import store from '@/vuex/store.js'
 				var arr = []
 				arr = this.editData.templates.map(item=>{
 					if(item.id == this.showTemplateIdEdit1){
-						return item
+							return item
 					}
-				})
+					 
+					
+					})
 				var arr1 = arr.filter(item=>{
 					if( item !=undefined ){
 					return item
@@ -1100,7 +1130,7 @@ import store from '@/vuex/store.js'
 			sureTemplateEdit3(){
 				var arr = []
 				arr = this.editData.templates.map((item)=>{
-					if(item.id == this.showTemplateIdEdit1){
+					if(item.id == this.showTemplateIdEdit3){
 						return item;
 					}
 				})
@@ -1380,7 +1410,7 @@ import store from '@/vuex/store.js'
 							item.id = '' + item.id +''
 							return item
 						})
-						this.editData.templates = data.info.templates
+						// this.editData.templates = data.info.templates
 						this.formEdit = data.info.info
 						this.formEdit.usable_ai_count = data.info.usable_ai_count
 						this.formEdit.ai_count = parseInt(data.info.info.ai_count)
@@ -1419,21 +1449,41 @@ import store from '@/vuex/store.js'
 						this.form3Edit = arr2[0]
 						this.form3Edit.template_id = arr2[0].template_id
 						this.showTemplateIdEdit3 = arr2[0].template_id
-						var showNameEditQ1 = this.editData.templates.map(item=>item.id == this.form1Edit.template_id).filter(item=>{
-							if(item != undefined ){
-								return item
+							var showNameEdit1 = []
+						showNameEdit1 = this.editData.templates.map((item)=>{
+							if(item.id == this.form1Edit.template_id){
+								return item;
+							}
+						})
+						// consoel.l
+						var showNameEditQ1 = showNameEdit1.filter((item)=>{
+							if(item !=undefined){
+								return item;
 							}
 						})
 						this.showTemplateNameEdit1 = showNameEditQ1[0].name
-						var showNameEditQ2 = this.editData.templates.map(item=> item.id == this.form2Edit.template_id ).filter(item=>{
-							if(item != undefined ){
-								return item
+						console.log(this.showTemplateNameEdit1)
+						var showNameEdit2 = []
+						showNameEdit2 = this.editData.templates.map((item)=>{
+							if(item.id == this.form2Edit.template_id){
+								return item;
+							}
+						})
+						var showNameEditQ2 = showNameEdit2.filter((item)=>{
+							if(item !=undefined){
+								return item;
 							}
 						})
 						this.showTemplateNameEdit2 = showNameEditQ2[0].name
-						var showNameEditQ3 = this.editData.templates.map( item =>item.id == this.form3Edit.template_id ).filter(item=>{
-							if(item != undefined ){
-								return item
+						var showNameEdit3 = []
+						showNameEdit3 = this.editData.templates.map((item)=>{
+							if(item.id == this.form3Edit.template_id){
+								return item;
+							}
+						})
+						var showNameEditQ3 = showNameEdit3.filter((item)=>{
+							if(item !=undefined){
+								return item;
 							}
 						})
 						this.showTemplateNameEdit3 = showNameEditQ3[0].name
