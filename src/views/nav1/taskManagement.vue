@@ -160,9 +160,7 @@
 										<div>
 											<el-radio label="queue">转队列</el-radio>
 											<el-input v-model="form.caller_id"  :disabled="true" style="width: 100px;margin-left:10px"></el-input>
-											<span @click="agentorqueueChange('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor: 
-
-pointer;">
+											<span @click="agentorqueueChange('queue')" style="font-size:14px;display: inline-block;border-bottom: 1px solid #333;line-height: 10px;cursor:pointer;">
 												<span v-show="AddQueueData.member == ''">0</span>
 												<span>{{AddQueueData.member}}</span>成员(点击选择接听成员)
 											</span>
