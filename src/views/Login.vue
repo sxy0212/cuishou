@@ -66,7 +66,7 @@
 import store from '@/vuex/store.js'
 import axios from "axios"
 import {axiosRequest,getCookie,setCookie,message} from '@/assets/js/Yt.js'
-
+import { Message } from 'element-ui'
 
 export default {
   data() {
@@ -105,6 +105,11 @@ export default {
           password
         },
         success:(data)=>{
+          Message({
+            message: data.message,
+            type: data.statusCode==1?'success':'error',
+            duration: 3 * 1000
+          })
           if(data.statusCode == 1){
             setCookie('user',2);
             this.$router.push({ path: '/charts' })
@@ -128,12 +133,16 @@ export default {
           StaffId:this.ruleForm2.StaffId? this.ruleForm2.StaffId.trim() : ''
         },
         success:(data)=>{
+          Message({
+            message: data.message,
+            type: data.statusCode==1?'success':'error',
+            duration: 3 * 1000
+          })
           if( data.statusCode == 1 ){
             setCookie('staff','yes');
             this.$router.push({ path: '/dashboard' })
             this.loading = false
           }else if(data.statusCode == 0){
-            this.$alert(data.message)
             this.logining = false
           }
         }
