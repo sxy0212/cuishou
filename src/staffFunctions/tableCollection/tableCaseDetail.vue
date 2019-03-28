@@ -2,7 +2,7 @@
     <el-table
         border
         :data="tableData"
-        style="width: 98%"
+        style="width: 100%;"
         @row-dblclick="doubleClickFn"
         >
         <el-table-column

@@ -60,7 +60,7 @@
 </template>
 <script>
 
-
+import '@/styles/css/dialog.css'
 export default {
     name:'addCheckDialog',
     props:[
@@ -90,73 +90,6 @@ export default {
     }
 }
 </script>
-<style >
-
-.checkDialog .info div{line-height:30px;}
-.checkDialog .info h3{margin-left:10px;font-size:18px;font-weight:400;}
-.checkDialog .info span{margin-left:10px;}
-.checkDialog .el-button span{margin-left:0;}
-.checkDialog .info{ padding:10px 0; font-size:14px;background-color:rgba(0, 204, 255, 0.0980392156862745);}
-.checkDialog .coverMiddle .middle{display:inline-block;vertical-align:top;}
-.checkDialog .coverMiddle .middle:nth-of-type(1){width:18%;}
-.checkDialog .coverMiddle .middle:nth-of-type(2){width:77%;}
-.checkDialog .tableCover{margin: 15px 0;}
-.checkDialog .redS{color:red;}
-.checkDialog .el-button--mini, .el-button--mini.is-round{padding:4px 15px;}
-.checkDialog .middle{margin:0 10px;}
-.checkDialog .el-form--inline .el-form-item{margin-right:0;}
-.checkDialog .el-form-item{margin-bottom:10px;}
-.checkDialog .otherI{margin-bottom:15px;}
-.checkDialog .el-date-editor span{margin-left:0;}
-.checkDialog .middle .caseForm .el-form-item__label{font-size:12px;}
-.checkDialog .middle .caseForm .el-form-item{margin-right:0;margin-bottom:5px;}
-
-
-
-
-
-
-.checkDialog .dialogueList ul li{position: relative;font-size: 0;margin-bottom: 10px;padding-left: 60px;min-height: 68px; height: auto; overflow: hidden;}
-.checkDialog .dialogueList ul li .el-button{ padding: 5px 10px;font-size: 12px}
-.checkDialog .layim-chat-text, .layim-chat-user {display: inline-block;vertical-align: top;font-size: 14px;}
-.checkDialog .layim-chat-user {position: absolute;left: 3px;}
-.checkDialog .layim-chat-user img {width: 40px;height: 40px;border-radius: 100%;}
-.checkDialog .layim-chat-user cite {position: absolute;left: 60px;top: -2px;width: 500px;line-height: 24px;font-size: 12px;white-space: nowrap;color: #999;text-align: left;font-style: normal;}
-.checkDialog .layim-chat-user cite i {padding-left: 15px;font-style: normal;}
-.checkDialog .layim-chat-text {position: relative;line-height: 22px;margin-top: 25px;padding: 8px 15px;background-color: #e2e2e2; border-radius: 3px;color: #333;word-break: break-all;max-width: 462px\9;}
-.checkDialog .layim-chat-text:after {content: '';position: absolute;
-    left: -10px;top: 13px;width: 0;height: 0;border-style: solid dashed dashed;border-color: #e2e2e2 transparent transparent;overflow: hidden;border-width: 10px;
-}
-.checkDialog .dialogueList{ height: 422px; border-bottom:1px solid #ececec;max-height: 452px; border-bottom:none;
-    overflow-y: auto;  padding: 15px; background-size:cover;  }
-.checkDialog .DialogueMain .dialogue {height:500px; background: #FFF}
-.checkDialog .DialogueInput{ padding-top: 10px}
-.checkDialog .dialogueList ul .layim-chat-mine {text-align: right;padding-left: 0;padding-right: 60px;min-height:100px}
-.checkDialog .dialogueList ul .layim-chat-mine1 {min-height:120px}
-.checkDialog .dialogueList ul .layim-chat-mine .layim-chat-user {left: auto;right: 3px;}
-.checkDialog .dialogueList ul .layim-chat-mine .layim-chat-user cite {left: auto;right: 60px;text-align: right;}
-.checkDialog .dialogueList ul .layim-chat-mine .layim-chat-user cite i {padding-left: 0;padding-right: 15px;}
-.checkDialog .dialogueList ul .layim-chat-mine .layim-chat-text {margin-left: 0;text-align: left;background-color: #5FB878;color: #fff;}
-.checkDialog .dialogueList ul .layim-chat-mine .layim-chat-text:after {left: auto;right: -10px;border-top-color: #5FB878;}
-
-.checkDialog .DialogueMain .el-dialog__body{ padding: 10px 20px;}
-.checkDialog .coverDialog .el-dialog__wrapper .el-dialog{width:90%;}
-.checkDialog .coverDialog .el-dialog__body{overflow:hidden;}
-
-.checkDialog .infoCover{max-height:50px;}
-.checkDialog .info_span{color:#409EFF;}
-.checkDialog .infoCover{font-size:17px;line-height:35px;}
-.checkDialog .info_title{color:red;font-size:18px;margin-bottom:10px;}
-.checkDialog .info_details{width:30%;height:561px;background:#fff;float:left;}
-.checkDialog .call_details{width:60%;float:left;background:#fff;}
-.checkDialog .everyone{max-width:80%;}
-.checkDialog .floatL{float:left;}
-.checkDialog .floatR{float:right;}
-.checkDialog .marginT{margin-top:20px;}
-.checkDialog .totalRe{display:flex;justify-content:space-between;margin-bottom:10px;}
-</style>
-
-
 
 
 

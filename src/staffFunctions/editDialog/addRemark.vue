@@ -9,8 +9,8 @@
         </div>
        
         <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="protectFn">保存</el-button>
-            <el-button  @click="cancelFn">取消</el-button>
+            <el-button type="warning" round @click="protectFn">保存</el-button>
+            <el-button  type="info" round @click="cancelFn">取消</el-button>
         </div>
     </div>
 </template>

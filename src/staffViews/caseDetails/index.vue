@@ -15,9 +15,12 @@
                 v-on:doubleClickFn='doubleClickFn($event)'
             ></div-table>
         </div>
-        <div class='info otherI'>
-            <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button>
-            <el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
+        <div class='info otherI infoCss'>
+            <h3>
+                <span></span>其他信息
+                <el-button v-if='!otherInfo' type="warning" @click="callOtherInfo(true)" size="mini">展开</el-button>
+                <el-button type="warning" v-else @click="callOtherInfo(false)" size="mini">关闭</el-button>
+            </h3>
             <div-other
                 :selfInfo='selfInfo'
                 v-show='otherInfo'
@@ -99,8 +102,8 @@
                     <i class="fa fa-image" style="font-size:26px;"></i>
                 </el-upload>
                 <div slot="footer" class="dialog-footer">     
-                    <el-button type="primary" @click="addDioSave">保存</el-button>
-                    <el-button type="primary" @click="logDio = false">取消</el-button>
+                    <el-button type="warning" round @click="addDioSave">保存</el-button>
+                    <el-button type="info" round  @click="logDio = false">取消</el-button>
                 </div>  
             </el-dialog>
         </div>
@@ -129,8 +132,8 @@
                     <i class="fa fa-image" style="font-size:26px;"></i>
                 </el-upload>               
                 <div slot="footer" class="dialog-footer">     
-                    <el-button type="primary" @click="addDioSaveMemorandum">保存</el-button>
-                    <el-button type="primary" @click="logDioMemorandum= false">取消</el-button>
+                    <el-button type="warning" round @click="addDioSaveMemorandum">保存</el-button>
+                    <el-button type="info" round @click="logDioMemorandum= false">取消</el-button>
                 </div>  
             </el-dialog>
         </div>
@@ -744,7 +747,7 @@ export default {
 <style>
 .checkDialog .info div{line-height:30px;}
 .checkDialog .info h3{margin-left:10px;font-size:18px;font-weight:400;}
-.checkDialog .info span{margin-left:10px;}
+
 .checkDialog .el-button span{margin-left:0;}
 .checkDialog .info{ padding:10px 0; font-size:14px;background-color:rgba(0, 204, 255, 0.0980392156862745);}
 .checkDialog .coverMiddle .middle{display:inline-block;vertical-align:top;}

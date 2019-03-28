@@ -1,45 +1,99 @@
 <template>
     <div>
-        <div class="info">
-            <h3 style="margin-bottom:10px;display:inline-block;">个人信息 <div class="redS" style="display:inline-block;"><span>案件序列号：{{selfInfo.case_code}}</span><span><el-button type="primary" @click="totalCaseFn('total')" size="mini">（有{{selfInfo.case_total}}条共案）</el-button></span><span>案件等级：{{selfInfo.case_level}}</span><span><el-button type="primary" v-show="selfInfo.case_status!='3'" @click="changeLevelFn" size="mini">修改等级</el-button></span></div></h3>
-            <el-button type="primary" size="mini" @click="caseLog">案件日志</el-button>
-            <el-button type="primary" size="mini" @click="caseMemorandum">案件备忘录</el-button>
-            <div class="coverLevel">
-                <div class="average">
-                    <span style="display: inline-block;width: 270px;">证件号码：{{selfInfo.case_id_num}}</span>
-                    <span style="display: inline-block;width: 220px;">联系方式：{{selfInfo.case_mobile}}</span>
-                    <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'" @click="callFn(selfInfo.case_mobile,'本人')"  title="呼叫"></i>
-                    <!--<el-button  type="primary" v-show="selfInfo.case_status!='3'" @click="callFn(selfInfo.case_mobile,'本人')" size="mini">呼叫</el-button>-->
-                    <span>家庭住址：{{selfInfo.case_home_address}}</span>
-                    <i class="fa fa-envelope" style="color:#F5952D;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_mobile,'本人')" title="信函"></i>
-                   <!-- <el-button   v-show="selfInfo.case_status!='3'" type="success" @click="sendLetter(2,selfInfo.case_mobile,'本人')" size="mini">信函</el-button> -->
-                   <i class="fa fa-eye" style="color:#62A1EF;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(3,selfInfo.case_mobile,'本人')"  title="外访"></i>
-                  <!-- <el-button  v-show="selfInfo.case_status!='3'"  type="danger" @click="sendLetter(3,selfInfo.case_mobile,'本人')" size="mini">外访</el-button>-->
-                </div>
+        <div class="info infoCss">
+            <h3>
+                <span></span>
+                个人信息 
+            </h3>
+            <div class="coverU">
+                <ul class="info_ul">
+                    <li>
+                        <div>案件序列号：<span class="colorFul">{{selfInfo.case_code}}</span></div>
+                        <div>
+                            <el-button type="warning" round plain @click="totalCaseFn('total')" size="mini">（有{{selfInfo.case_total}}条共案）</el-button>
+                        </div>
+                     </li>
+                    <li>
+                        <div>案件等级：<span  class="colorFul">{{selfInfo.case_level}}</span></div>
+                        <div> 
+                            <el-button type="warning"  round v-show="selfInfo.case_status!='3'" @click="changeLevelFn" size="mini">修改等级</el-button>
+                            <el-button type="warning" plain round size="mini" @click="caseLog">案件日志</el-button>
+                            <el-button type="warning" plain round size="mini" @click="caseMemorandum">案件备忘录</el-button>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="info_ul">
+                    <li>
+                        <div>证件号码：<span class="deepColor">{{selfInfo.case_id_num}}</span></div>
+                        <div>
+                            工作单位： <span class="deepColor">{{selfInfo.case_organization_name}}</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            公司电话：<span class="deepColor">{{selfInfo.case_work_phone}}</span>
+                            <el-button type="primary" round v-show="(selfInfo.case_status!='3')&&selfInfo.case_work_phone"  @click="callFn(selfInfo.case_work_phone,'公司')" size='mini'>呼叫</el-button>
+                        </div>
+                        <div>
+                            联系方式：<span class="deepColor">{{selfInfo.case_mobile}}</span>
+                            <el-button type="primary" round v-show="(selfInfo.case_status!='3')&&selfInfo.case_mobile" @click="callFn(selfInfo.case_mobile,'本人')" size='mini'>呼叫</el-button>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            第一联系人:<span class="deepColor">{{selfInfo.case_mobile1}} </span>
+                            <el-button type="primary" round v-show="(selfInfo.case_status!='3')&&selfInfo.case_mobile1"  @click="callFn(selfInfo.case_mobile1,'第一联系人')" size='mini'>呼叫</el-button>
+                        </div>
+                        <div>
+                            第二联系人：<span class="deepColor">{{selfInfo.case_mobile2}} </span>
+                            <el-button type="primary"  round v-show="(selfInfo.case_status!='3')&&selfInfo.case_mobile2"  @click="callFn(selfInfo.case_mobile2,'第二联系人')" size='mini'>呼叫</el-button>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            公司地址：<span class="deepColor">{{selfInfo.case_work_address}} </span>
+                            <el-button type="success" round v-show="(selfInfo.case_status!='3')&&selfInfo.case_work_phone"  @click="sendLetter(2,selfInfo.case_work_phone,'公司')"  size='mini'>信函</el-button>
+                            <el-button type="success" plain round v-show="(selfInfo.case_status!='3')&&selfInfo.case_work_phone" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size='mini'>外访</el-button>
+                        </div>
+                        <div>
+                            家庭住址：<span class="deepColor">{{selfInfo.case_home_address}}</span>
+                            <el-button type="success" round v-show="(selfInfo.case_status!='3')&&selfInfo.case_mobile"  @click="sendLetter(2,selfInfo.case_mobile,'本人')" size='mini'>信函</el-button>
+                            <el-button type="success" plain round v-show="(selfInfo.case_status!='3')&&selfInfo.case_mobile"  @click="sendLetter(3,selfInfo.case_mobile,'本人')" size='mini'>外访</el-button>
+                        </div>
+                        
+                    </li>
+                </ul>
             </div>
-            <div class="coverLevel">
-               <span style="display: inline-block;width: 270px;">工作单位：{{selfInfo.case_organization_name}}</span>
-               <span style="display: inline-block;width: 220px;">公司电话：{{selfInfo.case_work_phone}}</span>
-                <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_work_phone,'公司')"  title="呼叫"></i>
-               <!--<el-button  type="primary" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_work_phone,'公司')" size="mini">呼叫</el-button>-->
-               <span>公司地址：{{selfInfo.case_work_address}} </span>
-               <i class="fa fa-envelope" style="color:#F5952D;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_work_phone,'公司')"  title="信函"></i>
-               <i class="fa fa-eye" style="color:#62A1EF;cursor:pointer;" v-show="selfInfo.case_status!='3'" @click="sendLetter(3,selfInfo.case_work_phone,'公司')"  title="外访"></i>
-               <!--<el-button  type="success" v-show="selfInfo.case_status!='3'"  @click="sendLetter(2,selfInfo.case_work_phone,'公司')" size="mini">信函</el-button>
-               <el-button  v-show="selfInfo.case_status!='3'"  type="danger" @click="sendLetter(3,selfInfo.case_work_phone,'公司')" size="mini">外访</el-button>-->
+            <h3 ><span></span>案件信息</h3>
+            <div class="coverCaseU">
+                <ul class="caseU">
+                    <li>
+                        <div  class="colorFul">{{selfInfo.case_money}} </div>
+                        <div>委案金额</div>
+                    </li>
+                    <li>
+                        <div  class="colorFul">{{selfInfo.case_paid}} </div>
+                        <div>还款金额</div>
+                    </li>
+                    <li>
+                        <div class="colorFul">{{selfInfo.client}}</div>
+                        <div>委托方</div>
+                    </li>
+                    <li>
+                        <div  class="colorFul">{{selfInfo.case_exceed_limit}}</div>
+                        <div>逾期账龄</div>
+                    </li>
+                    <li>
+                        <div  class="colorFul">{{selfInfo.case_interest}} </div>
+                        <div>利息</div>
+                    </li>
+                    <li>
+                        <div  class="colorFul">{{selfInfo.case_back_date}} </div>
+                        <div>退案日期</div>
+                    </li>
+                </ul>
             </div>
-            <div class="coverLevel">
-               <span style="display: inline-block;width: 255px;">第一联系人:{{selfInfo.case_mobile1}} </span>
-                <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')"  title="呼叫"></i>
-               <!--<span><el-button  type="primary" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile1,'第一联系人')" size="mini">呼叫</el-button></span>-->
-                <span style="display: inline-block;width: 220px;">第二联系人：{{selfInfo.case_mobile2}} </span>
-                 <i class="fa fa-phone" style="color:#09CC5B;cursor:pointer;" v-show="selfInfo.case_status!='3'"  @click="callFn(selfInfo.case_mobile2,'第二联系人')"  title="呼叫"></i>
-                <!--<span><el-button  v-show="selfInfo.case_status!='3'" type="primary" @click="callFn(selfInfo.case_mobile2,'第二联系人')" size="mini">呼叫</el-button></span>-->
-            </div>
-            <div class="info">
-                <h3 style="margin-bottom:10px;">案件信息</h3>
-                <div><span>委案金额：{{selfInfo.case_money}}  </span><span>还款金额：{{selfInfo.case_paid}}  </span><span>委托方：{{selfInfo.client}}  </span><span>逾期账龄：{{selfInfo.case_exceed_limit}}  </span><span>利息：{{selfInfo.case_interest}}  </span><span>退案日期：{{selfInfo.case_back_date}}  </span></div>
-            </div>
+            
         </div>
     </div>
 </template>
