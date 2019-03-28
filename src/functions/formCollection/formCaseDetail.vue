@@ -38,7 +38,7 @@
             </el-date-picker>
         </el-form-item>
         <el-form-item label="">
-            <el-button type="primary" @click="saveFn" :disabled='selfInfo.case_status == 3' size="mini">保存</el-button>
+            <el-button type="warning" @click="saveFn" :disabled='selfInfo.case_status == 3' size="mini">保存</el-button>
             <el-button type="info" @click="clearFn" size="mini">清空</el-button>
         </el-form-item>
     </el-form>

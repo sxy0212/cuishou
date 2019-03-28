@@ -1,8 +1,8 @@
 .checkDialog .info div{line-height:30px;}
-.checkDialog .info h3{margin-left:10px;font-size:18px;font-weight:400;}
-.checkDialog .info span{margin-left:10px;}
+/* .checkDialog .info h3{margin-left:10px;} */
+/* .checkDialog .info span{margin-left:10px;} */
 .checkDialog .el-button span{margin-left:0;}
-.checkDialog .info{ padding:10px 0; font-size:14px;background-color:rgba(0, 204, 255, 0.0980392156862745);}
+.checkDialog .info{font-size:14px;}
 .checkDialog .coverMiddle .middle{display:inline-block;vertical-align:top;}
 .checkDialog .coverMiddle .middle:nth-of-type(1){width:18%;}
 .checkDialog .coverMiddle .middle:nth-of-type(2){width:80%;}
@@ -60,3 +60,76 @@
 .checkDialog .floatR{float:right;}
 .checkDialog .marginT{margin-top:20px;}
 .checkDialog .totalRe{display:flex;justify-content:space-between;margin-bottom:10px;}
+
+/* 案件详情页 */
+.checkDialog .infoCss h3{
+    height:45px;
+    line-height:45px;
+    position:relative;
+    background-color:white;
+    /* margin-bottom:10px; */
+    padding-left:25px;
+    font-size:15px;
+    font-family:'黑体';
+}
+.checkDialog .infoCss h3 > span{
+    position:absolute;
+    height:40%;
+    left:15px;
+    top:30%;
+    width:3px;
+    background-color:#e4bc5c;
+}
+.checkDialog .infoCss .coverU,.checkDialog .infoCss .coverCaseU{
+    background-color:white;
+    color:#8c8c8c;
+    margin-bottom:12px;
+}
+.deepColor{
+    color:black;
+   
+}
+.checkDialog .infoCss .info_ul{
+    display:flex;
+    flex-direction:row;
+    padding:5px 0;
+    margin:0;
+}
+.checkDialog .infoCss .info_ul li{
+    flex:1;
+    padding:5px;
+}
+.checkDialog .infoCss .coverU ul:first-of-type li:first-of-type{
+    border-right:1px solid #e3e3e3;
+}
+
+.checkDialog .infoCss .coverU ul:first-of-type li{
+    display: flex;
+}
+.checkDialog .infoCss .coverU ul:first-of-type li div{
+    flex:1;
+}
+.checkDialog .infoCss .coverCaseU .caseU{
+    display:flex;
+    margin:0;
+    padding-bottom:15px;
+}
+.checkDialog .infoCss .coverCaseU .caseU li{
+    flex:1;
+    border-right:1px solid #eeeded;
+    text-align:center;
+}
+.checkDialog .infoCss .coverCaseU .caseU li:last-of-type{
+    border-right:none;
+
+}
+.checkDialog .infoCss .coverCaseU .caseU li div{
+   height:50%;
+}
+.colorFul{
+    color:#3b9afe;
+    font-weight:800;
+}
+.checkDialog .otherI{
+    background-color:white;
+}

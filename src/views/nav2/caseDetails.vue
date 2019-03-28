@@ -15,9 +15,12 @@
                 v-on:doubleClickFn='doubleClickFn($event)'
             ></div-table>
         </div>
-        <div class='info otherI'>
-            <h3>其他信息<span><el-button v-show='!otherInfo' type="primary" @click="callOtherInfo(true)" size="mini">展开</el-button>
-            <el-button type="primary" v-show='otherInfo' @click="callOtherInfo(false)" size="mini">关闭</el-button></span></h3>
+        <div class='info otherI  infoCss'>
+            <h3>
+                <span></span>其他信息
+                <el-button round v-if='!otherInfo' type="warning" @click="callOtherInfo(true)" size="mini">展开</el-button>
+                <el-button round type="warning" v-else @click="callOtherInfo(false)" size="mini">关闭</el-button>
+            </h3>
             <div-other
                 :selfInfo='selfInfo'
                 v-show='otherInfo'
@@ -99,8 +102,8 @@
                     <i class="fa fa-image" style="font-size:26px;"></i>
                 </el-upload>
                 <div slot="footer" class="dialog-footer">     
-                    <el-button type="primary" @click="addDioSave">保存</el-button>
-                    <el-button type="primary" @click="logDio = false">取消</el-button>
+                    <el-button type="warning" @click="addDioSave">保存</el-button>
+                    <el-button type="info" @click="logDio = false">取消</el-button>
                 </div>  
             </el-dialog>
         </div>
@@ -129,8 +132,8 @@
                     <i class="fa fa-image" style="font-size:26px;"></i>
                 </el-upload>               
                 <div slot="footer" class="dialog-footer">     
-                    <el-button type="primary" @click="addDioSaveMemorandum">保存</el-button>
-                    <el-button type="primary" @click="logDioMemorandum= false">取消</el-button>
+                    <el-button type="warning" @click="addDioSaveMemorandum">保存</el-button>
+                    <el-button type="info" @click="logDioMemorandum= false">取消</el-button>
                 </div>  
             </el-dialog>
         </div>
@@ -149,6 +152,7 @@ import divInfo from '@/functions/normalDiv/divInfo.vue'
 import  { axiosRequest } from '@/assets/js/Yt.js'
 import { Message } from 'element-ui'
 import '@/styles/css/dialog.css'
+
 
 export default {
     name:'caseDetails',
@@ -738,8 +742,7 @@ export default {
     }
 }
 </script>
-<style>
-</style>
+
 
 
 
