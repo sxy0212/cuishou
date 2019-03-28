@@ -123,7 +123,7 @@
 								<el-form-item label="上午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="form.start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>									></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="form.end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: form.start_time_am}" :style="Index.width1"></el-time-select>	
 								</el-form-item>
 								<el-form-item label="下午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="form.start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
@@ -266,7 +266,7 @@
 								<el-form-item label="上午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00'}" :style="Index.width1"></el-time-select>
 									<span>~</span>
-									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}":style="Index.width1"></el-time-select>
+									<el-time-select placeholder="结束时间" v-model="end_time_am" :picker-options="{start: '00:00',step: '00:30',end: '12:00',minTime: start_time_am}" :style="Index.width1"></el-time-select>
 								</el-form-item>
 								<el-form-item label="下午呼叫时间:">
 									<el-time-select placeholder="开始时间" v-model="start_time_pm" :picker-options="{start: '11:00',step: '00:30',end: '24:00'}" :style="Index.width1"></el-time-select>
@@ -498,9 +498,7 @@
 						队列名称:
 						<el-input v-model="AddQueue.name" style="width:200px"  placeholder="请输入名称"></el-input>
 						<span style="color:red;font-size:12px">*必填</span>
-						<el-table ref="multipleTable" :data="AddQueue.date" border :height="AddQueue.date.length<=1?100:300" tooltip-effect="dark" style="width: 100%;margin-top:10px" @selection-
-
-change="handleSelectionChangeQueue" >
+						<el-table ref="multipleTable" :data="AddQueue.date" border :height="AddQueue.date.length<=1?100:300" tooltip-effect="dark" style="width: 100%;margin-top:10px" @selection-change="handleSelectionChangeQueue" >
 							<el-table-column type="selection"></el-table-column>
 							<el-table-column  prop="name" label="任务名称" ></el-table-column>
 							<el-table-column  prop="task_coding" label="任务编号" ></el-table-column>
