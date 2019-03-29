@@ -29,6 +29,7 @@
 
 <script>
 import store from '@/vuex/store.js'
+import router from '@/router.js'
 import { Message } from 'element-ui'
 import {axiosRequest,delCookie,setCookie,getCookie} from '@/assets/js/Yt.js'
 import addChangePassword from '@/staffFunctions/editDialog/addChangePassword.vue'
@@ -48,7 +49,7 @@ export default {
       user_name:'',
       trueName:'',
       Plays:false,
-      preCaseId:'',//前一个案件id
+      // preCaseId:'',//前一个案件id
       newCaseId:"",  //当前案件id
       preCallNum:"",     //前一个呼入号码
       newCallNum:"",    //当前呼入号码
@@ -85,7 +86,7 @@ export default {
   },
   methods: {
     getStatus(){//获取当前状态
-    // var  preCallNum = ''
+     var preCaseId = ''
       setInterval(()=>{
         if( getCookie('preCaseId') == 'underfined' ||getCookie('preCaseId') == ''){  //前一个状态没有定义时，前一个状态码是100
             preCaseId = "02510"
@@ -105,7 +106,7 @@ export default {
           success:(data)=>{
             if( data.statusCode == 1 ){
               if(data.info.status == 1){
-                 setCookie('preCaseId',data.info.case_id)
+                 
                 const url = '/api/api_staff.php?r=cdr-call/answer-phone'
                 const conf = {
                   url,
@@ -117,6 +118,7 @@ export default {
                 axiosRequest(conf)
                 // setCookie('preCaseId',data.info.case_id)  //设置前案件id
                 this.newCaseId = data.info.case_id       //当前案件id
+                setCookie('preCaseId',data.info.case_id)
                 if(preCaseId != this.newCaseId &&this.newCaseId!=''){
                     router.push({
                         path:'/staffCaseDetails/',
