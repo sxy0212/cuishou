@@ -115,14 +115,14 @@ export default {
                 axiosRequest(conf)
                 setCookie('preCaseId',data.info.case_id)  //设置前案件id
                 this.newCaseId = data.info.case_id       //当前案件id
-                if(this.preCaseId != this.newCaseId){
+                // if(this.preCaseId != this.newCaseId){
                     router.push({
                         path:'/staffCaseDetails/',
                         query:{
                             id:this.newCaseId
                         }
                     })
-                }
+                // }
               }
             }
           }
