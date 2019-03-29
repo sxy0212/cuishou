@@ -87,7 +87,7 @@ export default {
     getStatus(){//获取当前状态
       setInterval(()=>{
         if( getCookie('preCaseId') == 'underfined' ){  //前一个状态没有定义时，前一个状态码是100
-            this.preCaseId = "100"
+            this.preCaseId = "02510"
         }else{
             this.preCaseId = getCookie('preCaseId') //前一个状态定义时，获取前一个状态
         }
