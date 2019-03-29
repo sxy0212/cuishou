@@ -453,9 +453,19 @@ export default {
 					if( data.statusCode == 1 ){
                         this.audioData = data.info.info
                         this.detail = data.info.call_record
+                        Message({
+                            message: data.message,
+                            type: 'success',
+                            duration: 2 * 1000
+                        })
                     }else if( data.statusCode == 0 ){
                         this.audioData = []
                         this.detail = {}
+                        Message({
+                            message: data.message,
+                            type: 'warning',
+                            duration: 2 * 1000
+                        })
                     }
                 }
             }
