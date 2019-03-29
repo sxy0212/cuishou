@@ -85,11 +85,12 @@ export default {
   },
   methods: {
     getStatus(){//获取当前状态
+    // var  preCallNum = ''
       setInterval(()=>{
-        if( getCookie('preCaseId') == 'underfined' ){  //前一个状态没有定义时，前一个状态码是100
-            this.preCaseId = "02510"
+        if( getCookie('preCaseId') == 'underfined' ||getCookie('preCaseId') == ''){  //前一个状态没有定义时，前一个状态码是100
+            preCaseId = "02510"
         }else{
-            this.preCaseId = getCookie('preCaseId') //前一个状态定义时，获取前一个状态
+            preCaseId = getCookie('preCaseId') //前一个状态定义时，获取前一个状态
         }
         // if(getCookie("preCallNum") == 'underfined'){ //前一个呼入号码没有定义时，前一个号码是100
         //     preCallNum = "100"
@@ -104,6 +105,7 @@ export default {
           success:(data)=>{
             if( data.statusCode == 1 ){
               if(data.info.status == 1){
+                 setCookie('preCaseId',data.info.case_id)
                 const url = '/api/api_staff.php?r=cdr-call/answer-phone'
                 const conf = {
                   url,
@@ -113,16 +115,16 @@ export default {
                   }
                 }
                 axiosRequest(conf)
-                setCookie('preCaseId',data.info.case_id)  //设置前案件id
+                // setCookie('preCaseId',data.info.case_id)  //设置前案件id
                 this.newCaseId = data.info.case_id       //当前案件id
-                // if(this.preCaseId != this.newCaseId){
+                if(preCaseId != this.newCaseId &&this.newCaseId!=''){
                     router.push({
                         path:'/staffCaseDetails/',
                         query:{
                             id:this.newCaseId
                         }
                     })
-                // }
+                }
               }
             }
           }
