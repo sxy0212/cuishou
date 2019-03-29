@@ -117,7 +117,7 @@ export default {
                 this.newCaseId = data.info.case_id       //当前案件id
                 if(this.preCaseId != this.newCaseId){
                     router.push({
-                        path:'/caseDetails/',
+                        path:'/staffCaseDetails/',
                         query:{
                             id:this.newCaseId
                         }
