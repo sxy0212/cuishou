@@ -376,9 +376,9 @@ let routes = [
     children: [
       {
         path: '',
-        name: '案件详情',
+        name: '',
         component: () => import('@/staffViews/caseDetails/index'),
-        meta: { title: '案件详情', icon: 'fa-address-card-o' }
+        // meta: { title: '案件详情', icon: 'fa-address-card-o' }
       }
     ]
   },

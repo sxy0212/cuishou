@@ -18,7 +18,6 @@ export default {
     methods: {
         tabClick (tab) {
             let path = this.activeIndex;
-            console.log(path)
             if(this.activeIndex === '/charts') {
                // path = this.activeIndex + '/' + this.$store.state.userInfo.name; 
             }
