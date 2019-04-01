@@ -49,7 +49,7 @@
         <el-table-column
         prop="staff_id"
         label="是否分配"
-        width="120"
+        width="145"
         >
         </el-table-column>
         <el-table-column
