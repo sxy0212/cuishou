@@ -49,11 +49,12 @@
             </template>
           </el-table-column>  
           <el-table-column prop="phone" label="联系方式"></el-table-column>  
-          <el-table-column  label="操作" width="350">
+          <el-table-column  label="操作" width="420">
             <template slot-scope="scope">
               <el-button type="primary" plain  @click="addMemberEdit(scope.$index,scope.row)" style="padding:10px">编辑</el-button>
               <el-button type="primary" plain  @click="editPassword(scope.$index,scope.row)" style="padding:10px">修改密码</el-button>
               <el-button type="primary" plain  @click="copyName(scope.$index,scope.row)" style="padding:10px">复制账号</el-button>
+              <el-button :type="scope.row.status == 1?'warning':'success'" plain  @click="frozenAccount(scope.row)" style="padding:10px">{{scope.row.status == 1?'冻结账号':'解冻账号'}}</el-button>
               <el-button type="primary" plain  @click="del(scope.row.id)" style="padding:10px">删除</el-button>
             </template>
           </el-table-column>
@@ -168,6 +169,7 @@
 </template> 
 <script>
 import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
+import { Message } from 'element-ui'
 	export default {
 		data(){
       return {
@@ -245,7 +247,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       // 保存添加部门
       addBranchSave(){
         const url = "/api/api_backend.php?r=collect-depart/depart-add"
-        const data = this.form;
+        const data = this.form
         if(this.form.parent_id == 0){
           data.parent_str = '0'
         }else{
@@ -295,16 +297,16 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
           },
           success:(data)=>{
             this.$alert(data.message)
-              this.showId = ""
-              this.showName = "" 
-              this.initTree()
+            this.showId = ""
+            this.showName = "" 
+            this.initTree()
           }
         }
         axiosRequest(conf)
       },
       // 添加成员
       addMember(){
-        this.addMemberDio = true;
+        this.addMemberDio = true
       },
       addMemberSave(){
         const url = "/api/api_backend.php?r=collect-depart/staff-add"
@@ -334,44 +336,42 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       beforeUploadFile(file) {
         this.file = file.name
       },
-            successFile(response,file,files){
-              this.fileList = []
-                if(response.statusCode == 1){
-                    alert(response.message)
-                }else{
-                    this.$alert(response.message)
-                    this.fileList = []
-                }
-            },
-            handleExceedFile(files, fileList) {
-                this.$message.warning(`当前限制选择 1 个文件`);
-            },
-            
-      // 删除部门
-      remove(id){
+      successFile(response,file,files){
+        this.fileList = []
+        if(response.statusCode == 1){
+            alert(response.message)
+        }else{
+            this.$alert(response.message)
+            this.fileList = []
+        }
+      },
+      handleExceedFile(files, fileList) {
+          this.$message.warning(`当前限制选择 1 个文件`)
+      },
+      remove(id){ // 删除部门
         this.$confirm('确定删除?', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-              const url = "/api/api_backend.php?r=collect-depart/depart-del"
-              const conf = {
-                url,
-                data:{
-                  id:id
-                },
-                success:(data)=>{
-                  this.$alert(data.message)
-                  this.initTree()
-                }
+            const url = "/api/api_backend.php?r=collect-depart/depart-del"
+            const conf = {
+              url,
+              data:{
+                id:id
+              },
+              success:(data)=>{
+                this.$alert(data.message)
+                this.initTree()
               }
-              axiosRequest(conf)
+            }
+            axiosRequest(conf)
           }).catch(() => {
             this.$message({
               type: 'info',
               message: '已取消删除'
-            });          
-        });
+            })          
+        })
       },
       // 右侧数据
       init(){
@@ -425,7 +425,7 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },
       // 修改密码
       editPassword(index,row){
-        this.editPasswordDio = true;
+        this.editPasswordDio = true
         this.editPasswordForm.id = row.id
       },
       editPasswordSave(){
@@ -457,42 +457,42 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       },  
       Copy(str){ 
         var save = function(e){ 
-        e.clipboardData.setData('text/plain', str); 
-        e.preventDefault(); 
+          e.clipboardData.setData('text/plain', str) 
+          e.preventDefault() 
         } 
-        document.addEventListener('copy', save); 
-        document.execCommand('copy'); 
-        document.removeEventListener('copy',save); 
+        document.addEventListener('copy', save) 
+        document.execCommand('copy') 
+        document.removeEventListener('copy',save) 
         this.$message({
           message: '复制成功',
           type: 'success'
-        });
+        })
       },
       // 删除
 			del(id){
         this.$confirm('确定删除?', '提示', {
-                  confirmButtonText: '确定',
-                  cancelButtonText: '取消',
-                  type: 'warning'
-                }).then(() => {
-                  	const url = "/api/api_backend.php?r=collect-depart/staff-del"
-                    const conf = {
-                      url,
-                      data:{
-                        id:id
-                      },
-                      success:(data)=>{
-                        this.$alert(data.message)
-                        this.init()
-                      }
-                    }
-                   axiosRequest(conf)
-                }).catch(() => {
-                  this.$message({
-                    type: 'info',
-                    message: '已取消删除'
-                  });          
-              });
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            const url = "/api/api_backend.php?r=collect-depart/staff-del"
+            const conf = {
+              url,
+              data:{
+                id:id
+              },
+              success:(data)=>{
+                this.$alert(data.message)
+                this.init()
+              }
+            }
+            axiosRequest(conf)
+          }).catch(() => {
+            this.$message({
+              type: 'info',
+              message: '已取消删除'
+            })        
+        })
 			},
       downloadWord(){
         window.open("/upload/staffTemplate.xlsx")
@@ -504,13 +504,38 @@ import {axiosRequest,clone,message} from '@/assets/js/Yt.js'
       handleSizeChange(val){
         this.page_size = val
         this.init()
+      },
+      frozenAccount(row){  //冻结 解冻账号
+        const conf = {
+          url:'/api/api_backend.php?r=collect-depart/freeze-account',
+          data:{
+            id:row.id
+          },
+          success:(data)=>{
+            if( data.statusCode == 1 ){
+              this.init()
+              Message({
+                message: data.message,
+                type: 'success',
+                duration: 3 * 1000
+              })
+            }else{
+              Message({
+                message: data.message,
+                type: 'erro',
+                duration: 3 * 1000
+              })
+            }
+          }
+        }
+        axiosRequest(conf)
       }
     }
   }
 </script>
 <style lang="scss" >
-.DialogueMain2 .el-dialog{width:35%}
-.el-tree .el-tree-node{background:#fff}
+.DialogueMain2 .el-dialog{width:35%;}
+.el-tree .el-tree-node{background:#fff;}
 .deparTree .el-tree{height:650px;padding-top:20px;}
 .node-word{max-width: 101px;float:left;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
 </style>   
