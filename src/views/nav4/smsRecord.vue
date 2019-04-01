@@ -28,7 +28,7 @@
             <el-table-column prop="mobile" label="接收号码"> </el-table-column>
             <el-table-column prop="content" label="发送内容"></el-table-column>
             <!-- <el-table-column prop="user_id" label="发送者"></el-table-column> -->
-            <el-table-column prop="status" label="发送状态">
+            <el-table-column prop="status" label="发送状态" width="120">
               <template slot-scope="scope">
                 <span v-if="scope.row.status == 1">成功</span>
                 <span v-else>失败</span>
