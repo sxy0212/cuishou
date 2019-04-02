@@ -5,17 +5,20 @@
       @select="handleSelect" router
       class="el-menu-vertical-demo" 
       style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b" >
-      <el-menu-item :index="item.path" v-for="(item,index) in menus" v-if="item.child.length==0" :key="index">
-        <i :class="item.icon"></i>
-        <span slot="title">{{item.name}}</span>
-      </el-menu-item>
-      <el-submenu :index="item.id" v-for="(item,index) in menus" v-if="item.child.length!=0" :key="index">
-        <template slot="title">
+      <lebel v-for="(item,index) in menus">
+        <el-menu-item :index="item.path"  v-if="item.child.length==0" :key="index">
           <i :class="item.icon"></i>
-          <span>{{item.name}}</span>
-        </template>
-        <el-menu-item :index="item.path" v-for="(item,index) in item.child" :key="index" >{{item.name}}</el-menu-item>
-      </el-submenu> 
+          <span slot="title">{{item.name}}</span>
+        </el-menu-item>
+        <el-submenu :index="item.id"  v-if="item.child.length!=0" :key="index">
+          <template slot="title">
+            <i :class="item.icon"></i>
+            <span>{{item.name}}</span>
+          </template>
+          <el-menu-item :index="item.path" v-for="(item,index) in item.child" :key="index" >{{item.name}}</el-menu-item>
+        </el-submenu>
+      </lebel>
+       
     </el-menu>  
 </template>
 <script type="text/ecmascript-6">
