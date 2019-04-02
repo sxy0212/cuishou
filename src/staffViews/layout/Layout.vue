@@ -42,6 +42,13 @@ export default {
   @import "@/styles/css/mixin.scss";
   @import "@/styles/css/sidebar.scss";
   .el-main{padding:0;}
+  html,body,p,h1,h2,h3,h4,h5{ padding:0; margin:0;}
+#app {
+  font-family:'微软雅黑', 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+html,body,#app,.el-container{height:100%}
   .app-wrapper {
     @include clearfix;
     position: relative;

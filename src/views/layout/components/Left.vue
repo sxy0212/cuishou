@@ -5,7 +5,7 @@
       @select="handleSelect" router
       class="el-menu-vertical-demo" 
       style="height:100%" background-color="#333744" text-color="#fff"  active-text-color="#ffd04b" >
-      <lebel v-for="(item,index) in menus">
+      <lebel v-for="(item,index) in menus" :key="index">
         <el-menu-item :index="item.path"  v-if="item.child.length==0" :key="index">
           <i :class="item.icon"></i>
           <span slot="title">{{item.name}}</span>
