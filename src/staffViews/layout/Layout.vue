@@ -5,19 +5,20 @@
           <keep-alive>
             <navbar/><!-- 导航栏 -->
            </keep-alive>
+            <NaveTab style="margin-left:180px;margin-top:10px;"></NaveTab>
         </el-header>
         <el-aside class="sidebar-container" style="margin-top:60px;">
           <keep-alive>
             <sidebar/><!-- 侧边栏 -->
           </keep-alive>
         </el-aside>
-        <el-main class="main-container" style="min-height:550px;max-height:900px;overflow:scroll;" >
+        <el-main class="main-container" style="min-height:550px;max-height:815px;overflow:scroll;" >
           <keep-alive>
             <!-- tabs-view -->
-            <NaveTab style=""></NaveTab>
+           
           </keep-alive> 
           <keep-alive>
-            <app-main/><!-- Body -->
+          <router-view></router-view>
           </keep-alive> 
         </el-main>
       </el-container>

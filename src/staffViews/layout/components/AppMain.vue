@@ -1,32 +1,17 @@
 <template>
-  <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
-      <!-- or name="fade" -->
-      <keep-alive>
-        <router-view/>
-      </keep-alive>
-    </transition>
-  </section>
+  <div id="app">
+    <router-view/>
+  </div>
 </template>
 
 <script>
-
 export default {
-  name: 'AppMain',
-  
-  computed: {
-    // key() {
-    //   return this.$route.name !== undefined ? this.$route.name + +new Date() : this.$route + +new Date()
-    // }
-  }
+  name: 'AppMain'
 }
 </script>
-
-<style scoped>
-.app-main {
-  /*50 = navbar  */
-  min-height: calc(100vh - 50px);
-  position: relative;
-  overflow: scroll;
-}
+<style>
+  html,body,#app,section{ width:100%;height:100%}
+  
+  .addTask1 .el-dialog{width:75%;max-width:75%;background:#f2f2f2}
+  .export .el-dialog{width:30%;max-width:30%;}
 </style>
