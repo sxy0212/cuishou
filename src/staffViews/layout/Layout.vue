@@ -2,15 +2,23 @@
   <div>
     <el-container>
         <el-header style="position:relative;background-color: #23262e;color:white; padding:0;">
-          <navbar/><!-- 导航栏 -->
+          <keep-alive>
+            <navbar/><!-- 导航栏 -->
+           </keep-alive>
         </el-header>
         <el-aside class="sidebar-container" style="margin-top:60px;">
-          <sidebar/><!-- 侧边栏 -->
+          <keep-alive>
+            <sidebar/><!-- 侧边栏 -->
+          </keep-alive>
         </el-aside>
         <el-main class="main-container" style="min-height:550px;max-height:900px;overflow:scroll;" >
-          <!-- tabs-view -->
-          <NaveTab style=""></NaveTab>
-          <app-main/><!-- Body --> 
+          <keep-alive>
+            <!-- tabs-view -->
+            <NaveTab style=""></NaveTab>
+          </keep-alive> 
+          <keep-alive>
+            <app-main/><!-- Body -->
+          </keep-alive> 
         </el-main>
       </el-container>
     </div>
