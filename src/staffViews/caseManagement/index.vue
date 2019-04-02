@@ -194,11 +194,13 @@ export default {
 			areaList:[],//区域列表
 		}
     },
-    created(){
+    // created(){
+	// 	// this.init()
+	// 	// this.getList()
+    // },
+	activated(){
 		this.init()
 		this.getList()
-    },
-	activated(){
 		// this.conditions.staff_id = typeof( this.$route.query.staff_id ) == 'undefined'?'':this.$route.query.staff_id
 		// this.conditions.depart_id = typeof(  this.$route.query.depart_id ) == 'undefined'?'': this.$route.query.depart_id
 		// this.conditions.batch_id = typeof(  this.$route.query.batch_id ) == 'undefined'?'': this.$route.query.batch_id

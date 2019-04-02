@@ -2,8 +2,9 @@
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
       <!-- or name="fade" -->
-      
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </transition>
   </section>
 </template>

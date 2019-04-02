@@ -311,14 +311,15 @@ export default {
         }
     },
     created(){
+        
+    },
+    activated(){ 
         this.id = this.$route.query.id
         this.init()
         this.formTitle = {}
         this.getTableSecond()
-        this.otherInfo = false
+        this.otherInfo = false 
     },
-    // activated(){    
-    // },
     methods:{
         beforeCloseFn(done){
             if( !this.$refs.middleRef.$refs.audioPlay.paused ){
